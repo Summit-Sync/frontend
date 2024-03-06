@@ -9,8 +9,7 @@ export class GroupTemplate {
     public description?: string,
     public datesCount?: number,
     public duration?: number,
-    public priceList?: Price[],
-    public place?: string,
+    public pricePerTrainerPerHour?: number,
     public trainerKey?: number,
     public trainerQualifications?: Qualification[]
   ) {}

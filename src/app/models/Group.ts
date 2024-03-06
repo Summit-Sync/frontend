@@ -2,7 +2,7 @@ import { Price } from './Price';
 import { Qualification } from './Qualification';
 import { Trainer } from './Trainer';
 
-export class GroupTemplate {
+export class Group {
   constructor(
     public id?: number,
     public groupTitle?: string,
@@ -12,9 +12,14 @@ export class GroupTemplate {
     public dates?: Date[],
     public duration?: number,
     public participantsCount?: number,
-    public priceList?: Price[],
+    public contact?: string,
+    public contactEmail?: string,
+    public contactPhoneNumber?: string,
     public place?: string,
     public trainerKey?: number,
+    public pricePerParticipent?: number,
+    public pricePerHour?: number,
+    public totalPrice?: number,
     public trainerQualifications?: Qualification[],
     public trainers?: Trainer[],
     public notes?: string

@@ -10,7 +10,7 @@ export class CourseTemplate {
     public datesCount?: number,
     public duration?: number,
     public maxParticipants?: number,
-    public waitingListLength?: number,
+    public maxWaitingListLength?: number,
     public priceList?: Price[],
     public place?: string,
     public trainerQualifications?: Qualification[]
