@@ -12,12 +12,16 @@ export class Course {
     public datesCount?: number,
     public dates?: Date[],
     public duration?: number,
+    public participants?: string[],
+    public waitList?: string[],
     public maxParticipants?: number,
-    public waitingListLength?: number,
+    public maxWaitingListLength?: number,
     public priceList?: Price[],
     public place?: string,
     public trainerQualifications?: Qualification[],
     public trainers?: Trainer[],
-    public notes?: string
+    public notes?: string,
+    public visivle?: boolean,
+    public canceled?: boolean,
   ) {}
 }
