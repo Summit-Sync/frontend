@@ -1,1 +1,39 @@
-<p>group-list works!</p>
+<table>
+  <thead>
+    <tr>
+      <th>Gruppenkürzel</th>
+      <th>Termin 1.</th>
+      <th>Termin 2.</th>
+      <th>Termine insgesamt</th>
+      <th>Kontaktperson</th>
+      <th>Trainer</th>
+      <th>Teilnehmer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let g of groups | async">
+      <tr>
+        <td>{{ g.groupTitle }}</td>
+        <td>{{ g.dates?.[1] || "-" }}</td>
+        <td>{{ g.dates?.[2] || "-" }}</td>
+        <td>{{ g.dates?.length }}</td>
+        <td>{{ g.contact }}</td>
+        <td>
+          <span *ngFor="let trainer of g.trainers">
+            {{ trainer.trainerName }}
+          </span>
+        </td>
+        <td>{{ g.participantsCount }}</td>
+        <td>
+          <button (click)="showDetails(g)">Bewerben</button>
+        </td>
+        <td>
+          <button (click)="showEdit(g)">Bearbeiten</button>
+        </td>
+        <td>
+          <button (click)="delete(g)">Löschen</button>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
