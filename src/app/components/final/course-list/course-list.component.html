@@ -1,1 +1,41 @@
-<p>course-list works!</p>
+<table>
+  <thead>
+    <tr>
+      <th>Kurskürzel</th>
+      <th>Nr</th>
+      <th>Termin 1.</th>
+      <th>Termin 2.</th>
+      <th>Termine insgesamt</th>
+      <th>Trainer</th>
+      <th>Plätze</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let c of courses | async">
+      <tr>
+        <td>{{ c.courseAbbreviation }}</td>
+        <td>{{ c.courseNumber }}</td>
+        <td>
+          {{ c.dates?.[0] }}
+        </td>
+        <td>{{ c.dates?.[1] || "-" }}</td>
+        <td>{{ c.dates?.length }}</td>
+        <td>
+          <span *ngFor="let trainer of c.trainers">
+            {{ trainer.trainerName }}
+          </span>
+        </td>
+        <td>{{ c.maxParticipants }}</td>
+        <td>
+          <button (click)="showDetails(c)">Bewerben</button>
+        </td>
+        <td>
+          <button (click)="showEdit(c)">Bearbeiten</button>
+        </td>
+        <td>
+          <button (click)="delete(c)">Löschen</button>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
