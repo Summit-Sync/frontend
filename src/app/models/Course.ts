@@ -6,7 +6,8 @@ export class Course {
   constructor(
     public id?: number,
     public courseTitle?: string,
-    public courseNumber?: string,
+    public courseAbbreviation?: string,
+    public courseNumber?: number,
     public description?: string,
     public datesCount?: number,
     public dates?: Date[],
