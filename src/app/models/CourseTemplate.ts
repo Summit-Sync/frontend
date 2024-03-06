@@ -9,7 +9,7 @@ export class CourseTemplate {
     public description?: string,
     public datesCount?: number,
     public duration?: number,
-    public participantsCount?: number,
+    public maxParticipants?: number,
     public waitingListLength?: number,
     public priceList?: Price[],
     public place?: string,

@@ -11,7 +11,7 @@ export class Course {
     public datesCount?: number,
     public dates?: Date[],
     public duration?: number,
-    public participantsCount?: number,
+    public maxParticipants?: number,
     public waitingListLength?: number,
     public priceList?: Price[],
     public place?: string,
