@@ -1,1 +1,46 @@
-<p>course-template works!</p>
+<div class="outer">
+  <div class="header">
+    <h1>Erstellen einer Kursvorlage</h1>
+  </div>
+  <div class="body">
+    <mat-dialog-content [formGroup]="courseTemplateForm">
+      <div>
+        <mat-form-field><input matInput placeholder="Kurstitel" formControlName="courseTitle"></mat-form-field>
+        <mat-form-field><input matInput placeholder="Kürzel"></mat-form-field>
+      </div>
+      <div class="description-div">
+        <mat-form-field><input matInput placeholder="Beschreibung"></mat-form-field>
+      </div>
+      <div>
+        <mat-form-field><input matInput placeholder="Anzahl Termine"></mat-form-field>
+        <mat-form-field><input matInput placeholder="Dauer"></mat-form-field>
+        <mat-form-field><input matInput placeholder="Teilnehmeranzahl"></mat-form-field>
+        <mat-form-field><input matInput placeholder="Wartelistenlänge"></mat-form-field>
+        <mat-form-field><input matInput placeholder="Ort"></mat-form-field>
+      </div>
+      <div class="price">
+        <label>Preise</label>
+        <button>Preis hinzufügen</button>
+        <mat-list>
+          <mat-list-item>
+            <input matInput placeholder="Preisname">
+            <input matInput placeholder="Preis">
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="Trainer Qualifikation">
+        <mat-form-field>
+          <mat-select placeholder="Gewählte Qualifikation">
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+  </div>
+  <div class="button-div">
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="save()">Speichern</button>
+      <button mat-raised-button (click)="close()">Abbrechen</button>
+    </mat-dialog-actions>
+  </div>
+</div>
