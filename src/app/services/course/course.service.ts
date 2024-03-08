@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../../models/Course';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Price } from '../../models/Price';
 import { Qualification } from '../../models/Qualification';
 import { Trainer } from '../../models/Trainer';
@@ -50,10 +50,16 @@ export class CourseService {
   );
 
   courses: Observable<Course[]> = of([this.course1, this.course2]);
+  public currentCourse: BehaviorSubject<Course | null> =
+    new BehaviorSubject<Course | null>(null);
 
   constructor() {}
 
   getAllCourses(): Observable<Course[]> {
     return this.courses;
+  }
+
+  updateCourseDetails(c: Course) {
+    this.currentCourse.next(c);
   }
 }

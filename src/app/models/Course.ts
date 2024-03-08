@@ -22,6 +22,6 @@ export class Course {
     public trainers?: Trainer[],
     public notes?: string,
     public visivle?: boolean,
-    public canceled?: boolean,
+    public canceled?: boolean
   ) {}
 }

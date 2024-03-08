@@ -1,4 +1,3 @@
-import { Price } from './Price';
 import { Qualification } from './Qualification';
 import { Trainer } from './Trainer';
 

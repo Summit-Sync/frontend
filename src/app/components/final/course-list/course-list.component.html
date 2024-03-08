@@ -15,10 +15,10 @@
       <tr>
         <td>{{ c.courseAbbreviation }}</td>
         <td>{{ c.courseNumber }}</td>
-        <td>
-          {{ c.dates?.[0] }}
+        <td type="datetime-local">
+          {{ c.dates?.[0] | date:'EEEE, d MMMM yyyy HH:mm':'de' }}
         </td>
-        <td>{{ c.dates?.[1] || "-" }}</td>
+        <td>{{ c.dates?.[1] | date:'EEEE, d MMMM yyyy HH:mm':'de' || "-" }}</td>
         <td>{{ c.dates?.length }}</td>
         <td>
           <span *ngFor="let trainer of c.trainers">
@@ -39,3 +39,7 @@
     </ng-container>
   </tbody>
 </table>
+
+<div *ngIf="showingCourse">
+  <app-course (close)="hideEdit()"> </app-course>
+</div>

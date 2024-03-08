@@ -1,1 +1,101 @@
-<p>course works!</p>
+<div class="outer">
+  <div class="body">
+    <div>
+      <p>Kurstitel</p>
+      <p>
+        {{ courseDetails?.courseTitle }}
+      </p>
+    </div>
+    <div>
+      <p>Kursnummer</p>
+      <p>
+        {{ courseDetails?.courseNumber }}
+      </p>
+    </div>
+    <div>
+      <p>Beschreibung</p>
+      <p>
+        {{ courseDetails?.description }}
+      </p>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Start Zeit</th>
+            <th>End Zeit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let cd of courseDetails?.dates">
+            <tr>
+              <td>{{ dateConverterService.getDate(cd) }}</td>
+              <td>{{ dateConverterService.getStartTime(cd) }}</td>
+              <td>
+                {{
+                  dateConverterService.getEndTime(cd, courseDetails?.duration)
+                }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <button *ngIf="edit" (click)="addDate()">Termin hinzufügen</button>
+    </div>
+    <div>
+      <p>Teilnehmeanzahl</p>
+      <p>
+        {{ courseDetails?.participants?.length }}
+      </p>
+    </div>
+    <div>
+      <p>Wartelistenlänge</p>
+      <p>
+        {{ courseDetails?.waitList?.length }}
+      </p>
+    </div>
+    <div>
+      <div>
+        <p>Preise</p>
+        <button *ngIf="edit" (click)="addPrice()">Preis hinzufügen</button>
+      </div>
+      <div>
+        <ng-container *ngFor="let price of courseDetails?.priceList">
+          <p>{{ price.priceName }}</p>
+          <p>{{ price.priceValue }}</p>
+        </ng-container>
+      </div>
+    </div>
+    <div>
+      <p>Ort</p>
+      <p>
+        {{ courseDetails?.place }}
+      </p>
+    </div>
+    <div>
+      <p>Trainer Qualifikation</p>
+      <ng-container *ngFor="let q of courseDetails?.trainerQualifications">
+        <li>{{ q.skill }}</li>
+      </ng-container>
+    </div>
+    <div>
+      <p>Trainer</p>
+      <ng-container *ngFor="let t of courseDetails?.trainers">
+        <li>{{ t.trainerName }}</li>
+      </ng-container>
+    </div>
+    <div>
+      <p>Notizen</p>
+      <p>
+        {{ courseDetails?.notes }}
+      </p>
+    </div>
+  </div>
+  <div class="button-div">
+    <button mat-raised-button color="primary" (click)="save()">
+      Speichern
+    </button>
+    <button mat-raised-button (click)="cancel()">Abbrechen</button>
+  </div>
+</div>
