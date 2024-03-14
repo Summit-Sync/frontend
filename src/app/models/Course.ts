@@ -1,3 +1,4 @@
+import { Participant } from './Participant';
 import { Price } from './Price';
 import { Qualification } from './Qualification';
 import { Trainer } from './Trainer';
@@ -12,7 +13,7 @@ export class Course {
     public datesCount: number,
     public dates: Date[],
     public duration: number,
-    public participants: string[],
+    public participants: Participant[],
     public waitList: string[],
     public maxParticipants: number,
     public maxWaitingListLength: number,

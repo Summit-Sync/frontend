@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Price } from '../../models/Price';
 import { Qualification } from '../../models/Qualification';
 import { Trainer } from '../../models/Trainer';
+import { Participant } from '../../models/Participant';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,10 @@ export class CourseService {
     3,
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
     12,
-    ['Lena Meyer', 'Alex Kohl'],
+    [
+      new Participant(0, 'Lena', 'Meyer', 'Sektion Bremen', 'email@Meyer.com'),
+      new Participant(1, 'Alex', 'Kohl', 'Gast', 'email@Kohl.com'),
+    ],
     ['Karl Kaals'],
     2,
     1,
@@ -40,9 +44,26 @@ export class CourseService {
     5,
     [new Date('2024-04-01'), new Date('2024-04-08'), new Date('2024-04-15')],
     30,
-    ['Lena Meyer', 'Alex Kohl'],
+    [
+      new Participant(
+        0,
+        'Lena',
+        'Meyer',
+        'Sektion Bremen',
+        '015468312345',
+        'email@Meyer.com'
+      ),
+      new Participant(
+        1,
+        'Alex',
+        'Kohl',
+        'Gast',
+        '0161487981',
+        'email@Kohl.com'
+      ),
+    ],
     ['Karl Kaals'],
-    2,
+    3,
     1,
     [new Price('Regular', 500), new Price('Early Bird', 450)],
     'In-person - City Center',
