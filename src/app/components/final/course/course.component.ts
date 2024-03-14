@@ -1,9 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  numberAttribute,
+} from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { Course } from '../../../models/Course';
 import { CommonModule } from '@angular/common';
 import { DateConverterService } from '../../../services/dateConverter/date-converter.service';
 import { FormsModule } from '@angular/forms';
+import { Participant } from '../../../models/Participant';
 
 @Component({
   selector: 'app-course',
@@ -18,6 +26,7 @@ export class CourseComponent implements OnInit {
   @Input() isDelete: boolean = false;
   courseDetails: Course;
   courseEditData: Course;
+  participantAddedCount: number = 0;
 
   // MatDialog on hold for now
   // public dialogRef: MatDialogRef<CourseComponent>
@@ -64,27 +73,85 @@ export class CourseComponent implements OnInit {
     console.log('date added');
   }
 
+  deleteDate(index: number): void {
+    this.courseEditData.dates.splice(index, 1);
+  }
+
   addPrice() {
     console.log('price added');
   }
 
+  deleteParticipant(index: number): void {
+    this.courseEditData.participants.splice(index, 1);
+  }
+
   save(): void {
-    this.close.emit();
-    console.log('save: ', this.courseEditData);
+    if (this.checkUnfinishedParticipants(this.courseEditData.participants)) {
+      this.deleteEmptyParticipants(this.courseEditData.participants);
+      this.close.emit();
+      console.log('save: ', this.courseEditData);
+    }
   }
 
   cancel(): void {
+    this.deleteEmptyParticipants(this.courseDetails.participants);
     this.close.emit();
     console.log('cancel');
-  }
-
-  deleteDate(index: number): void {
-    this.courseEditData.dates.splice(index, 1);
   }
 
   deleteCourse(): void {
     this.close.emit();
     console.log('delete');
+  }
+
+  fullParticipantsList(
+    participantsList: Participant[],
+    maxParticipants: number
+  ) {
+    for (let i = participantsList.length; i < maxParticipants; i++) {
+      console.log(i);
+      participantsList.push(new Participant(i, '', '', '', ''));
+    }
+    console.log(participantsList);
+    return participantsList;
+  }
+
+  checkUnfinishedParticipants(participantsList: Participant[]): boolean {
+    participantsList.forEach((p) => {
+      const allEmpty =
+        p.firstname == '' &&
+        p.lastname == '' &&
+        p.eMail == '' &&
+        p.phonenumber == '' &&
+        p.status == '';
+      const allFilled =
+        p.firstname != '' &&
+        p.lastname != '' &&
+        p.eMail != '' &&
+        p.phonenumber != '' &&
+        p.status != '';
+      if (allEmpty || allFilled) {
+        console.error(
+          'Teilnehmer ' + p.id + ' ist noch nicht fertig ausgefüllt'
+        );
+        return false;
+      }
+    });
+    return true;
+  }
+
+  deleteEmptyParticipants(participantsList: Participant[]) {
+    participantsList.filter((p) => {
+      p.firstname != '';
+    });
+  }
+
+  addParticipant(): void {
+    let p = this.courseEditData.participants;
+    this.courseEditData.maxParticipants++;
+    this.participantAddedCount++;
+    p.push(new Participant(p.length, '', '', '', ''));
+    console.log('participant added');
   }
 
   // MatDialog on hold for now

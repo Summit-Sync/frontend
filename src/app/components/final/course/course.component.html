@@ -24,7 +24,7 @@
         <input type="text" [(ngModel)]="courseEditData.description" />
       </ng-template>
     </div>
-    <div class="dateWrapper">
+    <div class="listWrapper">
       <table>
         <thead>
           <tr>
@@ -52,11 +52,114 @@
       </table>
       <button *ngIf="isEdit" (click)="addDate()">Termin hinzufügen</button>
     </div>
+
     <div>
-      <p>Teilnehmeanzahl:</p>
-      <p>
-        {{ courseDetails.participants.length }}
+      <p>Maximale Teilnehmeanzahl:</p>
+      <p *ngIf="!isEdit; else editParticipantsCount">
+        {{ courseDetails.maxParticipants }}
       </p>
+      <ng-template #editParticipantsCount>
+        <input type="number" [(ngModel)]="courseEditData.maxParticipants" />
+      </ng-template>
+    </div>
+    <div class="listWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Vorname</th>
+            <th>Kurs Teilnehmer Nachname</th>
+            <th>Status</th>
+            <th>Email</th>
+            <th>Telefonnummer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="!isEdit; else editParticipants">
+            <ng-container
+              *ngFor="
+                let p of fullParticipantsList(
+                  courseDetails.participants,
+                  courseDetails.maxParticipants
+                );
+                let i = index
+              "
+            >
+              <tr>
+                <td>
+                  {{ p.firstname != "" ? p.firstname : "leer" }}
+                </td>
+                <td>
+                  {{ p.lastname != "" ? p.lastname : "leer" }}
+                </td>
+                <td>
+                  {{ p.status != "" ? p.status : "leer" }}
+                </td>
+                <td>
+                  {{ p.eMail != "" ? p.eMail : "leer" }}
+                </td>
+                <td>
+                  {{ p.phonenumber != "" ? p.phonenumber : "leer" }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          <ng-template #editParticipants>
+            <ng-container
+              *ngFor="
+                let p of fullParticipantsList(
+                  courseEditData.participants,
+                  courseEditData.maxParticipants
+                );
+                let i = index
+              "
+            >
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.firstname"
+                    [placeholder]="p.firstname ? p.firstname : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.lastname"
+                    [placeholder]="p.lastname ? p.lastname : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.status"
+                    [placeholder]="p.status ? p.status : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.eMail"
+                    [placeholder]="p.eMail ? p.eMail : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.phonenumber"
+                    [placeholder]="p.phonenumber ? p.phonenumber : 'leer'"
+                  />
+                </td>
+                <td *ngIf="isEdit">
+                  <button (click)="deleteParticipant(i)">-</button>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-template>
+        </tbody>
+      </table>
+      <button *ngIf="isEdit" (click)="addParticipant()">
+        Teilnehmer hinzufügen
+      </button>
     </div>
     <div>
       <p>Wartelistenlänge:</p>
