@@ -70,12 +70,16 @@ export class CourseComponent implements OnInit {
 
   save(): void {
     this.close.emit();
-    console.log('save');
+    console.log('save: ', this.courseEditData);
   }
 
   cancel(): void {
     this.close.emit();
     console.log('cancel');
+  }
+
+  deleteDate(index: number): void {
+    this.courseEditData.dates.splice(index, 1);
   }
 
   deleteCourse(): void {

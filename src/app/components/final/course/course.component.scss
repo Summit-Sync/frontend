@@ -26,6 +26,9 @@
         list-style-type: none;
         height: fit-content;
       }
+      &.dateWrapper {
+        flex-direction: column;
+      }
     }
     .priceWrapper {
       display: flex;

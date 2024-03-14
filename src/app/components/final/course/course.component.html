@@ -24,7 +24,7 @@
         <input type="text" [(ngModel)]="courseEditData.description" />
       </ng-template>
     </div>
-    <div>
+    <div class="dateWrapper">
       <table>
         <thead>
           <tr>
@@ -34,7 +34,7 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let cd of courseDetails.dates">
+          <ng-container *ngFor="let cd of courseDetails.dates; let i = index">
             <tr>
               <td>{{ dateConverterService.getDate(cd) }}</td>
               <td>{{ dateConverterService.getStartTime(cd) }}</td>
@@ -42,6 +42,9 @@
                 {{
                   dateConverterService.getEndTime(cd, courseDetails.duration)
                 }}
+              </td>
+              <td *ngIf="isEdit">
+                <button (click)="deleteDate(i)">-</button>
               </td>
             </tr>
           </ng-container>
