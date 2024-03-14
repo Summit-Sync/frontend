@@ -26,6 +26,7 @@ export class CourseComponent implements OnInit {
     public courseService: CourseService,
     public dateConverterService: DateConverterService
   ) {}
+
   ngOnInit(): void {
     this.courseService.currentCourse.subscribe((c) => {
       if (!c) {
@@ -69,11 +70,17 @@ export class CourseComponent implements OnInit {
 
   save(): void {
     this.close.emit();
+    console.log('save');
   }
 
   cancel(): void {
     this.close.emit();
     console.log('cancel');
+  }
+
+  deleteCourse(): void {
+    this.close.emit();
+    console.log('delete');
   }
 
   // MatDialog on hold for now

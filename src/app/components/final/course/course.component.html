@@ -107,9 +107,12 @@
     </div>
   </div>
   <div class="button-div">
-    <button mat-raised-button color="primary" (click)="save()">
+    <button mat-raised-button color="primary" (click)="save()" *ngIf="isEdit">
       Speichern
     </button>
-    <button mat-raised-button (click)="cancel()">Abbrechen</button>
+    <button (click)="deleteCourse()" *ngIf="isDelete">Löschen</button>
+    <button mat-raised-button (click)="cancel()">
+      {{ isEdit || isDelete ? "Abbrechen" : "schließen" }}
+    </button>
   </div>
 </div>
