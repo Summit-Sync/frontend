@@ -26,7 +26,9 @@ export class CourseService {
     'Online',
     [new Qualification(0, 'Certified Programmer')],
     [new Trainer(1, 'John Doe')],
-    'Notes about the course.'
+    'Notes about the course.',
+    true,
+    false
   );
 
   course2 = new Course(
@@ -46,7 +48,9 @@ export class CourseService {
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
     [new Trainer(4, 'Jane Smith')],
-    'Notes about the bootcamp.'
+    'Notes about the bootcamp.',
+    true,
+    false
   );
 
   courses: Observable<Course[]> = of([this.course1, this.course2]);
