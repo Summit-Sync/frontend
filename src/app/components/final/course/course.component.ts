@@ -3,18 +3,21 @@ import { CourseService } from '../../../services/course/course.service';
 import { Course } from '../../../models/Course';
 import { CommonModule } from '@angular/common';
 import { DateConverterService } from '../../../services/dateConverter/date-converter.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './course.component.html',
-  styleUrl: './course.component.css',
+  styleUrl: './course.component.scss',
 })
-export class CourseComponent {
+export class CourseComponent implements OnInit {
   @Output() close = new EventEmitter();
-  @Input() edit: boolean = false;
-  courseDetails: Course | null = null;
+  @Input() isEdit: boolean = false;
+  @Input() isDelete: boolean = false;
+  courseDetails: Course;
+  courseEditData: Course;
 
   // MatDialog on hold for now
   // public dialogRef: MatDialogRef<CourseComponent>
@@ -22,19 +25,50 @@ export class CourseComponent {
   constructor(
     public courseService: CourseService,
     public dateConverterService: DateConverterService
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.courseService.currentCourse.subscribe((c) => {
+      if (!c) {
+        console.error('no course to show');
+        return;
+      }
       this.courseDetails = c;
+      if (this.isEdit) {
+        this.courseEditData = new Course(
+          c.id,
+          c.courseTitle,
+          c.courseAbbreviation,
+          c.courseNumber,
+          c.description,
+          c.datesCount,
+          c.dates,
+          c.duration,
+          c.participants,
+          c.waitList,
+          c.maxParticipants,
+          c.maxWaitingListLength,
+          c.priceList,
+          c.place,
+          c.trainerQualifications,
+          c.trainers,
+          c.notes,
+          c.visible,
+          c.canceled
+        );
+      }
     });
   }
 
-  addDate() {}
+  addDate() {
+    console.log('date added');
+  }
 
-  addPrice() {}
+  addPrice() {
+    console.log('price added');
+  }
 
   save(): void {
     this.close.emit();
-    console.log('saved');
   }
 
   cancel(): void {

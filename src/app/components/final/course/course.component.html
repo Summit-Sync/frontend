@@ -1,22 +1,28 @@
 <div class="outer">
-  <div class="body">
+  <div class="courseBody">
     <div>
-      <p>Kurstitel</p>
+      <p>Kurstitel:</p>
+      <p *ngIf="!isEdit; else editTitle">
+        {{ courseDetails.courseTitle }}
+      </p>
+      <ng-template #editTitle>
+        <input type="text" [(ngModel)]="courseEditData.courseTitle" />
+      </ng-template>
+    </div>
+    <div>
+      <p>Kursnummer:</p>
       <p>
-        {{ courseDetails?.courseTitle }}
+        {{ courseDetails.courseNumber }}
       </p>
     </div>
     <div>
-      <p>Kursnummer</p>
-      <p>
-        {{ courseDetails?.courseNumber }}
+      <p>Beschreibung:</p>
+      <p *ngIf="!isEdit; else editDescription">
+        {{ courseDetails.description }}
       </p>
-    </div>
-    <div>
-      <p>Beschreibung</p>
-      <p>
-        {{ courseDetails?.description }}
-      </p>
+      <ng-template #editDescription>
+        <input type="text" [(ngModel)]="courseEditData.description" />
+      </ng-template>
     </div>
     <div>
       <table>
@@ -28,68 +34,76 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let cd of courseDetails?.dates">
+          <ng-container *ngFor="let cd of courseDetails.dates">
             <tr>
               <td>{{ dateConverterService.getDate(cd) }}</td>
               <td>{{ dateConverterService.getStartTime(cd) }}</td>
               <td>
                 {{
-                  dateConverterService.getEndTime(cd, courseDetails?.duration)
+                  dateConverterService.getEndTime(cd, courseDetails.duration)
                 }}
               </td>
             </tr>
           </ng-container>
         </tbody>
       </table>
-      <button *ngIf="edit" (click)="addDate()">Termin hinzufügen</button>
+      <button *ngIf="isEdit" (click)="addDate()">Termin hinzufügen</button>
     </div>
     <div>
-      <p>Teilnehmeanzahl</p>
+      <p>Teilnehmeanzahl:</p>
       <p>
-        {{ courseDetails?.participants?.length }}
+        {{ courseDetails.participants.length }}
       </p>
     </div>
     <div>
-      <p>Wartelistenlänge</p>
+      <p>Wartelistenlänge:</p>
       <p>
-        {{ courseDetails?.waitList?.length }}
+        {{ courseDetails.waitList.length }}
       </p>
     </div>
     <div>
       <div>
-        <p>Preise</p>
-        <button *ngIf="edit" (click)="addPrice()">Preis hinzufügen</button>
+        <p>Preise:</p>
       </div>
-      <div>
-        <ng-container *ngFor="let price of courseDetails?.priceList">
-          <p>{{ price.priceName }}</p>
-          <p>{{ price.priceValue }}</p>
+      <div class="priceWrapper">
+        <ng-container *ngFor="let price of courseDetails.priceList">
+          <div class="price">
+            <p>{{ price.priceName }}:</p>
+            <p>{{ price.priceValue }}</p>
+          </div>
         </ng-container>
+        <button *ngIf="isEdit" (click)="addPrice()">Preis hinzufügen</button>
       </div>
     </div>
     <div>
-      <p>Ort</p>
-      <p>
-        {{ courseDetails?.place }}
+      <p>Ort:</p>
+      <p *ngIf="!isEdit; else editPlace">
+        {{ courseDetails.place }}
       </p>
+      <ng-template #editPlace>
+        <input type="text" [(ngModel)]="courseEditData.place" />
+      </ng-template>
     </div>
     <div>
-      <p>Trainer Qualifikation</p>
-      <ng-container *ngFor="let q of courseDetails?.trainerQualifications">
+      <p>Trainer Qualifikation:</p>
+      <ng-container *ngFor="let q of courseDetails.trainerQualifications">
         <li>{{ q.skill }}</li>
       </ng-container>
     </div>
     <div>
-      <p>Trainer</p>
-      <ng-container *ngFor="let t of courseDetails?.trainers">
+      <p>Trainer:</p>
+      <ng-container *ngFor="let t of courseDetails.trainers">
         <li>{{ t.trainerName }}</li>
       </ng-container>
     </div>
     <div>
-      <p>Notizen</p>
-      <p>
-        {{ courseDetails?.notes }}
+      <p>Notizen:</p>
+      <p *ngIf="!isEdit; else editNotes">
+        {{ courseDetails.notes }}
       </p>
+      <ng-template #editNotes>
+        <input type="text" [(ngModel)]="courseEditData.notes" />
+      </ng-template>
     </div>
   </div>
   <div class="button-div">
