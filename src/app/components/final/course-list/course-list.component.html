@@ -7,7 +7,7 @@
       <th>Termin 2.</th>
       <th>Termine insgesamt</th>
       <th>Trainer</th>
-      <th>Plätze</th>
+      <th>Belegte Plätze</th>
     </tr>
   </thead>
   <tbody>
@@ -27,7 +27,7 @@
             {{ trainer.trainerName }}
           </span>
         </td>
-        <td>{{ c.maxParticipants }}</td>
+        <td>{{ c.participants.length + "/" + c.maxParticipants }}</td>
         <td>
           <button (click)="showDetails(c)">Bewerben</button>
         </td>
