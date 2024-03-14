@@ -29,21 +29,25 @@ export class CourseListComponent implements OnInit {
   }
 
   showDetails(course: Course) {
-    this.showingCourse = true;
-    this.courseSerice.updateCourseDetails(course);
+    this.showCourse(course);
   }
 
   showEdit(course: Course) {
     this.showingEdit = true;
-    this.courseSerice.updateCourseDetails(course);
+    this.showCourse(course);
   }
 
   delete(course: Course) {
     this.showingDelete = true;
+    this.showCourse(course);
+  }
+
+  showCourse(course: Course) {
+    this.showingCourse = true;
     this.courseSerice.updateCourseDetails(course);
   }
 
-  hideEdit() {
+  hideCourse() {
     this.showingCourse = false;
     this.showingEdit = false;
     this.showingDelete = false;
