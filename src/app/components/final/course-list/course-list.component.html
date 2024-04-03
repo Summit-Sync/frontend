@@ -24,7 +24,8 @@
         <td>{{ c.dates.length }}</td>
         <td>
           <span *ngFor="let trainer of c.trainers">
-            {{ trainer.trainerName }}
+            {{ trainer.firstName }}
+            {{ trainer.lastName }}
           </span>
         </td>
         <td>{{ c.participants.length + "/" + c.maxParticipants }}</td>

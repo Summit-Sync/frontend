@@ -43,8 +43,8 @@ export class CourseListComponent implements OnInit {
   }
 
   showCourse(course: Course) {
-    this.showingCourse = true;
     this.courseSerice.updateCourseDetails(course);
+    this.showingCourse = true;
   }
 
   hideCourse() {
