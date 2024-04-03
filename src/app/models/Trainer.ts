@@ -1,3 +1,7 @@
 export class Trainer {
-  constructor(public id?: number, public trainerName?: string) {}
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string
+  ) {}
 }

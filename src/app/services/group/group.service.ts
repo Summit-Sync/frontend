@@ -32,7 +32,7 @@ export class GroupService {
     10,
     30,
     [new Qualification(2, 'klettern'), new Qualification(4, 'gut klettern')],
-    [new Trainer(2, 'Michael')]
+    [new Trainer(2, 'Michael', 'Meyer')]
   );
 
   group2 = new Group(
@@ -56,7 +56,7 @@ export class GroupService {
       new Qualification(2, 'erweitertes klettern'),
       new Qualification(4, 'schnelles klettern'),
     ],
-    [new Trainer(2, 'Michael'), new Trainer(2, 'Max')],
+    [new Trainer(2, 'Michael', 'Meyer'), new Trainer(2, 'Max', 'Verstappen')],
     'kürzer als Michaels anfänger Gruppe'
   );
 

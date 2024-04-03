@@ -20,16 +20,23 @@ export class CourseService {
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
     12,
     [
-      new Participant(0, 'Lena', 'Meyer', 'Sektion Bremen', 'email@Meyer.com'),
-      new Participant(1, 'Alex', 'Kohl', 'Gast', 'email@Kohl.com'),
+      new Participant(
+        0,
+        'Lena',
+        'Meyer',
+        'Sektion Bremen',
+        undefined,
+        'email@Meyer.com'
+      ),
+      new Participant(1, 'Alex', 'Kohl', 'Gast', undefined, 'email@Kohl.com'),
     ],
-    ['Karl Kaals'],
+    [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
     2,
     1,
     [new Price('Regular', 150), new Price('Early Bird', 120)],
     'Online',
     [new Qualification(0, 'Certified Programmer')],
-    [new Trainer(1, 'John Doe')],
+    [new Trainer(1, 'John', 'Doe')],
     'Notes about the course.',
     true,
     false
@@ -62,13 +69,13 @@ export class CourseService {
         'email@Kohl.com'
       ),
     ],
-    ['Karl Kaals'],
+    [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
     3,
     1,
     [new Price('Regular', 500), new Price('Early Bird', 450)],
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
-    [new Trainer(4, 'Jane Smith')],
+    [new Trainer(4, 'Jane', 'Smith')],
     'Notes about the bootcamp.',
     true,
     false
