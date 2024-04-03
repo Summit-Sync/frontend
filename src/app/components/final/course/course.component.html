@@ -2,26 +2,24 @@
   <div class="courseBody">
     <div>
       <p>Kurstitel:</p>
-      <p *ngIf="!isEdit; else editTitle">
-        {{ courseDetails.courseTitle }}
-      </p>
+      <p *ngIf="!isEdit; else editTitle"></p>
       <ng-template #editTitle>
-        <input type="text" [(ngModel)]="courseEditData.courseTitle" />
+        <input type="text" [(ngModel)]="courseData.courseTitle" />
       </ng-template>
     </div>
     <div>
       <p>Kursnummer:</p>
       <p>
-        {{ courseDetails.courseNumber }}
+        {{ courseData.courseNumber }}
       </p>
     </div>
     <div>
       <p>Beschreibung:</p>
       <p *ngIf="!isEdit; else editDescription">
-        {{ courseDetails.description }}
+        {{ courseData.description }}
       </p>
       <ng-template #editDescription>
-        <input type="text" [(ngModel)]="courseEditData.description" />
+        <input type="text" [(ngModel)]="courseData.description" />
       </ng-template>
     </div>
     <div class="listWrapper">
@@ -34,20 +32,49 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let cd of courseDetails.dates; let i = index">
-            <tr>
-              <td>{{ dateConverterService.getDate(cd) }}</td>
-              <td>{{ dateConverterService.getStartTime(cd) }}</td>
-              <td>
-                {{
-                  dateConverterService.getEndTime(cd, courseDetails.duration)
-                }}
-              </td>
-              <td *ngIf="isEdit">
-                <button (click)="deleteDate(i)">-</button>
-              </td>
-            </tr>
+          <ng-container *ngIf="!isEdit; else editDates">
+            <ng-container
+              *ngFor="let currentDate of courseData.dates; let i = index"
+            >
+              <tr>
+                <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
+                <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
+                <td>
+                  {{ currentDate | endTime : 8 }}
+                </td>
+              </tr>
+            </ng-container>
           </ng-container>
+          <ng-template #editDates>
+            <ng-container
+              *ngFor="let currentDate of courseData.dates; let i = index"
+            >
+              <tr>
+                <td>
+                  <input
+                    type="date"
+                    [ngModel]="currentDate | date : 'yyyy-MM-dd'"
+                    (input)="onDateChange($event, i)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="time"
+                    [ngModel]="currentDate | date : 'HH:mm'"
+                    (input)="onStartTimeChange($event, i)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="time"
+                    [ngModel]="currentDate | endTime : 8"
+                    (input)="onEndTimeChange($event, i)"
+                  />
+                </td>
+                <button (click)="deleteDate(i)">-</button>
+              </tr>
+            </ng-container>
+          </ng-template>
         </tbody>
       </table>
       <button *ngIf="isEdit" (click)="addDate()">Termin hinzufügen</button>
@@ -56,10 +83,14 @@
     <div>
       <p>Maximale Teilnehmeanzahl:</p>
       <p *ngIf="!isEdit; else editParticipantsCount">
-        {{ courseDetails.maxParticipants }}
+        {{ courseData.maxParticipants }}
       </p>
       <ng-template #editParticipantsCount>
-        <input type="number" [(ngModel)]="courseEditData.maxParticipants" />
+        <input
+          type="number"
+          [(ngModel)]="courseData.maxParticipants"
+          (input)="onMaxParticipantsChange()"
+        />
       </ng-template>
     </div>
     <div class="listWrapper">
@@ -67,7 +98,7 @@
         <thead>
           <tr>
             <th>Vorname</th>
-            <th>Kurs Teilnehmer Nachname</th>
+            <th>Nachname</th>
             <th>Status</th>
             <th>Email</th>
             <th>Telefonnummer</th>
@@ -76,13 +107,7 @@
         <tbody>
           <ng-container *ngIf="!isEdit; else editParticipants">
             <ng-container
-              *ngFor="
-                let p of fullParticipantsList(
-                  courseDetails.participants,
-                  courseDetails.maxParticipants
-                );
-                let i = index
-              "
+              *ngFor="let p of courseData.participants; let i = index"
             >
               <tr>
                 <td>
@@ -105,13 +130,7 @@
           </ng-container>
           <ng-template #editParticipants>
             <ng-container
-              *ngFor="
-                let p of fullParticipantsList(
-                  courseEditData.participants,
-                  courseEditData.maxParticipants
-                );
-                let i = index
-              "
+              *ngFor="let p of courseData.participants; let i = index"
             >
               <tr>
                 <td>
@@ -162,21 +181,111 @@
       </button>
     </div>
     <div>
-      <p>Wartelistenlänge:</p>
+      <p>Maximale Wartelistenlänge:</p>
       <p>
-        {{ courseDetails.waitList.length }}
+        {{ courseData.maxWaitingListLength }}
       </p>
+    </div>
+    <div class="listWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Status</th>
+            <th>Email</th>
+            <th>Telefonnummer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="!isEdit; else editWaitlistParticipants">
+            <ng-container *ngFor="let wp of courseData.waitList; let i = index">
+              <tr>
+                <td>
+                  {{ wp.firstname != "" ? wp.firstname : "leer" }}
+                </td>
+                <td>
+                  {{ wp.lastname != "" ? wp.lastname : "leer" }}
+                </td>
+                <td>
+                  {{ wp.status != "" ? wp.status : "leer" }}
+                </td>
+                <td>
+                  {{ wp.eMail != "" ? wp.eMail : "leer" }}
+                </td>
+                <td>
+                  {{ wp.phonenumber != "" ? wp.phonenumber : "leer" }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          <ng-template #editWaitlistParticipants>
+            <ng-container
+              *ngFor="let p of courseData.participants; let i = index"
+            >
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.firstname"
+                    [placeholder]="p.firstname ? p.firstname : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.lastname"
+                    [placeholder]="p.lastname ? p.lastname : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.status"
+                    [placeholder]="p.status ? p.status : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.eMail"
+                    [placeholder]="p.eMail ? p.eMail : 'leer'"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="p.phonenumber"
+                    [placeholder]="p.phonenumber ? p.phonenumber : 'leer'"
+                  />
+                </td>
+                <td *ngIf="isEdit">
+                  <button (click)="deleteParticipant(i)">-</button>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-template>
+        </tbody>
+      </table>
+      <button *ngIf="isEdit" (click)="addParticipant()">
+        Teilnehmer hinzufügen
+      </button>
     </div>
     <div>
       <div>
         <p>Preise:</p>
       </div>
       <div class="priceWrapper">
-        <ng-container *ngFor="let price of courseDetails.priceList">
-          <div class="price">
+        <ng-container *ngFor="let price of courseData.priceList; let i = index">
+          <div class="price" *ngIf="!isEdit; else editPrice">
             <p>{{ price.priceName }}:</p>
             <p>{{ price.priceValue }}</p>
           </div>
+          <ng-template #editPrice>
+            <input type="text" [(ngModel)]="price.priceName" />
+            <input type="number" [(ngModel)]="price.priceValue" />
+            <button (click)="deletePrice(i)">-</button>
+          </ng-template>
         </ng-container>
         <button *ngIf="isEdit" (click)="addPrice()">Preis hinzufügen</button>
       </div>
@@ -184,31 +293,31 @@
     <div>
       <p>Ort:</p>
       <p *ngIf="!isEdit; else editPlace">
-        {{ courseDetails.place }}
+        {{ courseData.place }}
       </p>
       <ng-template #editPlace>
-        <input type="text" [(ngModel)]="courseEditData.place" />
+        <input type="text" [(ngModel)]="courseData.place" />
       </ng-template>
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
-      <ng-container *ngFor="let q of courseDetails.trainerQualifications">
+      <ng-container *ngFor="let q of courseData.trainerQualifications">
         <li>{{ q.skill }}</li>
       </ng-container>
     </div>
     <div>
       <p>Trainer:</p>
-      <ng-container *ngFor="let t of courseDetails.trainers">
-        <li>{{ t.trainerName }}</li>
+      <ng-container *ngFor="let t of courseData.trainers">
+        <li>{{ t.firstName + " " + t.lastName }}</li>
       </ng-container>
     </div>
     <div>
       <p>Notizen:</p>
       <p *ngIf="!isEdit; else editNotes">
-        {{ courseDetails.notes }}
+        {{ courseData.notes }}
       </p>
       <ng-template #editNotes>
-        <input type="text" [(ngModel)]="courseEditData.notes" />
+        <input type="text" [(ngModel)]="courseData.notes" />
       </ng-template>
     </div>
   </div>
