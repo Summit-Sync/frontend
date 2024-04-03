@@ -1,0 +1,49 @@
+.outer {
+  position: absolute;
+  top: 0;
+  background: white;
+  border: black solid 1px;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  width: 60%;
+  .courseBody {
+    padding: 12px;
+    table {
+      width: 400px;
+      td {
+        text-align: center;
+      }
+    }
+    div {
+      display: flex;
+      align-items: center;
+      p:first-child {
+        font-weight: 500;
+        margin-right: 10px;
+      }
+      li {
+        list-style-type: none;
+        height: fit-content;
+      }
+      &.listWrapper {
+        flex-direction: column;
+      }
+    }
+    .priceWrapper {
+      display: flex;
+      flex-direction: column;
+      .price {
+        p {
+          margin: 0;
+          margin-bottom: 10px;
+        }
+        p:first-child {
+          font-weight: 400;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+

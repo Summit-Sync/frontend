@@ -20,7 +20,8 @@
         <td>{{ g.contact }}</td>
         <td>
           <span *ngFor="let trainer of g.trainers">
-            {{ trainer.trainerName }}
+            {{ trainer.firstName }}
+            {{ trainer.lastName }}
           </span>
         </td>
         <td>{{ g.participantsCount }}</td>

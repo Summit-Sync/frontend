@@ -7,7 +7,7 @@
       <th>Termin 2.</th>
       <th>Termine insgesamt</th>
       <th>Trainer</th>
-      <th>Plätze</th>
+      <th>Belegte Plätze</th>
     </tr>
   </thead>
   <tbody>
@@ -16,16 +16,19 @@
         <td>{{ c.courseAbbreviation }}</td>
         <td>{{ c.courseNumber }}</td>
         <td>
-          {{ c.dates?.[0] }}
+          {{ c.dates[0] | date : "EEEE, d MMMM yyyy HH:mm" : "de" }}
         </td>
-        <td>{{ c.dates?.[1] || "-" }}</td>
-        <td>{{ c.dates?.length }}</td>
+        <td>
+          {{ c.dates[1] | date : "EEEE, d MMMM yyyy HH:mm" : "de" }}
+        </td>
+        <td>{{ c.dates.length }}</td>
         <td>
           <span *ngFor="let trainer of c.trainers">
-            {{ trainer.trainerName }}
+            {{ trainer.firstName }}
+            {{ trainer.lastName }}
           </span>
         </td>
-        <td>{{ c.maxParticipants }}</td>
+        <td>{{ c.participants.length + "/" + c.maxParticipants }}</td>
         <td>
           <button (click)="showDetails(c)">Bewerben</button>
         </td>
@@ -39,3 +42,12 @@
     </ng-container>
   </tbody>
 </table>
+
+<div *ngIf="showingCourse">
+  <app-course
+    (close)="hideCourse()"
+    [isEdit]="showingEdit"
+    [isDelete]="showingDelete"
+  >
+  </app-course>
+</div>
