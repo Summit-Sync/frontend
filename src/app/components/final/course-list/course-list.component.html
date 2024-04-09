@@ -13,7 +13,7 @@
   <tbody>
     <ng-container *ngFor="let c of courses | async">
       <tr>
-        <td>{{ c.courseAbbreviation }}</td>
+        <td>{{ c.acronym }}</td>
         <td>{{ c.courseNumber }}</td>
         <td>
           {{ c.dates[0] | date : "EEEE, d MMMM yyyy HH:mm" : "de" }}
@@ -28,7 +28,7 @@
             {{ trainer.lastName }}
           </span>
         </td>
-        <td>{{ c.participants.length + "/" + c.maxParticipants }}</td>
+        <td>{{ c.participantList.length + "/" + c.numberParticipants }}</td>
         <td>
           <button (click)="showDetails(c)">Bewerben</button>
         </td>

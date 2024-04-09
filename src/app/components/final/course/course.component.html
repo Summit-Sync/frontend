@@ -60,14 +60,14 @@
                 <td>
                   <input
                     type="time"
-                    [ngModel]="currentDate | date : 'HH:mm'"
+                    [ngModel]="mappedDateTime[i][0]"
                     (input)="onStartTimeChange($event, i)"
                   />
                 </td>
                 <td>
                   <input
                     type="time"
-                    [ngModel]="currentDate | endTime : 8"
+                    [ngModel]="mappedDateTime[i][1]"
                     (input)="onEndTimeChange($event, i)"
                   />
                 </td>
@@ -82,13 +82,13 @@
 
     <div>
       <p>Maximale Teilnehmeanzahl:</p>
-      <p *ngIf="!isEdit; else editParticipantsCount">
-        {{ courseData.maxParticipants }}
+      <p *ngIf="!isEdit; else editMaxParticipants">
+        {{ courseData.numberParticipants }}
       </p>
-      <ng-template #editParticipantsCount>
+      <ng-template #editMaxParticipants>
         <input
           type="number"
-          [(ngModel)]="courseData.maxParticipants"
+          [(ngModel)]="courseData.numberParticipants"
           (input)="onMaxParticipantsChange()"
         />
       </ng-template>
@@ -107,7 +107,7 @@
         <tbody>
           <ng-container *ngIf="!isEdit; else editParticipants">
             <ng-container
-              *ngFor="let p of courseData.participants; let i = index"
+              *ngFor="let p of courseData.participantList; let i = index"
             >
               <tr>
                 <td>
@@ -130,7 +130,7 @@
           </ng-container>
           <ng-template #editParticipants>
             <ng-container
-              *ngFor="let p of courseData.participants; let i = index"
+              *ngFor="let p of courseData.participantList; let i = index"
             >
               <tr>
                 <td>
@@ -182,9 +182,16 @@
     </div>
     <div>
       <p>Maximale Wartelistenlänge:</p>
-      <p>
-        {{ courseData.maxWaitingListLength }}
+      <p *ngIf="!isEdit; else editMaxWaitlist">
+        {{ courseData.numberWaitlist }}
       </p>
+      <ng-template #editMaxWaitlist>
+        <input
+          type="number"
+          [(ngModel)]="courseData.numberWaitlist"
+          (input)="onMaxWaitlistChange()"
+        />
+      </ng-template>
     </div>
     <div class="listWrapper">
       <table>
@@ -220,9 +227,7 @@
             </ng-container>
           </ng-container>
           <ng-template #editWaitlistParticipants>
-            <ng-container
-              *ngFor="let p of courseData.participants; let i = index"
-            >
+            <ng-container *ngFor="let p of courseData.waitList; let i = index">
               <tr>
                 <td>
                   <input
@@ -260,14 +265,14 @@
                   />
                 </td>
                 <td *ngIf="isEdit">
-                  <button (click)="deleteParticipant(i)">-</button>
+                  <button (click)="deleteWaitingParticipant(i)">-</button>
                 </td>
               </tr>
             </ng-container>
           </ng-template>
         </tbody>
       </table>
-      <button *ngIf="isEdit" (click)="addParticipant()">
+      <button *ngIf="isEdit" (click)="addWaitingParticipant()">
         Teilnehmer hinzufügen
       </button>
     </div>
@@ -301,15 +306,58 @@
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
-      <ng-container *ngFor="let q of courseData.trainerQualifications">
-        <li>{{ q.skill }}</li>
+      <ng-container *ngIf="!isEdit; else editQualification">
+        <ng-container *ngFor="let q of courseData.trainerQualifications">
+          <li>{{ q.skill }}</li>
+        </ng-container>
       </ng-container>
+      <ng-template #editQualification>
+        <div class="qualifications-wrapper">
+          <div id="list1" class="dropdown-check-list">
+            <span class="anchor" (click)="showQualificationsList()"
+              >Qualifikationen</span
+            >
+            <ul
+              class="items"
+              [ngClass]="{ showQualificationList: showQualificationList }"
+            >
+              <li *ngFor="let q of allQualifications; let i = index">
+                <input
+                  type="checkbox"
+                  [checked]="
+                    q | checkItemInList : courseData.trainerQualifications
+                  "
+                  (input)="onQualificationCheckBoxClick($event, i)"
+                />{{ q.skill }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
     </div>
     <div>
       <p>Trainer:</p>
-      <ng-container *ngFor="let t of courseData.trainers">
-        <li>{{ t.firstName + " " + t.lastName }}</li>
+      <ng-container *ngIf="!isEdit; else editTrainer">
+        <ng-container *ngFor="let t of courseData.trainers">
+          <li>{{ t.firstName + " " + t.lastName }}</li>
+        </ng-container>
       </ng-container>
+      <ng-template #editTrainer>
+        <div class="qualifications-wrapper">
+          <div id="list1" class="dropdown-check-list">
+            <span class="anchor" (click)="showTrainersList()">Trainer</span>
+            <ul class="items" [ngClass]="{ showTrainerList: showTrainerList }">
+              <li *ngFor="let t of allTrainers; let i = index">
+                <input
+                  type="checkbox"
+                  [checked]="t | checkItemInList : courseData.trainers"
+                  (input)="onTrainerCheckBoxClick($event, i)"
+                />{{ t.firstName + " " + t.lastName }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
     </div>
     <div>
       <p>Notizen:</p>
