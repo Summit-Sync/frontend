@@ -1,16 +1,19 @@
+import { LocationDTO } from './LocationDTO';
 import { Price } from './Price';
 import { Qualification } from './Qualification';
 
-export class GroupTemplate {
-  constructor(
-    public id?: number,
-    public groupTitle?: string,
-    public groupAbbreviation?: string,
-    public description?: string,
-    public datesCount?: number,
-    public duration?: number,
-    public pricePerTrainerPerHour?: number,
-    public trainerKey?: number,
-    public trainerQualifications?: Qualification[]
-  ) {}
+export type GroupTemplateDTO={
+  id:number
+  acronym:string
+  title:string
+  description:string
+  numberOfDates:number
+  duration:number
+  numberOfParticipant:number
+  numberOfWaitlist:number
+  locationDTO:LocationDTO
+  meetingPoint:string
+  priceList:Price[]
+  requiredQualificationList:Qualification[]
+  numberOfTrainers:number
 }
