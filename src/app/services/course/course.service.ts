@@ -18,7 +18,7 @@ export class CourseService {
     'CS',
     3,
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
-    12,
+    260,
     [
       new Participant(
         0,
@@ -35,10 +35,11 @@ export class CourseService {
     1,
     [new Price('Regular', 150), new Price('Early Bird', 120)],
     'Online',
-    [new Qualification(0, 'Certified Programmer')],
+    [new Qualification(2, 'weit klettern')],
     [new Trainer(1, 'John', 'Doe')],
     'Notes about the course.',
     true,
+    false,
     false
   );
 
@@ -50,7 +51,7 @@ export class CourseService {
     'WD',
     5,
     [new Date('2024-04-01'), new Date('2024-04-08'), new Date('2024-04-15')],
-    30,
+    210,
     [
       new Participant(
         0,
@@ -78,6 +79,7 @@ export class CourseService {
     [new Trainer(4, 'Jane', 'Smith')],
     'Notes about the bootcamp.',
     true,
+    false,
     false
   );
 
@@ -93,5 +95,13 @@ export class CourseService {
 
   updateCourseDetails(c: Course) {
     this.currentCourse.next(c);
+  }
+
+  deleteCourse() {
+    console.log('Course deleted');
+  }
+
+  updateCourse() {
+    console.log('Course deleted');
   }
 }
