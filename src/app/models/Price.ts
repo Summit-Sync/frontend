@@ -1,3 +1,3 @@
 export class Price {
-  constructor(public priceName?: string, public priceValue?: number) {}
+  constructor(public name: string, public price: number) {}
 }

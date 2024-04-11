@@ -151,6 +151,21 @@ export class CourseComponent implements OnInit {
     this.courseData.priceList.splice(index, 1);
   }
 
+  checkUnfinishedPrice() {
+    const unfinishedPrices = this.courseData.priceList.some((wp) => {
+      const allEmpty = wp.name == '' && wp.price == 0;
+      const allFilled = wp.name != '' && wp.price != 0;
+      if (!(allEmpty || allFilled)) {
+        console.error(`Preis unvollständig (filler)`);
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    return unfinishedPrices;
+  }
+
   deleteQualification(clickedQualification: Qualification) {
     var tqList = this.courseData.trainerQualifications;
     tqList = tqList.filter((q) => {
@@ -246,7 +261,6 @@ export class CourseComponent implements OnInit {
   }
 
   checkUnfinishedWaitlistParticipants(): boolean {
-    console.log('waitlistParticipants');
     const unfinishedParticipantExists = this.courseData.waitList.some((wp) => {
       const allEmpty =
         wp.firstname == '' &&

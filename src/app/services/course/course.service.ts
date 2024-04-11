@@ -10,16 +10,20 @@ import { Participant } from '../../models/Participant';
   providedIn: 'root',
 })
 export class CourseService {
-  course1 = new Course(
-    0,
-    'Introduction to Programming',
-    'CS101',
-    2,
-    'CS',
-    3,
-    [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
-    260,
-    [
+  course1: Course = {
+    id: 0,
+    courseTitle: 'Introduction to Programming',
+    acronym: 'CS101',
+    courseNumber: 2,
+    description: 'CS',
+    datesCount: 3,
+    dates: [
+      new Date('2024-03-01'),
+      new Date('2024-03-08'),
+      new Date('2024-03-15'),
+    ],
+    duration: 260,
+    participantList: [
       new Participant(
         0,
         'Lena',
@@ -29,19 +33,20 @@ export class CourseService {
         'email@Meyer.com'
       ),
       new Participant(1, 'Alex', 'Kohl', 'Gast', undefined, 'email@Kohl.com'),
+      ,
     ],
-    [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
-    2,
-    1,
-    [new Price('Regular', 150), new Price('Early Bird', 120)],
-    'Online',
-    [new Qualification(2, 'weit klettern')],
-    [new Trainer(1, 'John', 'Doe')],
-    'Notes about the course.',
-    true,
-    false,
-    false
-  );
+    waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
+    numberParticipants: 2,
+    numberWaitlist: 1,
+    priceList: [new Price('Regular', 150), new Price('Early Bird', 120)],
+    place: 'Online',
+    trainerQualifications: [new Qualification(2, 'weit klettern')],
+    trainers: [new Trainer(1, 'John', 'Doe')],
+    notes: 'Notes about the course.',
+    visible: true,
+    canceled: false,
+    finished: false,
+  };
 
   course2 = new Course(
     1,
