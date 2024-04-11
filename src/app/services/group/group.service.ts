@@ -75,7 +75,7 @@ export class GroupService {
     return this.groups;
   }
 
-  getGroupTemplatess():Observable<GroupTemplateDTO[]>{
+  getGroupTemplates():Observable<GroupTemplateDTO[]>{
     return this.http.get<GroupTemplateDTO[]>(this.url);
   }
 
