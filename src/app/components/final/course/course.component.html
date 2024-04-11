@@ -283,12 +283,12 @@
       <div class="priceWrapper">
         <ng-container *ngFor="let price of courseData.priceList; let i = index">
           <div class="price" *ngIf="!isEdit; else editPrice">
-            <p>{{ price.priceName }}:</p>
-            <p>{{ price.priceValue }}</p>
+            <p>{{ price.name }}:</p>
+            <p>{{ price.price }}</p>
           </div>
           <ng-template #editPrice>
-            <input type="text" [(ngModel)]="price.priceName" />
-            <input type="number" [(ngModel)]="price.priceValue" />
+            <input type="text" [(ngModel)]="price.name" />
+            <input type="number" [(ngModel)]="price.price" />
             <button (click)="deletePrice(i)">-</button>
           </ng-template>
         </ng-container>
