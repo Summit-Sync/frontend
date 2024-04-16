@@ -16,7 +16,7 @@
         <td>{{ g.groupTitle }}</td>
         <td>{{ g.dates?.[1] || "-" }}</td>
         <td>{{ g.dates?.[2] || "-" }}</td>
-        <td>{{ g.dates?.length }}</td>
+        <td>{{ g.dates.length }}</td>
         <td>{{ g.contact }}</td>
         <td>
           <span *ngFor="let trainer of g.trainers">
