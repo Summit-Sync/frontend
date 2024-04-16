@@ -40,7 +40,7 @@
                 <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
                 <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
                 <td>
-                  {{ currentDate | endTime : 8 }}
+                  {{ currentDate | endTime : courseData.duration }}
                 </td>
               </tr>
             </ng-container>
@@ -65,11 +65,12 @@
                   />
                 </td>
                 <td>
-                  <input
+                  <!-- <input
                     type="time"
                     [ngModel]="mappedDateTime[i][1]"
                     (input)="onEndTimeChange($event, i)"
-                  />
+                  /> -->
+                  {{ mappedDateTime[i][1] }}
                 </td>
                 <button (click)="deleteDate(i)">-</button>
               </tr>

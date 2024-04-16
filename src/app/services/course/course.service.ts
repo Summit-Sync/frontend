@@ -10,20 +10,97 @@ import { Participant } from '../../models/Participant';
   providedIn: 'root',
 })
 export class CourseService {
-  course1: Course = {
-    id: 0,
-    courseTitle: 'Introduction to Programming',
-    acronym: 'CS101',
-    courseNumber: 2,
-    description: 'CS',
-    datesCount: 3,
-    dates: [
-      new Date('2024-03-01'),
-      new Date('2024-03-08'),
-      new Date('2024-03-15'),
-    ],
-    duration: 260,
-    participantList: [
+  // course1: Course = {
+  //   id: 0,
+  //   courseTitle: 'Introduction to Programming',
+  //   acronym: 'CS101',
+  //   courseNumber: 2,
+  //   description: 'CS',
+  //   datesCount: 3,
+  //   dates: [
+  //     new Date('2024-03-01'),
+  //     new Date('2024-03-08'),
+  //     new Date('2024-03-15'),
+  //   ],
+  //   duration: 260,
+  //   participantList: [
+  //     new Participant(
+  //       0,
+  //       'Lena',
+  //       'Meyer',
+  //       'Sektion Bremen',
+  //       undefined,
+  //       'email@Meyer.com'
+  //     ),
+  //     new Participant(1, 'Alex', 'Kohl', 'Gast', undefined, 'email@Kohl.com'),
+  //   ],
+  //   waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
+  //   numberParticipants: 2,
+  //   numberWaitlist: 1,
+  //   priceList: [new Price('Regular', 150), new Price('Early Bird', 120)],
+  //   place: 'Online',
+  //   trainerQualifications: [new Qualification(2, 'weit klettern')],
+  //   trainers: [new Trainer(1, 'John', 'Doe')],
+  //   notes: 'Notes about the course.',
+  //   visible: true,
+  //   canceled: false,
+  //   finished: false,
+  // };
+
+  // course2 = {
+  //   id: 1,
+  //   courseTitle: 'Web Development Bootcamp',
+  //   acronym: 'WD200',
+  //   courseNumber: 4,
+  //   description: 'WD',
+  //   datesCount: 5,
+  //   dates: [
+  //     new Date('2024-04-01'),
+  //     new Date('2024-04-08'),
+  //     new Date('2024-04-15'),
+  //   ],
+  //   duration: 210,
+  //   participantList: [
+  //     new Participant(
+  //       0,
+  //       'Lena',
+  //       'Meyer',
+  //       'Sektion Bremen',
+  //       '015468312345',
+  //       'email@Meyer.com'
+  //     ),
+  //     new Participant(
+  //       1,
+  //       'Alex',
+  //       'Kohl',
+  //       'Gast',
+  //       '0161487981',
+  //       'email@Kohl.com'
+  //     ),
+  //   ],
+  //   waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
+  //   numberParticipants: 3,
+  //   numberWaitlist: 1,
+  //   priceList: [new Price('Regular', 500), new Price('Early Bird', 450)],
+  //   place: 'In-person - City Center',
+  //   trainerQualifications: [new Qualification(2, 'Certified Web Developer')],
+  //   trainers: [new Trainer(4, 'Jane', 'Smith')],
+  //   notes: 'Notes about the bootcamp.',
+  //   visible: true,
+  //   canceled: false,
+  //   finished: false,
+  // };
+
+  course1: Course = new Course(
+    0,
+    'Introduction to Programming',
+    'CS101',
+    2,
+    'CS',
+    3,
+    [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
+    260,
+    [
       new Participant(
         0,
         'Lena',
@@ -33,22 +110,21 @@ export class CourseService {
         'email@Meyer.com'
       ),
       new Participant(1, 'Alex', 'Kohl', 'Gast', undefined, 'email@Kohl.com'),
-      ,
     ],
-    waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
-    numberParticipants: 2,
-    numberWaitlist: 1,
-    priceList: [new Price('Regular', 150), new Price('Early Bird', 120)],
-    place: 'Online',
-    trainerQualifications: [new Qualification(2, 'weit klettern')],
-    trainers: [new Trainer(1, 'John', 'Doe')],
-    notes: 'Notes about the course.',
-    visible: true,
-    canceled: false,
-    finished: false,
-  };
+    [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
+    2,
+    1,
+    [new Price('Regular', 150), new Price('Early Bird', 120)],
+    'Online',
+    [new Qualification(2, 'weit klettern')],
+    [new Trainer(1, 'John', 'Doe')],
+    'Notes about the course.',
+    true,
+    false,
+    false
+  );
 
-  course2 = new Course(
+  course2: Course = new Course(
     1,
     'Web Development Bootcamp',
     'WD200',

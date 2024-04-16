@@ -26,7 +26,28 @@ export class CourseComponent implements OnInit {
   @Input() isDelete: boolean = false;
   allQualifications: Qualification[];
   allTrainers: Trainer[];
-  courseData: Course;
+  courseData: Course = new Course(
+    0,
+    '',
+    '',
+    0,
+    '',
+    0,
+    [],
+    0,
+    [],
+    [],
+    0,
+    0,
+    [],
+    '',
+    [],
+    [],
+    '',
+    false,
+    false,
+    false
+  );
   mappedDateTime: string[][] = [];
   showQualificationList: boolean = false;
   showTrainerList: boolean = false;
@@ -46,7 +67,8 @@ export class CourseComponent implements OnInit {
         console.error('no course to show');
         return;
       }
-      this.courseData = structuredClone(c);
+      this.courseData.createCopyFrom(c);
+      console.log('onInit', this.courseData);
       // this.fillDatesList();
       this.fillParticipantsList(
         this.courseData.participantList,
@@ -130,14 +152,14 @@ export class CourseComponent implements OnInit {
     );
   }
 
-  onEndTimeChange(event: Event, index: number) {
+  /* onEndTimeChange(event: Event, index: number) {
     const inputElement = event.target as HTMLInputElement;
     const timeMS = inputElement.valueAsNumber;
     const hours = this.dateTimeMapper.convertMilisecondsToFullHours(timeMS);
     const minutes = this.dateTimeMapper.calculateMinutesRemainder(timeMS);
     this.courseData.dates[index].setHours(hours);
     this.courseData.dates[index].setMinutes(minutes);
-  }
+  } */
 
   getEndTime(currentTime: Date): string {
     return currentTime.getHours() + 8 + ':' + currentTime.getMinutes();
@@ -218,10 +240,7 @@ export class CourseComponent implements OnInit {
   }
 
   save(): void {
-    if (
-      !this.checkUnfinishedParticipants(this.courseData.participantList) &&
-      !this.checkUnfinishedParticipants(this.courseData.waitList)
-    ) {
+    if (this.courseData.validate()) {
       this.deleteEmptyParticipants(this.courseData.participantList);
       this.deleteEmptyWaitingParticipants(this.courseData.waitList);
       console.log('save: ', this.courseData);
@@ -260,32 +279,6 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  checkUnfinishedWaitlistParticipants(): boolean {
-    const unfinishedParticipantExists = this.courseData.waitList.some((wp) => {
-      const allEmpty =
-        wp.firstname == '' &&
-        wp.lastname == '' &&
-        wp.eMail == '' &&
-        wp.phonenumber == '' &&
-        wp.status == '';
-      const allFilled =
-        wp.firstname != '' &&
-        wp.lastname != '' &&
-        wp.eMail != '' &&
-        (wp.phonenumber != '' || wp.status != '');
-      if (!(allEmpty || allFilled)) {
-        console.error(
-          `Der Teilnehmer auf der Warteliste (ID: ${wp.id}) hat unvollständige Informationen.`
-        );
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    return unfinishedParticipantExists;
-  }
-
   onMaxParticipantsChange(): void {
     const participantsLength = this.courseData.participantList.length;
     if (this.courseData.numberParticipants < participantsLength) {
@@ -300,32 +293,6 @@ export class CourseComponent implements OnInit {
     for (let i = participantsList.length; i < maxParticipants; i++) {
       participantsList.push(new Participant(i, '', '', '', '', ''));
     }
-  }
-
-  checkUnfinishedParticipants(participants: Participant[]): boolean {
-    const unfinishedParticipantExists = participants.some((p) => {
-      const allEmpty =
-        p.firstname == '' &&
-        p.lastname == '' &&
-        p.eMail == '' &&
-        p.phonenumber == '' &&
-        p.status == '';
-      const allFilled =
-        p.firstname != '' &&
-        p.lastname != '' &&
-        p.eMail != '' &&
-        (p.phonenumber != '' || p.status != '');
-      if (!(allEmpty || allFilled)) {
-        console.error(
-          'Teilnehmer ' + p.id + ' ist noch nicht fertig ausgefüllt'
-        );
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    return unfinishedParticipantExists;
   }
 
   deleteEmptyParticipants(participantsList: Participant[]) {

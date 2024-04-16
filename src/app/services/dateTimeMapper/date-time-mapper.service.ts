@@ -11,6 +11,20 @@ export class DateTimeMapperService {
   }
 
   mapDateToEndTimeString(hours: number, minutes: number, duration: number) {
+    let endHours = Math.floor(duration / 60);
+    const endMinutes = duration % 60;
+    const totalMinutes = (minutes + endMinutes) % 60;
+    console.log(minutes + endMinutes, minutes, endMinutes);
+    if (minutes + endMinutes >= 60) {
+      endHours++;
+    }
+    let totalHours = (hours + endHours) % 24;
+    return (
+      totalHours.toString().padStart(2, '0') +
+      ':' +
+      totalMinutes.toString().padStart(2, '0')
+    );
+
     const durationMinutes = (duration + minutes) % 60;
     const durationHours = Math.floor(duration / 60) + hours;
     const formattedHours = String(durationHours).padStart(2, '0');
