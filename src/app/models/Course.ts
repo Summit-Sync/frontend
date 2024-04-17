@@ -62,7 +62,7 @@ export class Course {
 
     //validate arrays content
     if (
-      !this.priceList.some((price) => {
+      !this.priceList.every((price) => {
         return price.validate();
       })
     ) {
@@ -70,7 +70,7 @@ export class Course {
     }
 
     if (
-      !this.trainerQualifications.some((qualification) => {
+      !this.trainerQualifications.every((qualification) => {
         return qualification.validate();
       })
     ) {
@@ -78,8 +78,16 @@ export class Course {
     }
 
     if (
-      !this.participantList.some((participant) => {
+      !this.participantList.every((participant) => {
         return participant.validate();
+      })
+    ) {
+      return false;
+    }
+
+    if (
+      !this.waitList.every((wc) => {
+        return wc.validate();
       })
     ) {
       return false;
@@ -88,30 +96,6 @@ export class Course {
     return true;
   }
 
-  createCopyFrom(course: Course) {
-    this.id = course.id;
-    this.courseTitle = course.courseTitle;
-    this.acronym = course.acronym;
-    this.courseNumber = course.courseNumber;
-    this.description = course.description;
-    this.datesCount = course.datesCount;
-    this.dates = course.dates;
-    this.duration = course.duration;
-    this.participantList = course.participantList;
-    this.waitList = course.waitList;
-    this.numberParticipants = course.numberParticipants;
-    this.numberWaitlist = course.numberWaitlist;
-    this.priceList = course.priceList;
-    this.place = course.place;
-    this.trainerQualifications = course.trainerQualifications;
-    this.trainers = course.trainers;
-    this.notes = course.notes;
-    this.visible = course.visible;
-    this.canceled = course.canceled;
-    this.finished = course.finished;
-  }
-
-  /*   
   createCopyFrom(course: Course) {
     this.id = course.id;
     this.courseTitle = course.courseTitle;
@@ -143,5 +127,5 @@ export class Course {
     this.visible = course.visible;
     this.canceled = course.canceled;
     this.finished = course.finished;
-  }*/
+  }
 }

@@ -21,12 +21,12 @@ export class Participant {
       this.lastname != '' &&
       this.eMail != '' &&
       (this.phonenumber != '' || this.status != '');
-    if (!(allEmpty || allFilled)) {
-      console.error(
-        `Der Teilnehmer (ID: ${this.id}) hat unvollständige Informationen.`
-      );
-      return false;
+    if (allEmpty || allFilled) {
+      return true;
     }
-    return true;
+    console.error(
+      `Der Teilnehmer (ID: ${this.id}) hat unvollständige Informationen.`
+    );
+    return false;
   }
 }
