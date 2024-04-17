@@ -1,28 +1,14 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {MatFormField} from "@angular/material/form-field";
-import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
-import {MatInput} from "@angular/material/input";
-import {MatList, MatListItem} from "@angular/material/list";
 import {NgForOf} from "@angular/common";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {MatButton} from "@angular/material/button";
+import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
+import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
 
 @Component({
   selector: 'app-course-template',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatDialogContent,
-    MatInput,
-    MatList,
     NgForOf,
-    MatListItem,
-    MatSelect,
-    MatOption,
-    MatDialogActions,
-    MatButton
   ],
   templateUrl: './course-template.component.html',
   styleUrl: './course-template.component.css'
@@ -41,6 +27,17 @@ export class CourseTemplateComponent {
     place: new FormControl(''),
     trainerQualifications: new FormControl('')
   })
+  courseTemplateList:CourseTemplate[]=[];
+
+  constructor(
+    private courseTemplateService:CoursetemplateService
+  ){
+    console.log("Gets called")
+  }
+
+  ngOnInit(){
+    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>this.courseTemplateList=data)
+  }
 
   save(){
 

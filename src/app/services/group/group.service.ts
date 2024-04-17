@@ -5,9 +5,8 @@ import { Price } from '../../models/Price';
 import { Qualification } from '../../models/Qualification';
 import { Trainer } from '../../models/Trainer';
 import { HttpClient } from '@angular/common/http';
-import { GroupTemplateDTO } from '../../models/GroupTemplate';
 import { PostGroupTemplateDto } from '../../models/PostGroupTemplate';
-import { CourseTemplate } from '../../models/CourseTemplate';
+import { CourseTemplate } from '../../models/coursetemplate/CourseTemplate';
 
 @Injectable({
   providedIn: 'root',
@@ -76,21 +75,21 @@ export class GroupService {
     return this.groups;
   }
 
-  getGroupTemplates():Observable<GroupTemplateDTO[]>{
-    return this.http.get<GroupTemplateDTO[]>(this.url);
-  }
+  // getGroupTemplates():Observable<GroupTemplateDTO[]>{
+  //   return this.http.get<GroupTemplateDTO[]>(this.url);
+  // }
 
-  getGroupTemplateById(id:number):Observable<GroupTemplateDTO>{
-    return this.http.get<GroupTemplateDTO>(`${this.url}/${id}`)
-  }
+  // getGroupTemplateById(id:number):Observable<GroupTemplateDTO>{
+  //   return this.http.get<GroupTemplateDTO>(`${this.url}/${id}`)
+  // }
 
-  createGroupTemplate(group:PostGroupTemplateDto):Observable<GroupTemplateDTO>{
-    return this.http.post<GroupTemplateDTO>(this.url,group);
-  }
+  // createGroupTemplate(group:PostGroupTemplateDto):Observable<GroupTemplateDTO>{
+  //   return this.http.post<GroupTemplateDTO>(this.url,group);
+  // }
 
-  updateGroupTemplate(group:GroupTemplateDTO,id:number):Observable<GroupTemplateDTO>{
-     return this.http.put<GroupTemplateDTO>(`${this.url}/${id}`,group);
-  }
+  // updateGroupTemplate(group:GroupTemplateDTO,id:number):Observable<GroupTemplateDTO>{
+  //    return this.http.put<GroupTemplateDTO>(`${this.url}/${id}`,group);
+  // }
 
   deleteGroupTemplate(id:number):Observable<void>{
     return this.http.delete<void>(`${this.url}/${id}`);
