@@ -2,7 +2,9 @@
   <div class="courseBody">
     <div>
       <p>Kurstitel:</p>
-      <p *ngIf="!isEdit; else editTitle"></p>
+      <p *ngIf="!isEdit; else editTitle">
+        {{ courseData.courseTitle }}
+      </p>
       <ng-template #editTitle>
         <input type="text" [(ngModel)]="courseData.courseTitle" />
       </ng-template>

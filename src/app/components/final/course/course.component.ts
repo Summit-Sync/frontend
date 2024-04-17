@@ -222,7 +222,6 @@ export class CourseComponent implements OnInit {
   }
 
   save(): void {
-    console.log();
     if (this.courseData.validate()) {
       this.deleteEmptyParticipants(this.courseData.participantList);
       this.deleteEmptyWaitingParticipants(this.courseData.waitList);
@@ -282,6 +281,7 @@ export class CourseComponent implements OnInit {
     this.courseData.participantList = participantsList.filter((p) => {
       return p.firstname != '';
     });
+    console.log('deleteEmptyParticipants: ', this.courseData.participantList);
   }
 
   deleteEmptyWaitingParticipants(waitingParticipantsList: Participant[]) {
