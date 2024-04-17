@@ -1,13 +1,13 @@
-<div class="qualifications-wrapper">
+<div class="dropbox-wrapper">
   <div id="list1" class="dropdown-check-list">
-    <span class="anchor" (click)="dropDownClick()">Trainer</span>
+    <span class="anchor" (click)="dropDownClick()">{{ dropdownHeadline }}</span>
     <ul class="items" [ngClass]="{ showTrainerList: showList }">
       <li *ngFor="let t of allOptions; let i = index">
         <input
           type="checkbox"
           [checked]="t | checkItemInList : selectedOptions"
-          (input)="emitCheckBoxClick($event, i)"
-        />{{ t }}
+          (input)="onCheckBoxClick($event, i)"
+        />{{ t.displayFullName }}
       </li>
     </ul>
   </div>

@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { listItem } from '../../models/listItem';
+import { CheckboxList } from '../../models/CheckBoxList';
 
 @Pipe({
   name: 'checkItemInList',
   standalone: true,
 })
 export class CheckItemInListPipe implements PipeTransform {
-  transform<T extends listItem>(
+  transform<T extends CheckboxList>(
     qualification: T,
     inCourseQualificationList: T[]
   ): boolean {
