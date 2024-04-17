@@ -1,6 +1,5 @@
-import { LocationDTO } from './LocationDTO';
-import { Price } from './Price';
-import { Qualification } from './Qualification';
+import { PostPrice } from './price/PostPrice';
+import { Qualification } from './qualification/Qualification';
 
 export class GroupTemplate {
   constructor(

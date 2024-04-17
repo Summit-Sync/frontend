@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../../models/Course';
+import { Course } from '../../models/course/Course';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Price } from '../../models/Price';
-import { Qualification } from '../../models/Qualification';
-import { Trainer } from '../../models/Trainer';
-import { Participant } from '../../models/Participant';
+import { PostPrice } from '../../models/price/PostPrice';
+import { Qualification } from '../../models/qualification/Qualification';
+import { Trainer } from '../../models/trainer/Trainer';
+import { Participant } from '../../models/participant/Participant';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class CourseService {
   //   waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
   //   numberParticipants: 2,
   //   numberWaitlist: 1,
-  //   priceList: [new Price('Regular', 150), new Price('Early Bird', 120)],
+  //   priceList: [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
   //   place: 'Online',
   //   trainerQualifications: [new Qualification(2, 'weit klettern')],
   //   trainers: [new Trainer(1, 'John', 'Doe')],
@@ -81,7 +81,7 @@ export class CourseService {
   //   waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
   //   numberParticipants: 3,
   //   numberWaitlist: 1,
-  //   priceList: [new Price('Regular', 500), new Price('Early Bird', 450)],
+  //   priceList: [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
   //   place: 'In-person - City Center',
   //   trainerQualifications: [new Qualification(2, 'Certified Web Developer')],
   //   trainers: [new Trainer(4, 'Jane', 'Smith')],
@@ -114,7 +114,7 @@ export class CourseService {
     [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
     2,
     1,
-    [new Price('Regular', 150), new Price('Early Bird', 120)],
+    [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
     'Online',
     [new Qualification(2, 'weit klettern')],
     [new Trainer(1, 'John', 'Doe')],
@@ -154,7 +154,7 @@ export class CourseService {
     [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
     3,
     1,
-    [new Price('Regular', 500), new Price('Early Bird', 450)],
+    [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
     [new Trainer(4, 'Jane', 'Smith')],

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CourseTemplate } from '../../models/coursetemplate/CourseTemplate';
 import { PostCourseTemplateDTO } from '../../models/coursetemplate/PostCourseTemplateDTO';
-import { Location } from '../../models/location/LocationDTO';
+import { Location } from '../../models/location/Location';
 
 @Injectable({
   providedIn: 'root'

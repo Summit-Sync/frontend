@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
-import { Course } from '../../../models/Course';
+import { Course } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Participant } from '../../../models/Participant';
+import { Participant } from '../../../models/participant/Participant';
 import { EndTimePipe } from '../../../pipes/endTime/end-time.pipe';
-import { Price } from '../../../models/Price';
+import { PostPrice } from '../../../models/price/PostPrice';
 import { DateTimeMapperService } from '../../../services/dateTimeMapper/date-time-mapper.service';
-import { Qualification } from '../../../models/Qualification';
+import { Qualification } from '../../../models/qualification/Qualification';
 import { QualificationsService } from '../../../services/qualifications/qualifications.service';
 import { TrainerService } from '../../../services/trainer/trainer.service';
-import { Trainer } from '../../../models/Trainer';
+import { Trainer } from '../../../models/trainer/Trainer';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 
@@ -173,7 +173,7 @@ export class CourseComponent implements OnInit {
   }
 
   addPrice() {
-    this.courseData.priceList.push(new Price('', 0));
+    this.courseData.priceList.push(new PostPrice('', 0));
   }
 
   deletePrice(index: number) {

@@ -1,6 +1,6 @@
-import { LocationDTO } from "./LocationDTO"
-import { Price } from "./Price"
-import { Qualification } from "./Qualification"
+import { Location } from "./location/Location"
+import { PostPrice } from "./price/PostPrice"
+import { Qualification } from './qualification/Qualification'
 
 export type PostGroupTemplateDto={
     acronym:string
@@ -9,9 +9,9 @@ export type PostGroupTemplateDto={
     numberOfDates:number
     duration:number
     numberOfParticipant:number
-    locationDTO:LocationDTO
+    locationDTO:Location
     meetingPoint:string
-    priceList:Price[]
+    priceList:PostPrice[]
     requiredQualificationList:Qualification[]
     numberOfTrainers:number
 }
