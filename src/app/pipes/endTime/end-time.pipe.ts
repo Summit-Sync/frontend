@@ -13,7 +13,6 @@ export class EndTimePipe implements PipeTransform {
       hours++;
     }
     let totalHours = (currentDate.getHours() + hours) % 24;
-    console.log('EndTimePipe', totalHours, totalMinutes);
     return (
       totalHours.toString().padStart(2, '0') +
       ':' +

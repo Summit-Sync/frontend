@@ -183,6 +183,6 @@ export class CourseService {
   }
 
   updateCourse() {
-    console.log('Course deleted');
+    console.log('Course updated');
   }
 }

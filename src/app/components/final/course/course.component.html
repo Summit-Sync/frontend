@@ -313,27 +313,12 @@
         </ng-container>
       </ng-container>
       <ng-template #editQualification>
-        <div class="qualifications-wrapper">
-          <div id="list1" class="dropdown-check-list">
-            <span class="anchor" (click)="showQualificationsList()"
-              >Qualifikationen</span
-            >
-            <ul
-              class="items"
-              [ngClass]="{ showQualificationList: showQualificationList }"
-            >
-              <li *ngFor="let q of allQualifications; let i = index">
-                <input
-                  type="checkbox"
-                  [checked]="
-                    q | checkItemInList : courseData.trainerQualifications
-                  "
-                  (input)="onQualificationCheckBoxClick($event, i)"
-                />{{ q.skill }}
-              </li>
-            </ul>
-          </div>
-        </div>
+        <app-multi-select-dropdown
+          [allOptions]="allQualifications"
+          [selectedOptions]="courseData.trainerQualifications"
+          [dropdownHeadline]="'Qualifikationen'"
+        >
+        </app-multi-select-dropdown>
       </ng-template>
     </div>
     <div>
@@ -344,20 +329,12 @@
         </ng-container>
       </ng-container>
       <ng-template #editTrainer>
-        <div class="qualifications-wrapper">
-          <div id="list1" class="dropdown-check-list">
-            <span class="anchor" (click)="showTrainersList()">Trainer</span>
-            <ul class="items" [ngClass]="{ showTrainerList: showTrainerList }">
-              <li *ngFor="let t of allTrainers; let i = index">
-                <input
-                  type="checkbox"
-                  [checked]="t | checkItemInList : courseData.trainers"
-                  (input)="onTrainerCheckBoxClick($event, i)"
-                />{{ t.firstName + " " + t.lastName }}
-              </li>
-            </ul>
-          </div>
-        </div>
+        <app-multi-select-dropdown
+          [allOptions]="allTrainers"
+          [selectedOptions]="courseData.trainers"
+          [dropdownHeadline]="'Trainer'"
+        >
+        </app-multi-select-dropdown>
       </ng-template>
     </div>
     <div>

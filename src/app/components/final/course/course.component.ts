@@ -12,11 +12,18 @@ import { QualificationsService } from '../../../services/qualifications/qualific
 import { TrainerService } from '../../../services/trainer/trainer.service';
 import { Trainer } from '../../../models/Trainer';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
+import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [CommonModule, FormsModule, EndTimePipe, CheckItemInListPipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    EndTimePipe,
+    CheckItemInListPipe,
+    MultiSelectDropdownComponent,
+  ],
   templateUrl: './course.component.html',
   styleUrl: './course.component.scss',
 })
@@ -214,32 +221,8 @@ export class CourseComponent implements OnInit {
       : this.deleteQualification(clickedQualification);
   }
 
-  deleteTrainer(clickedTrainers: Trainer) {
-    var tqList = this.courseData.trainers;
-    tqList = tqList.filter((q) => {
-      return q.id !== clickedTrainers.id;
-    });
-    this.courseData.trainers = tqList;
-  }
-
-  addTrainer(clickedTrainer: Trainer) {
-    this.courseData.trainers.push(clickedTrainer);
-  }
-
-  showTrainersList() {
-    this.showTrainerList = !this.showTrainerList;
-    this.showQualificationList = false;
-  }
-
-  onTrainerCheckBoxClick(event: Event, index: number) {
-    const checkbox = event.target as HTMLInputElement;
-    const clickedTrainer = this.allTrainers[index];
-    checkbox.checked
-      ? this.addTrainer(clickedTrainer)
-      : this.deleteTrainer(clickedTrainer);
-  }
-
   save(): void {
+    console.log();
     if (this.courseData.validate()) {
       this.deleteEmptyParticipants(this.courseData.participantList);
       this.deleteEmptyWaitingParticipants(this.courseData.waitList);
