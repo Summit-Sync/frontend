@@ -39,7 +39,8 @@ export class GroupService {
     10,
     30,
     [new Qualification(2, 'klettern'), new Qualification(4, 'gut klettern')],
-    [new Trainer(2, 'Michael', 'Meyer')]
+    [new Trainer(2, 'Michael', 'Meyer')],
+    'hoch, hoch, runter, runter, links, rechts, links, rechts, B, A.'
   );
 
   // group2 = new Group(

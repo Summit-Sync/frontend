@@ -11,11 +11,18 @@ export class DateTimeMapperService {
   }
 
   mapDateToEndTimeString(hours: number, minutes: number, duration: number) {
-    const durationMinutes = (duration + minutes) % 60;
-    const durationHours = Math.floor(duration / 60) + hours;
-    const formattedHours = String(durationHours).padStart(2, '0');
-    const formattedMinutes = String(durationMinutes).padStart(2, '0');
-    return `${formattedHours}:${formattedMinutes}`;
+    let endHours = Math.floor(duration / 60);
+    const endMinutes = duration % 60;
+    const totalMinutes = (minutes + endMinutes) % 60;
+    if (minutes + endMinutes >= 60) {
+      endHours++;
+    }
+    let totalHours = (hours + endHours) % 24;
+    return (
+      totalHours.toString().padStart(2, '0') +
+      ':' +
+      totalMinutes.toString().padStart(2, '0')
+    );
   }
 
   mapHoursToDateHours(hours: number) {

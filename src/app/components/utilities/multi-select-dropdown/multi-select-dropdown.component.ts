@@ -1,24 +1,42 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
-import { listItem } from '../../../models/listItem';
+import { CheckboxList } from '../../../models/CheckBoxList';
 
 @Component({
   selector: 'app-multi-select-dropdown',
   standalone: true,
   imports: [CommonModule, CheckItemInListPipe],
   templateUrl: './multi-select-dropdown.component.html',
-  styleUrl: './multi-select-dropdown.component.css',
+  styleUrl: './multi-select-dropdown.component.scss',
 })
 export class MultiSelectDropdownComponent {
-  @Output() CheckBoxClick: EventEmitter<{ event: InputEvent; id: number }> =
-    new EventEmitter();
-  @Input() allOptions: listItem[];
-  @Input() selectedOptions: listItem[];
+  @Input() allOptions: CheckboxList[];
+  @Input() selectedOptions: CheckboxList[];
+  @Input() dropdownHeadline: string;
   showList: boolean = false;
-  emitCheckBoxClick(event: any, id: number) {
-    // Emit an object containing both the event and the index
-    this.CheckBoxClick.emit({ event, id });
+
+  onCheckBoxClick(event: Event, index: number) {
+    const checkbox = event.target as HTMLInputElement;
+    const clickedObject = this.allOptions[index];
+    checkbox.checked
+      ? this.addObject(clickedObject)
+      : this.deleteObject(clickedObject);
   }
-  dropDownClick() {}
+
+  deleteObject(clickedObject: CheckboxList) {
+    var tqList = this.selectedOptions;
+    tqList = tqList.filter((q) => {
+      return q.id !== clickedObject.id;
+    });
+    this.selectedOptions = tqList;
+  }
+
+  addObject(clickedObject: CheckboxList) {
+    this.selectedOptions.push(clickedObject);
+  }
+
+  dropDownClick() {
+    this.showList = !this.showList;
+  }
 }
