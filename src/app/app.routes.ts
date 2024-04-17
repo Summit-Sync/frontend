@@ -4,6 +4,7 @@ import {GroupListComponent} from "./components/final/group-list/group-list.compo
 import {CourseComponent} from "./components/final/course/course.component";
 import {GroupComponent} from "./components/final/group/group.component";
 import {AppComponent} from "./app.component";
+import { GroupTemplateListComponent } from './components/template/group-template-list/group-template-list.component';
 
 export const routes: Routes = [
   // Kurs Routen
@@ -12,6 +13,8 @@ export const routes: Routes = [
   // Gruppen Routen
   { path: 'gruppe', component: GroupListComponent, canActivate:[]},
   { path: 'gruppe/:id', component: GroupComponent, canActivate:[]},
+  //Gruppentemplates Routen
+  {path: 'gruppenvorlage', component:GroupTemplateListComponent, canActivate:[]},
   // Root Routen
   { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},

@@ -1,3 +1,4 @@
+import { LocationDTO } from './LocationDTO';
 import { Price } from './Price';
 import { Qualification } from './Qualification';
 
