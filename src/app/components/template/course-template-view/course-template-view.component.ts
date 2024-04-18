@@ -28,16 +28,27 @@ export class CourseTemplateViewComponent {
     private activatedRoute: ActivatedRoute
   ){}
 
-  ngOnIt(){
-    this.id=this.activatedRoute.snapshot.paramMap.get('id')!;
-    this.loadCourseTemplate()
+  ngOnInit(){
+    this.updateList()
   }
 
-  loadCourseTemplate(){
-    this.courseTemplateService.getCourseTemplateById(this.id).subscribe(data => {
-      this.courseTemplate=data;
-      console.log(data)
-  });
+  deleteTemplate(id:number){
+    this.courseTemplateService.deleteCourseTemplate(id).subscribe(()=>{
+      this.updateList();
+    });
   }
- 
+
+  updateList(){
+    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>this.courseTemplateList=data)
+  }
+
+  openDetails(template:CourseTemplate){
+
+  }
+
+  openCreateDialog(){
+    
+  }
+
 }
+
