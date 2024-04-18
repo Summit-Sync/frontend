@@ -8,8 +8,6 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class LocationService {
-  url: string = 'http://localhost:8080/api/v1/location';
-
   baseUrl:string="http://localhost:8080/api/v1/location"
 
   constructor(private http: HttpClient) {}
