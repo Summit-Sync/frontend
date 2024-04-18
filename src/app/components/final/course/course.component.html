@@ -343,13 +343,15 @@
           <li>{{ q.name }}</li>
         </ng-container>
       </ng-container>
-      <app-multi-select-dropdown
-        *ngIf="isEdit"
-        [allOptions]="allQualifications"
-        [selectedOptions]="courseData.requiredQualifications"
-        [dropdownHeadline]="'Qualifikationen'"
-      >
-      </app-multi-select-dropdown>
+      <ng-template #editQualification>
+        <app-multi-select-dropdown
+          [allOptions]="allQualifications"
+          [selectedOptions]="courseData.trainerQualifications"
+          [dropdownHeadline]="'Qualifikationen'"
+          [allowMultiple]="true"
+        >
+        </app-multi-select-dropdown>
+      </ng-template>
     </div>
     <div>
       <p>Trainer:</p>
@@ -358,14 +360,15 @@
           <li>{{ t.firstName + " " + t.lastName }}</li>
         </ng-container>
       </ng-container>
-
-      <app-multi-select-dropdown
-        *ngIf="isEdit"
-        [allOptions]="allTrainers"
-        [selectedOptions]="courseData.trainers"
-        [dropdownHeadline]="'Trainer'"
-      >
-      </app-multi-select-dropdown>
+      <ng-template #editTrainer>
+        <app-multi-select-dropdown
+          [allOptions]="allTrainers"
+          [selectedOptions]="courseData.trainers"
+          [dropdownHeadline]="'Trainer'"
+          [allowMultiple]="true"
+        >
+        </app-multi-select-dropdown>
+      </ng-template>
     </div>
     <div>
       <p>Notizen:</p>

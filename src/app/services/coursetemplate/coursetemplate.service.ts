@@ -76,9 +76,9 @@ export class CoursetemplateService {
     return of([this.t1, this.t2]);
   }
 
-  getCourseTemplateById(id: number): Observable<CourseTemplate> {
-    return this.http.get<CourseTemplate>(`${this.baseUrl}/${id}`);
-    //return of(this.t1)
+  getCourseTemplateById(id:string):Observable<CourseTemplate>{
+    // return this.http.get<CourseTemplate>(`${this.url}/${id}`);
+    return of(this.t1)
   }
 
   //Put

@@ -1,0 +1,73 @@
+<p>add-course-template works!</p>
+<div class="outer">
+    <div class="header">
+
+    </div>
+    <div class="body">
+        <div class="title">
+            <label for="title">Titel</label>
+            <input id="title" type="text" placeholder="1" [(ngModel)]="courseTemplate.title">
+        </div>
+        <div class="acronym">
+            <label for="acronym">Kürzel</label>
+            <input id="acronym" type="text" placeholder="" [(ngModel)]="courseTemplate.acronym">
+        </div>
+        <div class="description">
+            <label for="description">Beschreibung</label>
+            <input id="description" type="text" placeholder="" [(ngModel)]="courseTemplate.description">
+        </div>
+        <div class="number-of-dates">
+            <label for="number-of-dates">Anzahl Termine</label>
+            <input id="number-of-dates" type="text" placeholder="" [(ngModel)]="courseTemplate.numberOfDates">
+        </div>
+        <div class="duration">
+            <label id="duration">Dauer in Minuten</label>
+            <input id="duration" type="text" placeholder="" [(ngModel)]="courseTemplate.duration">
+        </div>
+        <div class="number-of-participants">
+            <label for="number-of-participants">Teilnehmeranzahl</label>
+            <input id="number-of-participants" type="text" placeholder="" [(ngModel)]="courseTemplate.numberOfParticipants">
+        </div>
+        <div class="number-waitlist">
+            <label for="number-waitlist">Wartelistenlänge</label>
+            <input id="number-waitlist" type="text" placeholder="" [(ngModel)]="courseTemplate.numberOfWaitlist">
+        </div>
+        <div class="price">
+            <label for="price">Preise</label>
+            <app-multi-select-dropdown
+            [allOptions] = "priceList"
+            [selectedOptions] = "coursePrices"
+            [dropdownHeadline] = "'Preise'"
+            [allowMultiple] = "true"
+            ></app-multi-select-dropdown>
+        </div>
+        <div class="meeting-point">
+            <label for="meeting-point">Treffpunkt</label>
+            <input id="meeting-point" type="text" placeholder="" [(ngModel)]="courseTemplate.meetingPoint">
+        </div>
+        <div class="required-qualifications">
+            <label for="required-qualifications">Qualifikationen</label>
+            <app-multi-select-dropdown
+            [allOptions]="qualificationList"
+            [selectedOptions]="requiredQualifications"
+            [dropdownHeadline]="'Qualifikationen'"
+            [allowMultiple]="true"></app-multi-select-dropdown>
+        </div>
+        <div class="number-trainers">
+            <label for="number-trainers">Anzahl Trainer</label>
+            <input id="number-trainers" type="text" placeholder="" [(ngModel)]="courseTemplate.numberTrainers">
+        </div>
+        <div class="location">
+            <label for="location">Ort</label>
+            <app-multi-select-dropdown
+            [allowMultiple]="false"
+            [allOptions]="locationList"
+            [selectedOptions]="courseLocation"
+            [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
+        </div>
+    </div>
+    <div class="footer">
+        <button class="save-button dialog-button" (click)="save()">Speichern</button>
+        <button class="dialog button" (click)="cancel()">Abbrechen</button>
+    </div>
+</div>

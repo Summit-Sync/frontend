@@ -1,6 +1,6 @@
+import { Location } from '../location/Location';
 import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
-import { Location } from '../location/Location';
 
 export class CourseTemplate {
   constructor(
