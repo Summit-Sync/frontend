@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { Course } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
 import { CourseComponent } from '../course/course.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ShortCourseListComponent } from '../../template/short-course-list/short-course-list.component';
 
 @Component({
   selector: 'app-course-list',
@@ -19,7 +21,7 @@ export class CourseListComponent implements OnInit {
   showingDelete: boolean = false;
   // dialogRef: MatDialogRef<CourseComponent> | undefined;
 
-  constructor(public courseSerice: CourseService) {}
+  constructor(public courseSerice: CourseService, private dialog: MatDialog) {}
 
   // MatDialog on hold for now
   // constructor(public courseSerice: CourseService, public dialog: MatDialog) {}
@@ -40,6 +42,24 @@ export class CourseListComponent implements OnInit {
   delete(course: Course) {
     this.showingDelete = true;
     this.showCourse(course);
+  }
+
+  createCourse() {
+    const dialogRef = this.dialog.open(ShortCourseListComponent, {
+      disableClose: false,
+      autoFocus: true,
+      height: '80dvh',
+      width: '40dvw',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method == 'accept') {
+        console.log('Dialog output:', obj.data);
+        // Validate Input
+        //
+      }
+    });
   }
 
   showCourse(course: Course) {
