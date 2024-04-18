@@ -1,15 +1,16 @@
 import {Status} from "../status/Status"
 
 export class Participant{
-  constructor(public id: number, public name: string, public firstName: string, public status: Status, public email: string) {
+  constructor(public id: number, public lastName: string, public firstName: string, public status: Status, public email: string, public phoneNumber: string) {
   }
   validate(): boolean{
     if (
       !this.id ||
-      !this.name ||
+      !this.lastName ||
       !this.firstName ||
       this.status.validate() ||
-      !this.email
+      !this.email ||
+      !this.phoneNumber
     ){
       return false;
     }

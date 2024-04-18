@@ -5,6 +5,7 @@ import { PostPrice } from '../../models/price/PostPrice';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
 import { Participant } from '../../models/participant/Participant';
+import {Status} from "../../models/status/Status";
 
 @Injectable({
   providedIn: 'root',
@@ -103,27 +104,26 @@ export class CourseService {
     [
       new Participant(
         0,
-        'Lena',
         'Meyer',
-        'Sektion Bremen',
-        undefined,
-        'email@Meyer.com'
+        'Lena',
+        new Status(0, 'pew'),
+        'email@Meyer.com', '0421v12345678'
       ),
-      new Participant(1, 'Alex', 'Kohl', 'Gast', undefined, 'email@Kohl.com'),
+      new Participant(1,  'Kohl', 'Alex', new Status(0, 'Gast'),  'email@Kohl.com', '0421 12345678'),
     ],
-    [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
+    [new Participant(0,  'Kaals', 'Karl', new Status(0, 'Gast'), 'Kaals@mail.net', '0215641546')],
     2,
     1,
     [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
     'Online',
     [new Qualification(2, 'weit klettern')],
-    [new Trainer(1, 'John', 'Doe')],
+    [new Trainer(1, 'trainer', 'John', 'Doe', 'joedoe@mail.net', '042112345678', new Array<Qualification>)],
     'Notes about the course.',
     true,
     false,
     false
   );
-
+/*
   course2: Course = new Course(
     1,
     'Web Development Bootcamp',
@@ -163,8 +163,8 @@ export class CourseService {
     false,
     false
   );
-
-  courses: Observable<Course[]> = of([this.course1, this.course2]);
+*/
+  courses: Observable<Course[]> = of([this.course1, /*this.course2 */]);
   public currentCourse: BehaviorSubject<Course | null> =
     new BehaviorSubject<Course | null>(null);
 

@@ -13,6 +13,7 @@ import { TrainerService } from '../../../services/trainer/trainer.service';
 import { Trainer } from '../../../models/trainer/Trainer';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
+import {Status} from "../../../models/status/Status";
 
 @Component({
   selector: 'app-course',
@@ -247,7 +248,7 @@ export class CourseComponent implements OnInit {
       return;
     }
     let wp = this.courseData.waitList;
-    wp.push(new Participant(wp.length, '', '', '', '', ''));
+    wp.push(new Participant(wp.length, '', '', new Status(0, 'pew'), '', ''));
   }
 
   deleteWaitingParticipant(index: number) {
@@ -273,20 +274,20 @@ export class CourseComponent implements OnInit {
     maxParticipants: number
   ): void {
     for (let i = participantsList.length; i < maxParticipants; i++) {
-      participantsList.push(new Participant(i, '', '', '', '', ''));
+      participantsList.push(new Participant(i, '', '', new Status(0, 'pew'), '', ''));
     }
   }
 
   deleteEmptyParticipants(participantsList: Participant[]) {
     this.courseData.participantList = participantsList.filter((p) => {
-      return p.firstname != '';
+      return p.firstName != '';
     });
     console.log('deleteEmptyParticipants: ', this.courseData.participantList);
   }
 
   deleteEmptyWaitingParticipants(waitingParticipantsList: Participant[]) {
     this.courseData.waitList = waitingParticipantsList.filter((wp) => {
-      return wp.firstname != '';
+      return wp.firstName != '';
     });
   }
 
@@ -298,7 +299,7 @@ export class CourseComponent implements OnInit {
       return;
     }
     let p = this.courseData.participantList;
-    p.push(new Participant(p.length, '', '', '', '', ''));
+    p.push(new Participant(p.length, '', '', new Status(0, 'pew'), '', ''));
   }
 
   deleteParticipant(index: number): void {
