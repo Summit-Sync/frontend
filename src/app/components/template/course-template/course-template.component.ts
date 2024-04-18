@@ -15,18 +15,6 @@ import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 })
 export class CourseTemplateComponent {
 
-  courseTemplateForm: FormGroup = new FormGroup({
-    courseTitle: new FormControl(''),
-    courseAbbreviation: new FormControl(''),
-    description: new FormControl(''),
-    datesCount: new FormControl(''),
-    duration: new FormControl(''),
-    participantsCount: new FormControl(''),
-    waitingListLength: new FormControl(''),
-    priceList: new FormControl(''),
-    place: new FormControl(''),
-    trainerQualifications: new FormControl('')
-  })
   courseTemplateList:CourseTemplate[]=[];
 
   constructor(

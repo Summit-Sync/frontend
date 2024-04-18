@@ -18,7 +18,8 @@ export const routes: Routes = [
   //Gruppentemplates Routen
   // {path: 'gruppenvorlage', component:GroupTemplateListComponent, canActivate:[]},
   //Kursvorlagen
-  {path:'kursvorlage',component:CourseTemplateViewComponent,canActivate:[]},
+  {path:'kursvorlage', component:CourseTemplateListComponent, canActivate:[]},
+  {path:'kursvorlage/:id', component:CourseTemplateViewComponent, canActivate:[]},
   // Root Routen
   { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},
