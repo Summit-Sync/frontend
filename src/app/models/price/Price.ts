@@ -16,12 +16,3 @@ export class Price {
     return true;
   }
 }
-
-/*
-export type PriceDTO={
-    id:number
-    name:string
-    price:number
-}
-
- */
