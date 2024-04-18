@@ -4,9 +4,11 @@ import { Observable, of } from 'rxjs';
 import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
 import { Location } from '../../models/location/Location';
 import {PostCourseTemplate} from "../../models/courseTemplate/PostCourseTemplate";
+import { Price } from '../../models/price/Price';
+import { Qualification } from '../../models/qualification/Qualification';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CoursetemplateService {
 
