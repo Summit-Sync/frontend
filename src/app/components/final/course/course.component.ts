@@ -30,6 +30,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 export class CourseComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
+  @Input() isCreate: boolean = false;
   @Input() isDelete: boolean = false;
   allQualifications: Qualification[];
   allTrainers: Trainer[];
@@ -58,8 +59,6 @@ export class CourseComponent implements OnInit {
   mappedDateTime: string[][] = [];
   showQualificationList: boolean = false;
   showTrainerList: boolean = false;
-  // MatDialog on hold for now
-  // public dialogRef: MatDialogRef<CourseComponent>
 
   constructor(
     public courseService: CourseService,
@@ -69,28 +68,31 @@ export class CourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.courseService.currentCourse.subscribe((c) => {
-      if (!c) {
-        console.error('no course to show');
+    if (!this.isCreate) {
+      this.courseService.currentCourse.subscribe((c) => {
+        if (!c) {
+          console.error('no course to show');
+          return;
+        }
+        this.courseData.createCopyFrom(c);
+        console.log('onInit', this.courseData);
+        // this.fillDatesList();
+        this.fillParticipantsList(
+          this.courseData.participantList,
+          this.courseData.numberParticipants
+        );
         return;
-      }
-      this.courseData.createCopyFrom(c);
-      console.log('onInit', this.courseData);
-      // this.fillDatesList();
-      this.fillParticipantsList(
-        this.courseData.participantList,
-        this.courseData.numberParticipants
-      );
-      return;
-    });
-    this.mapDateTime();
+      });
+      this.mapDateTime();
 
-    this.qualifcationsService.getAllQualifications().subscribe((q) => {
-      this.allQualifications = q;
-    });
-    this.trainerService.getAllTrainers().subscribe((t) => {
-      this.allTrainers = t;
-    });
+      this.qualifcationsService.getAllQualifications().subscribe((q) => {
+        this.allQualifications = q;
+      });
+      this.trainerService.getAllTrainers().subscribe((t) => {
+        this.allTrainers = t;
+      });
+    } else {
+    }
   }
 
   mapDateTime() {
@@ -158,15 +160,6 @@ export class CourseComponent implements OnInit {
       duration
     );
   }
-
-  /* onEndTimeChange(event: Event, index: number) {
-    const inputElement = event.target as HTMLInputElement;
-    const timeMS = inputElement.valueAsNumber;
-    const hours = this.dateTimeMapper.convertMilisecondsToFullHours(timeMS);
-    const minutes = this.dateTimeMapper.calculateMinutesRemainder(timeMS);
-    this.courseData.dates[index].setHours(hours);
-    this.courseData.dates[index].setMinutes(minutes);
-  } */
 
   getEndTime(currentTime: Date): string {
     return currentTime.getHours() + 8 + ':' + currentTime.getMinutes();
@@ -304,15 +297,4 @@ export class CourseComponent implements OnInit {
   deleteParticipant(index: number): void {
     this.courseData.participantList.splice(index, 1);
   }
-
-  // MatDialog on hold for now
-  // save(): void {
-  //   this.dialogRef.close();
-  //   console.log('saved');
-  // }
-
-  // cancel(): void {
-  //   this.dialogRef.close();
-  //   console.log('cancel');
-  // }
 }
