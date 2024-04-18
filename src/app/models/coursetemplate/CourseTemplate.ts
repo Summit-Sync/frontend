@@ -1,6 +1,6 @@
-import { Price } from '../Price';
-import { Qualification } from '../Qualification';
-import { Location } from '../location/LocationDTO';
+import { PostPrice } from '../price/PostPrice';
+import { Qualification } from '../qualification/Qualification';
+import { Location } from '../location/Location';
 
 export class CourseTemplate {
   constructor(
@@ -12,7 +12,7 @@ export class CourseTemplate {
     public duration: number,
     public numberOfParticipants: number,
     public numberWaitlist: number,
-    public price: Price[],
+    public price: PostPrice[],
     public meetingPoint: string,
     public requiredQualifications: Qualification[],
     public numberTrainers:number,
@@ -51,7 +51,7 @@ export class CourseTemplate {
     // Validate nested objects if necessary
     for (const price of this.price) {
       if (!price.validate()) {
-        return false; // Price validation failed
+        return false; // PostPrice validation failed
       }
     }
 

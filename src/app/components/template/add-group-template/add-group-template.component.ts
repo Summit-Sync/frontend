@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, FormsModule} from "@angular/forms";
-import { Price } from '../../../models/Price';
-import { Qualification } from '../../../models/Qualification';
+import { PostPrice } from '../../../models/price/PostPrice';
+import { Qualification } from '../../../models/qualification/Qualification';
 import {
   MatDialogActions,
   MatDialogContent,
@@ -25,8 +25,8 @@ import { PriceService } from '../../../services/price/price.service';
 // })
 // export class AddGroupTemplateComponent {
 
-//   prices:Price[]=[]
-//   priceList:Price[]=[]
+//   prices:PostPrice[]=[]
+//   priceList:PostPrice[]=[]
 //   qualificationList:Qualification[]=[]
 //   requiredQualifications:Qualification[]=[]
 //   location:LocationDTO
@@ -83,7 +83,7 @@ import { PriceService } from '../../../services/price/price.service';
 //         data:groupTemplate,
 //         method: 'accept'}));
 //     }
-  
+
 //     close() {
 //       this.dialogRef.close(JSON.stringify({method: 'cancel'}));
 //     }

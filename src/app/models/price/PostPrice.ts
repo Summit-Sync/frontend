@@ -1,4 +1,4 @@
-export class Price {
+export class PostPrice {
   constructor(public name: string, public price: number) {}
 
   validate(): boolean {

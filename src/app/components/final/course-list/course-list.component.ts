@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { Observable, of } from 'rxjs';
-import { Course } from '../../../models/Course';
+import { Course } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
 import { CourseComponent } from '../course/course.component';
 

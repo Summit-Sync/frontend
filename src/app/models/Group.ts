@@ -1,5 +1,5 @@
-import { Qualification } from './Qualification';
-import { Trainer } from './Trainer';
+import { Qualification } from './qualification/Qualification';
+import { Trainer } from './trainer/Trainer';
 
 export class Group {
   constructor(

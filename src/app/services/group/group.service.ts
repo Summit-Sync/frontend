@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Group } from '../../models/Group';
-import { Price } from '../../models/Price';
-import { Qualification } from '../../models/Qualification';
-import { Trainer } from '../../models/Trainer';
+import { PostPrice } from '../../models/price/PostPrice';
+import { Qualification } from '../../models/qualification/Qualification';
+import { Trainer } from '../../models/trainer/Trainer';
 import { HttpClient } from '@angular/common/http';
 import { PostGroupTemplateDto } from '../../models/PostGroupTemplate';
 import { CourseTemplate } from '../../models/coursetemplate/CourseTemplate';
@@ -38,7 +38,7 @@ export class GroupService {
     10,
     30,
     [new Qualification(2, 'klettern'), new Qualification(4, 'gut klettern')],
-    [new Trainer(2, 'Michael', 'Meyer')],
+    [new Trainer(2, 'pew', 'Michael', 'Meyer', 'meyer@mail.net', '0421 12345678', new Array<Qualification>)],
     'hoch, hoch, runter, runter, links, rechts, links, rechts, B, A.'
   );
 
@@ -95,5 +95,5 @@ export class GroupService {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
 
-  
+
 }

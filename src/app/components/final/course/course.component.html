@@ -103,7 +103,7 @@
             <th>Vorname</th>
             <th>Nachname</th>
             <th>Status</th>
-            <th>Email</th>
+            <th>email</th>
             <th>Telefonnummer</th>
           </tr>
         </thead>
@@ -114,19 +114,19 @@
             >
               <tr>
                 <td>
-                  {{ p.firstname != "" ? p.firstname : "leer" }}
+                  {{ p.firstName != "" ? p.firstName : "leer" }}
                 </td>
                 <td>
-                  {{ p.lastname != "" ? p.lastname : "leer" }}
+                  {{ p.lastName != "" ? p.lastName : "leer" }}
                 </td>
                 <td>
-                  {{ p.status != "" ? p.status : "leer" }}
+                  {{ p.status ? p.status : "leer" }}
                 </td>
                 <td>
-                  {{ p.eMail != "" ? p.eMail : "leer" }}
+                  {{ p.email != "" ? p.email : "leer" }}
                 </td>
                 <td>
-                  {{ p.phonenumber != "" ? p.phonenumber : "leer" }}
+                  {{ p.phoneNumber != "" ? p.phoneNumber : "leer" }}
                 </td>
               </tr>
             </ng-container>
@@ -139,15 +139,15 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.firstname"
-                    [placeholder]="p.firstname ? p.firstname : 'leer'"
+                    [(ngModel)]="p.firstName"
+                    [placeholder]="p.firstName ? p.firstName : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.lastname"
-                    [placeholder]="p.lastname ? p.lastname : 'leer'"
+                    [(ngModel)]="p.lastName"
+                    [placeholder]="p.lastName ? p.lastName : 'leer'"
                   />
                 </td>
                 <td>
@@ -160,15 +160,15 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.eMail"
-                    [placeholder]="p.eMail ? p.eMail : 'leer'"
+                    [(ngModel)]="p.email"
+                    [placeholder]="p.email ? p.email : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.phonenumber"
-                    [placeholder]="p.phonenumber ? p.phonenumber : 'leer'"
+                    [(ngModel)]="p.phoneNumber"
+                    [placeholder]="p.phoneNumber ? p.phoneNumber : 'leer'"
                   />
                 </td>
                 <td *ngIf="isEdit">
@@ -203,7 +203,7 @@
             <th>Vorname</th>
             <th>Nachname</th>
             <th>Status</th>
-            <th>Email</th>
+            <th>email</th>
             <th>Telefonnummer</th>
           </tr>
         </thead>
@@ -212,19 +212,21 @@
             <ng-container *ngFor="let wp of courseData.waitList; let i = index">
               <tr>
                 <td>
-                  {{ wp.firstname != "" ? wp.firstname : "leer" }}
+                  {{ wp.firstName != "" ? wp.firstName : "leer" }}
                 </td>
                 <td>
-                  {{ wp.lastname != "" ? wp.lastname : "leer" }}
+                  {{ wp.lastName != "" ? wp.lastName : "leer" }}
+                </td>
+
+                <td>
+                  {{ wp.status ? wp.status : "leer" }}
+                </td>
+
+                <td>
+                  {{ wp.email != "" ? wp.email : "leer" }}
                 </td>
                 <td>
-                  {{ wp.status != "" ? wp.status : "leer" }}
-                </td>
-                <td>
-                  {{ wp.eMail != "" ? wp.eMail : "leer" }}
-                </td>
-                <td>
-                  {{ wp.phonenumber != "" ? wp.phonenumber : "leer" }}
+                  {{ wp.phoneNumber != "" ? wp.phoneNumber : "leer" }}
                 </td>
               </tr>
             </ng-container>
@@ -235,15 +237,15 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.firstname"
-                    [placeholder]="p.firstname ? p.firstname : 'leer'"
+                    [(ngModel)]="p.firstName"
+                    [placeholder]="p.firstName ? p.firstName : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.lastname"
-                    [placeholder]="p.lastname ? p.lastname : 'leer'"
+                    [(ngModel)]="p.lastName"
+                    [placeholder]="p.lastName ? p.lastName : 'leer'"
                   />
                 </td>
                 <td>
@@ -256,15 +258,15 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.eMail"
-                    [placeholder]="p.eMail ? p.eMail : 'leer'"
+                    [(ngModel)]="p.email"
+                    [placeholder]="p.email ? p.email : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.phonenumber"
-                    [placeholder]="p.phonenumber ? p.phonenumber : 'leer'"
+                    [(ngModel)]="p.phoneNumber"
+                    [placeholder]="p.phoneNumber ? p.phoneNumber : 'leer'"
                   />
                 </td>
                 <td *ngIf="isEdit">
@@ -311,7 +313,7 @@
       <p>Trainer Qualifikation:</p>
       <ng-container *ngIf="!isEdit; else editQualification">
         <ng-container *ngFor="let q of courseData.trainerQualifications">
-          <li>{{ q.skill }}</li>
+          <li>{{ q.name }}</li>
         </ng-container>
       </ng-container>
       <ng-template #editQualification>

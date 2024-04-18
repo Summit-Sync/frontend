@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../../models/Course';
+import { Course } from '../../models/course/Course';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Price } from '../../models/Price';
-import { Qualification } from '../../models/Qualification';
-import { Trainer } from '../../models/Trainer';
-import { Participant } from '../../models/Participant';
+import { PostPrice } from '../../models/price/PostPrice';
+import { Qualification } from '../../models/qualification/Qualification';
+import { Trainer } from '../../models/trainer/Trainer';
+import { Participant } from '../../models/participant/Participant';
+import {Status} from "../../models/status/Status";
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class CourseService {
   //   waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
   //   numberParticipants: 2,
   //   numberWaitlist: 1,
-  //   priceList: [new Price('Regular', 150), new Price('Early Bird', 120)],
+  //   priceList: [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
   //   place: 'Online',
   //   trainerQualifications: [new Qualification(2, 'weit klettern')],
   //   trainers: [new Trainer(1, 'John', 'Doe')],
@@ -81,7 +82,7 @@ export class CourseService {
   //   waitList: [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
   //   numberParticipants: 3,
   //   numberWaitlist: 1,
-  //   priceList: [new Price('Regular', 500), new Price('Early Bird', 450)],
+  //   priceList: [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
   //   place: 'In-person - City Center',
   //   trainerQualifications: [new Qualification(2, 'Certified Web Developer')],
   //   trainers: [new Trainer(4, 'Jane', 'Smith')],
@@ -103,27 +104,26 @@ export class CourseService {
     [
       new Participant(
         0,
-        'Lena',
         'Meyer',
-        'Sektion Bremen',
-        undefined,
-        'email@Meyer.com'
+        'Lena',
+        new Status(0, 'pew'),
+        'email@Meyer.com', '0421v12345678'
       ),
-      new Participant(1, 'Alex', 'Kohl', 'Gast', undefined, 'email@Kohl.com'),
+      new Participant(1,  'Kohl', 'Alex', new Status(0, 'Gast'),  'email@Kohl.com', '0421 12345678'),
     ],
-    [new Participant(0, 'Karl', 'Kaals', 'Gast', '0215641546')],
+    [new Participant(0,  'Kaals', 'Karl', new Status(0, 'Gast'), 'Kaals@mail.net', '0215641546')],
     2,
     1,
-    [new Price('Regular', 150), new Price('Early Bird', 120)],
+    [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
     'Online',
     [new Qualification(2, 'weit klettern')],
-    [new Trainer(1, 'John', 'Doe')],
+    [new Trainer(1, 'trainer', 'John', 'Doe', 'joedoe@mail.net', '042112345678', new Array<Qualification>)],
     'Notes about the course.',
     true,
     false,
     false
   );
-
+/*
   course2: Course = new Course(
     1,
     'Web Development Bootcamp',
@@ -154,7 +154,7 @@ export class CourseService {
     [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
     3,
     1,
-    [new Price('Regular', 500), new Price('Early Bird', 450)],
+    [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
     [new Trainer(4, 'Jane', 'Smith')],
@@ -163,8 +163,8 @@ export class CourseService {
     false,
     false
   );
-
-  courses: Observable<Course[]> = of([this.course1, this.course2]);
+*/
+  courses: Observable<Course[]> = of([this.course1, /*this.course2 */]);
   public currentCourse: BehaviorSubject<Course | null> =
     new BehaviorSubject<Course | null>(null);
 

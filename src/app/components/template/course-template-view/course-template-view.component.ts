@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
 import { NgFor } from '@angular/common';
-import { Course } from '../../../models/Course';
+import { Course } from '../../../models/course/Course';
 import { CourseTemplateComponent } from '../course-template/course-template.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { CourseTemplateComponent } from '../course-template/course-template.comp
   styleUrl: './course-template-view.component.css'
 })
 export class CourseTemplateViewComponent {
- 
+
   courseTemplateList:CourseTemplate[]=[];
 
   constructor(
@@ -41,7 +41,7 @@ export class CourseTemplateViewComponent {
   }
 
   openCreateDialog(){
-    
+
   }
 
 }
