@@ -14,14 +14,20 @@ export class MultiSelectDropdownComponent {
   @Input() allOptions: CheckboxList[];
   @Input() selectedOptions: CheckboxList[];
   @Input() dropdownHeadline: string;
+  @Input() allowMultiple: boolean;
   showList: boolean = false;
 
   onCheckBoxClick(event: Event, index: number) {
     const checkbox = event.target as HTMLInputElement;
     const clickedObject = this.allOptions[index];
-    checkbox.checked
-      ? this.addObject(clickedObject)
-      : this.deleteObject(clickedObject);
+    if(this.allowMultiple){
+      checkbox.checked
+        ? this.addObject(clickedObject)
+        : this.deleteObject(clickedObject);
+    }else{
+      this.selectedOptions = [];
+      this.addObject(clickedObject);
+    }
   }
 
   deleteObject(clickedObject: CheckboxList) {
