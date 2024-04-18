@@ -1,5 +1,5 @@
-import { PostPrice } from './price/PostPrice';
-import { Qualification } from './qualification/Qualification';
+import { PostPrice } from '../price/PostPrice';
+import { Qualification } from '../qualification/Qualification';
 
 export class GroupTemplate {
   constructor(

@@ -13,6 +13,7 @@ export class PriceService {
 
   constructor(private http:HttpClient) { }
 
+  //Get
   getAllPrices(): Observable<Price[]>{
     return this.http.get<Price[]>(this.baseUrl);
   }

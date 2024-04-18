@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
-import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 
 @Component({
   selector: 'app-course-template',

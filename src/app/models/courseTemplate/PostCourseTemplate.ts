@@ -13,7 +13,7 @@ export class PostCourseTemplate{
         public requiredQualifications:number[],
         public numberTrainers:number,
     ){}
-
+//TODO: Die Validation ist noch nicht Vollständig...
     public validate():boolean{
         if(
             !(this.acronym||this.title||this.description||this.meetingPoint)

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Group } from '../../models/Group';
+import { Group } from '../../models/group/Group';
 import { PostPrice } from '../../models/price/PostPrice';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
 import { HttpClient } from '@angular/common/http';
-import { PostGroupTemplateDto } from '../../models/PostGroupTemplate';
-import { CourseTemplate } from '../../models/coursetemplate/CourseTemplate';
+import { PostGroupTemplate } from '../../models/groupTemplate/PostGroupTemplate';
+import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
 
 @Injectable({
   providedIn: 'root',

@@ -43,6 +43,12 @@ export class TrainerService {
     return this.http.get<Trainer>(apiUrl);
   }
 
+  //Put
+  putTrainer(id: number, Trainer: Trainer): Observable<Trainer>{
+    const apiUrl: string = `${this.baseUrl}/${id}`;
+    return this.http.put<Trainer>(apiUrl, Trainer);
+  }
+
   //Post
   postTrainer(trainerToPost: PostTrainer): Observable<Trainer>{
     const apiUrl: string = `${this.baseUrl}`;
@@ -52,12 +58,6 @@ export class TrainerService {
   postQualificationOfTrainerById(trainerId: number, qualificationId: number): Observable<Trainer>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/qualification/${qualificationId}`;
     return this.http.post<Trainer>(apiUrl, qualificationId);
-  }
-
-  //Put
-  putTrainer(id: number, Trainer: Trainer): Observable<Trainer>{
-    const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Trainer>(apiUrl, Trainer);
   }
 
   //Delete
