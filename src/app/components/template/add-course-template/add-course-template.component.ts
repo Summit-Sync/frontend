@@ -96,7 +96,7 @@ export class AddCourseTemplateComponent {
           for(let qualification of data){
             checkboxList.push({
               id: qualification.id,
-              displayFullName: qualification.name
+              displayFullName: qualification.skill
             })
           }
           return checkboxList;
