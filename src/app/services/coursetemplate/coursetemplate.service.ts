@@ -11,14 +11,64 @@ import { Qualification } from '../../models/qualification/Qualification';
   providedIn: 'root',
 })
 export class CoursetemplateService {
-
-  baseUrl:string='http://localhost:8080/api/v1/template/course';
-  l1=new Location(1,'1','1','1','1','1','1','1');
-  t1=new CourseTemplate(1,'1','1','1',1,1,1,1,[],'1',[],1,this.l1);
-  t2=new CourseTemplate(2,'2','2','2',2,2,2,2,[],'2',[],2,this.l1);
-  constructor(
-    private http:HttpClient
-  ) { }
+  baseUrl: string = 'http://localhost:8080/api/v1/template/course';
+  l1 = new Location(
+    1,
+    'west 1',
+    'Morgenstraße 2',
+    '27816',
+    'Deutschland',
+    'filler@email.com',
+    '0148131564156156',
+    'https://www.test.com/firstTest'
+  );
+  l2 = new Location(
+    2,
+    'east 2',
+    'Abendstraße',
+    '27816',
+    'Deutschland',
+    'test@email.com',
+    '0156487947787853',
+    'https://www.test.com/secondTest'
+  );
+  t1 = new CourseTemplate(
+    1,
+    'quick climb',
+    'qc34',
+    'learn to climb quick but careful',
+    2,
+    120,
+    4,
+    2,
+    [new Price(0, 'Regular', 100), new Price(1, 'Special', 80)],
+    'vor der großen Halle',
+    [
+      new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
+      new Qualification(3, 'Erweiterte Sicherheitsmaßnahmen'),
+    ],
+    1,
+    this.l1
+  );
+  t2 = new CourseTemplate(
+    2,
+    'high climb',
+    'hc21',
+    'learn to climb higher, than the regular classes',
+    1,
+    200,
+    5,
+    2,
+    [new Price(2, 'Erweiterter Kurs', 130)],
+    'vor der großen Halle',
+    [
+      new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
+      new Qualification(3, 'Kletterschein 2'),
+    ],
+    2,
+    this.l2
+  );
+  constructor(private http: HttpClient) {}
 
   //Get
   getAllCourseTemplates():Observable<CourseTemplate[]>{
