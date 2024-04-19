@@ -39,7 +39,7 @@ export class CoursetemplateService {
     return this.http.post<CourseTemplate>(this.baseUrl,template);
   }
 
-  postCourseTemplateByIdWithQualificationId(courseId: number, qualiId: number, postCourse: PostCourseTemplate): Observable<CourseTemplate>{
+  postQualificationToCourseTemplate(courseId: number, qualiId: number, postCourse: PostCourseTemplate): Observable<CourseTemplate>{
     const apiUrl: string = `${this.baseUrl}/${courseId}/qualification/${qualiId}`;
     return this.http.post<CourseTemplate>(apiUrl, postCourse);
   }
@@ -49,8 +49,8 @@ export class CoursetemplateService {
     return this.http.delete<void>(this.baseUrl);
   }
 
-  deleteCourseTemplateByIdWithQualificationId(courseId: number, qualiId: number): void{
+  deleteQualificationFromCourseTemplate(courseId: number, qualiId: number): Observable<CourseTemplate>{
     const apiUrl: string = `${this.baseUrl}/${courseId}/qualification/${qualiId}`;
-    this.http.delete(apiUrl);
+    return  this.http.delete<CourseTemplate>(apiUrl);
   }
 }
