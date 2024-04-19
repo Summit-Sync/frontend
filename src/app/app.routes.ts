@@ -4,7 +4,7 @@ import {GroupListComponent} from "./components/final/group-list/group-list.compo
 import {CourseComponent} from "./components/final/course/course.component";
 import {GroupComponent} from "./components/final/group/group.component";
 import {AppComponent} from "./app.component";
-import { CourseTemplate } from './models/coursetemplate/CourseTemplate';
+import { CourseTemplate } from './models/courseTemplate/CourseTemplate';
 import { CourseTemplateComponent } from './components/template/course-template/course-template.component';
 import { CourseTemplateViewComponent } from './components/template/course-template-view/course-template-view.component';
 

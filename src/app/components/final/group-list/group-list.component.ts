@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Group } from '../../../models/Group';
+import { Group } from '../../../models/group/Group';
 import { Observable, of } from 'rxjs';
 import { GroupService } from '../../../services/group/group.service';
 import { CommonModule } from '@angular/common';

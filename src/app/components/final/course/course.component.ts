@@ -70,6 +70,7 @@ export class CourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     this.courseService.currentCourse.subscribe((c) => {
       if (!c) {
         console.error('no course to show');

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
 import { NgFor } from '@angular/common';
 import { Course } from '../../../models/course/Course';
