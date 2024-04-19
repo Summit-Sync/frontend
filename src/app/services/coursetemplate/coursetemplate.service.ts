@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
-import { PostCourseTemplateDTO } from '../../models/courseTemplate/PostCourseTemplateDTO';
 import { Location } from '../../models/location/Location';
 import {PostCourseTemplate} from "../../models/courseTemplate/PostCourseTemplate";
 
@@ -31,12 +30,12 @@ export class CoursetemplateService {
   }
 
   //Put
-  putCouseTemplate(template:PostCourseTemplateDTO, id:number):Observable<CourseTemplate>{
+  putCouseTemplate(template:PostCourseTemplate, id:number):Observable<CourseTemplate>{
     return this.http.put<CourseTemplate>(`${this.baseUrl}/${id}`,template);
   }
 
   //Post
-  postCourseTemplate(template:PostCourseTemplateDTO):Observable<CourseTemplate>{
+  postCourseTemplate(template:PostCourseTemplate):Observable<CourseTemplate>{
     return this.http.post<CourseTemplate>(this.baseUrl,template);
   }
 
