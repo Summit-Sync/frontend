@@ -7,6 +7,8 @@ import { Trainer } from '../../models/trainer/Trainer';
 import { HttpClient } from '@angular/common/http';
 import { PostGroupTemplate } from '../../models/groupTemplate/PostGroupTemplate';
 import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
+import {PostGroup} from "../../models/group/PostGroup";
+import {UpdateGroup} from "../../models/group/UpdateGroup";
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +31,9 @@ export class GroupService {
   }
 
   //Put
-  putGroup(id: number, postGroup: Group): Observable<Group>{
+  putGroup(id: number, updateGroup: UpdateGroup): Observable<Group>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Group>(apiUrl, postGroup);
+    return this.http.put<Group>(apiUrl, updateGroup);
   }
 
   putGroupTrainers(courseId: number, trainerIds: number[]): Observable<Group>{
@@ -50,7 +52,7 @@ export class GroupService {
   }
 
   //Post
-  postGroup(postGroup: Group): Observable<Group>{
+  postGroup(postGroup: PostGroup): Observable<Group>{
     return this.http.post<Group>(this.baseUrl, postGroup);
   }
 
@@ -65,32 +67,32 @@ export class GroupService {
     return this.http.delete<Group>(apiUrl);
   }
 
-  group1 = new Group(
-    0,
-    'anfänger Gruppe Michael',
-    'agm2',
-    'neue von Michael erstellte anfänger Gruppe',
-    4,
-    [
-      new Date('2024-03-01'),
-      new Date('2024-03-08'),
-      new Date('2024-03-15'),
-      new Date('2024-03-20'),
-    ],
-    4,
-    6,
-    'Große Halle',
-    'Sarah Biene',
-    'SarahBiene@Email.com',
-    '09823094920',
-    2,
-    20,
-    10,
-    30,
-    [new Qualification(2, 'klettern'), new Qualification(4, 'gut klettern')],
-    [new Trainer(2, 'pew', 'Michael', 'Meyer', 'meyer@mail.net', '0421 12345678', new Array<Qualification>)],
-    'hoch, hoch, runter, runter, links, rechts, links, rechts, B, A.'
-  );
+  // group1 = new Group(
+  //   0,
+  //   'anfänger Gruppe Michael',
+  //   'agm2',
+  //   'neue von Michael erstellte anfänger Gruppe',
+  //   4,
+  //   [
+  //     new Date('2024-03-01'),
+  //     new Date('2024-03-08'),
+  //     new Date('2024-03-15'),
+  //     new Date('2024-03-20'),
+  //   ],
+  //   4,
+  //   6,
+  //   'Große Halle',
+  //   'Sarah Biene',
+  //   'SarahBiene@Email.com',
+  //   '09823094920',
+  //   2,
+  //   20,
+  //   10,
+  //   30,
+  //   [new Qualification(2, 'klettern'), new Qualification(4, 'gut klettern')],
+  //   [new Trainer(2, 'pew', 'Michael', 'Meyer', 'meyer@mail.net', '0421 12345678', new Array<Qualification>)],
+  //   'hoch, hoch, runter, runter, links, rechts, links, rechts, B, A.'
+  // );
 
   // group2 = new Group(
   //   3,
@@ -117,7 +119,7 @@ export class GroupService {
   //   'kürzer als Michaels anfänger Gruppe'
   // );
 
-  groups: Observable<Group[]> = of([this.group1]);
+  // groups: Observable<Group[]> = of([this.group1]);
 
 
 
