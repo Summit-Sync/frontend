@@ -1,4 +1,4 @@
-export class UpdateCourse{
+export class UpdateCourse {
   constructor(
     public visible: boolean,
     public canceled: boolean,
@@ -6,7 +6,7 @@ export class UpdateCourse{
     public acronym: string,
     public title: string,
     public description: string,
-    public dates: string,
+    public dates: Date[],
     public duration: number,
     public numberParticipants: number,
     public numberWaitlist: number,
@@ -16,9 +16,9 @@ export class UpdateCourse{
     public requiredQualifications: number[],
     public numberTrainers: number,
     public notes: string
-  ) { }
+  ) {}
 
-  validate(): boolean{
+  validate(): boolean {
     if (
       !this.acronym ||
       !this.title ||
@@ -35,7 +35,12 @@ export class UpdateCourse{
     ) {
       return false;
     }
-    if (this.prices.length === 0 || this.requiredQualifications.length === 0 || this.duration === 0 || this.numberTrainers === 0){
+    if (
+      this.prices.length === 0 ||
+      this.requiredQualifications.length === 0 ||
+      this.duration === 0 ||
+      this.numberTrainers === 0
+    ) {
       return false;
     }
     return true;

@@ -4,7 +4,7 @@ export class PostCourse{
     public acronym: string,
     public title: string,
     public description: string,
-    public dates: string, //Date[]?
+    public dates: Date[],
     public duration: number,
     public numberParticipants: number,
     public numberWaitlist: number,
