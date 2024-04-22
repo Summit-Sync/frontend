@@ -116,19 +116,19 @@
             >
               <tr>
                 <td>
-                  {{ p.firstName != "" ? p.firstName : "leer" }}
+                  {{ p.firstName ? p.firstName : "leer" }}
                 </td>
                 <td>
-                  {{ p.lastName != "" ? p.lastName : "leer" }}
+                  {{ p.lastName ? p.lastName : "leer" }}
                 </td>
                 <td>
-                  {{ p.status ? p.status.text : "leer" }}
+                  {{ p.status && p.status.text ? p.status.text : "leer" }}
                 </td>
                 <td>
-                  {{ p.email != "" ? p.email : "leer" }}
+                  {{ p.email ? p.email : "leer" }}
                 </td>
                 <td>
-                  {{ p.phoneNumber != "" ? p.phoneNumber : "leer" }}
+                  {{ p.phoneNumber ? p.phoneNumber : "leer" }}
                 </td>
               </tr>
             </ng-container>
@@ -156,7 +156,9 @@
                   <input
                     type="text"
                     [(ngModel)]="p.status.text"
-                    [placeholder]="p.status ? p.status.text : 'leer'"
+                    [placeholder]="
+                      p.status && p.status.text ? p.status.text : 'leer'
+                    "
                   />
                 </td>
                 <td>
@@ -228,63 +230,63 @@
             <ng-container *ngFor="let wp of courseData.waitList; let i = index">
               <tr>
                 <td>
-                  {{ !wp.firstName ? wp.firstName : "leer" }}
+                  {{ wp.firstName ? wp.firstName : "leer" }}
                 </td>
                 <td>
-                  {{ !wp.lastName ? wp.lastName : "leer" }}
-                </td>
-
-                <td>
-                  {{ wp.status && !wp.status.text ? wp.status.text : "leer" }}
+                  {{ wp.lastName ? wp.lastName : "leer" }}
                 </td>
 
                 <td>
-                  {{ wp.email != "" ? wp.email : "leer" }}
+                  {{ wp.status && wp.status.text ? wp.status.text : "leer" }}
+                </td>
+
+                <td>
+                  {{ wp.email ? wp.email : "leer" }}
                 </td>
                 <td>
-                  {{ wp.phoneNumber != "" ? wp.phoneNumber : "leer" }}
+                  {{ wp.phoneNumber ? wp.phoneNumber : "leer" }}
                 </td>
               </tr>
             </ng-container>
           </ng-container>
           <ng-container *ngIf="isEdit">
-            <ng-container *ngFor="let p of courseData.waitList; let i = index">
+            <ng-container *ngFor="let wp of courseData.waitList; let i = index">
               <tr>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.firstName"
-                    [placeholder]="p.firstName ? p.firstName : 'leer'"
+                    [(ngModel)]="wp.firstName"
+                    [placeholder]="wp.firstName ? wp.firstName : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.lastName"
-                    [placeholder]="p.lastName ? p.lastName : 'leer'"
+                    [(ngModel)]="wp.lastName"
+                    [placeholder]="wp.lastName ? wp.lastName : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.status.text"
+                    [(ngModel)]="wp.status.text"
                     [placeholder]="
-                      p.status && !p.status.text ? p.status.text : 'leer'
+                      wp.status && wp.status.text ? wp.status.text : 'leer'
                     "
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.email"
-                    [placeholder]="p.email ? p.email : 'leer'"
+                    [(ngModel)]="wp.email"
+                    [placeholder]="wp.email ? wp.email : 'leer'"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.phoneNumber"
-                    [placeholder]="p.phoneNumber ? p.phoneNumber : 'leer'"
+                    [(ngModel)]="wp.phoneNumber"
+                    [placeholder]="wp.phoneNumber ? wp.phoneNumber : 'leer'"
                   />
                 </td>
                 <td *ngIf="isEdit">
