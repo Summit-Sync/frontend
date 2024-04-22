@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
 import { Observable, of } from 'rxjs';
-import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CourseComponent } from '../../final/course/course.component';
 
@@ -33,6 +33,7 @@ export class ShortCourseListComponent implements OnInit {
       height: '80dvh',
       width: '60dvw',
     });
+
     console.log('open');
 
     let instance = courseDialogRef.componentInstance;
