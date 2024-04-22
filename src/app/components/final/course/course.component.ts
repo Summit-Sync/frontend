@@ -70,14 +70,18 @@ export class CourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
-    this.courseService.currentCourse.subscribe((c) => {
+
+    this.courseService.getAllCourses().subscribe((c) => {
       if (!c) {
         console.error('no course to show');
         return;
       }
-      this.courseData.createCopyFrom(c);
-      console.log('onInit', this.courseData);
+      for (let cKey of c) {
+        this.courseData.createCopyFrom(cKey);
+        console.log('onInit', this.courseData);
+      }
+
+
       // this.fillDatesList();
       this.fillParticipantsList(
         this.courseData.participantList,

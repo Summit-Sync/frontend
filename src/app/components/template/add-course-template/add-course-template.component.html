@@ -1,1 +1,64 @@
-<p>add-course-template works!</p>
+<div class="outer">
+  <div class="header">
+    <h1 mat-dialog-title>Kursvorlage hinzufügen</h1>
+  </div>
+  <div class="body">
+    <mat-dialog-content [formGroup]="addCourseTemplateForm">
+      <div>
+        <mat-form-field class=""><input matInput placeholder="Kurstitel" formControlName="title"></mat-form-field>
+        <mat-form-field class=""><input matInput placeholder="Kurskürzel" formControlName="acronym"></mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class=""><input matInput placeholder="Beschreibung" formControlName="description">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class=""><input matInput placeholder="Anzahl Termine" formControlName="numberOfDates">
+        </mat-form-field>
+        <mat-form-field class=""><input matInput placeholder="Dauer" formControlName="duration"></mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class=""><input matInput placeholder="Anzahl Teilnehmer" formControlName="numberOfParticipants">
+        </mat-form-field>
+        <mat-form-field class=""><input matInput placeholder="Wartelisten länge" formControlName="numberWaitlist">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Gewählter Ort" formControlName="location">
+            <mat-option *ngFor="let l of location$ | async" value="{{l.locationId}}">{{l.street}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <h2>Preise</h2>
+        <button mat-raised-button (click)="addPrice()">+</button>
+        <mat-list>
+          <mat-list-item *ngFor="let price of selectedPrices; let i = index">
+            <input matInput placeholder="Preisname" [value]="price.name" id="priceName{{i}}">
+            <input matInput placeholder="Betrag" [value]="price.price.toString()" (change)="updatePriceList(i)"
+                   id="pricePrice{{i}}">
+            <button mat-raised-button (click)="deletePrice(i)">-</button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div>
+        <mat-form-field><input matInput placeholder="Treffpunkt" formControlName="meetingPoint"></mat-form-field>
+        <mat-form-field><input matInput placeholder="Trainer Anzahl" formControlName="numberTrainers"></mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Trainer Qualifikation" formControlName="requiredQualifications">
+            <mat-option *ngFor="let q of qualification$ | async" value="{{q.id}}">{{q.displayFullName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+  </div>
+  <div class="buttonDiv">
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="save()">Speichern</button>
+      <button mat-raised-button (click)="close()">Abbrechen</button>
+    </mat-dialog-actions>
+  </div>
+</div>

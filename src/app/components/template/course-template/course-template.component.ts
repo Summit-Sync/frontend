@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
-import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
+import { CourseTemplateService } from '../../../services/coursetemplate/courseTemplate.service';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 
 @Component({
@@ -30,7 +30,7 @@ export class CourseTemplateComponent {
   courseTemplateList:CourseTemplate[]=[];
 
   constructor(
-    private courseTemplateService:CoursetemplateService
+    private courseTemplateService:CourseTemplateService
   ){
     console.log("Gets called")
   }

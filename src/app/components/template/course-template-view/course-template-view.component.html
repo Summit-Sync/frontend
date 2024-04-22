@@ -1,6 +1,6 @@
 <div class="outer">
     <div class="header">
-        <button (click)="openCreateDialog()">Kursvorlage erstelleb</button>
+        <button (click)="openCreateDialog()">Kursvorlage erstellen</button>
     </div>
     <div class="body">
       <table>
@@ -25,14 +25,13 @@
             <td>{{template.numberTrainers}}</td>
             <td>{{template.meetingPoint}}</td>
             <td><button (click)="openDetails(template)">Details</button></td>
-            <td><button (click)="deleteTemplate(template.id)">Löschen</button></td>
+            <td><button (click)="deleteTemplate(template.id, template.acronym)">Löschen</button></td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="footer">
-  
+
     </div>
-  
+
   </div>
-  

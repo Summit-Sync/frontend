@@ -8,7 +8,7 @@ import {PostCourseTemplate} from "../../models/courseTemplate/PostCourseTemplate
 @Injectable({
   providedIn: 'root'
 })
-export class CoursetemplateService {
+export class CourseTemplateService {
 
   baseUrl:string='http://localhost:8080/api/v1/template/course';
   l1=new Location(1,'1','1','1','1','1','1','1');
