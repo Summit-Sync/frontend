@@ -1,4 +1,5 @@
-import { CourseTemplate } from '../coursetemplate/CourseTemplate';
+import { Location } from '../location/Location';
+import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Participant } from '../participant/Participant';
 import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
@@ -7,20 +8,21 @@ import { Trainer } from '../trainer/Trainer';
 export class Course {
   constructor(
     public id: number,
-    public courseTitle: string,
+    public title: string,
     public acronym: string,
     public courseNumber: number,
     public description: string,
-    public datesCount: number,
     public dates: Date[],
     public duration: number,
-    public participantList: Participant[],
+    public participants: Participant[],
     public waitList: Participant[],
     public numberParticipants: number,
     public numberWaitlist: number,
-    public priceList: PostPrice[],
-    public place: string,
-    public trainerQualifications: Qualification[],
+    public numberTrainers: number,
+    public prices: PostPrice[],
+    public location: Location,
+    public meetingPoint: string,
+    public requiredQualifications: Qualification[],
     public trainers: Trainer[],
     public notes: string,
     public visible: boolean,
@@ -31,10 +33,10 @@ export class Course {
   validate(): boolean {
     // Check if required fields are present
     if (
-      !this.courseTitle ||
+      !this.title ||
       !this.acronym ||
       !this.description ||
-      !this.place ||
+      // !this.location ||
       !this.notes
     ) {
       return false;
@@ -43,7 +45,6 @@ export class Course {
     // Check if numerical fields are not zero
     if (
       this.courseNumber === 0 ||
-      this.datesCount === 0 ||
       this.duration === 0 ||
       this.numberParticipants === 0 ||
       this.numberWaitlist === 0
@@ -53,9 +54,9 @@ export class Course {
 
     // Check if arrays are not empty
     if (
-      this.priceList.length === 0 ||
-      this.trainerQualifications.length === 0 ||
-      this.participantList.length === 0 ||
+      this.prices.length === 0 ||
+      this.requiredQualifications.length === 0 ||
+      this.participants.length === 0 ||
       this.dates.length === 0
     ) {
       return false;
@@ -63,7 +64,7 @@ export class Course {
 
     //validate arrays content
     if (
-      !this.priceList.every((price) => {
+      !this.prices.every((price) => {
         return price.validate();
       })
     ) {
@@ -71,7 +72,7 @@ export class Course {
     }
 
     if (
-      !this.trainerQualifications.every((qualification) => {
+      !this.requiredQualifications.every((qualification) => {
         return qualification.validate();
       })
     ) {
@@ -79,7 +80,7 @@ export class Course {
     }
 
     if (
-      !this.participantList.every((participant) => {
+      !this.participants.every((participant) => {
         return participant.validate();
       })
     ) {
@@ -99,27 +100,26 @@ export class Course {
 
   createCopy(course: Course) {
     this.id = course.id;
-    this.courseTitle = course.courseTitle;
+    this.title = course.title;
     this.acronym = course.acronym;
     this.courseNumber = course.courseNumber;
     this.description = course.description;
-    this.datesCount = course.datesCount;
     this.dates = course.dates;
     this.duration = course.duration;
-    course.participantList.forEach((participant) => {
-      this.participantList.push(participant);
+    course.participants.forEach((participant) => {
+      this.participants.push(participant);
     });
     course.waitList.forEach((waitingParticipant) => {
       this.waitList.push(waitingParticipant);
     });
     this.numberParticipants = course.numberParticipants;
     this.numberWaitlist = course.numberWaitlist;
-    course.priceList.forEach((price) => {
-      this.priceList.push(price);
+    course.prices.forEach((price) => {
+      this.prices.push(price);
     });
-    this.place = course.place;
-    course.trainerQualifications.forEach((qualification) => {
-      this.trainerQualifications.push(qualification);
+    this.location = course.location;
+    course.requiredQualifications.forEach((qualification) => {
+      this.requiredQualifications.push(qualification);
     });
     course.trainers.forEach((trainer) => {
       this.trainers.push(trainer);
@@ -131,17 +131,23 @@ export class Course {
   }
 
   createCourseFromTemplate(courseTemplate: CourseTemplate) {
-    this.courseTitle = courseTemplate.acronym;
+    this.title = courseTemplate.acronym;
     this.description = courseTemplate.description;
     this.duration = courseTemplate.duration;
     this.id = courseTemplate.id;
     this.location = courseTemplate.location;
     this.meetingPoint = courseTemplate.meetingPoint;
-    this.numberOfDates = courseTemplate.numberOfDates;
-    this.numberOfParticipants = courseTemplate.numberOfParticipants;
+    courseTemplate.numberOfDates;
+    for (let i = 0; i < courseTemplate.numberOfDates; i++) {
+      const addedDate = new Date();
+      addedDate.setHours(12);
+      addedDate.setMinutes(0);
+      this.dates.push(addedDate);
+    }
+    this.numberParticipants = courseTemplate.numberOfParticipants;
     this.numberTrainers = courseTemplate.numberTrainers;
     this.numberWaitlist = courseTemplate.numberWaitlist;
-    this.price = courseTemplate.price;
+    this.prices = courseTemplate.price;
     this.requiredQualifications = courseTemplate.requiredQualifications;
     this.title = courseTemplate.title;
   }
