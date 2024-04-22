@@ -13,7 +13,9 @@ import { TrainerService } from '../../../services/trainer/trainer.service';
 import { Trainer } from '../../../models/trainer/Trainer';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
-import {Status} from "../../../models/status/Status";
+import { Status } from '../../../models/status/Status';
+import { MatDialogRef } from '@angular/material/dialog';
+import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
 
 @Component({
   selector: 'app-course',
@@ -35,6 +37,7 @@ export class CourseComponent implements OnInit {
   @Input() isDelete: boolean = false;
   allQualifications: Qualification[];
   allTrainers: Trainer[];
+  courseTemplate: CourseTemplate | undefined;
   courseData: Course = new Course(
     0,
     '',
@@ -65,7 +68,8 @@ export class CourseComponent implements OnInit {
     public courseService: CourseService,
     public qualifcationsService: QualificationsService,
     public trainerService: TrainerService,
-    private dateTimeMapper: DateTimeMapperService
+    private dateTimeMapper: DateTimeMapperService,
+    private dialogRef: MatDialogRef<CourseComponent>
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +79,7 @@ export class CourseComponent implements OnInit {
           console.error('no course to show');
           return;
         }
-        this.courseData.createCopyFrom(c);
+        this.courseData.createCopy(c);
         console.log('onInit', this.courseData);
         // this.fillDatesList();
         this.fillParticipantsList(
@@ -93,6 +97,7 @@ export class CourseComponent implements OnInit {
         this.allTrainers = t;
       });
     } else {
+      this.courseData 
     }
   }
 
@@ -220,19 +225,20 @@ export class CourseComponent implements OnInit {
       this.deleteEmptyParticipants(this.courseData.participantList);
       this.deleteEmptyWaitingParticipants(this.courseData.waitList);
       console.log('save: ', this.courseData);
-      this.close.emit();
+      this.dialogRef.close(JSON.stringify({ method: 'save' }));
     }
   }
 
   cancel(): void {
     this.deleteEmptyParticipants(this.courseData.participantList);
     this.deleteEmptyWaitingParticipants(this.courseData.waitList);
-    this.close.emit();
+
+    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
     console.log('cancel');
   }
 
   deleteCourse(): void {
-    this.close.emit();
+    this.dialogRef.close(JSON.stringify({ method: 'delete' }));
     console.log('delete');
   }
 
@@ -267,7 +273,9 @@ export class CourseComponent implements OnInit {
     maxParticipants: number
   ): void {
     for (let i = participantsList.length; i < maxParticipants; i++) {
-      participantsList.push(new Participant(i, '', '', new Status(0, 'pew'), '', ''));
+      participantsList.push(
+        new Participant(i, '', '', new Status(0, 'pew'), '', '')
+      );
     }
   }
 
