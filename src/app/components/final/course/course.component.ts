@@ -255,9 +255,8 @@ export class CourseComponent implements OnInit {
   cancel(): void {
     this.deleteEmptyParticipants(this.courseData.participants);
     this.deleteEmptyParticipants(this.courseData.waitList);
-
-    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
     console.log('cancel: ', this.courseData);
+    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
 
   deleteCourse(): void {

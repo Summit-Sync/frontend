@@ -26,6 +26,7 @@ export class CourseListComponent implements OnInit {
   }
 
   showDetails(course: Course) {
+    this.showingEdit = false;
     this.showCourse(course);
   }
 
