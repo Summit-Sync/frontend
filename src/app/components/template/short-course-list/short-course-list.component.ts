@@ -4,7 +4,7 @@ import { CoursetemplateService } from '../../../services/coursetemplate/coursete
 import { Observable, of } from 'rxjs';
 import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
+import { CourseComponent } from '../../final/course/course.component';
 
 @Component({
   selector: 'app-short-course-list',
@@ -17,7 +17,7 @@ export class ShortCourseListComponent implements OnInit {
   courseTemplates: Observable<CourseTemplate[]> = of([]);
   constructor(
     public courseTemplateService: CoursetemplateService,
-    private dialogRef: MatDialogRef<ShortCourseListComponent>,
+    private selfDialogRef: MatDialogRef<ShortCourseListComponent>,
     private dialog: MatDialog
   ) {}
 
@@ -27,13 +27,17 @@ export class ShortCourseListComponent implements OnInit {
   }
 
   openCourseCreator(courseTemplate: CourseTemplate) {
-    this.dialog.open(AddCourseTemplateComponent, {
+    let courseDialogRef = this.dialog.open(CourseComponent, {
       disableClose: false,
       autoFocus: true,
       height: '80dvh',
       width: '60dvw',
     });
     console.log('open');
+
+    let instance = courseDialogRef.componentInstance;
+    instance.isCreate = true;
+    instance.courseTemplate = courseTemplate;
   }
 
   //         qualificationService.getAllQualifications().subscribe(data=>this.qualificationList=data);
@@ -66,6 +70,6 @@ export class ShortCourseListComponent implements OnInit {
   //       }
 
   close() {
-    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
+    this.selfDialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
 }
