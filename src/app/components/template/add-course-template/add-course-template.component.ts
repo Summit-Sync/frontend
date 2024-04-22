@@ -103,16 +103,7 @@ export class AddCourseTemplateComponent {
 
   }
 
-  private patch(): void{
-    this.selectedPrices.forEach((item) => {
-      this.control.push(this.patchValues(item));
-    })
-  }
-  private patchValues(item: PostPrice): AbstractControl {
-    return this.formBuilder.group({
-      price: [item]
-    })
-  }
+
 
   save(): void{
     // Übernahme der Preis daten aus selectedPrices in Form daten
@@ -135,15 +126,22 @@ export class AddCourseTemplateComponent {
     this.selectedPrices.splice(index, 1);
   }
 
-
-
-
-
-
   updatePriceList(index: number) {
     // @ts-ignore
     this.selectedPrices.at(index).name = document.getElementById("priceName" + index).value;
     // @ts-ignore
     this.selectedPrices.at(index).price = document.getElementById("pricePrice" + index).value;
+  }
+
+  //FormArray Value Patchers
+  private patch(): void{
+    this.selectedPrices.forEach((item) => {
+      this.control.push(this.patchValues(item));
+    })
+  }
+  private patchValues(item: PostPrice): AbstractControl {
+    return this.formBuilder.group({
+      price: [item]
+    })
   }
 }
