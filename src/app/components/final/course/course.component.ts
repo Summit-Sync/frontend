@@ -15,7 +15,8 @@ import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 import { Status } from '../../../models/status/Status';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
+import { Location } from '../../../models/location/Location';
 
 @Component({
   selector: 'app-course',
@@ -44,14 +45,15 @@ export class CourseComponent implements OnInit {
     '',
     0,
     '',
-    0,
     [],
     0,
     [],
     [],
     0,
     0,
+    0,
     [],
+    new Location(0, '', '', '', '', '', '', ''),
     '',
     [],
     [],
@@ -82,13 +84,8 @@ export class CourseComponent implements OnInit {
         this.courseData.createCopy(c);
         console.log('onInit', this.courseData);
         // this.fillDatesList();
-        this.fillParticipantsList(
-          this.courseData.participantList,
-          this.courseData.numberParticipants
-        );
         return;
       });
-      this.mapDateTime();
 
       this.qualifcationsService.getAllQualifications().subscribe((q) => {
         this.allQualifications = q;
@@ -97,8 +94,23 @@ export class CourseComponent implements OnInit {
         this.allTrainers = t;
       });
     } else {
-      this.courseData 
+      this.isEdit = true;
+      if (this.courseTemplate) {
+        this.courseData.createCourseFromTemplate(this.courseTemplate);
+      } else {
+        console.error('Template missing!');
+      }
     }
+    this.fillParticipantsList(
+      this.courseData.participants,
+      this.courseData.numberParticipants
+    );
+    this.fillParticipantsList(
+      this.courseData.waitList,
+      this.courseData.numberWaitlist
+    );
+    this.mapDateTime();
+    console.log('courseData: ', this.courseData);
   }
 
   mapDateTime() {
@@ -172,15 +184,15 @@ export class CourseComponent implements OnInit {
   }
 
   addPrice() {
-    this.courseData.priceList.push(new PostPrice('', 0));
+    this.courseData.prices.push(new PostPrice('', 0));
   }
 
   deletePrice(index: number) {
-    this.courseData.priceList.splice(index, 1);
+    this.courseData.prices.splice(index, 1);
   }
 
   checkUnfinishedPrice() {
-    const unfinishedPrices = this.courseData.priceList.some((wp) => {
+    const unfinishedPrices = this.courseData.prices.some((wp) => {
       const allEmpty = wp.name == '' && wp.price == 0;
       const allFilled = wp.name != '' && wp.price != 0;
       if (!(allEmpty || allFilled)) {
@@ -195,16 +207,16 @@ export class CourseComponent implements OnInit {
   }
 
   deleteQualification(clickedQualification: Qualification) {
-    var tqList = this.courseData.trainerQualifications;
+    var tqList = this.courseData.requiredQualifications;
     tqList = tqList.filter((q) => {
       return q.id !== clickedQualification.id;
     });
 
-    this.courseData.trainerQualifications = tqList;
+    this.courseData.requiredQualifications = tqList;
   }
 
   addQualification(clickedQualification: Qualification) {
-    this.courseData.trainerQualifications.push(clickedQualification);
+    this.courseData.requiredQualifications.push(clickedQualification);
   }
 
   showQualificationsList() {
@@ -220,21 +232,32 @@ export class CourseComponent implements OnInit {
       : this.deleteQualification(clickedQualification);
   }
 
-  save(): void {
+  saveUpdate(): void {
+    console.log('updated: ', this.courseData);
     if (this.courseData.validate()) {
-      this.deleteEmptyParticipants(this.courseData.participantList);
-      this.deleteEmptyWaitingParticipants(this.courseData.waitList);
-      console.log('save: ', this.courseData);
+      this.deleteEmptyParticipants(this.courseData.participants);
+      this.deleteEmptyParticipants(this.courseData.waitList);
+      console.log('save Updated Version: ', this.courseData);
+      this.dialogRef.close(JSON.stringify({ method: 'save' }));
+    }
+  }
+
+  saveCreated(): void {
+    console.log('created: ', this.courseData);
+    if (this.courseData.validate()) {
+      this.deleteEmptyParticipants(this.courseData.participants);
+      this.deleteEmptyParticipants(this.courseData.waitList);
+      console.log('save Created Course: ', this.courseData);
       this.dialogRef.close(JSON.stringify({ method: 'save' }));
     }
   }
 
   cancel(): void {
-    this.deleteEmptyParticipants(this.courseData.participantList);
-    this.deleteEmptyWaitingParticipants(this.courseData.waitList);
+    this.deleteEmptyParticipants(this.courseData.participants);
+    this.deleteEmptyParticipants(this.courseData.waitList);
 
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
-    console.log('cancel');
+    console.log('cancel: ', this.courseData);
   }
 
   deleteCourse(): void {
@@ -242,29 +265,13 @@ export class CourseComponent implements OnInit {
     console.log('delete');
   }
 
-  addWaitingParticipant() {
-    if (this.courseData.numberWaitlist <= this.courseData.waitList.length) {
-      return;
-    }
-    let wp = this.courseData.waitList;
-    wp.push(new Participant(wp.length, '', '', new Status(0, 'pew'), '', ''));
-  }
-
-  deleteWaitingParticipant(index: number) {
-    this.courseData.waitList.splice(index, 1);
-  }
-
-  onMaxWaitlistChange() {
-    const waitlistLength = this.courseData.waitList.length;
-    if (this.courseData.numberWaitlist < waitlistLength) {
-      this.courseData.waitList.splice(waitlistLength - 1, 1);
-    }
-  }
-
-  onMaxParticipantsChange(): void {
-    const participantsLength = this.courseData.participantList.length;
-    if (this.courseData.numberParticipants < participantsLength) {
-      this.courseData.participantList.splice(participantsLength - 1, 1);
+  onMaxParticipantsChange(
+    participants: Participant[],
+    numberParticipants: number
+  ): void {
+    const participantsLength = participants.length;
+    if (numberParticipants < participantsLength) {
+      participants.splice(participantsLength - 1, 1);
     }
   }
 
@@ -274,36 +281,31 @@ export class CourseComponent implements OnInit {
   ): void {
     for (let i = participantsList.length; i < maxParticipants; i++) {
       participantsList.push(
-        new Participant(i, '', '', new Status(0, 'pew'), '', '')
+        new Participant(i, '', '', new Status(0, ''), '', '')
       );
     }
   }
 
   deleteEmptyParticipants(participantsList: Participant[]) {
-    this.courseData.participantList = participantsList.filter((p) => {
-      return p.firstName != '';
-    });
-    console.log('deleteEmptyParticipants: ', this.courseData.participantList);
+    participantsList.splice(
+      0,
+      participantsList.length,
+      ...participantsList.filter((p) => p.firstName !== '')
+    );
   }
 
-  deleteEmptyWaitingParticipants(waitingParticipantsList: Participant[]) {
-    this.courseData.waitList = waitingParticipantsList.filter((wp) => {
-      return wp.firstName != '';
-    });
-  }
-
-  addParticipant(): void {
-    if (
-      this.courseData.numberParticipants <=
-      this.courseData.participantList.length
-    ) {
+  addParticipant(
+    numberParticipants: number,
+    participants: Participant[]
+  ): void {
+    if (numberParticipants <= participants.length) {
       return;
     }
-    let p = this.courseData.participantList;
-    p.push(new Participant(p.length, '', '', new Status(0, 'pew'), '', ''));
+    let p = participants;
+    p.push(new Participant(p.length, '', '', new Status(0, ''), '', ''));
   }
 
-  deleteParticipant(index: number): void {
-    this.courseData.participantList.splice(index, 1);
+  deleteParticipant(index: number, participants: Participant[]): void {
+    participants.splice(index, 1);
   }
 }

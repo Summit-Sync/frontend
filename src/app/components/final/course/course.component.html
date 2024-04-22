@@ -3,9 +3,9 @@
     <div>
       <p>Kurstitel:</p>
       <p *ngIf="!isEdit">
-        {{ courseData.courseTitle }}
+        {{ courseData.title }}
       </p>
-      <input *ngIf="isEdit" type="text" [(ngModel)]="courseData.courseTitle" />
+      <input *ngIf="isEdit" type="text" [(ngModel)]="courseData.title" />
     </div>
     <div>
       <p>Kursnummer:</p>
@@ -90,7 +90,12 @@
         *ngIf="isEdit"
         type="number"
         [(ngModel)]="courseData.numberParticipants"
-        (input)="onMaxParticipantsChange()"
+        (input)="
+          onMaxParticipantsChange(
+            this.courseData.participants,
+            this.courseData.numberParticipants
+          )
+        "
       />
     </div>
     <div class="listWrapper">
@@ -107,7 +112,7 @@
         <tbody>
           <ng-container *ngIf="!isEdit">
             <ng-container
-              *ngFor="let p of courseData.participantList; let i = index"
+              *ngFor="let p of courseData.participants; let i = index"
             >
               <tr>
                 <td>
@@ -117,7 +122,7 @@
                   {{ p.lastName != "" ? p.lastName : "leer" }}
                 </td>
                 <td>
-                  {{ p.status ? p.status : "leer" }}
+                  {{ p.status ? p.status.text : "leer" }}
                 </td>
                 <td>
                   {{ p.email != "" ? p.email : "leer" }}
@@ -130,7 +135,7 @@
           </ng-container>
           <ng-container *ngIf="isEdit">
             <ng-container
-              *ngFor="let p of courseData.participantList; let i = index"
+              *ngFor="let p of courseData.participants; let i = index"
             >
               <tr>
                 <td>
@@ -150,8 +155,8 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.status"
-                    [placeholder]="p.status ? p.status : 'leer'"
+                    [(ngModel)]="p.status.text"
+                    [placeholder]="p.status ? p.status.text : 'leer'"
                   />
                 </td>
                 <td>
@@ -169,14 +174,23 @@
                   />
                 </td>
                 <td *ngIf="isEdit">
-                  <button (click)="deleteParticipant(i)">-</button>
+                  <button
+                    (click)="deleteParticipant(i, courseData.participants)"
+                  >
+                    -
+                  </button>
                 </td>
               </tr>
             </ng-container>
           </ng-container>
         </tbody>
       </table>
-      <button *ngIf="isEdit" (click)="addParticipant()">
+      <button
+        *ngIf="isEdit"
+        (click)="
+          addParticipant(courseData.numberParticipants, courseData.participants)
+        "
+      >
         Teilnehmer hinzufügen
       </button>
     </div>
@@ -190,7 +204,12 @@
         *ngIf="isEdit"
         type="number"
         [(ngModel)]="courseData.numberWaitlist"
-        (input)="onMaxWaitlistChange()"
+        (input)="
+          onMaxParticipantsChange(
+            this.courseData.waitList,
+            this.courseData.numberWaitlist
+          )
+        "
       />
     </div>
     <div class="listWrapper">
@@ -209,14 +228,14 @@
             <ng-container *ngFor="let wp of courseData.waitList; let i = index">
               <tr>
                 <td>
-                  {{ wp.firstName != "" ? wp.firstName : "leer" }}
+                  {{ !wp.firstName ? wp.firstName : "leer" }}
                 </td>
                 <td>
-                  {{ wp.lastName != "" ? wp.lastName : "leer" }}
+                  {{ !wp.lastName ? wp.lastName : "leer" }}
                 </td>
 
                 <td>
-                  {{ wp.status ? wp.status : "leer" }}
+                  {{ wp.status && !wp.status.text ? wp.status.text : "leer" }}
                 </td>
 
                 <td>
@@ -248,8 +267,10 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.status"
-                    [placeholder]="p.status ? p.status : 'leer'"
+                    [(ngModel)]="p.status.text"
+                    [placeholder]="
+                      p.status && !p.status.text ? p.status.text : 'leer'
+                    "
                   />
                 </td>
                 <td>
@@ -267,14 +288,19 @@
                   />
                 </td>
                 <td *ngIf="isEdit">
-                  <button (click)="deleteWaitingParticipant(i)">-</button>
+                  <button (click)="deleteParticipant(i, courseData.waitList)">
+                    -
+                  </button>
                 </td>
               </tr>
             </ng-container>
           </ng-container>
         </tbody>
       </table>
-      <button *ngIf="isEdit" (click)="addWaitingParticipant()">
+      <button
+        *ngIf="isEdit"
+        (click)="addParticipant(courseData.numberWaitlist, courseData.waitList)"
+      >
         Teilnehmer hinzufügen
       </button>
     </div>
@@ -283,7 +309,7 @@
         <p>Preise:</p>
       </div>
       <div class="priceWrapper">
-        <ng-container *ngFor="let price of courseData.priceList; let i = index">
+        <ng-container *ngFor="let price of courseData.prices; let i = index">
           <div class="price" *ngIf="!isEdit">
             <p>{{ price.name }}:</p>
             <p>{{ price.price }}</p>
@@ -300,21 +326,25 @@
     <div>
       <p>Ort:</p>
       <p *ngIf="!isEdit">
-        {{ courseData.place }}
+        {{ courseData.location.room }}
       </p>
-      <input *ngIf="isEdit" type="text" [(ngModel)]="courseData.place" />
+      <input
+        *ngIf="isEdit"
+        type="text"
+        [(ngModel)]="courseData.location.room"
+      />
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
       <ng-container *ngIf="!isEdit">
-        <ng-container *ngFor="let q of courseData.trainerQualifications">
+        <ng-container *ngFor="let q of courseData.requiredQualifications">
           <li>{{ q.name }}</li>
         </ng-container>
       </ng-container>
       <app-multi-select-dropdown
         *ngIf="isEdit"
         [allOptions]="allQualifications"
-        [selectedOptions]="courseData.trainerQualifications"
+        [selectedOptions]="courseData.requiredQualifications"
         [dropdownHeadline]="'Qualifikationen'"
       >
       </app-multi-select-dropdown>
@@ -345,7 +375,9 @@
     </div>
   </div>
   <div class="button-div">
-    <button (click)="save()" *ngIf="isEdit">Speichern</button>
+    <button (click)="isCreate ? saveCreated() : saveUpdate()" *ngIf="isEdit">
+      Speichern
+    </button>
     <button (click)="deleteCourse()" *ngIf="isDelete">Löschen</button>
     <button (click)="cancel()">
       {{ isEdit || isDelete ? "Abbrechen" : "schließen" }}
