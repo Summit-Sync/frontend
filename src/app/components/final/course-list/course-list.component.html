@@ -28,7 +28,7 @@
             {{ trainer.lastName }}
           </span>
         </td>
-        <td>{{ c.participantList.length + "/" + c.numberParticipants }}</td>
+        <td>{{ c.participants.length + "/" + c.numberParticipants }}</td>
         <td>
           <button (click)="showDetails(c)">Bewerben</button>
         </td>
@@ -42,7 +42,9 @@
     </ng-container>
   </tbody>
 </table>
-<button (click)="showTemplateList()">Kurs anhand einer Vorlage erstellen</button>
+<button (click)="showTemplateList()">
+  Kurs anhand einer Vorlage erstellen
+</button>
 
 <!-- <div *ngIf="showingCourse">
   <app-course
