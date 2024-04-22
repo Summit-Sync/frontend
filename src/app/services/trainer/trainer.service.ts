@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Trainer } from '../../models/trainer/Trainer';
 import { Observable, of } from 'rxjs';
-import {HttpClient} from "@angular/common/http";
-import {PostTrainer} from "../../models/trainer/PostTrainer";
+import { HttpClient } from '@angular/common/http';
+import { PostTrainer } from '../../models/trainer/PostTrainer';
 
 @Injectable({
   providedIn: 'root',
@@ -30,15 +30,15 @@ export class TrainerService {
 
   constructor(private http: HttpClient) {}
 
-  baseUrl:string="http://localhost:8080/api/v1//trainer"
+  baseUrl: string = 'http://localhost:8080/api/v1//trainer';
 
   //Get
-  getAllTrainers(): Observable<Trainer[]>{
+  getAllTrainers(): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}`;
     return this.http.get<Trainer[]>(apiUrl);
   }
 
-  getTrainerById(id: number): Observable<Trainer>{
+  getTrainerById(id: number): Observable<Trainer> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.get<Trainer>(apiUrl);
   }
@@ -50,12 +50,15 @@ export class TrainerService {
   }
 
   //Post
-  postTrainer(trainerToPost: PostTrainer): Observable<Trainer>{
+  postTrainer(trainerToPost: PostTrainer): Observable<Trainer> {
     const apiUrl: string = `${this.baseUrl}`;
     return this.http.post<Trainer>(apiUrl, trainerToPost);
   }
 
-  postQualificationOfTrainerById(trainerId: number, qualificationId: number): Observable<Trainer>{
+  postQualificationOfTrainerById(
+    trainerId: number,
+    qualificationId: number
+  ): Observable<Trainer> {
     const apiUrl: string = `${this.baseUrl}/${trainerId}/qualification/${qualificationId}`;
     return this.http.post<Trainer>(apiUrl, qualificationId);
   }
@@ -66,11 +69,13 @@ export class TrainerService {
     this.http.delete(apiUrl);
   }
 
-  deleteQualificationOfTrainerById(trainerId: number, qualificationId: number):Observable<Trainer>{
+  deleteQualificationOfTrainerById(
+    trainerId: number,
+    qualificationId: number
+  ): Observable<Trainer> {
     const apiUrl: string = `${this.baseUrl}/${trainerId}/qualification/${qualificationId}`;
     return this.http.delete<Trainer>(apiUrl);
   }
-
 
   /*
   getAllTrainers(): Observable<Trainer[]> {
