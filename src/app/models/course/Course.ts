@@ -1,3 +1,4 @@
+import { CourseTemplate } from '../coursetemplate/CourseTemplate';
 import { Participant } from '../participant/Participant';
 import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
@@ -96,7 +97,7 @@ export class Course {
     return true;
   }
 
-  createCopyFrom(course: Course) {
+  createCopy(course: Course) {
     this.id = course.id;
     this.courseTitle = course.courseTitle;
     this.acronym = course.acronym;
@@ -127,5 +128,21 @@ export class Course {
     this.visible = course.visible;
     this.canceled = course.canceled;
     this.finished = course.finished;
+  }
+
+  createCourseFromTemplate(courseTemplate: CourseTemplate) {
+    this.courseTitle = courseTemplate.acronym;
+    this.description = courseTemplate.description;
+    this.duration = courseTemplate.duration;
+    this.id = courseTemplate.id;
+    this.location = courseTemplate.location;
+    this.meetingPoint = courseTemplate.meetingPoint;
+    this.numberOfDates = courseTemplate.numberOfDates;
+    this.numberOfParticipants = courseTemplate.numberOfParticipants;
+    this.numberTrainers = courseTemplate.numberTrainers;
+    this.numberWaitlist = courseTemplate.numberWaitlist;
+    this.price = courseTemplate.price;
+    this.requiredQualifications = courseTemplate.requiredQualifications;
+    this.title = courseTemplate.title;
   }
 }
