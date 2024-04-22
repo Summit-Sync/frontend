@@ -16,18 +16,13 @@ import { ShortCourseListComponent } from '../../template/short-course-list/short
 })
 export class CourseListComponent implements OnInit {
   courses: Observable<Course[]> = of([]);
-  showingCourse: boolean = false;
   showingEdit: boolean = false;
   showingDelete: boolean = false;
-  // dialogRef: MatDialogRef<CourseComponent> | undefined;
 
-  constructor(public courseSerice: CourseService, private dialog: MatDialog) {}
-
-  // MatDialog on hold for now
-  // constructor(public courseSerice: CourseService, public dialog: MatDialog) {}
+  constructor(public courseService: CourseService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.courses = this.courseSerice.getAllCourses();
+    this.courses = this.courseService.getAllCourses();
   }
 
   showDetails(course: Course) {
@@ -44,7 +39,7 @@ export class CourseListComponent implements OnInit {
     this.showCourse(course);
   }
 
-  createCourse() {
+  showTemplateList() {
     const dialogRef = this.dialog.open(ShortCourseListComponent, {
       disableClose: false,
       autoFocus: true,
@@ -63,12 +58,29 @@ export class CourseListComponent implements OnInit {
   }
 
   showCourse(course: Course) {
-    this.courseSerice.nextCourse(course);
-    this.showingCourse = true;
+    this.courseService.updateCourseDetails(course);
+    const dialogRef = this.dialog.open(CourseComponent, {
+      disableClose: false,
+      autoFocus: true,
+      height: '90dvh',
+      width: '70dvw',
+    });
+
+    let instance = dialogRef.componentInstance;
+    instance.isEdit = this.showingEdit;
+    instance.isDelete = this.showingDelete;
+
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method == 'accept') {
+        console.log('Dialog output:', obj.data);
+        // Validate Input
+        //
+      }
+    });
   }
 
   hideCourse() {
-    this.showingCourse = false;
     this.showingEdit = false;
     this.showingDelete = false;
   }
