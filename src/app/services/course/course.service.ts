@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../../models/course/Course';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { PostPrice } from '../../models/price/PostPrice';
-import { Qualification } from '../../models/qualification/Qualification';
-import { Trainer } from '../../models/trainer/Trainer';
-import { Participant } from '../../models/participant/Participant';
-import { Status } from '../../models/status/Status';
 import { HttpClient } from '@angular/common/http';
-import { C } from '@angular/cdk/keycodes';
 import { PostCourse } from '../../models/course/PostCourse';
 import { UpdateCourse } from '../../models/course/UpdateCourse';
+import { Participant } from '../../models/participant/Participant';
+import { PostPrice } from '../../models/price/PostPrice';
+import { Location } from '../../models/location/Location';
+import { Status } from '../../models/status/Status';
+import { Qualification } from '../../models/qualification/Qualification';
+import { Trainer } from '../../models/trainer/Trainer';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
-  currentCourse: BehaviorSubject<Course>;
+  public currentCourse: BehaviorSubject<Course | null> =
+    new BehaviorSubject<Course | null>(null);
   baseUrl: string = 'http://localhost:8080/api/v1/course';
   constructor(private http: HttpClient) {}
 
   //Get
   getAllCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.baseUrl);
+    // return this.http.get<Course[]>(this.baseUrl);
+    return of([this.course1, this.course2]);
   }
 
   getCourseById(id: number): Observable<Course> {
@@ -87,7 +89,8 @@ export class CourseService {
     return this.http.delete<Course>(apiUrl);
   }
 
-  nextCourse(course: Course) {
+  updateCourseDetails(course: Course) {
+    console.log();
     this.currentCourse.next(course);
   }
 
@@ -171,14 +174,12 @@ export class CourseService {
   //   canceled: false,
   //   finished: false,
   // };
-  /*
   course1: Course = new Course(
     0,
     'Introduction to Programming',
     'CS101',
     2,
     'CS',
-    3,
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
     260,
     [
@@ -187,17 +188,55 @@ export class CourseService {
         'Meyer',
         'Lena',
         new Status(0, 'pew'),
-        'email@Meyer.com', '0421v12345678'
+        'email@Meyer.com',
+        '0421v12345678'
       ),
-      new Participant(1,  'Kohl', 'Alex', new Status(0, 'Gast'),  'email@Kohl.com', '0421 12345678'),
+      new Participant(
+        1,
+        'Kohl',
+        'Alex',
+        new Status(0, 'Gast'),
+        'email@Kohl.com',
+        '0421 12345678'
+      ),
     ],
-    [new Participant(0,  'Kaals', 'Karl', new Status(0, 'Gast'), 'Kaals@mail.net', '0215641546')],
+    [
+      new Participant(
+        0,
+        'Kaals',
+        'Karl',
+        new Status(0, 'Gast'),
+        'Kaals@mail.net',
+        '0215641546'
+      ),
+    ],
     2,
     1,
+    1,
     [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
+    new Location(
+      0,
+      'room1',
+      'test street',
+      '27818',
+      'Germany',
+      'test@email.com',
+      '01594597466',
+      'testURL'
+    ),
     'Online',
     [new Qualification(2, 'weit klettern')],
-    [new Trainer(1, 'trainer', 'John', 'Doe', 'joedoe@mail.net', '042112345678', new Array<Qualification>)],
+    [
+      new Trainer(
+        1,
+        'trainer',
+        'John',
+        'Doe',
+        'joedoe@mail.net',
+        '042112345678',
+        new Array<Qualification>()
+      ),
+    ],
     'Notes about the course.',
     true,
     false,
@@ -210,7 +249,6 @@ export class CourseService {
     'WD200',
     4,
     'WD',
-    5,
     [new Date('2024-04-01'), new Date('2024-04-08'), new Date('2024-04-15')],
     210,
     [
@@ -218,33 +256,59 @@ export class CourseService {
         0,
         'Lena',
         'Meyer',
-        'Sektion Bremen',
-        '015468312345',
-        'email@Meyer.com'
+        new Status(0, 'Gast'),
+        'email@Meyer.com',
+        '015468312345'
       ),
       new Participant(
         1,
         'Alex',
         'Kohl',
-        'Gast',
-        '0161487981',
-        'email@Kohl.com'
+        new Status(0, 'Gast'),
+        'email@Kohl.com',
+        '0161487981'
       ),
     ],
-    [new Participant(0, 'Karl', 'Kaals', 'Gast', '02156468486')],
+    [
+      new Participant(
+        0,
+        'Karl',
+        'Kaals',
+        new Status(0, 'Gast'),
+        'test@email.com',
+        '02156468486'
+      ),
+    ],
     3,
     1,
+    1,
     [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
+    new Location(
+      0,
+      'testtestroom',
+      'test Street2',
+      '21897',
+      'germany',
+      'second@mail.com',
+      '021867967898564564',
+      'tesURL2'
+    ),
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
-    [new Trainer(4, 'Jane', 'Smith')],
+    [
+      new Trainer(
+        4,
+        'trainer',
+        'Jane',
+        'Smith',
+        'janesmitch@mail.net',
+        '042112345678',
+        new Array<Qualification>()
+      ),
+    ],
     'Notes about the bootcamp.',
     true,
     false,
     false
   );
-*/
-  // courses: Observable<Course[]> = of([this.course1, /*this.course2 */]);
-  // public currentCourse: BehaviorSubject<Course | null> =
-  //   new BehaviorSubject<Course | null>(null);
 }

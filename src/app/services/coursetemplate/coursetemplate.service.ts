@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
 import { Location } from '../../models/location/Location';
-import {PostCourseTemplate} from "../../models/courseTemplate/PostCourseTemplate";
+import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
 import { Price } from '../../models/price/Price';
 import { Qualification } from '../../models/qualification/Qualification';
 
@@ -71,38 +71,48 @@ export class CoursetemplateService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllCourseTemplates():Observable<CourseTemplate[]>{
-    return this.http.get<CourseTemplate[]>(this.baseUrl);
-    //return of([this.t1,this.t2])
+  getAllCourseTemplates(): Observable<CourseTemplate[]> {
+    // return this.http.get<CourseTemplate[]>(this.baseUrl);
+    return of([this.t1, this.t2]);
   }
 
-  getCourseTemplateById(id:number):Observable<CourseTemplate>{
+  getCourseTemplateById(id: number): Observable<CourseTemplate> {
     return this.http.get<CourseTemplate>(`${this.baseUrl}/${id}`);
     //return of(this.t1)
   }
 
   //Put
-  putCouseTemplate(template:PostCourseTemplate, id:number):Observable<CourseTemplate>{
-    return this.http.put<CourseTemplate>(`${this.baseUrl}/${id}`,template);
+  putCouseTemplate(
+    template: PostCourseTemplate,
+    id: number
+  ): Observable<CourseTemplate> {
+    return this.http.put<CourseTemplate>(`${this.baseUrl}/${id}`, template);
   }
 
   //Post
-  postCourseTemplate(template:PostCourseTemplate):Observable<CourseTemplate>{
-    return this.http.post<CourseTemplate>(this.baseUrl,template);
+  postCourseTemplate(template: PostCourseTemplate): Observable<CourseTemplate> {
+    return this.http.post<CourseTemplate>(this.baseUrl, template);
   }
 
-  postQualificationToCourseTemplate(courseId: number, qualiId: number, postCourse: PostCourseTemplate): Observable<CourseTemplate>{
+  postQualificationToCourseTemplate(
+    courseId: number,
+    qualiId: number,
+    postCourse: PostCourseTemplate
+  ): Observable<CourseTemplate> {
     const apiUrl: string = `${this.baseUrl}/${courseId}/qualification/${qualiId}`;
     return this.http.post<CourseTemplate>(apiUrl, postCourse);
   }
 
   //Delete
-  deleteCourseTemplate(id:number):Observable<void>{
+  deleteCourseTemplate(id: number): Observable<void> {
     return this.http.delete<void>(this.baseUrl);
   }
 
-  deleteQualificationFromCourseTemplate(courseId: number, qualiId: number): Observable<CourseTemplate>{
+  deleteQualificationFromCourseTemplate(
+    courseId: number,
+    qualiId: number
+  ): Observable<CourseTemplate> {
     const apiUrl: string = `${this.baseUrl}/${courseId}/qualification/${qualiId}`;
-    return  this.http.delete<CourseTemplate>(apiUrl);
+    return this.http.delete<CourseTemplate>(apiUrl);
   }
 }
