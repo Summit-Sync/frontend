@@ -32,9 +32,10 @@ export class Course {
 
   validate(): boolean {
     // Check if required fields are present
+
     if (
       !this.title ||
-      !this.acronym ||
+      // !this.acronym ||
       !this.description ||
       // !this.location ||
       !this.notes
@@ -44,7 +45,7 @@ export class Course {
 
     // Check if numerical fields are not zero
     if (
-      this.courseNumber === 0 ||
+      // this.courseNumber === 0 ||
       this.duration === 0 ||
       this.numberParticipants === 0 ||
       this.numberWaitlist === 0
@@ -81,7 +82,7 @@ export class Course {
 
     if (
       !this.participants.every((participant) => {
-        return participant.validate();
+        return participant.validateExceptAllEmpty();
       })
     ) {
       return false;
@@ -89,7 +90,7 @@ export class Course {
 
     if (
       !this.waitList.every((wc) => {
-        return wc.validate();
+        return wc.validateExceptAllEmpty();
       })
     ) {
       return false;
