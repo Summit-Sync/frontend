@@ -4,8 +4,8 @@ import { Observable, of } from 'rxjs';
 import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
 import { Location } from '../../models/location/Location';
 import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
-import { Price } from '../../models/price/Price';
 import { Qualification } from '../../models/qualification/Qualification';
+import { PostPrice } from '../../models/price/PostPrice';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +41,7 @@ export class CoursetemplateService {
     120,
     4,
     2,
-    [new Price(0, 'Regular', 100), new Price(1, 'Special', 80)],
+    [new PostPrice('Regular', 100), new PostPrice('Special', 80)],
     'vor der großen Halle',
     [
       new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
@@ -59,7 +59,7 @@ export class CoursetemplateService {
     200,
     5,
     2,
-    [new Price(2, 'Erweiterter Kurs', 130)],
+    [new PostPrice('Erweiterter Kurs', 130)],
     'vor der großen Halle',
     [
       new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
