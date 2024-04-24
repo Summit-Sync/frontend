@@ -3,7 +3,7 @@
     <h1 mat-dialog-title>Vorlage auswählen</h1>
   </div>
   <div>
-    <mat-dialog-content>
+    <mat-dialog-content [formGroup]="selectedTemplateForm">
       <div>
         <mat-select placeholder="Vorlage Auswählen" formControlName="template">
           <mat-option *ngFor="let template of template$ | async" value="{{template.id}}">{{template.description}}</mat-option>

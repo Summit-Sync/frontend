@@ -11,7 +11,7 @@ import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
 import {Observable} from "rxjs";
 import {CourseService} from "../../../services/course/course.service";
 import {GrouptemplateService} from "../../../services/grouptemplate/grouptemplate.service";
-import {CourseTemplateService} from "../../../services/coursetemplate/courseTemplate.service";
+import {CoursetemplateService} from "../../../services/coursetemplate/coursetemplate.service";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
@@ -42,7 +42,7 @@ export class TemplateSelectDialogComponent {
   isCourse: boolean;
 
   constructor(
-    private courseService: CourseTemplateService,
+    private courseService: CoursetemplateService,
     private groupService: GrouptemplateService,
     private dialogRef: MatDialogRef<TemplateSelectDialogComponent>,
     @Inject(MAT_DIALOG_DATA)isCourse: boolean

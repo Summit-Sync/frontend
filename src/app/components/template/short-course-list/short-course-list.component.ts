@@ -67,7 +67,7 @@ export class ShortCourseListComponent implements OnInit {
 
   //         this.dialogRef.close(JSON.stringify({
   //           data:groupTemplate,
-  //           method: 'accept'}));
+  //           method: 'confirm'}));
   //       }
 
   close() {

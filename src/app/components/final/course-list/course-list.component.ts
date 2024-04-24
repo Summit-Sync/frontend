@@ -50,7 +50,7 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'accept') {
+      if (obj.method == 'confirm') {
         console.log('Dialog output:', obj.data);
         // Validate Input
         //

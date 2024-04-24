@@ -43,7 +43,7 @@ export class CourseComponent implements OnInit {
     0,
     '',
     '',
-    0,
+    '',
     '',
     [],
     0,

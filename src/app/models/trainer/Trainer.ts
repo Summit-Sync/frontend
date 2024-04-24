@@ -3,7 +3,15 @@ import {CheckboxList} from "../CheckBoxList";
 
 export class Trainer implements CheckboxList{
   displayFullName: string;
-  constructor(public id: number, public subjectId: string, public firstName: string, public lastName: string, public email: string, public phone: string, public qualification: Qualification[]) {
+  constructor(
+    public id: number,
+    public subjectId: string,
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public phone: string,
+    public qualification: Qualification[]
+  ) {
     this.displayFullName = this.firstName + ' ' + this.lastName;
   }
   validate(): boolean {
