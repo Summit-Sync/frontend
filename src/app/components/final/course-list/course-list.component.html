@@ -1,3 +1,38 @@
+<div class="searchBarWrapper">
+  <div class="dropdown">
+    <button class="dropbtn" (click)="displayDropdown = !displayDropdown">
+      {{ displayOption }}
+    </button>
+    <div
+      class="dropdown-content"
+      [ngClass]="{ 'show-dropdown-content': displayDropdown }"
+    >
+      <button
+        *ngFor="let filterOption of filterOptions"
+        (click)="optionClicked(filterOption)"
+      >
+        {{ filterOption }}
+      </button>
+    </div>
+  </div>
+  <input type="text" [(ngModel)]="searchText" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="30"
+    height="30"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    (click)="searchFilteredCourses()"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</div>
+
 <table>
   <thead>
     <tr>
@@ -12,7 +47,8 @@
   </thead>
   <tbody>
     <ng-container *ngFor="let c of courses | async">
-      <tr>
+      <tr *ngIf="c | search : selectedOption : filterText">
+        <!-- <tr> -->
         <td>{{ c.acronym }}</td>
         <td>{{ c.courseNumber }}</td>
         <td>
