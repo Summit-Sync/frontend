@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
 import { CommonModule, NgFor } from '@angular/common';
-import { CourseTemplateComponent } from '../course-template/course-template.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
 import { PostCourseTemplate } from '../../../models/coursetemplate/PostCourseTemplate';
@@ -29,17 +28,11 @@ export class CourseTemplateViewComponent {
   ){}
 
   ngOnInit(){
-    this.updateList()
   }
 
   deleteTemplate(id:number){
     this.courseTemplateService.deleteCourseTemplate(id).subscribe(()=>{
-      this.updateList();
     });
-  }
-
-  updateList(){
-    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>this.courseTemplateList=data)
   }
 
   openDetails(template:CourseTemplate){

@@ -34,6 +34,7 @@ export class QualificationsService {
 
   //Get
   getAllQualifications(): Observable<Qualification[]>{
+    return this.qualifications;
     return this.http.get<Qualification[]>(this.baseUrl);
   }
   getQualificationById(id: number): Observable<Qualification>{

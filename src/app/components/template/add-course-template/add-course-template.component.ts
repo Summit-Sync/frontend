@@ -11,6 +11,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 import { CheckboxList } from '../../../models/CheckBoxList';
 import { Price } from '../../../models/price/Price';
 import { Qualification } from '../../../models/qualification/Qualification';
+import { CategoryPrice } from '../../../models/price/NewPrice';
 
 @Component({
   selector: 'app-add-course-template',
@@ -24,12 +25,12 @@ export class AddCourseTemplateComponent {
   courseTemplate=new PostCourseTemplate('','','',0,0,0,0,0,'',[],[],0)
 
   requiredQualifications: CheckboxList[] = [];
-  coursePrices: CheckboxList[] = [];
   courseLocation: CheckboxList[] = [];
 
   locationList: CheckboxList[];
   qualificationList: CheckboxList[];
-  priceList: CheckboxList[];
+
+  defaultPriceListLength=3
 
   constructor(
         private dialogRef:MatDialogRef<AddCourseTemplateComponent>,
@@ -44,17 +45,22 @@ export class AddCourseTemplateComponent {
             }
           });
           locationService.getAllLocations().subscribe(data=>this.locationList = this.mapLocationListToCheckboxList(data));
-          priceService.getAllPrices().subscribe(data=>this.priceList = this.mapPriceListToCheckboxList(data));
           qualificationService.getAllQualifications().subscribe(data=>this.qualificationList = this.mapQualificationListToCheckboxList(data));
           
         }
+
+        ngOnInit(){
+          let priceList: CategoryPrice[]=[];
+          for(let i=0; i < this.defaultPriceListLength; i++){
+            priceList.push(new CategoryPrice('',''))
+          }
+          this.courseTemplate.price = priceList;
+        }
     
         save() {
-          let priceIds: number[] = this.mapCheckboxListToNumberList(this.coursePrices);
           let qualificationIds: number[] = this.mapCheckboxListToNumberList(this.requiredQualifications);
           let location: number= this.mapCheckboxListToNumberList(this.courseLocation)[0];
           this.courseTemplate.requiredQualifications = qualificationIds;
-          this.courseTemplate.price = priceIds;
           this.courseTemplate.location = location;
           if(this.courseTemplate.validate()){
             console.log(this.courseTemplate)
@@ -80,23 +86,12 @@ export class AddCourseTemplateComponent {
           return list;
         }
 
-        mapPriceListToCheckboxList(data: Price[]): CheckboxList[]{
-          let checkboxList: CheckboxList[] = [];
-          for(let price of data){
-            checkboxList.push({
-              id: price.id,
-              displayFullName: `${price.name}: ${price.price}`
-            })
-          }
-          return checkboxList;
-        }
-
         mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[]{
           let checkboxList: CheckboxList[] = [];
           for(let qualification of data){
             checkboxList.push({
               id: qualification.id,
-              displayFullName: qualification.skill
+              displayFullName: qualification.name
             })
           }
           return checkboxList;
@@ -112,6 +107,13 @@ export class AddCourseTemplateComponent {
           }
           console.log(checkboxList)
           return checkboxList;
+        }
+
+        addPrice(){
+          this.courseTemplate.price.push(new CategoryPrice('',''))
+        }
+        removePrice(){
+          this.courseTemplate.price.length = this.courseTemplate.price.length - 1;
         }
     }
     

@@ -25,8 +25,10 @@ export class MultiSelectDropdownComponent {
         ? this.addObject(clickedObject)
         : this.deleteObject(clickedObject);
     }else{
-      this.selectedOptions = [];
-      this.addObject(clickedObject);
+      this.selectedOptions.length = 0
+      if(checkbox.checked){
+       this.addObject(clickedObject);
+      }
     }
   }
 
