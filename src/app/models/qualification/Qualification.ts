@@ -1,13 +1,13 @@
-import {CheckboxList} from "../CheckBoxList";
+import { CheckboxList } from '../interfaces/CheckBoxList';
 
-export class Qualification implements CheckboxList{
+export class Qualification implements CheckboxList {
   displayFullName: string;
   constructor(public id: number, public name: string) {
     this.displayFullName = name;
   }
 
   validate(): boolean {
-    if (!this.id || !this.name){
+    if (!this.id || !this.name) {
       return false;
     }
     return true;

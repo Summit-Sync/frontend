@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
-import { CheckboxList } from '../../../models/CheckBoxList';
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 
 @Component({
   selector: 'app-multi-select-dropdown',
@@ -20,11 +20,11 @@ export class MultiSelectDropdownComponent {
   onCheckBoxClick(event: Event, index: number) {
     const checkbox = event.target as HTMLInputElement;
     const clickedObject = this.allOptions[index];
-    if(this.allowMultiple){
+    if (this.allowMultiple) {
       checkbox.checked
         ? this.addObject(clickedObject)
         : this.deleteObject(clickedObject);
-    }else{
+    } else {
       this.selectedOptions = [];
       this.addObject(clickedObject);
     }

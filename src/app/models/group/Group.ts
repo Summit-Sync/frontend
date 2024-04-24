@@ -4,7 +4,7 @@ import { Trainer } from '../trainer/Trainer';
 export class Group {
   constructor(
     public id: number,
-    public groupTitle: string,
+    public title: string,
     public groupNumber: string,
     public description: string,
     public datesCount: number,
@@ -26,7 +26,7 @@ export class Group {
 
   validate(): boolean {
     if (
-      !this.groupTitle ||
+      !this.title ||
       !this.groupNumber ||
       !this.description ||
       !this.contact ||

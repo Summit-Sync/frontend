@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CheckboxList } from '../../models/CheckBoxList';
+import { CheckboxList } from '../../models/interfaces/CheckBoxList';
 
 @Pipe({
   name: 'checkItemInList',
