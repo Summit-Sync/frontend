@@ -16,7 +16,7 @@ export class PostGroup {
     public pricePerParticipant: number,
     public requiredQualifications: number[],
     public participantsPerTrainer: number,
-    public trainers: Trainer[]
+    public trainers: number[]
   ) {}
 
   validate(): boolean {
@@ -50,14 +50,6 @@ export class PostGroup {
       this.events.length === 0 ||
       this.requiredQualifications.length === 0 ||
       this.trainers.length === 0
-    ) {
-      return false;
-    }
-
-    if (
-      this.trainers.some((trainer) => {
-        return trainer.validate();
-      })
     ) {
       return false;
     }

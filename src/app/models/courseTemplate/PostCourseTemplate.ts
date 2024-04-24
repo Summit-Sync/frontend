@@ -1,3 +1,5 @@
+import {PostPrice} from "../price/PostPrice";
+
 export class PostCourseTemplate{
     constructor(
         public acronym:string,
@@ -9,7 +11,7 @@ export class PostCourseTemplate{
         public numberOfWaitlist:number,
         public location:number,
         public meetingPoint:string,
-        public price:number[],
+        public price: PostPrice[],
         public requiredQualifications:number[],
         public numberTrainers:number,
     ){}

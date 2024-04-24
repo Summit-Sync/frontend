@@ -1,16 +1,16 @@
-import { Location } from '../location/Location';
-import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Participant } from '../participant/Participant';
 import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
+import {CourseTemplate} from "../courseTemplate/CourseTemplate";
+import { Location } from '../location/Location';
 
 export class Course {
   constructor(
     public id: number,
     public title: string,
     public acronym: string,
-    public courseNumber: number,
+    public courseNumber: string,
     public description: string,
     public dates: Date[],
     public duration: number,

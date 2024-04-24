@@ -1,50 +1,54 @@
 import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
+import {Contact} from "../contact/Contact";
+import { Location } from '../location/Location';
+import {TrainerApplication} from "../trainer/TrainerApplication";
 
 export class Group {
   constructor(
     public id: number,
-    public groupTitle: string,
+    public canceled: boolean,
     public groupNumber: string,
+    public finished: boolean,
+    public title: string,
     public description: string,
-    public datesCount: number,
-    public dates: Date[],
+    public numberOfDates: number,
     public duration: number,
-    public participantsCount: number,
-    public contact: string,
-    public contactEmail: string,
-    public contactPhoneNumber: string,
-    public place: string,
-    public trainerKey: number,
-    public pricePerParticipent: number,
-    public pricePerHour: number,
-    public totalPrice: number,
-    public trainerQualifications: Qualification[],
-    public trainers: Trainer[],
-    public notes: string
+    public contact: Contact,
+    public dates: Date[],
+    public numberParticipants: number,
+    public location: Location,
+    public meetingPoint: string,
+    public trainerPricePerHour: number,
+    public pricePerParticipant: number,
+    public requiredQualifications: Qualification[],
+    public participantsPerTrainer: number,
+    public trainers: TrainerApplication[],
+    public totalPrice: number
   ) {}
 
   validate(): boolean {
     if (
-      !this.groupTitle ||
+      !this.title ||
       !this.groupNumber ||
       !this.description ||
       !this.contact ||
-      !this.contactEmail ||
-      !this.contactPhoneNumber ||
-      !this.place ||
-      !this.notes
+      !this.trainerPricePerHour ||
+      !this.participantsPerTrainer ||
+      !this.totalPrice ||
+      !this.meetingPoint ||
+      !this.pricePerParticipant
     ) {
       return false;
     }
 
     if (
-      this.datesCount === 0 ||
+      this.numberOfDates === 0 ||
       this.duration === 0 ||
-      this.participantsCount === 0 ||
-      this.trainerKey === 0 ||
-      this.pricePerParticipent === 0 ||
-      this.pricePerHour === 0 ||
+      this.numberParticipants === 0 ||
+      this.participantsPerTrainer === 0 ||
+      this.pricePerParticipant === 0 ||
+      this.trainerPricePerHour === 0 ||
       this.totalPrice === 0
     ) {
       return false;
@@ -52,14 +56,14 @@ export class Group {
 
     if (
       this.dates.length === 0 ||
-      this.trainerQualifications.length === 0 ||
+      this.requiredQualifications.length === 0 ||
       this.trainers.length === 0
     ) {
       return false;
     }
 
     if (
-      this.trainerQualifications.some((tq) => {
+      this.requiredQualifications.some((tq) => {
         return tq.validate();
       })
     ) {

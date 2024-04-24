@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <h1 mat-dialog-title>Vorlage auswählen</h1>
+  </div>
+  <div>
+    <mat-dialog-content>
+      <div>
+        <mat-select placeholder="Vorlage Auswählen" formControlName="template">
+          <mat-option *ngFor="let template of template$ | async" value="{{template.id}}">{{template.description}}</mat-option>
+        </mat-select>
+      </div>
+    </mat-dialog-content>
+  </div>
+  <div class="buttonDiv">
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="confirm()">Auswählen</button>
+      <button mat-raised-button (click)="cancel()">Abbrechen</button>
+    </mat-dialog-actions>
+  </div>
+</div>

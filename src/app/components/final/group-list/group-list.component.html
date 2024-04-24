@@ -13,7 +13,7 @@
   <tbody>
     <ng-container *ngFor="let g of groups | async">
       <tr>
-        <td>{{ g.groupTitle }}</td>
+        <td>{{ g.title }}</td>
         <!-- <td>{{ g.dates?.[1] || "-" }}</td>
         <td>{{ g.dates?.[2] || "-" }}</td> -->
         <td>{{ g.dates.length }}</td>
@@ -24,7 +24,7 @@
             {{ trainer.lastName }}
           </span>
         </td>
-        <td>{{ g.participantsCount }}</td>
+        <td>{{ g.numberParticipants }}</td>
         <td>
           <button (click)="showDetails(g)">Bewerben</button>
         </td>

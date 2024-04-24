@@ -4,7 +4,7 @@ export class Contact {
     public firstName: string,
     public lastName: string,
     public email: string,
-    public telephone: string) { }
+    public phone: string) { }
 
   validate(): boolean {
     if (
@@ -12,7 +12,7 @@ export class Contact {
       !this.firstName ||
       !this.lastName ||
       !this.email ||
-      !this.telephone) {
+      !this.phone) {
       return false;
     }
     return true;
