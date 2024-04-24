@@ -1,38 +1,68 @@
 <div class="outer">
     <div class="header">
-        <button (click)="openCreateDialog()">Kursvorlage erstelleb</button>
+
     </div>
     <div class="body">
-      <table>
-        <thead>
-          <tr>
-            <th>Kurskürzel</th>
-            <th>Anzahl Temrmine</th>
-            <th>Teilnehmeranzahl</th>
-            <th>Wartelistenlänge</th>
-            <th>Trainer</th>
-            <th>Ort</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let template of courseTemplateList">
-            <td>{{template.acronym}}</td>
-            <td>{{template.numberOfDates}}</td>
-            <td>{{template.numberOfParticipants}}</td>
-            <td>{{template.numberWaitlist}}</td>
-            <td>{{template.numberTrainers}}</td>
-            <td>{{template.meetingPoint}}</td>
-            <td><button (click)="openDetails(template)">Details</button></td>
-            <td><button (click)="deleteTemplate(template.id)">Löschen</button></td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="title">
+            <p>Titel: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.title}}</p>
+        </div>
+        <div class="acronym">
+            <p>Kürzel: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.acronym}}</p>
+        </div>
+        <div class="description">
+            <p>Beschreibung: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.description}}</p>
+        </div>
+        <div class="number-of-dates">
+            <p>Anzahl Terminen: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberOfDates}}</p>
+        </div>
+        <div class="duration">
+            <p>Dauer in Minuten: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.duration}}</p>
+        </div>
+        <div class="number-of-participants">
+            <p>Maximale Teilnehmeranzahl: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberOfParticipants}}</p>
+        </div>
+        <div class="number-of-waitlist">
+            <p>Wartelistenlänge: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberWaitlist}}</p>
+        </div>
+        <div class="location">
+            <p>Ort: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.location.room}}</p>
+        </div>
+        <div class="meeting-point">
+            <p>Treffpunkt: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.meetingPoint}}</p>
+        </div>
+        <div class="price">
+            <p>Preisliste: </p>
+            <div *ngIf="!isEdit; else editTemplate">
+                <p *ngFor="let price of courseTemplate.price">{{price.name}}:{{price.price}}</p>
+            </div>
+        </div>
+        <div class="required-qualifications">
+            <p>Benötigte Qualifikationen: </p>
+            <div *ngIf="!isEdit; else editTemplate">
+                <p *ngFor="let qualification of courseTemplate.requiredQualifications">
+                    {{qualification.name}}
+                </p>
+            </div>
+        </div>
+        <div class="number-of-trainers">
+            <p>Anzahl Trainer: </p>
+            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberTrainers}}</p>
+        </div>
     </div>
     <div class="footer">
-  
+
     </div>
-  
-  </div>
-  
+</div>
+
+<ng-template #editTemplate>
+
+</ng-template>

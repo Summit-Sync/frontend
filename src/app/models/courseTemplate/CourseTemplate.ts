@@ -1,6 +1,7 @@
+import { Location } from '../location/Location';
+import { CategoryPrice } from '../price/NewPrice';
 import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
-import { Location } from '../location/Location';
 
 export class CourseTemplate {
   constructor(
@@ -12,7 +13,7 @@ export class CourseTemplate {
     public duration: number,
     public numberOfParticipants: number,
     public numberWaitlist: number,
-    public price: PostPrice[],
+    public price: CategoryPrice[],
     public meetingPoint: string,
     public requiredQualifications: Qualification[],
     public numberTrainers:number,
@@ -29,13 +30,13 @@ export class CourseTemplate {
     ) {
       return false;
     }
-
+    console.log(this.numberWaitlist)
     // Check if numerical fields are not zero
     if (
-      this.numberOfDates === 0 ||
-      this.duration === 0 ||
-      this.numberOfParticipants === 0 ||
-      this.numberWaitlist === 0
+      Number(this.numberOfDates) == 0 ||
+      Number(this.duration) == 0 ||
+      Number(this.numberOfParticipants) == 0 ||
+      Number(this.numberWaitlist) == 0
     ) {
       return false;
     }

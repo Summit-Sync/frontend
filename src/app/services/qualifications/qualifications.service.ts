@@ -33,10 +33,8 @@ export class QualificationsService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllQualifications(): Observable<Qualification[]> {
-    this.http.get<Qualification[]>(this.baseUrl).subscribe((qualification) => {
-      console.log('test', qualification);
-    });
+  getAllQualifications(): Observable<Qualification[]>{
+    return this.qualifications;
     return this.http.get<Qualification[]>(this.baseUrl);
   }
 

@@ -7,6 +7,7 @@ import {AppComponent} from "./app.component";
 import { CourseTemplate } from './models/courseTemplate/CourseTemplate';
 import { CourseTemplateComponent } from './components/template/course-template/course-template.component';
 import { CourseTemplateViewComponent } from './components/template/course-template-view/course-template-view.component';
+import { CourseTemplateListComponent } from './components/template/course-template-list/course-template-list.component';
 
 export const routes: Routes = [
   // Kurs Routen
@@ -18,7 +19,8 @@ export const routes: Routes = [
   //Gruppentemplates Routen
   // {path: 'gruppenvorlage', component:GroupTemplateListComponent, canActivate:[]},
   //Kursvorlagen
-  {path:'kursvorlage',component:CourseTemplateViewComponent,canActivate:[]},
+  {path:'kursvorlage', component:CourseTemplateListComponent, canActivate:[]},
+  {path:'kursvorlage/:id', component:CourseTemplateViewComponent, canActivate:[]},
   // Root Routen
   { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},
