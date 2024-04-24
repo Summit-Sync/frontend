@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { PostPrice } from '../../models/price/PostPrice';
 import {Price} from "../../models/price/Price";
 
@@ -13,8 +13,10 @@ export class PriceService {
 
   constructor(private http:HttpClient) { }
 
-  //Get
-  getAllPrices(): Observable<Price[]>{
+  getAllPrices():Observable<Price[]>{
+    let price1=new Price(1,"new",1.111);
+    let price2=new Price(1,"intermediate",2.222)
+    return of([price1,price2])
     return this.http.get<Price[]>(this.baseUrl);
   }
 
@@ -39,13 +41,4 @@ export class PriceService {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     this.http.delete(apiUrl);
   }
-/*
-  getAllPrices():Observable<PostPrice[]>{
-    let price1=new PostPrice("new",1.111);
-    let price2=new PostPrice("intermediate",2.222)
-    return of([price1,price2])
-    return this.http.get<PostPrice[]>(this.url);
-  }
-
- */
 }
