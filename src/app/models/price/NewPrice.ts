@@ -4,7 +4,7 @@ export class CategoryPrice{
         public price: string
     ){}
 
-    validatePrice(): boolean{
+    validate(): boolean{
         return !(this.category||this.price);
     }
 }

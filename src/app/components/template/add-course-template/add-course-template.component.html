@@ -47,6 +47,14 @@
                 <input [(ngModel)]="price.price">
             </div>
         </div>
+        <div class="location">
+            <label for="location">Ort</label>
+            <app-multi-select-dropdown
+            [allowMultiple]="false"
+            [allOptions]="locationList"
+            [selectedOptions]="courseLocation"
+            [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
+        </div>
         <div class="meeting-point">
             <label for="meeting-point">Treffpunkt</label>
             <input id="meeting-point" type="text" placeholder="" [(ngModel)]="courseTemplate.meetingPoint">
@@ -63,14 +71,7 @@
             <label for="number-trainers">Anzahl Trainer</label>
             <input id="number-trainers" type="text" placeholder="" [(ngModel)]="courseTemplate.numberTrainers">
         </div>
-        <div class="location">
-            <label for="location">Ort</label>
-            <app-multi-select-dropdown
-            [allowMultiple]="false"
-            [allOptions]="locationList"
-            [selectedOptions]="courseLocation"
-            [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
-        </div>
+        
     </div>
     <div class="footer">
         <button class="save-button dialog-button" (click)="save()">Speichern</button>

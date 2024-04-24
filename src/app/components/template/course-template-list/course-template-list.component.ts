@@ -4,6 +4,7 @@ import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
+import { CourseTemplateDetailViewComponent } from '../course-template-detail-view/course-template-detail-view.component';
 
 @Component({
   selector: 'app-course-template-list',
@@ -36,10 +37,13 @@ export class CourseTemplateListComponent {
   }
 
   openDetails(template:CourseTemplate){
-    const dialogRef= this.dialog.open(CourseTemplateListComponent, {
+    const dialogRef= this.dialog.open(CourseTemplateDetailViewComponent, {
       disableClose: true,
       width: '40dvw',
-      height: '80dvh'
+      height: '80dvh',
+      data: {
+        template: template
+      }
     })
   }
 
