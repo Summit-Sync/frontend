@@ -16,11 +16,7 @@
             <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.description}}</p>
         </div>
         <div class="number-of-dates">
-<<<<<<< Updated upstream
             <p>Anzahl Terminen: </p>
-=======
-            <p>Anzahl an Terminen: </p>
->>>>>>> Stashed changes
             <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberOfDates}}</p>
         </div>
         <div class="duration">
@@ -35,7 +31,6 @@
             <p>Wartelistenlänge: </p>
             <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberWaitlist}}</p>
         </div>
-<<<<<<< Updated upstream
         <div class="location">
             <p>Ort: </p>
             <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.location.room}}</p>
@@ -44,30 +39,17 @@
             <p>Treffpunkt: </p>
             <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.meetingPoint}}</p>
         </div>
-=======
->>>>>>> Stashed changes
         <div class="price">
             <p>Preisliste: </p>
             <div *ngIf="!isEdit; else editTemplate">
                 <p *ngFor="let price of courseTemplate.price">{{price.name}}:{{price.price}}</p>
             </div>
         </div>
-<<<<<<< Updated upstream
-=======
-        <div class="meeting-point">
-            <p>Treffpunkt: </p>
-            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.meetingPoint}}</p>
-        </div>
->>>>>>> Stashed changes
         <div class="required-qualifications">
             <p>Benötigte Qualifikationen: </p>
             <div *ngIf="!isEdit; else editTemplate">
                 <p *ngFor="let qualification of courseTemplate.requiredQualifications">
-<<<<<<< Updated upstream
                     {{qualification.name}}
-=======
-                    {{qualification.skill}}
->>>>>>> Stashed changes
                 </p>
             </div>
         </div>
@@ -75,14 +57,6 @@
             <p>Anzahl Trainer: </p>
             <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.numberTrainers}}</p>
         </div>
-<<<<<<< Updated upstream
-        
-=======
-        <div class="location">
-            <p>Ort: </p>
-            <p *ngIf="!isEdit; else editTemplate">{{courseTemplate.location.room}}</p>
-        </div>
->>>>>>> Stashed changes
     </div>
     <div class="footer">
 

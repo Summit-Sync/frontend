@@ -33,13 +33,19 @@
             <input id="number-waitlist" type="text" placeholder="" [(ngModel)]="courseTemplate.numberOfWaitlist">
         </div>
         <div class="price">
-            <label for="price">Preise</label>
-            <app-multi-select-dropdown
-            [allOptions] = "priceList"
-            [selectedOptions] = "coursePrices"
-            [dropdownHeadline] = "'Preise'"
-            [allowMultiple] = "true"
-            ></app-multi-select-dropdown>
+            <div>
+                <span>Preise:</span>
+                <button (click)="addPrice()">+</button>
+                <button (click)="removePrice()">-</button>
+            </div>
+            <div>
+                <span>Kategorie</span>
+                <span>Preis</span>
+            </div>
+            <div *ngFor="let price of courseTemplate.price">
+                <input [(ngModel)]="price.category">
+                <input [(ngModel)]="price.price">
+            </div>
         </div>
         <div class="meeting-point">
             <label for="meeting-point">Treffpunkt</label>
