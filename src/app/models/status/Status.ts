@@ -1,12 +1,8 @@
-export class Status{
-  constructor(public statusId: number, public text: string) {
-  }
+export class Status {
+  constructor(public statusId: number, public text: string) {}
 
   validate(): boolean {
-    if (!this.statusId){
-      return false;
-    }
-    if (!this.text){
+    if (!this.text) {
       return false;
     }
     return true;

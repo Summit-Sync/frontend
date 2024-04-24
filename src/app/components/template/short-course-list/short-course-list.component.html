@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Kurskürzel</th>
+      <th>Anzahl Termine</th>
+      <th>Trainer Qualifikationen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let template of courseTemplates | async">
+      <tr class="shortListContent" (dblclick)="openCourseCreator(template)">
+        <td>{{ template.acronym }}</td>
+        <td>{{ template.numberOfDates }}</td>
+        <td>
+          <p *ngFor="let qualification of template.requiredQualifications">
+            {{ qualification.name }}
+          </p>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<button (click)="close()">Close</button>

@@ -1,0 +1,10 @@
+table {
+  border-collapse: collapse;
+}
+
+.shortListContent {
+  &:hover{
+
+    background-color: #d3d3d3;
+  }
+}
