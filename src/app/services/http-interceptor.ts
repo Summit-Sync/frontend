@@ -1,0 +1,18 @@
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+// import { UserService } from '../user.service';
+import { from, switchMap } from 'rxjs';
+
+export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  let token: string =
+    'eyJhbGciOiJFUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKRHlvU2NsRWI4UE9ydkp4UlFYYzRoTVNmT3YzUUFYbGRYSG1wVEJxNXlzIn0.eyJleHAiOjE3MTM5ODk5MzgsImlhdCI6MTcxMzk1MzkzOCwianRpIjoiYzU4NGUzZTQtMDA2NC00Yjk1LWJkMmEtZmNmMWEwOTNmZmFkIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5zdW1taXRzeW5jLm1lc2NodGVyLm1lL3JlYWxtcy9zdW1taXQtc3luYyIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50Iiwic3VtbWl0c3luYyIsImFjY291bnQiXSwic3ViIjoiNzI1NGRkNWUtZGM4MC00M2FlLWE3YjEtZTFiNTg5MGUwNDg0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3VtbWl0LXN5bmMtYmZmIiwic2Vzc2lvbl9zdGF0ZSI6IjE3NzhhMDY3LTQxZGUtNGY5Yy05NmFjLWEwNjU0OWRkZWY5NCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovLzEyNy4wLjAuMToqIiwiaHR0cDovL2xvY2FsaG9zdDoqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXN1bW1pdC1zeW5jIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlYWxtLW1hbmFnZW1lbnQiOnsicm9sZXMiOlsidmlldy1yZWFsbSIsIm1hbmFnZS11c2VycyIsInZpZXctdXNlcnMiLCJxdWVyeS1ncm91cHMiLCJxdWVyeS11c2VycyJdfSwic3VtbWl0c3luYyI6eyJyb2xlcyI6WyJhZG1pbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInNpZCI6IjE3NzhhMDY3LTQxZGUtNGY5Yy05NmFjLWEwNjU0OWRkZWY5NCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IlRlc3QgQWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0X2FkbWluIiwiZ2l2ZW5fbmFtZSI6IlRlc3QiLCJmYW1pbHlfbmFtZSI6IkFkbWluIn0.Sr8xbQE2HN_VuCtKyr4xKTnoz4hJuu9qr_22C-rybVkQr0J4N91a61z0-kOURE83YN0CyxQI8yDIeEzMWSw-MA';
+
+  //   const userService = inject(UserService);
+
+  console.log('injecting token');
+  return next(
+    req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`),
+    })
+  );
+};
