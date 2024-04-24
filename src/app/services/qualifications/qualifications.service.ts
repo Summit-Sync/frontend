@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Qualification } from '../../models/qualification/Qualification';
-import {HttpClient} from "@angular/common/http";
-import {Trainer} from "../../models/trainer/Trainer";
-import {Course} from "../../models/course/Course";
-import {PostQualification} from "../../models/qualification/PostQualification";
+import { HttpClient } from '@angular/common/http';
+import { Trainer } from '../../models/trainer/Trainer';
+import { Course } from '../../models/course/Course';
+import { PostQualification } from '../../models/qualification/PostQualification';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QualificationsService {
-  baseUrl:string="http://localhost:8080/api/v1/qualification";
+  baseUrl: string = 'http://localhost:8080/api/v1/qualification';
 
   qualification1 = new Qualification(1, 'hoch klettern');
   qualification2 = new Qualification(2, 'weit klettern');
@@ -33,42 +33,49 @@ export class QualificationsService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllQualifications(): Observable<Qualification[]>{
+  getAllQualifications(): Observable<Qualification[]> {
+    this.http.get<Qualification[]>(this.baseUrl).subscribe((qualification) => {
+      console.log('test', qualification);
+    });
     return this.http.get<Qualification[]>(this.baseUrl);
   }
-  getQualificationById(id: number): Observable<Qualification>{
+
+  getQualificationById(id: number): Observable<Qualification> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.get<Qualification>(apiUrl);
   }
 
-  getTrainersByQualification(id: number): Observable<Trainer[]>{
+  getTrainersByQualification(id: number): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}/${id}/trainer`;
     return this.http.get<Trainer[]>(apiUrl);
   }
 
-  getCoursesByQualification(id: number): Observable<Course[]>{
+  getCoursesByQualification(id: number): Observable<Course[]> {
     const apiUrl: string = `${this.baseUrl}/${id}/course`;
     return this.http.get<Course[]>(apiUrl);
   }
 
   //Put
-  putQualification(id: number, quali: Qualification): Observable<Qualification>{
+  putQualification(
+    id: number,
+    quali: Qualification
+  ): Observable<Qualification> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.put<Qualification>(apiUrl, quali);
   }
 
   // Post
-  postQualification(quali: PostQualification): Observable<Qualification>{
+  postQualification(quali: PostQualification): Observable<Qualification> {
     return this.http.post<Qualification>(this.baseUrl, quali);
   }
 
   //Delete
-  deleteQualification(id: number): void{
+  deleteQualification(id: number): void {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl)
+    this.http.delete(apiUrl);
   }
 
-/*
+  /*
   getAllQualifications(): Observable<Qualification[]> {
     return this.qualifications;
   }
