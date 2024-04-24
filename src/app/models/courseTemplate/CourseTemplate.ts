@@ -1,4 +1,5 @@
 import { Location } from '../location/Location';
+import { CategoryPrice } from '../price/NewPrice';
 import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
 
@@ -12,7 +13,7 @@ export class CourseTemplate {
     public duration: number,
     public numberOfParticipants: number,
     public numberWaitlist: number,
-    public price: PostPrice[],
+    public price: CategoryPrice[],
     public meetingPoint: string,
     public requiredQualifications: Qualification[],
     public numberTrainers:number,
