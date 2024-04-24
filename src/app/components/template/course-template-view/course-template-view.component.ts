@@ -4,7 +4,6 @@ import { CoursetemplateService } from '../../../services/coursetemplate/coursete
 import { CommonModule, NgFor } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
-import { PostCourseTemplate } from '../../../models/coursetemplate/PostCourseTemplate';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 

@@ -1,11 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
 import { CommonModule } from '@angular/common';
-import { PostCourseTemplate } from '../../../models/coursetemplate/PostCourseTemplate';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
-import { CheckboxList } from '../../../models/CheckBoxList';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 
 @Component({
     selector: 'app-course-template-detail-view',
