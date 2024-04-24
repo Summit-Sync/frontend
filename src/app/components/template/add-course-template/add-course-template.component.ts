@@ -3,12 +3,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { LocationService } from '../../../services/location/location.service';
 import { PriceService } from '../../../services/price/price.service';
 import { QualificationsService } from '../../../services/qualifications/qualifications.service';
-import { PostCourseTemplate } from '../../../models/coursetemplate/PostCourseTemplate';
+import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
 import { Location } from '../../../models/location/Location';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
-import { CheckboxList } from '../../../models/CheckBoxList';
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 import { Price } from '../../../models/price/Price';
 import { Qualification } from '../../../models/qualification/Qualification';
 import { CategoryPrice } from '../../../models/price/NewPrice';
@@ -46,7 +46,7 @@ export class AddCourseTemplateComponent {
           });
           locationService.getAllLocations().subscribe(data=>this.locationList = this.mapLocationListToCheckboxList(data));
           qualificationService.getAllQualifications().subscribe(data=>this.qualificationList = this.mapQualificationListToCheckboxList(data));
-          
+
         }
 
         ngOnInit(){
@@ -56,7 +56,7 @@ export class AddCourseTemplateComponent {
           }
           this.courseTemplate.price = priceList;
         }
-    
+
         save() {
           let qualificationIds: number[] = this.mapCheckboxListToNumberList(this.requiredQualifications);
           let location: number= this.mapCheckboxListToNumberList(this.courseLocation)[0];
@@ -70,9 +70,9 @@ export class AddCourseTemplateComponent {
           } else{
             console.log('The given template is not valid')
           }
-          
+
         }
-      
+
         cancel() {
           this.dialogRef.close(JSON.stringify({method: 'cancel'}));
         }
@@ -116,4 +116,4 @@ export class AddCourseTemplateComponent {
           this.courseTemplate.price.length = this.courseTemplate.price.length - 1;
         }
     }
-    
+

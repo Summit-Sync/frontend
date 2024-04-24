@@ -6,6 +6,7 @@ import { Location } from '../../models/location/Location';
 import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
 import { Qualification } from '../../models/qualification/Qualification';
 import { PostPrice } from '../../models/price/PostPrice';
+import {CategoryPrice} from "../../models/price/NewPrice";
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +42,7 @@ export class CoursetemplateService {
     120,
     4,
     2,
-    [new PostPrice('Regular', 100), new PostPrice('Special', 80)],
+    [new CategoryPrice('Regular', '100'), new CategoryPrice('Special', '80')],
     'vor der großen Halle',
     [
       new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
@@ -59,7 +60,7 @@ export class CoursetemplateService {
     200,
     5,
     2,
-    [new PostPrice('Erweiterter Kurs', 130)],
+    [new CategoryPrice('Erweiterter Kurs', '130')],
     'vor der großen Halle',
     [
       new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),

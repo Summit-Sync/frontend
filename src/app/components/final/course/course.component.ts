@@ -17,6 +17,7 @@ import { Status } from '../../../models/status/Status';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { Location } from '../../../models/location/Location';
+import {CategoryPrice} from "../../../models/price/NewPrice";
 
 @Component({
   selector: 'app-course',
@@ -184,7 +185,7 @@ export class CourseComponent implements OnInit {
   }
 
   addPrice() {
-    this.courseData.prices.push(new PostPrice('', 0));
+    this.courseData.prices.push(new CategoryPrice('', '0'));
   }
 
   deletePrice(index: number) {
@@ -193,8 +194,8 @@ export class CourseComponent implements OnInit {
 
   checkUnfinishedPrice() {
     const unfinishedPrices = this.courseData.prices.some((wp) => {
-      const allEmpty = wp.name == '' && wp.price == 0;
-      const allFilled = wp.name != '' && wp.price != 0;
+      const allEmpty = wp.category == '' && wp.price == '0';
+      const allFilled = wp.category != '' && wp.price != '0';
       if (!(allEmpty || allFilled)) {
         console.error(`Preis unvollständig (filler)`);
         return true;

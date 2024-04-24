@@ -4,6 +4,7 @@ import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
 import {CourseTemplate} from "../courseTemplate/CourseTemplate";
 import { Location } from '../location/Location';
+import {CategoryPrice} from "../price/NewPrice";
 
 export class Course {
   constructor(
@@ -19,7 +20,7 @@ export class Course {
     public numberParticipants: number,
     public numberWaitlist: number,
     public numberTrainers: number,
-    public prices: PostPrice[],
+    public prices: CategoryPrice[],
     public location: Location,
     public meetingPoint: string,
     public requiredQualifications: Qualification[],

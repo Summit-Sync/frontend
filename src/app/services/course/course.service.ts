@@ -10,6 +10,7 @@ import { Location } from '../../models/location/Location';
 import { Status } from '../../models/status/Status';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
+import {CategoryPrice} from "../../models/price/NewPrice";
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class CourseService {
     new BehaviorSubject<Course | null>(null);
   baseUrl: string = 'http://localhost:8080/api/v1/course';
   constructor(private http: HttpClient) {}
-  
+
 
   //Get
   getAllCourses(): Observable<Course[]> {
@@ -214,7 +215,7 @@ export class CourseService {
     2,
     1,
     1,
-    [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
+    [new CategoryPrice('Regular', '150'), new CategoryPrice('Early Bird', '120')],
     new Location(
       0,
       'room1',
@@ -283,7 +284,7 @@ export class CourseService {
     3,
     1,
     1,
-    [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
+    [new CategoryPrice('Regular', '500'), new CategoryPrice('Early Bird', '450')],
     new Location(
       0,
       'testtestroom',

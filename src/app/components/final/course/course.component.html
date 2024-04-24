@@ -313,11 +313,11 @@
       <div class="priceWrapper">
         <ng-container *ngFor="let price of courseData.prices; let i = index">
           <div class="price" *ngIf="!isEdit">
-            <p>{{ price.name }}:</p>
+            <p>{{ price.category }}:</p>
             <p>{{ price.price }}</p>
           </div>
           <ng-container *ngIf="isEdit">
-            <input type="text" [(ngModel)]="price.name" />
+            <input type="text" [(ngModel)]="price.category" />
             <input type="number" [(ngModel)]="price.price" />
             <button (click)="deletePrice(i)">-</button>
           </ng-container>

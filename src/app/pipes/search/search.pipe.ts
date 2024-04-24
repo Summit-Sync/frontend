@@ -26,11 +26,11 @@ export class SearchPipe implements PipeTransform {
         return (list as Course).location.street.includes(condition);
       case FilterOption.PriceValue:
         return (list as Course).prices.filter((price) => {
-          price.price = parseInt(condition);
+          price.price = condition;
         });
       case FilterOption.PriceName:
         return (list as Course).prices.filter((price) => {
-          price.name.includes(condition);
+          price.category.includes(condition);
         });
       case FilterOption.Qualification:
         return (list as Course).requiredQualifications.filter((q) => {
@@ -39,9 +39,7 @@ export class SearchPipe implements PipeTransform {
       case FilterOption.Trainer:
         return list.trainers.filter((trainer) => {
           return trainer.lastName.includes(condition);
-        }).length
-          ? true
-          : false;
+        }).length ? true : false;
     }
   }
 }
