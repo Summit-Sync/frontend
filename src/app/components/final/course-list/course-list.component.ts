@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { Observable, of } from 'rxjs';
 import { Course } from '../../../models/course/Course';
@@ -6,11 +13,14 @@ import { CommonModule } from '@angular/common';
 import { CourseComponent } from '../course/course.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ShortCourseListComponent } from '../../template/short-course-list/short-course-list.component';
+import { FilterOption } from '../../../models/enums/search';
+import { SearchPipe } from '../../../pipes/search/search.pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [CommonModule, CourseComponent],
+  imports: [CommonModule, FormsModule, CourseComponent, SearchPipe],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.css',
 })
@@ -18,11 +28,50 @@ export class CourseListComponent implements OnInit {
   courses: Observable<Course[]> = of([]);
   showingEdit: boolean = false;
   showingDelete: boolean = false;
+  displayDropdown: boolean = false;
+  dropdownContent: any;
+  searchText: string = '';
+  filterText: string = '';
+  selectedOption: FilterOption = FilterOption.None;
+  displayOption: FilterOption = FilterOption.None;
+  filterOptions: FilterOption[] = [
+    FilterOption.None,
+    FilterOption.Trainer,
+    FilterOption.Qualification,
+    FilterOption.PriceValue,
+    FilterOption.PriceName,
+    FilterOption.Date,
+    FilterOption.LocationRoom,
+    FilterOption.LocationStreet,
+    FilterOption.LocationPostCode,
+  ];
 
-  constructor(public courseService: CourseService, private dialog: MatDialog) {}
+  constructor(
+    public courseService: CourseService,
+    private dialog: MatDialog,
+    private elementRef: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.courses = this.courseService.getAllCourses();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    this.dropdownContent = document.querySelectorAll('.dropdown-content');
+    const btn = document.querySelectorAll('.dropbtn');
+    const clickedInside = event.composedPath().includes(this.dropdownContent);
+    if (!clickedInside && !btn && this.displayDropdown) {
+      this.displayDropdown = false;
+    }
+  }
+
+  optionClicked(filterOption: FilterOption) {
+    this.displayOption = filterOption;
+  }
+
+  searchFilteredCourses() {
+    this.selectedOption = this.displayOption;
   }
 
   showDetails(course: Course) {

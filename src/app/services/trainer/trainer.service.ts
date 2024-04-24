@@ -30,11 +30,16 @@ export class TrainerService {
 
   constructor(private http: HttpClient) {}
 
-  baseUrl: string = 'http://localhost:8080/api/v1//trainer';
+  baseUrl: string = 'http://localhost:8080/api/v1/trainer';
 
   //Get
   getAllTrainers(): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}`;
+
+    this.http.get<Trainer[]>(apiUrl).subscribe((trainers) => {
+      console.log('test', trainers);
+    });
+
     return this.http.get<Trainer[]>(apiUrl);
   }
 
@@ -44,7 +49,7 @@ export class TrainerService {
   }
 
   //Put
-  putTrainer(id: number, Trainer: Trainer): Observable<Trainer>{
+  putTrainer(id: number, Trainer: Trainer): Observable<Trainer> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.put<Trainer>(apiUrl, Trainer);
   }

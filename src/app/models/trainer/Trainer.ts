@@ -1,7 +1,7 @@
-import {Qualification} from "../qualification/Qualification"
-import {CheckboxList} from "../CheckBoxList";
+import { Qualification } from '../qualification/Qualification';
+import { CheckboxList } from '../interfaces/CheckBoxList';
 
-export class Trainer implements CheckboxList{
+export class Trainer implements CheckboxList {
   displayFullName: string;
   constructor(
     public id: number,
@@ -15,25 +15,27 @@ export class Trainer implements CheckboxList{
     this.displayFullName = this.firstName + ' ' + this.lastName;
   }
   validate(): boolean {
-    if (!this.id ||
+    if (
+      !this.id ||
       !this.email ||
       !this.subjectId ||
       !this.firstName ||
       !this.lastName ||
       !this.phone ||
-      this.qualification.length === 0) {
+      this.qualification.length === 0
+    ) {
       return false;
     }
 
-    if (!this.qualification.every((qualification) => {
-      return qualification.validate();
-    })
+    if (
+      !this.qualification.every((qualification) => {
+        return qualification.validate();
+      })
     ) {
       return false;
     }
     return true;
   }
-
 }
 
 /*
