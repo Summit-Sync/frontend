@@ -5,7 +5,6 @@ export enum FilterOption {
   PriceValue = 'PriceValue',
   PriceName = 'PriceName',
   Date = 'Date',
-  LocationRoom = 'LocationRoom',
   LocationStreet = 'LocationStreet',
   LocationPostCode = 'LocationPostCode',
 }

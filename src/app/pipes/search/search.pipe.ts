@@ -20,8 +20,6 @@ export class SearchPipe implements PipeTransform {
         return;
       case FilterOption.LocationPostCode:
         return (list as Course).location.postCode.includes(condition);
-      case FilterOption.LocationRoom:
-        return (list as Course).location.room.includes(condition);
       case FilterOption.LocationStreet:
         return (list as Course).location.street.includes(condition);
       case FilterOption.PriceValue:
@@ -39,7 +37,9 @@ export class SearchPipe implements PipeTransform {
       case FilterOption.Trainer:
         return list.trainers.filter((trainer) => {
           return trainer.lastName.includes(condition);
-        }).length ? true : false;
+        }).length
+          ? true
+          : false;
     }
   }
 }
