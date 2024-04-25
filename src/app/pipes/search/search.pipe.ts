@@ -26,7 +26,7 @@ export class SearchPipe implements PipeTransform {
         return (list as Course).location.street.includes(condition);
       case FilterOption.PriceValue:
         return (list as Course).prices.filter((price) => {
-          price.price = condition;
+          price.price = Number(condition);
         });
       case FilterOption.PriceName:
         return (list as Course).prices.filter((price) => {

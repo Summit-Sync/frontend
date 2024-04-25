@@ -5,11 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { PostCourse } from '../../models/course/PostCourse';
 import { UpdateCourse } from '../../models/course/UpdateCourse';
 import { Participant } from '../../models/participant/Participant';
-import { Location } from '../../models/location/Location';
 import { Status } from '../../models/status/Status';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
 import { CategoryPrice } from '../../models/price/NewPrice';
+import { Location } from '../../models/location/Location';
 
 @Injectable({
   providedIn: 'root',
@@ -241,7 +241,7 @@ export class CourseService {
     'Notes about the course.',
     true,
     false,
-    false
+    false,
   );
 
   course2: Course = new Course(
@@ -310,6 +310,6 @@ export class CourseService {
     'Notes about the bootcamp.',
     true,
     false,
-    false
+    false,
   );
 }

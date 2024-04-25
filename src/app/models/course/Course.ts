@@ -2,6 +2,8 @@ import { Participant } from '../participant/Participant';
 import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
 import { CategoryPrice } from '../price/NewPrice';
+import { CourseTemplate } from '../courseTemplate/CourseTemplate';
+import { Location } from '../location/Location';
 
 export class Course {
   constructor(
@@ -17,7 +19,6 @@ export class Course {
     public numberParticipants: number,
     public numberWaitlist: number,
     public numberTrainers: number,
-    public prices: CategoryPrice[],
     public prices: CategoryPrice[],
     public location: Location,
     public meetingPoint: string,
