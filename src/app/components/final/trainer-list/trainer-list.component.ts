@@ -52,7 +52,7 @@ export class TrainerListComponent {
       disableClose:true,
       autoFocus:true,
       height:'50dvh',
-      width:'350dvw',
+      width:'30dvw',
     });
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
