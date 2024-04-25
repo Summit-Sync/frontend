@@ -36,6 +36,16 @@ export class Trainer implements CheckboxList {
     }
     return true;
   }
+
+  createCopy(trainer: Trainer): void{
+    this.id = trainer.id;
+    this.subjectId = trainer.subjectId;
+    this.firstName = trainer.firstName;
+    this.lastName = trainer.lastName;
+    this.email = trainer.email;
+    this.phone = trainer.phone;
+    this.qualification = trainer.qualification;
+  }
 }
 
 /*

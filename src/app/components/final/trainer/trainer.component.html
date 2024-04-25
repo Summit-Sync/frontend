@@ -1,1 +1,35 @@
-<p>trainer works!</p>
+<div class="outer">
+  <div class="header">
+    <h1 mat-dialog-title>Trainer Details</h1>
+  </div>
+  <div class="body">
+    <div class="id">
+      <p>Id: </p>
+      <p>{{trainerData.id}}</p>
+    </div>
+    <div class="subjectId">
+      <p>SubjectId: </p>
+      <p>{{trainerData.subjectId}}</p>
+    </div>
+    <div class="firstName">
+      <p>Vorname: </p>
+      <p>{{trainerData.firstName}}</p>
+    </div>
+    <div class="lastName">
+      <p>Nachname: </p>
+      <p>{{trainerData.lastName}}</p>
+    </div>
+    <div class="email">
+      <p>Email: </p>
+      <p>{{trainerData.email}}</p>
+    </div>
+    <div class="phone">
+      <p>Telefonnummer: </p>
+      <p>{{trainerData.phone}}</p>
+    </div>
+    <div class="qualificationList">
+      <p>Qualifikationen: </p>
+      <p *ngFor="let t of trainerData.qualification">{{t.name}}</p>
+    </div>
+  </div>
+</div>

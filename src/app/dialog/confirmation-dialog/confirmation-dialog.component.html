@@ -1,0 +1,15 @@
+<div class="dialog">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>Löschen bestätigen</h1>
+  </div>
+  <div class="body">
+    <mat-dialog-content>
+      <p>Sind Sie sicher, dass Sie den Eintrag <b>{{item}}</b> löschen wollen?</p>
+    </mat-dialog-content>
+  </div>
+  <mat-dialog-actions class="dialog-footer">
+    <button color="primary" mat-raised-button (click)="confirm()">Ja</button>
+    <button mat-raised-button (click)="cancel()">Nein</button>
+  </mat-dialog-actions>
+</div>
+

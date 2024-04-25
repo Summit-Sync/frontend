@@ -64,8 +64,8 @@ export class CourseComponent implements OnInit {
     false
   );
   mappedDateTime: string[][] = [];
-  showQualificationList: boolean = false;
-  showTrainerList: boolean = false;
+//  showQualificationList: boolean = false;
+//  showTrainerList: boolean = false;
 
   constructor(
     public courseService: CourseService,
@@ -179,11 +179,11 @@ export class CourseComponent implements OnInit {
       duration
     );
   }
-
+/*
   getEndTime(currentTime: Date): string {
     return currentTime.getHours() + 8 + ':' + currentTime.getMinutes();
   }
-
+*/
   addPrice() {
     this.courseData.prices.push(new CategoryPrice('', '0'));
   }
@@ -191,7 +191,7 @@ export class CourseComponent implements OnInit {
   deletePrice(index: number) {
     this.courseData.prices.splice(index, 1);
   }
-
+/*
   checkUnfinishedPrice() {
     const unfinishedPrices = this.courseData.prices.some((wp) => {
       const allEmpty = wp.category == '' && wp.price == '0';
@@ -232,7 +232,7 @@ export class CourseComponent implements OnInit {
       ? this.addQualification(clickedQualification)
       : this.deleteQualification(clickedQualification);
   }
-
+*/
   saveUpdate(): void {
     console.log('updated: ', this.courseData);
     if (this.courseData.validate()) {
