@@ -68,9 +68,9 @@ export class QualificationsService {
   }
 
   //Delete
-  deleteQualification(id: number): void {
+  deleteQualification(id: number): Observable<void> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl);
+    return this.http.delete<void>(apiUrl);
   }
 
   /*
