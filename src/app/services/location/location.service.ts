@@ -16,23 +16,25 @@ export class LocationService {
   getAllLocations(): Observable<Location[]> {
     let location1: Location = new Location(
       1,
-      'west 1',
       'Morgenstraße 2',
       '27816',
       'Deutschland',
       'filler@email.com',
       '0148131564156156',
-      'https://www.test.com/firstTest'
+      'https://www.test.com/firstTest',
+      'title 1',
+      'city 1'
     );
     let location2: Location = new Location(
       2,
-      'east 2',
       'Abendstraße',
       '27816',
       'Deutschland',
       'test@email.com',
       '0156487947787853',
-      'https://www.test.com/secondTest'
+      'https://www.test.com/secondTest',
+      'title 2',
+      'city 2'
     );
     return of([location1, location2]);
     // return this.http.get<Location[]>(this.baseUrl);

@@ -14,23 +14,25 @@ export class CoursetemplateService {
   baseUrl: string = 'http://localhost:8080/api/v1/template/course';
   l1 = new Location(
     1,
-    'west 1',
     'Morgenstraße 2',
     '27816',
     'Deutschland',
     'filler@email.com',
     '0148131564156156',
-    'https://www.test.com/firstTest'
+    'https://www.test.com/firstTest',
+    'title 1',
+    'city 1'
   );
   l2 = new Location(
     2,
-    'east 2',
     'Abendstraße',
     '27816',
     'Deutschland',
     'test@email.com',
     '0156487947787853',
-    'https://www.test.com/secondTest'
+    'https://www.test.com/secondTest',
+    'title 2',
+    'city 2'
   );
   t1 = new CourseTemplate(
     1,
@@ -76,9 +78,9 @@ export class CoursetemplateService {
     return of([this.t1, this.t2]);
   }
 
-  getCourseTemplateById(id:string):Observable<CourseTemplate>{
+  getCourseTemplateById(id: string): Observable<CourseTemplate> {
     // return this.http.get<CourseTemplate>(`${this.url}/${id}`);
-    return of(this.t1)
+    return of(this.t1);
   }
 
   //Put
