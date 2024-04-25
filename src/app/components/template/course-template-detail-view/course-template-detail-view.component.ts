@@ -19,7 +19,6 @@ export class CourseTemplateDetailViewComponent {
 
   editableTemplate: CourseTemplate
 
-  isEdit: boolean = false
   qualificationList: CheckboxList[];
   requiredQualifications: CheckboxList[];
   locationList: CheckboxList[];
@@ -31,22 +30,11 @@ export class CourseTemplateDetailViewComponent {
   ){}
 
   ngOnInit(){
-    this.courseTemplate = this.data.template
-  }
-
-  editCourseTemplate(){
-    this.isEdit=true;
+    this.courseTemplate = this.data.template;
+    console.log(this.courseTemplate)
   }
   
   closeDialog(){
     this.dialogRef.close();
-  }
-
-  addPrice(){
-
-  }
-
-  removePrice(){
-
   }
 }

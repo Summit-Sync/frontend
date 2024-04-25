@@ -1,7 +1,7 @@
 import { Location } from '../location/Location';
 import { CategoryPrice } from '../price/NewPrice';
-import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
+import { PostCourseTemplate } from './PostCourseTemplate';
 
 export class CourseTemplate {
   constructor(
@@ -62,5 +62,26 @@ export class CourseTemplate {
       }
     }
     return true;
+  }
+
+  createPostCourseTemplate():PostCourseTemplate{
+    let qualificationIdList:number[] = [];
+    for(let q of this.requiredQualifications){
+      qualificationIdList.push(q.id);
+    }
+    return new PostCourseTemplate(
+      this.acronym,
+      this.title,
+      this.description,
+      this.numberOfDates,
+      this.duration,
+      this.numberOfParticipants,
+      this.numberWaitlist,
+      this.location.locationId,
+      this.meetingPoint,
+      this.price,
+      qualificationIdList,
+      this.numberTrainers
+    );
   }
 }
