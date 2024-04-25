@@ -2,7 +2,6 @@
     <div class="header">
     </div>
     <div class="body">
-        <div *ngIf="!isEdit">
             <div class="title">
                 <span>Titel: </span>
                 <span>{{courseTemplate.title}}</span>
@@ -57,82 +56,8 @@
                 <span>Anzahl Trainer: </span>
                 <span>{{courseTemplate.numberTrainers}}</span>
             </div>
-        </div>
     </div>
     <div class="footer">
-        <button (click)="editCourseTemplate()">Bearbeiten</button>
         <button (click)="closeDialog()">Schließen</button>
     </div>
 </div>
-
-<ng-template #editTemplate>
-    <div class="title">
-        <span>Titel: </span>
-        <input [(ngModel)]="editableTemplate.title">
-    </div>
-    <div class="acronym">
-        <span>Kürzel: </span>
-        <input [(ngModel)]="editableTemplate.acronym">
-    </div>
-    <div class="description">
-        <span>Beschreibung: </span>
-        <input [(ngModel)]="editableTemplate.description">
-    </div>
-    <div class="number-of-dates">
-        <span>Anzahl Terminen: </span>
-        <input [(ngModel)]="editableTemplate.numberOfDates">
-    </div>
-    <div class="duration">
-        <span>Dauer in Minuten: </span>
-        <input [(ngModel)]="editableTemplate.duration">
-    </div>
-    <div class="number-of-participants">
-        <span>Maximale Teilnehmeranzahl: </span>
-        <input [(ngModel)]="editableTemplate.numberOfParticipants">
-    </div>
-    <div class="number-of-waitlist">
-        <span>Wartelistenlänge: </span>
-        <input [(ngModel)]="editableTemplate.numberWaitlist">
-    </div>
-    <div class="location">
-        <div class="location">
-            <label for="location">Ort</label>
-            <app-multi-select-dropdown
-            [allowMultiple]="false"
-            [allOptions]="locationList"
-            [selectedOptions]="courseLocation"
-            [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
-        </div>
-    </div>
-    <div class="meeting-point">
-        <span>Treffpunkt: </span>
-        <input [(ngModel)]="editableTemplate.meetingPoint">
-    </div>
-    <div class="price">
-        <div>
-            <span>Preise:</span>
-            <button (click)="addPrice()">+</button>
-            <button (click)="removePrice()">-</button>
-        </div>
-        <div>
-            <span>Kategorie</span>
-            <span>Preis</span>
-        </div>
-        <div *ngFor="let price of courseTemplate.price">
-            <input [(ngModel)]="price.category">
-            <input [(ngModel)]="price.price">
-        </div>
-    </div>
-    <div class="required-qualifications">
-        <label for="required-qualifications">Qualifikationen</label>
-        <app-multi-select-dropdown
-        [allOptions]="qualificationList"
-        [selectedOptions]="requiredQualifications"
-        [dropdownHeadline]="'Qualifikationen'"
-        [allowMultiple]="true"></app-multi-select-dropdown>
-    </div>
-    <div class="number-of-trainers">
-        <span>Anzahl Trainer: </span>
-        <input [(ngModel)]="editableTemplate.numberTrainers">
-    </div>
-</ng-template>

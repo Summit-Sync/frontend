@@ -1,10 +1,9 @@
 import { Participant } from '../participant/Participant';
-import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
-import {CourseTemplate} from "../courseTemplate/CourseTemplate";
+import { CategoryPrice } from '../price/NewPrice';
+import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Location } from '../location/Location';
-import {CategoryPrice} from "../price/NewPrice";
 
 export class Course {
   constructor(

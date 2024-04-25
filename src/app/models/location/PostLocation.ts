@@ -16,16 +16,3 @@ export class PostLocation {
     return true;
   }
 }
-
-/*
-export type PostLocation={
-    room:string
-    street:string
-    postCode:string
-    country:string
-    email:string
-    phone:string
-    mapsUrl:string
-}
-
- */
