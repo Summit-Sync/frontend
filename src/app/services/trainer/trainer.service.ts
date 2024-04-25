@@ -44,6 +44,11 @@ export class TrainerService {
     // this.trainer5,
     // this.trainer6,
     // this.trainer7,
+    // this.trainer3,
+    // this.trainer4,
+    // this.trainer5,
+    // this.trainer6,
+    // this.trainer7,
   ]);
 
   constructor(private http: HttpClient) {}
