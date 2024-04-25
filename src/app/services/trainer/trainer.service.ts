@@ -109,10 +109,4 @@ export class TrainerService {
     this.currentTrainer.next(trainer);
   }
 
-
-  getAllTrainers(): Observable<Trainer[]> {
-    return this.trainers;
-  }
-
-
 }

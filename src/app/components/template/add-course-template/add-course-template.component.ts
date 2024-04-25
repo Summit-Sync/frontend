@@ -19,7 +19,6 @@ import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
   imports: [CommonModule, MultiSelectDropdownComponent, FormsModule],
   templateUrl: './add-course-template.component.html',
   styleUrl: './add-course-template.component.css',
-  styleUrl: './add-course-template.component.css',
 })
 export class AddCourseTemplateComponent {
   //Selected template
@@ -106,9 +105,6 @@ export class AddCourseTemplateComponent {
   cancel() {
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
-  cancel() {
-    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
-  }
 
   mapCheckboxListToNumberList(data: CheckboxList[]): number[] {
     let list: number[] = [];
@@ -128,28 +124,7 @@ export class AddCourseTemplateComponent {
     }
     return checkboxList;
   }
-  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
-    let checkboxList: CheckboxList[] = [];
-    for (let qualification of data) {
-      checkboxList.push({
-        id: qualification.id,
-        displayFullName: qualification.name,
-      });
-    }
-    return checkboxList;
-  }
 
-  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
-    let checkboxList: CheckboxList[] = [];
-    for (let location of data) {
-      checkboxList.push({
-        id: location.locationId,
-        displayFullName: 'location.room',
-      });
-    }
-    console.log(checkboxList);
-    return checkboxList;
-  }
   mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
     let checkboxList: CheckboxList[] = [];
     for (let location of data) {
@@ -180,9 +155,9 @@ export class AddCourseTemplateComponent {
   }
 
   addSelectedQualification() {
-    this.courseLocation.push({
-      id: this.selectedCourseTemplate.location.locationId,
-      displayFullName: this.selectedCourseTemplate.location.room,
-    });
+    // this.courseLocation.push({
+    //   id: this.selectedCourseTemplate.location.locationId,
+    //   displayFullName: this.selectedCourseTemplate.location.room,
+    // });
   }
 }
