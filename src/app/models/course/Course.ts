@@ -1,9 +1,10 @@
 import { Participant } from '../participant/Participant';
 import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
-import { CategoryPrice } from '../price/NewPrice';
 import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Location } from '../location/Location';
+import { CategoryPrice } from '../price/NewPrice';
+import { Status } from '../status/Status';
 
 export class Course {
   constructor(
@@ -37,7 +38,6 @@ export class Course {
       !this.title ||
       // !this.acronym ||
       !this.description ||
-      // !this.location ||
       !this.notes
     ) {
       return false;
@@ -52,6 +52,12 @@ export class Course {
     ) {
       return false;
     }
+
+    console.log(
+      !this.prices.every((price) => {
+        return price.validate();
+      })
+    );
 
     // Check if arrays are not empty
     if (
@@ -93,6 +99,10 @@ export class Course {
         return wc.validateExceptAllEmpty();
       })
     ) {
+      return false;
+    }
+
+    if (!this.location.validate()) {
       return false;
     }
 
@@ -151,5 +161,24 @@ export class Course {
     this.prices = courseTemplate.price;
     this.requiredQualifications = courseTemplate.requiredQualifications;
     this.title = courseTemplate.title;
+  }
+
+  deleteEmptyParticipants(participantsList: Participant[]) {
+    participantsList.splice(
+      0,
+      participantsList.length,
+      ...participantsList.filter((p) => p.firstName !== '')
+    );
+  }
+
+  fillParticipantsList(
+    participantsList: Participant[],
+    maxParticipants: number
+  ): void {
+    for (let i = participantsList.length; i < maxParticipants; i++) {
+      participantsList.push(
+        new Participant(i, '', '', new Status(0, ''), '', '')
+      );
+    }
   }
 }

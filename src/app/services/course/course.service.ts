@@ -20,7 +20,6 @@ export class CourseService {
   baseUrl: string = 'http://localhost:8080/api/v1/course';
   constructor(private http: HttpClient) {}
 
-
   //Get
   getAllCourses(): Observable<Course[]> {
     // return this.http.get<Course[]>(this.baseUrl);
@@ -217,13 +216,14 @@ export class CourseService {
     [new CategoryPrice('Regular', 150), new CategoryPrice('Early Bird', 120)],
     new Location(
       0,
-      'room1',
       'test street',
       '27818',
       'Germany',
       'test@email.com',
       '01594597466',
-      'testURL'
+      'testURL',
+      'Unterwegs - DAV Kletterzentrum Bremen',
+      'Bremen'
     ),
     'Online',
     [new Qualification(2, 'weit klettern')],
@@ -241,7 +241,7 @@ export class CourseService {
     'Notes about the course.',
     true,
     false,
-    false,
+    false
   );
 
   course2: Course = new Course(
@@ -286,13 +286,14 @@ export class CourseService {
     [new CategoryPrice('Regular', 500), new CategoryPrice('Early Bird', 450)],
     new Location(
       0,
-      'testtestroom',
       'test Street2',
       '21897',
       'germany',
       'second@mail.com',
       '021867967898564564',
-      'tesURL2'
+      'tesURL2',
+      'Test 2 Unterwegs - DAV Kletterzentrum Bremen',
+      'Test Stadt'
     ),
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
@@ -310,6 +311,6 @@ export class CourseService {
     'Notes about the bootcamp.',
     true,
     false,
-    false,
+    false
   );
 }
