@@ -4,7 +4,6 @@ import {GroupListComponent} from "./components/final/group-list/group-list.compo
 import {CourseComponent} from "./components/final/course/course.component";
 import {GroupComponent} from "./components/final/group/group.component";
 import {AppComponent} from "./app.component";
-import { CourseTemplate } from './models/courseTemplate/CourseTemplate';
 import { CourseTemplateListComponent } from './components/template/course-template-list/course-template-list.component';
 import {QualificationListComponent} from "./components/final/qualification-list/qualification-list.component";
 import {TrainerListComponent} from "./components/final/trainer-list/trainer-list.component";
@@ -24,7 +23,6 @@ export const routes: Routes = [
   { path: 'qualifikation', component: QualificationListComponent, canActivate: []},
   //Trainer
   { path: 'trainer', component: TrainerListComponent, canActivate: []},
-
   // Root Routen
   { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},
