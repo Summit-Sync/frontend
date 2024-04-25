@@ -83,6 +83,7 @@ export class CourseComponent implements OnInit {
           return;
         }
         this.courseData.createCopy(c);
+        // this.fillDatesList();
         return;
       });
       this.selectedLocation.push(this.courseData.location);
@@ -190,8 +191,8 @@ export class CourseComponent implements OnInit {
 
   checkUnfinishedPrice() {
     const unfinishedPrices = this.courseData.prices.some((wp) => {
-      const allEmpty = wp.category == '' && wp.price == '0';
-      const allFilled = wp.category != '' && wp.price != '0';
+      const allEmpty = wp.category == '' && wp.price == 0;
+      const allFilled = wp.category != '' && wp.price != 0;
       if (!(allEmpty || allFilled)) {
         console.error(`Preis unvollständig (filler)`);
         return true;
@@ -214,11 +215,6 @@ export class CourseComponent implements OnInit {
 
   addQualification(clickedQualification: Qualification) {
     this.courseData.requiredQualifications.push(clickedQualification);
-  }
-
-  showQualificationsList() {
-    this.showQualificationList = !this.showQualificationList;
-    this.showTrainerList = false;
   }
 
   onQualificationCheckBoxClick(event: Event, index: number) {
