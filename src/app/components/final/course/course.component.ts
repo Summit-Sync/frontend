@@ -63,8 +63,6 @@ export class CourseComponent implements OnInit {
     false
   );
   mappedDateTime: string[][] = [];
-  showQualificationList: boolean = false;
-  showTrainerList: boolean = false;
 
   constructor(
     public courseService: CourseService,
@@ -83,7 +81,6 @@ export class CourseComponent implements OnInit {
         }
         this.courseData.createCopy(c);
         console.log('onInit', this.courseData);
-        // this.fillDatesList();
         return;
       });
 
@@ -179,57 +176,12 @@ export class CourseComponent implements OnInit {
     );
   }
 
-  getEndTime(currentTime: Date): string {
-    return currentTime.getHours() + 8 + ':' + currentTime.getMinutes();
-  }
-
   addPrice() {
     this.courseData.prices.push(new CategoryPrice('', 0));
   }
 
   deletePrice(index: number) {
     this.courseData.prices.splice(index, 1);
-  }
-
-  checkUnfinishedPrice() {
-    const unfinishedPrices = this.courseData.prices.some((wp) => {
-      const allEmpty = wp.category == '' && wp.price == 0;
-      const allFilled = wp.category != '' && wp.price != 0;
-      if (!(allEmpty || allFilled)) {
-        console.error(`Preis unvollständig (filler)`);
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    return unfinishedPrices;
-  }
-
-  deleteQualification(clickedQualification: Qualification) {
-    var tqList = this.courseData.requiredQualifications;
-    tqList = tqList.filter((q) => {
-      return q.id !== clickedQualification.id;
-    });
-
-    this.courseData.requiredQualifications = tqList;
-  }
-
-  addQualification(clickedQualification: Qualification) {
-    this.courseData.requiredQualifications.push(clickedQualification);
-  }
-
-  showQualificationsList() {
-    this.showQualificationList = !this.showQualificationList;
-    this.showTrainerList = false;
-  }
-
-  onQualificationCheckBoxClick(event: Event, index: number) {
-    const checkbox = event.target as HTMLInputElement;
-    const clickedQualification = this.allQualifications[index];
-    checkbox.checked
-      ? this.addQualification(clickedQualification)
-      : this.deleteQualification(clickedQualification);
   }
 
   saveUpdate(): void {
