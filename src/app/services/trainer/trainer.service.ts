@@ -8,25 +8,39 @@ import { PostTrainer } from '../../models/trainer/PostTrainer';
   providedIn: 'root',
 })
 export class TrainerService {
-  /*
-  trainer1 = new Trainer(0, 'Lukas', 'Müller');
-  trainer2 = new Trainer(1, 'John', 'Doe');
-  trainer3 = new Trainer(2, 'Max', 'Fischer');
-  trainer4 = new Trainer(3, 'Anna', 'Weber');
-  trainer5 = new Trainer(4, 'Felix', 'Schneider');
-  trainer6 = new Trainer(5, 'Laura', 'Meyer');
-  trainer7 = new Trainer(6, 'Hannah', 'Wagner');
+  trainer1 = new Trainer(
+    0,
+    'testsID',
+    'Lukas',
+    'Müller',
+    'testEmail',
+    'testphone',
+    []
+  );
+  trainer2 = new Trainer(
+    1,
+    'testsID',
+    'John',
+    'Doe',
+    'testEmail',
+    'testphone',
+    []
+  );
+  // trainer3 = new Trainer(2, 'Max', 'Fischer');
+  // trainer4 = new Trainer(3, 'Anna', 'Weber');
+  // trainer5 = new Trainer(4, 'Felix', 'Schneider');
+  // trainer6 = new Trainer(5, 'Laura', 'Meyer');
+  // trainer7 = new Trainer(6, 'Hannah', 'Wagner');
 
   trainers: Observable<Trainer[]> = of([
     this.trainer1,
     this.trainer2,
-    this.trainer3,
-    this.trainer4,
-    this.trainer5,
-    this.trainer6,
-    this.trainer7,
+    // this.trainer3,
+    // this.trainer4,
+    // this.trainer5,
+    // this.trainer6,
+    // this.trainer7,
   ]);
-  */
 
   constructor(private http: HttpClient) {}
 
@@ -36,11 +50,8 @@ export class TrainerService {
   getAllTrainers(): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}`;
 
-    this.http.get<Trainer[]>(apiUrl).subscribe((trainers) => {
-      console.log('test', trainers);
-    });
-
-    return this.http.get<Trainer[]>(apiUrl);
+    return this.trainers;
+    // return this.http.get<Trainer[]>(apiUrl);
   }
 
   getTrainerById(id: number): Observable<Trainer> {

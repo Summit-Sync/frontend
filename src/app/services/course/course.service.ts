@@ -10,7 +10,7 @@ import { Location } from '../../models/location/Location';
 import { Status } from '../../models/status/Status';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
-import {CategoryPrice} from "../../models/price/NewPrice";
+import { CategoryPrice } from '../../models/price/NewPrice';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,6 @@ export class CourseService {
     new BehaviorSubject<Course | null>(null);
   baseUrl: string = 'http://localhost:8080/api/v1/course';
   constructor(private http: HttpClient) {}
-
 
   //Get
   getAllCourses(): Observable<Course[]> {
@@ -215,16 +214,20 @@ export class CourseService {
     2,
     1,
     1,
-    [new CategoryPrice('Regular', '150'), new CategoryPrice('Early Bird', '120')],
+    [
+      new CategoryPrice('Regular', '150'),
+      new CategoryPrice('Early Bird', '120'),
+    ],
     new Location(
       0,
-      'room1',
       'test street',
       '27818',
       'Germany',
       'test@email.com',
       '01594597466',
-      'testURL'
+      'testURL',
+      'Unterwegs - DAV Kletterzentrum Bremen',
+      'Bremen'
     ),
     'Online',
     [new Qualification(2, 'weit klettern')],
@@ -284,16 +287,20 @@ export class CourseService {
     3,
     1,
     1,
-    [new CategoryPrice('Regular', '500'), new CategoryPrice('Early Bird', '450')],
+    [
+      new CategoryPrice('Regular', '500'),
+      new CategoryPrice('Early Bird', '450'),
+    ],
     new Location(
       0,
-      'testtestroom',
       'test Street2',
       '21897',
       'germany',
       'second@mail.com',
       '021867967898564564',
-      'tesURL2'
+      'tesURL2',
+      'Test 2 Unterwegs - DAV Kletterzentrum Bremen',
+      'Test Stadt'
     ),
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
