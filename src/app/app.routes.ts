@@ -19,6 +19,10 @@ export const routes: Routes = [
   // {path: 'gruppenvorlage', component:GroupTemplateListComponent, canActivate:[]},
   //Kursvorlagen
   {path:'kursvorlage', component:CourseTemplateListComponent, canActivate:[]},
+  //Qualifikationen
+  { path: 'qualifikation', component: QualificationListComponent, canActivate: []},
+  //Trainer
+  { path: 'trainer', component: TrainerListComponent, canActivate: []},
   // Root Routen
   { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},
