@@ -2,24 +2,18 @@
   <div class="courseBody">
     <div>
       <p>Kurstitel:</p>
-      <p *ngIf="!isEdit">
-        {{ courseData.title }}
-      </p>
-      <input *ngIf="isEdit" type="text" [(ngModel)]="courseData.title" />
+      <input type="text" [(ngModel)]="courseData.title" />
     </div>
     <div>
       <p>Kursnummer:</p>
       <p>
-        {{ courseData.courseNumber }}
+        {{ !isCreate ? courseData.courseNumber : "Wird automatisch erstellt!" }}
       </p>
     </div>
     <div>
       <p>Beschreibung:</p>
-      <p *ngIf="!isEdit">
-        {{ courseData.description }}
-      </p>
 
-      <input *ngIf="isEdit" type="text" [(ngModel)]="courseData.description" />
+      <input type="text" [(ngModel)]="courseData.description" />
     </div>
     <div class="listWrapper">
       <table>
@@ -31,72 +25,45 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="!isEdit">
-            <ng-container
-              *ngFor="let currentDate of courseData.dates; let i = index"
-            >
-              <tr>
-                <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
-                <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
-                <td>
-                  {{ currentDate | endTime : courseData.duration }}
-                </td>
-              </tr>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="isEdit">
-            <ng-container
-              *ngFor="let currentDate of courseData.dates; let i = index"
-            >
-              <tr>
-                <td>
-                  <input
-                    type="date"
-                    [ngModel]="currentDate | date : 'yyyy-MM-dd'"
-                    (input)="onDateChange($event, i)"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="time"
-                    [ngModel]="mappedDateTime[i][0]"
-                    (input)="onStartTimeChange($event, i)"
-                  />
-                </td>
-                <td>
-                  <!-- <input
+          <ng-container
+            *ngFor="let currentDate of courseData.dates; let i = index"
+          >
+            <tr>
+              <td>
+                <input
+                  type="date"
+                  [ngModel]="currentDate | date : 'yyyy-MM-dd'"
+                  (input)="onDateChange($event, i)"
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  [ngModel]="mappedDateTime[i][0]"
+                  (input)="onStartTimeChange($event, i)"
+                />
+              </td>
+              <td>
+                <!-- <input
                       type="time"
                       [ngModel]="mappedDateTime[i][1]"
                       (input)="onEndTimeChange($event, i)"
                     /> -->
-                  {{ mappedDateTime[i][1] }}
-                </td>
-                <button (click)="deleteDate(i)">-</button>
-              </tr>
-            </ng-container>
+                {{ mappedDateTime[i][1] }}
+              </td>
+              <button (click)="deleteDate(i)">-</button>
+            </tr>
           </ng-container>
         </tbody>
       </table>
-      <button *ngIf="isEdit" (click)="addDate()">Termin hinzufügen</button>
+      <button (click)="addDate()">Termin hinzufügen</button>
     </div>
 
     <div>
       <p>Maximale Teilnehmeanzahl:</p>
-      <p *ngIf="!isEdit">
+      <p>
         {{ courseData.numberParticipants }}
       </p>
-
-      <input
-        *ngIf="isEdit"
-        type="number"
-        [(ngModel)]="courseData.numberParticipants"
-        (input)="
-          onMaxParticipantsChange(
-            this.courseData.participants,
-            this.courseData.numberParticipants
-          )
-        "
-      />
     </div>
     <div class="listWrapper">
       <table>
@@ -110,85 +77,57 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="!isEdit">
-            <ng-container
-              *ngFor="let p of courseData.participants; let i = index"
-            >
-              <tr>
-                <td>
-                  {{ p.firstName ? p.firstName : "leer" }}
-                </td>
-                <td>
-                  {{ p.lastName ? p.lastName : "leer" }}
-                </td>
-                <td>
-                  {{ p.status && p.status.text ? p.status.text : "leer" }}
-                </td>
-                <td>
-                  {{ p.email ? p.email : "leer" }}
-                </td>
-                <td>
-                  {{ p.phone ? p.phone : "leer" }}
-                </td>
-              </tr>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="isEdit">
-            <ng-container
-              *ngFor="let p of courseData.participants; let i = index"
-            >
-              <tr>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="p.firstName"
-                    [placeholder]="p.firstName ? p.firstName : 'leer'"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="p.lastName"
-                    [placeholder]="p.lastName ? p.lastName : 'leer'"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="p.status.text"
-                    [placeholder]="
-                      p.status && p.status.text ? p.status.text : 'leer'
-                    "
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="p.email"
-                    [placeholder]="p.email ? p.email : 'leer'"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="p.phone"
-                    [placeholder]="p.phone ? p.phone : 'leer'"
-                  />
-                </td>
-                <td *ngIf="isEdit">
-                  <button
-                    (click)="deleteParticipant(i, courseData.participants)"
-                  >
-                    -
-                  </button>
-                </td>
-              </tr>
-            </ng-container>
+          <ng-container
+            *ngFor="let p of courseData.participants; let i = index"
+          >
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="p.firstName"
+                  [placeholder]="p.firstName ? p.firstName : 'leer'"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="p.lastName"
+                  [placeholder]="p.lastName ? p.lastName : 'leer'"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="p.status.text"
+                  [placeholder]="
+                    p.status && p.status.text ? p.status.text : 'leer'
+                  "
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="p.email"
+                  [placeholder]="p.email ? p.email : 'leer'"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="p.phone"
+                  [placeholder]="p.phone ? p.phone : 'leer'"
+                />
+              </td>
+              <td *ngI>
+                <button (click)="deleteParticipant(i, courseData.participants)">
+                  -
+                </button>
+              </td>
+            </tr>
           </ng-container>
         </tbody>
       </table>
       <button
-        *ngIf="isEdit"
         (click)="
           addParticipant(courseData.numberParticipants, courseData.participants)
         "
@@ -198,12 +137,7 @@
     </div>
     <div>
       <p>Maximale Wartelistenlänge:</p>
-      <p *ngIf="!isEdit">
-        {{ courseData.numberWaitlist }}
-      </p>
-
       <input
-        *ngIf="isEdit"
         type="number"
         [(ngModel)]="courseData.numberWaitlist"
         (input)="
@@ -226,81 +160,55 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="!isEdit">
-            <ng-container *ngFor="let wp of courseData.waitList; let i = index">
-              <tr>
-                <td>
-                  {{ wp.firstName ? wp.firstName : "leer" }}
-                </td>
-                <td>
-                  {{ wp.lastName ? wp.lastName : "leer" }}
-                </td>
-
-                <td>
-                  {{ wp.status && wp.status.text ? wp.status.text : "leer" }}
-                </td>
-
-                <td>
-                  {{ wp.email ? wp.email : "leer" }}
-                </td>
-                <td>
-                  {{ wp.phone ? wp.phone : "leer" }}
-                </td>
-              </tr>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="isEdit">
-            <ng-container *ngFor="let wp of courseData.waitList; let i = index">
-              <tr>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="wp.firstName"
-                    [placeholder]="wp.firstName ? wp.firstName : 'leer'"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="wp.lastName"
-                    [placeholder]="wp.lastName ? wp.lastName : 'leer'"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="wp.status.text"
-                    [placeholder]="
-                      wp.status && wp.status.text ? wp.status.text : 'leer'
-                    "
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="wp.email"
-                    [placeholder]="wp.email ? wp.email : 'leer'"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    [(ngModel)]="wp.phone"
-                    [placeholder]="wp.phone ? wp.phone : 'leer'"
-                  />
-                </td>
-                <td *ngIf="isEdit">
-                  <button (click)="deleteParticipant(i, courseData.waitList)">
-                    -
-                  </button>
-                </td>
-              </tr>
-            </ng-container>
+          <ng-container *ngFor="let wp of courseData.waitList; let i = index">
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="wp.firstName"
+                  [placeholder]="wp.firstName ? wp.firstName : 'leer'"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="wp.lastName"
+                  [placeholder]="wp.lastName ? wp.lastName : 'leer'"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="wp.status.text"
+                  [placeholder]="
+                    wp.status && wp.status.text ? wp.status.text : 'leer'
+                  "
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="wp.email"
+                  [placeholder]="wp.email ? wp.email : 'leer'"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="wp.phone"
+                  [placeholder]="wp.phone ? wp.phone : 'leer'"
+                />
+              </td>
+              <td *ngI>
+                <button (click)="deleteParticipant(i, courseData.waitList)">
+                  -
+                </button>
+              </td>
+            </tr>
           </ng-container>
         </tbody>
       </table>
       <button
-        *ngIf="isEdit"
         (click)="addParticipant(courseData.numberWaitlist, courseData.waitList)"
       >
         Teilnehmer hinzufügen
@@ -312,39 +220,30 @@
       </div>
       <div class="priceWrapper">
         <ng-container *ngFor="let price of courseData.prices; let i = index">
-          <div class="price" *ngIf="!isEdit">
-            <p>{{ price.category }}:</p>
-            <p>{{ price.price }}</p>
-          </div>
-          <ng-container *ngIf="isEdit">
-            <input type="text" [(ngModel)]="price.category" />
-            <input type="number" [(ngModel)]="price.price" />
-            <button (click)="deletePrice(i)">-</button>
-          </ng-container>
+          <input type="text" [(ngModel)]="price.category" />
+          <input type="number" [(ngModel)]="price.price" />
+          <button (click)="deletePrice(i)">-</button>
         </ng-container>
-        <button *ngIf="isEdit" (click)="addPrice()">Preis hinzufügen</button>
+        <button (click)="addPrice()">Preis hinzufügen</button>
       </div>
     </div>
     <div>
       <p>Ort:</p>
-      <p *ngIf="!isEdit">
-        {{ courseData.location.room }}
-      </p>
-      <input
-        *ngIf="isEdit"
-        type="text"
-        [(ngModel)]="courseData.location.room"
-      />
+      <app-multi-select-dropdown
+        [allOptions]="allLocations"
+        [selectedOptions]="selectedLocation"
+        [dropdownHeadline]="'Location'"
+        [allowMultiple]="false"
+      >
+      </app-multi-select-dropdown>
+    </div>
+    <div>
+      <p>Treffpunkt:</p>
+      <input type="text" [(ngModel)]="courseData.meetingPoint" />
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
-      <ng-container *ngIf="!isEdit">
-        <ng-container *ngFor="let q of courseData.requiredQualifications">
-          <li>{{ q.name }}</li>
-        </ng-container>
-      </ng-container>
       <app-multi-select-dropdown
-        *ngIf="isEdit"
         [allOptions]="allQualifications"
         [selectedOptions]="courseData.requiredQualifications"
         [dropdownHeadline]="'Qualifikationen'"
@@ -354,14 +253,8 @@
     </div>
     <div>
       <p>Trainer:</p>
-      <ng-container *ngIf="!isEdit">
-        <ng-container *ngFor="let t of courseData.trainers">
-          <li>{{ t.firstName + " " + t.lastName }}</li>
-        </ng-container>
-      </ng-container>
 
       <app-multi-select-dropdown
-        *ngIf="isEdit"
         [allOptions]="allTrainers"
         [selectedOptions]="courseData.trainers"
         [dropdownHeadline]="'Trainer'"
@@ -371,20 +264,12 @@
     </div>
     <div>
       <p>Notizen:</p>
-      <p *ngIf="!isEdit">
-        {{ courseData.notes }}
-      </p>
 
-      <input *ngIf="isEdit" type="text" [(ngModel)]="courseData.notes" />
+      <input type="text" [(ngModel)]="courseData.notes" />
     </div>
   </div>
   <div class="button-div">
-    <button (click)="isCreate ? saveCreated() : saveUpdate()" *ngIf="isEdit">
-      Speichern
-    </button>
-    <button (click)="deleteCourse()" *ngIf="isDelete">Löschen</button>
-    <button (click)="cancel()">
-      {{ isEdit || isDelete ? "Abbrechen" : "schließen" }}
-    </button>
+    <button (click)="save()">Speichern</button>
+    <button (click)="cancel()">Abbrechen</button>
   </div>
 </div>

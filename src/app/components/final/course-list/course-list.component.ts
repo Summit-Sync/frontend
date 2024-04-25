@@ -16,13 +16,14 @@ import { ShortCourseListComponent } from '../../template/short-course-list/short
 import { FilterOption } from '../../../models/enums/search';
 import { SearchPipe } from '../../../pipes/search/search.pipe';
 import { FormsModule } from '@angular/forms';
+import { CourseViewComponent } from '../course-view/course-view.component';
 
 @Component({
   selector: 'app-course-list',
   standalone: true,
   imports: [CommonModule, FormsModule, CourseComponent, SearchPipe],
   templateUrl: './course-list.component.html',
-  styleUrl: './course-list.component.css',
+  styleUrl: './course-list.component.scss',
 })
 export class CourseListComponent implements OnInit {
   courses: Observable<Course[]> = of([]);
@@ -41,7 +42,6 @@ export class CourseListComponent implements OnInit {
     FilterOption.PriceValue,
     FilterOption.PriceName,
     FilterOption.Date,
-    FilterOption.LocationRoom,
     FilterOption.LocationStreet,
     FilterOption.LocationPostCode,
   ];
@@ -76,17 +76,17 @@ export class CourseListComponent implements OnInit {
 
   showDetails(course: Course) {
     this.showingEdit = false;
-    this.showCourse(course);
+    this.showCourseView(course);
   }
 
   showEdit(course: Course) {
     this.showingEdit = true;
-    this.showCourse(course);
+    this.showEditCourse(course);
   }
 
   delete(course: Course) {
     this.showingDelete = true;
-    this.showCourse(course);
+    this.showCourseView(course);
   }
 
   showTemplateList() {
@@ -107,7 +107,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  showCourse(course: Course) {
+  showEditCourse(course: Course) {
     this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseComponent, {
       disableClose: false,
@@ -116,9 +116,24 @@ export class CourseListComponent implements OnInit {
       width: '70dvw',
     });
 
-    let instance = dialogRef.componentInstance;
-    instance.isEdit = this.showingEdit;
-    instance.isDelete = this.showingDelete;
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method == 'accept') {
+        console.log('Dialog output:', obj.data);
+        // Validate Input
+        //
+      }
+    });
+  }
+
+  showCourseView(course: Course) {
+    this.courseService.updateCourseDetails(course);
+    const dialogRef = this.dialog.open(CourseViewComponent, {
+      disableClose: false,
+      autoFocus: true,
+      height: '90dvh',
+      width: '70dvw',
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
