@@ -33,7 +33,7 @@ export class PostCourseTemplate{
             return false;
         }
         for(let categoryPrice of this.price){
-            if(categoryPrice.category == '' || categoryPrice.price == ''){
+            if(categoryPrice.category == '' || categoryPrice.price == 0){
                 return false;
             }
         }

@@ -14,6 +14,7 @@
             <th>Ort</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
             <td>{{template.meetingPoint}}</td>
             <td><button (click)="openDetails(template)">Details</button></td>
             <td><button (click)="deleteTemplate(template.id)">Löschen</button></td>
+            <td><button (click)="editTemplate(template)">Bearbeiten</button></td>
           </tr>
         </tbody>
       </table>

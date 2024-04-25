@@ -1,43 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { PostPrice } from '../../models/price/PostPrice';
-import {Price} from "../../models/price/Price";
+import { CategoryPrice } from '../../models/price/NewPrice';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PriceService {
+export class CategoryPriceService {
 
   baseUrl:string="http://localhost:8080/api/v1/price"
 
   constructor(private http:HttpClient) { }
 
-  getAllPrices():Observable<Price[]>{
-    let price1=new Price(1,"new",1.111);
-    let price2=new Price(1,"intermediate",2.222)
+  getAllCategoryPrices():Observable<CategoryPrice[]>{
+    let price1=new CategoryPrice("new",1.111);
+    let price2=new CategoryPrice("intermediate",2.222)
     return of([price1,price2])
-    return this.http.get<Price[]>(this.baseUrl);
+    return this.http.get<CategoryPrice[]>(this.baseUrl);
   }
 
-  getPriceById(id: number): Observable<Price>{
+  getCategoryPriceById(id: number): Observable<CategoryPrice>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Price>(apiUrl);
+    return this.http.get<CategoryPrice>(apiUrl);
   }
 
   //Put
-  putPrice(id: number, price: PostPrice): Observable<Price>{
+  putCategoryPrice(id: number, price: CategoryPrice): Observable<CategoryPrice>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Price>(apiUrl, price);
+    return this.http.put<CategoryPrice>(apiUrl, price);
   }
 
   //Post
-  postPrice(price: PostPrice): Observable<Price>{
-    return this.http.post<Price>(this.baseUrl, price);
+  postCategoryPrice(price: CategoryPrice): Observable<CategoryPrice>{
+    return this.http.post<CategoryPrice>(this.baseUrl, price);
   }
 
   //Delete
-  deletePrice(id: number): void{
+  deleteCategoryPrice(id: number): void{
     const apiUrl: string = `${this.baseUrl}/${id}`;
     this.http.delete(apiUrl);
   }

@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Participant } from '../../../models/participant/Participant';
 import { EndTimePipe } from '../../../pipes/endTime/end-time.pipe';
-import { PostPrice } from '../../../models/price/PostPrice';
 import { DateTimeMapperService } from '../../../services/dateTimeMapper/date-time-mapper.service';
 import { Qualification } from '../../../models/qualification/Qualification';
 import { QualificationsService } from '../../../services/qualifications/qualifications.service';
@@ -185,7 +184,7 @@ export class CourseComponent implements OnInit {
   }
 */
   addPrice() {
-    this.courseData.prices.push(new CategoryPrice('', '0'));
+    this.courseData.prices.push(new CategoryPrice('', 0));
   }
 
   deletePrice(index: number) {
@@ -194,8 +193,8 @@ export class CourseComponent implements OnInit {
 /*
   checkUnfinishedPrice() {
     const unfinishedPrices = this.courseData.prices.some((wp) => {
-      const allEmpty = wp.category == '' && wp.price == '0';
-      const allFilled = wp.category != '' && wp.price != '0';
+      const allEmpty = wp.category == '' && wp.price == 0;
+      const allFilled = wp.category != '' && wp.price != 0;
       if (!(allEmpty || allFilled)) {
         console.error(`Preis unvollständig (filler)`);
         return true;

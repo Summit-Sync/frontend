@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
-import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
 import { CourseTemplateDetailViewComponent } from '../course-template-detail-view/course-template-detail-view.component';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
+import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
+import { cloneDeep } from 'lodash';
+import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
+import { CategoryPrice } from '../../../models/price/NewPrice';
 
 @Component({
   selector: 'app-course-template-list',
@@ -32,6 +35,30 @@ export class CourseTemplateListComponent {
     });
   }
 
+  editTemplate(template: CourseTemplate){
+    const dialogRef = this.dialog.open(AddCourseTemplateComponent,{
+      disableClose: true,
+      width: '40dvw',
+      height: '80dvh',
+      data: {
+        selectedTemplate: cloneDeep(template),
+        isEdit: true
+      }
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      const obj = JSON.parse(result);
+      if(obj.method == 'accept'){
+        console.log('Dialog output: ' + obj.data)
+        this.courseTemplateService.putCourseTemplate(obj.data,template.id).subscribe({
+          next: (response) => console.log('Template has been updated'),
+          error: (error) => console.error('Template could not be updated'),
+          complete: () => this.updateList   
+        })
+      }
+    })
+  }
+
   updateList(){
     this.courseTemplateService.getAllCourseTemplates().subscribe(data=>this.courseTemplateList=data)
   }
@@ -48,16 +75,29 @@ export class CourseTemplateListComponent {
   }
 
   openCreateDialog(){
+    let priceList: CategoryPrice[] = [];
+    for(let x=0; x<3;x++){
+      priceList.push(new CategoryPrice('',0))
+    }
     const dialogref = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,
       width: '40dvw',
-      height: '80dvh'
+      height: '80dvh',
+      data: {
+        template: new PostCourseTemplate('','','',0,0,0,0,0,'',priceList,[],0),
+        isEdit: false
+      }
     });
 
     dialogref.afterClosed().subscribe(result => {
       const obj = JSON.parse(result);
       if(obj.method == 'accept'){
-        console.log('Dialog output: ' + obj.data)
+        console.log('Dialog output: ' + obj.data);
+        this.courseTemplateService.postCourseTemplate(obj.data,).subscribe({
+          next: (response) => console.log('Template has been created'),
+          error: (error) => console.error('Template could not be created'),
+          complete: () => this.updateList   
+        })
       }
     })
   }

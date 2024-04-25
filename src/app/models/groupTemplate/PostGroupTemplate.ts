@@ -1,5 +1,4 @@
 import {Location} from "../location/Location"
-import {PostPrice} from "../price/PostPrice"
 import {Qualification} from '../qualification/Qualification'
 
 export class PostGroupTemplate {
