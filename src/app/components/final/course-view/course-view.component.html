@@ -1,0 +1,206 @@
+<div class="outer">
+  <div class="courseBody">
+    <div>
+      <p>Kurstitel:</p>
+      <p>
+        {{ viewData.title }}
+      </p>
+    </div>
+    <div>
+      <p>Kursnummer:</p>
+      <p>
+        {{ viewData.courseNumber }}
+      </p>
+    </div>
+    <div>
+      <p>Beschreibung:</p>
+      <p>
+        {{ viewData.description }}
+      </p>
+    </div>
+    <div class="listWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Start Zeit</th>
+            <th>End Zeit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container
+            *ngFor="let currentDate of viewData.dates; let i = index"
+          >
+            <tr>
+              <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
+              <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
+              <td>
+                {{ currentDate | endTime : viewData.duration }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <p>Maximale Teilnehmeanzahl:</p>
+      <p>
+        {{ viewData.numberParticipants }}
+      </p>
+    </div>
+    <div class="listWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Status</th>
+            <th>email</th>
+            <th>Telefonnummer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let p of viewData.participants; let i = index">
+            <tr>
+              <td>
+                {{ p.firstName ? p.firstName : "leer" }}
+              </td>
+              <td>
+                {{ p.lastName ? p.lastName : "leer" }}
+              </td>
+              <td>
+                {{ p.status && p.status.text ? p.status.text : "leer" }}
+              </td>
+              <td>
+                {{ p.email ? p.email : "leer" }}
+              </td>
+              <td>
+                {{ p.phone ? p.phone : "leer" }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p>Maximale Wartelistenlänge:</p>
+      <p>
+        {{ viewData.numberWaitlist }}
+      </p>
+    </div>
+    <div class="listWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Status</th>
+            <th>email</th>
+            <th>Telefonnummer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let wp of viewData.waitList; let i = index">
+            <tr>
+              <td>
+                {{ wp.firstName ? wp.firstName : "leer" }}
+              </td>
+              <td>
+                {{ wp.lastName ? wp.lastName : "leer" }}
+              </td>
+
+              <td>
+                {{ wp.status && wp.status.text ? wp.status.text : "leer" }}
+              </td>
+
+              <td>
+                {{ wp.email ? wp.email : "leer" }}
+              </td>
+              <td>
+                {{ wp.phone ? wp.phone : "leer" }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div>
+        <p>Preise:</p>
+      </div>
+      <div class="priceWrapper">
+        <ng-container *ngFor="let price of viewData.prices; let i = index">
+          <div class="price">
+            <p>{{ price.category }}:</p>
+            <p>{{ price.price }}</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div>
+      <p>Ort:</p>
+      <div class="locationWrapper">
+        <p>
+          {{ viewData.location.title }}
+        </p>
+        <p>
+          {{ viewData.location.street }}
+        </p>
+        <p>
+          {{ viewData.location.postCode + " " + viewData.location.city }}
+        </p>
+        <p>
+          {{ viewData.location.country }}
+        </p>
+
+        <div>
+          <p>Telefonnummer:</p>
+          <p>
+            {{ viewData.location.phone }}
+          </p>
+        </div>
+        <div>
+          <p>Email:</p>
+          <p>
+            {{ viewData.location.email }}
+          </p>
+        </div>
+        <div *ngIf="viewData.location.mapsUrl">
+          <p>Google Maps Link:</p>
+          <a>
+            {{ viewData.location.mapsUrl }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p>Treffpunkt:</p>
+      <p>
+        {{ viewData.meetingPoint }}
+      </p>
+    </div>
+    <div>
+      <p>Trainer Qualifikation:</p>
+      <ng-container *ngFor="let q of viewData.requiredQualifications">
+        <li>{{ q.name }}</li>
+      </ng-container>
+    </div>
+    <div>
+      <p>Trainer:</p>
+      <ng-container *ngFor="let t of viewData.trainers">
+        <li>{{ t.firstName + " " + t.lastName }}</li>
+      </ng-container>
+    </div>
+    <div>
+      <p>Notizen:</p>
+      <p>
+        {{ viewData.notes }}
+      </p>
+    </div>
+  </div>
+  <div class="button-div">
+    <button (click)="cancel()">schließen</button>
+    <button (click)="deleteCourse()" *ngIf="isDelete">Löschen</button>
+  </div>
+</div>
