@@ -10,6 +10,7 @@ import { Location } from '../../models/location/Location';
 import { Status } from '../../models/status/Status';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
+import {CategoryPrice} from "../../models/price/NewPrice";
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class CourseService {
     new BehaviorSubject<Course | null>(null);
   baseUrl: string = 'http://localhost:8080/api/v1/course';
   constructor(private http: HttpClient) {}
-  
+
 
   //Get
   getAllCourses(): Observable<Course[]> {
@@ -179,7 +180,7 @@ export class CourseService {
     0,
     'Introduction to Programming',
     'CS101',
-    2,
+    '2',
     'CS',
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
     260,
@@ -214,7 +215,7 @@ export class CourseService {
     2,
     1,
     1,
-    [new PostPrice('Regular', 150), new PostPrice('Early Bird', 120)],
+    [new CategoryPrice('Regular', '150'), new CategoryPrice('Early Bird', '120')],
     new Location(
       0,
       'room1',
@@ -248,7 +249,7 @@ export class CourseService {
     1,
     'Web Development Bootcamp',
     'WD200',
-    4,
+    '4',
     'WD',
     [new Date('2024-04-01'), new Date('2024-04-08'), new Date('2024-04-15')],
     210,
@@ -283,7 +284,7 @@ export class CourseService {
     3,
     1,
     1,
-    [new PostPrice('Regular', 500), new PostPrice('Early Bird', 450)],
+    [new CategoryPrice('Regular', '500'), new CategoryPrice('Early Bird', '450')],
     new Location(
       0,
       'testtestroom',

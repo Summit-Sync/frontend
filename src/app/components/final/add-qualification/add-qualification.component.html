@@ -1,0 +1,18 @@
+<div>
+  <div>
+    <h1 mat-dialog-title>Qualifikation erstellen</h1>
+  </div>
+  <div>
+    <mat-dialog-content [formGroup]="addQualificationForm">
+      <div>
+        <input matInput placeholder="Name der Qualifikation" formControlName="name">
+      </div>
+    </mat-dialog-content>
+  </div>
+  <div class="buttonDiv">
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="save()">Speichern</button>
+      <button mat-raised-button (click)="cancel()">Abbrechen</button>
+    </mat-dialog-actions>
+  </div>
+</div>

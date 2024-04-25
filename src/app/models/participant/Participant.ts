@@ -7,14 +7,14 @@ export class Participant {
     public firstName: string,
     public status: Status,
     public email: string,
-    public phoneNumber: string
+    public phone: string
   ) {}
   validate(): boolean {
     const allFilled =
       this.lastName != '' &&
       this.firstName != '' &&
       this.status.validate() &&
-      (this.email != '' || this.phoneNumber != '');
+      (this.email != '' || this.phone != '');
     if (!allFilled) {
       return false;
     }
@@ -27,12 +27,12 @@ export class Participant {
       this.firstName == '' &&
       !this.status.validate() &&
       this.email == '' &&
-      this.phoneNumber == '';
+      this.phone == '';
     const allFilled =
       this.lastName != '' &&
       this.firstName != '' &&
       this.status.validate() &&
-      (this.email != '' || this.phoneNumber != '');
+      (this.email != '' || this.phone != '');
     if (!(allEmpty || allFilled)) {
       return false;
     }

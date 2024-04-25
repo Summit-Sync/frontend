@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
-import { CourseTemplate } from '../../../models/coursetemplate/CourseTemplate';
+import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';

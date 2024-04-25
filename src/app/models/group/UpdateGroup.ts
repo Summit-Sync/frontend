@@ -8,13 +8,14 @@ export class UpdateGroup{
     public numberOfDates: number,
     public duration: number,
     public contact: number,
-    public dates: Date[],
+    public dates: string[],
     public numberParticipants: number,
     public location: number,
     public meetingPoint: string,
     public trainerPricePerHour: number,
     public pricePerParticipant: number,
     public requiredQualifications: number[],
+    public participantsPerTrainer: number,
     public trainers: number
   ) {
   }
@@ -34,10 +35,19 @@ export class UpdateGroup{
       !this.trainerPricePerHour ||
       !this.pricePerParticipant ||
       !this.requiredQualifications ||
-      !this.trainers) {
+      !this.participantsPerTrainer ||
+      !this.trainers
+    ) {
       return false;
     }
-    if (this.dates.length === 0 || this.requiredQualifications.length === 0 || this.numberOfDates === 0 || this.trainerPricePerHour === 0 || this.pricePerParticipant === 0){
+    if (
+      this.dates.length === 0 ||
+      this.requiredQualifications.length === 0 ||
+      this.numberOfDates === 0 ||
+      this.trainerPricePerHour === 0 ||
+      this.pricePerParticipant === 0 ||
+      this.participantsPerTrainer === 0
+    ){
       return false;
     }
     return true;

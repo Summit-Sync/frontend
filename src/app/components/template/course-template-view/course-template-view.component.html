@@ -42,7 +42,7 @@
         <div class="price">
             <p>Preisliste: </p>
             <div *ngIf="!isEdit; else editTemplate">
-                <p *ngFor="let price of courseTemplate.price">{{price.name}}:{{price.price}}</p>
+                <p *ngFor="let price of courseTemplate.price">{{price.category}}:{{price.price}}</p>
             </div>
         </div>
         <div class="required-qualifications">

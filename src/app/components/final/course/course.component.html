@@ -128,7 +128,7 @@
                   {{ p.email ? p.email : "leer" }}
                 </td>
                 <td>
-                  {{ p.phoneNumber ? p.phoneNumber : "leer" }}
+                  {{ p.phone ? p.phone : "leer" }}
                 </td>
               </tr>
             </ng-container>
@@ -171,8 +171,8 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="p.phoneNumber"
-                    [placeholder]="p.phoneNumber ? p.phoneNumber : 'leer'"
+                    [(ngModel)]="p.phone"
+                    [placeholder]="p.phone ? p.phone : 'leer'"
                   />
                 </td>
                 <td *ngIf="isEdit">
@@ -244,7 +244,7 @@
                   {{ wp.email ? wp.email : "leer" }}
                 </td>
                 <td>
-                  {{ wp.phoneNumber ? wp.phoneNumber : "leer" }}
+                  {{ wp.phone ? wp.phone : "leer" }}
                 </td>
               </tr>
             </ng-container>
@@ -285,8 +285,8 @@
                 <td>
                   <input
                     type="text"
-                    [(ngModel)]="wp.phoneNumber"
-                    [placeholder]="wp.phoneNumber ? wp.phoneNumber : 'leer'"
+                    [(ngModel)]="wp.phone"
+                    [placeholder]="wp.phone ? wp.phone : 'leer'"
                   />
                 </td>
                 <td *ngIf="isEdit">
@@ -313,11 +313,11 @@
       <div class="priceWrapper">
         <ng-container *ngFor="let price of courseData.prices; let i = index">
           <div class="price" *ngIf="!isEdit">
-            <p>{{ price.name }}:</p>
+            <p>{{ price.category }}:</p>
             <p>{{ price.price }}</p>
           </div>
           <ng-container *ngIf="isEdit">
-            <input type="text" [(ngModel)]="price.name" />
+            <input type="text" [(ngModel)]="price.category" />
             <input type="number" [(ngModel)]="price.price" />
             <button (click)="deletePrice(i)">-</button>
           </ng-container>
