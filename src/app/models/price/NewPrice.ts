@@ -5,6 +5,6 @@ export class CategoryPrice{
     ){}
 
     validate(): boolean{
-        return !(this.category||this.price);
+        return (this.price != 0 && this.category == '');
     }
 }
