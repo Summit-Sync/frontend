@@ -17,8 +17,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { CategoryPrice } from '../../../models/price/NewPrice';
 import { LocationService } from '../../../services/location/location.service';
-import { CategoryPrice } from '../../../models/price/NewPrice';
-import { LocationService } from '../../../services/location/location.service';
 import { Location } from '../../../models/location/Location';
 
 @Component({
