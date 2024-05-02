@@ -34,30 +34,20 @@ export class Course {
   validate(): boolean {
     // Check if required fields are present
 
-    if (
-      !this.title ||
-      // !this.acronym ||
-      !this.description ||
-      !this.notes
-    ) {
+    if (!this.title || !this.description || !this.notes) {
+      console.error('string empty');
       return false;
     }
 
     // Check if numerical fields are not zero
     if (
-      // this.courseNumber === 0 ||
       this.duration === 0 ||
       this.numberParticipants === 0 ||
       this.numberWaitlist === 0
     ) {
+      console.error('number empty');
       return false;
     }
-
-    console.log(
-      !this.prices.every((price) => {
-        return price.validate();
-      })
-    );
 
     // Check if arrays are not empty
     if (
@@ -66,6 +56,7 @@ export class Course {
       this.participants.length === 0 ||
       this.dates.length === 0
     ) {
+      console.error('array empty');
       return false;
     }
 
@@ -75,6 +66,7 @@ export class Course {
         return price.validate();
       })
     ) {
+      console.error('price failed');
       return false;
     }
 
@@ -83,6 +75,7 @@ export class Course {
         return qualification.validate();
       })
     ) {
+      console.error('qualification failed');
       return false;
     }
 
@@ -91,6 +84,7 @@ export class Course {
         return participant.validateExceptAllEmpty();
       })
     ) {
+      console.error('participant failed');
       return false;
     }
 
@@ -99,10 +93,12 @@ export class Course {
         return wc.validateExceptAllEmpty();
       })
     ) {
+      console.error('waitlist failed');
       return false;
     }
 
     if (!this.location.validate()) {
+      console.error('location failed');
       return false;
     }
 
@@ -142,7 +138,8 @@ export class Course {
   }
 
   createCourseFromTemplate(courseTemplate: CourseTemplate) {
-    this.title = courseTemplate.acronym;
+    this.title = courseTemplate.title;
+    this.acronym = courseTemplate.acronym;
     this.description = courseTemplate.description;
     this.duration = courseTemplate.duration;
     this.id = courseTemplate.id;
@@ -160,7 +157,6 @@ export class Course {
     this.numberWaitlist = courseTemplate.numberWaitlist;
     this.prices = courseTemplate.price;
     this.requiredQualifications = courseTemplate.requiredQualifications;
-    this.title = courseTemplate.title;
   }
 
   deleteEmptyParticipants(participantsList: Participant[]) {
