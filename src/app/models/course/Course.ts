@@ -33,33 +33,41 @@ export class Course {
 
   validate(): boolean {
     // Check if required fields are present
-
-    if (
-      !this.title ||
-      // !this.acronym ||
-      !this.description ||
-      !this.notes
-    ) {
-      return false;
+    let result: boolean = true;
+    if(!this.title){
+      console.error("Titel darf nicht leer sein");
+      result = false;
     }
-
+    if(!this.description){
+      console.error("Die Beschreibung darf nicht leer sein");
+      result = false;
+    }
+    if(!this.notes){
+      console.error("Die Notizen dürfen nicht leer sein");
+      result = false;
+    }
     // Check if numerical fields are not zero
-    if (
-      // this.courseNumber === 0 ||
-      this.duration === 0 ||
-      this.numberParticipants === 0 ||
-      this.numberWaitlist === 0
-    ) {
-      return false;
+    if(this.duration < 1){
+      console.error("Die Dauer darf nicht kleiner als 1 sein");
+      result = false;
     }
-
-    console.log(
-      !this.prices.every((price) => {
-        return price.validate();
-      })
-    );
-
+    if(this.numberParticipants < 1){
+      console.error("Die Teilnehmeranzahl darf nicht kleiner als 1 sein");
+      result = false;
+    }
+    if(this.numberWaitlist < 1){
+      console.error("Wartelistenlänge darf nicht kleiner als 1 sein");
+      result = false;
+    }
+    if(this.numberTrainers < 1){
+      console.error("Traineranzahl darf nicht kleiner als 1 sein");
+      result = false;
+    }
     // Check if arrays are not empty
+    if(this.prices.length === 0){
+      console.error("Es müssen Preise für Kurse existieren");
+      result = false;
+    }
     if (
       this.prices.length === 0 ||
       this.requiredQualifications.length === 0 ||
@@ -75,7 +83,7 @@ export class Course {
         return price.validate();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (
@@ -83,7 +91,7 @@ export class Course {
         return qualification.validate();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (
@@ -91,7 +99,7 @@ export class Course {
         return participant.validateExceptAllEmpty();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (
@@ -99,14 +107,14 @@ export class Course {
         return wc.validateExceptAllEmpty();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (!this.location.validate()) {
-      return false;
+      result = false;
     }
 
-    return true;
+    return result;
   }
 
   createCopy(course: Course) {
