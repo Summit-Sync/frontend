@@ -23,7 +23,7 @@ export class LocationService {
       '0148131564156156',
       'https://www.test.com/firstTest',
       'title 1',
-      'city 1'
+      'city1'
     );
     let location2: Location = new Location(
       2,
@@ -34,7 +34,7 @@ export class LocationService {
       '0156487947787853',
       'https://www.test.com/secondTest',
       'title 2',
-      'city 2'
+      'city2'
     );
     return of([location1, location2]);
     // return this.http.get<Location[]>(this.baseUrl);
@@ -58,8 +58,8 @@ export class LocationService {
   }
 
   //Delete
-  deleteLocationById(id: number): void {
+  deleteLocationById(id: number): Observable<void> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl);
+    return this.http.delete<void>(apiUrl);
   }
 }

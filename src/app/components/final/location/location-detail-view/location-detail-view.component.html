@@ -1,1 +1,41 @@
-<p>location-detail-view works!</p>
+<div>
+    <div class="header">
+
+    </div>
+    <div class="body">
+        <div>
+            <label>Titel:</label>
+            <p>{{selectedLocation.title}}</p>
+        </div>
+        <div>
+            <label>Straße:</label>
+            <p>{{selectedLocation.street}}</p>
+        </div>
+        <div>
+            <label>Postleitzahl:</label>
+            <p>{{selectedLocation.postCode}}</p>
+        </div>
+        <div>
+            <label>Stadt:</label>
+            <p>{{selectedLocation.city}}</p>
+        </div>
+        <div>
+            <label>Land:</label>
+            <p>{{selectedLocation.country}}</p>
+        </div>
+        <div>
+            <label>E-Mail:</label>
+            <p>{{selectedLocation.email}}</p>
+        <div>
+            <label>Telefonnummer:</label>
+            <p>{{selectedLocation.phone}}</p>
+        </div>
+        <div>
+            <label>Google Maps URL:</label>
+           <p>{{selectedLocation.mapsUrl}}</p>
+        </div>
+    </div>
+    <div class="footer">
+        <button (click)="close()">Schließen</button>
+    </div>
+</div>

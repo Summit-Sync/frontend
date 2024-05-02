@@ -1,0 +1,28 @@
+<div>
+    <div class="header">
+        <button (click)="openCreateDialog()">Standort erstellen</button>
+    </div>
+    <div class="body">
+        <table>
+            <thead>
+                <th>Titel</th>
+                <th>Adresse</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let location of locationList">
+                    <td>{{location.title}}</td>
+                    <td>{{location.street}},&nbsp;{{location.postCode}}&nbsp;{{location.title}}</td>
+                    <td><button (click)="openEditDialog(location)">Bearbeiten</button></td>
+                    <td><button (click)="openDetailDialog(location)">Details</button></td>
+                    <td><button (click)="deleteLocation(location.locationId)">Löschen</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+
+    </div>
+</div>
