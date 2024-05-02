@@ -7,24 +7,19 @@ export class PostContact {
   }
 
   validate(): boolean {
-    if (
-      !this.firstName ||
-      !this.lastName ||
-      !this.email ||
-      !this.phone
-    ){
-      return false;
+    let result: boolean = true;
+    if(!this.firstName){
+      console.error("Vorname darf nicht leer sein");
+      result = false;
     }
-    return true;
+    if(!this.lastName){
+      console.error("Nachname darf nicht leer sein");
+      result = false;
+    }
+    if(!this.email || !this.phone){
+      console.error("Es muss eine E-Mail Adresse oder Telefonnummer angegeben werden");
+      result = false;
+    }
+    return result;
   }
 }
-
-/*
-export type PostContact={
-    firstName:string
-    lastName:string
-    email:string
-    phone:string
-}
-
- */
