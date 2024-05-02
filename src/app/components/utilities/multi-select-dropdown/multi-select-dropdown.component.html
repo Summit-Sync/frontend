@@ -1,12 +1,23 @@
 <div class="dropbox-wrapper">
   <div id="list1" class="dropdown-check-list">
-    <span class="anchor" (click)="dropDownClick()">{{ dropdownHeadline }}</span>
+    <span
+      class="anchor"
+      (click)="dropDownClick()"
+      tabindex="0"
+      (keydown.space)="dropDownClick()"
+      >{{ dropdownHeadline }}</span
+    >
     <ul class="items" [ngClass]="{ showTrainerList: showList }">
-      <li *ngFor="let t of allOptions; let i = index">
+      <li
+        *ngFor="let t of allOptions; let i = index"
+        tabindex="0"
+        (keydown.enter)="onCheckBoxClick($event, i)"
+      >
         <input
           type="checkbox"
-          [checked]="t | checkItemInList : selectedOptions"
+          [checked]="checkedBoxes[i]"
           (input)="onCheckBoxClick($event, i)"
+          tabindex="-1"
         />{{ t.displayFullName }}
       </li>
     </ul>
