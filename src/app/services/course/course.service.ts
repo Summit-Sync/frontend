@@ -286,14 +286,14 @@ export class CourseService {
     [new CategoryPrice('Regular', 500), new CategoryPrice('Early Bird', 450)],
     new Location(
       0,
+      'testtesttitle',
       'test Street2',
       '21897',
       'germany',
       'second@mail.com',
       '021867967898564564',
       'tesURL2',
-      'Test 2 Unterwegs - DAV Kletterzentrum Bremen',
-      'Test Stadt'
+      'testcity'
     ),
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],
