@@ -21,27 +21,27 @@ export class Trainer implements CheckboxList {
       console.error("Ein Trainer muss eine Id haben");
       
     }
-    if(!this.email){
+    if(!this.email || this.email === ''){
       result = false;
       console.error("Trainer müssen eine E-Mail haben");
       
     }
-    if(!this.subjectId){
+    if(!this.subjectId || this.subjectId == ''){
       result = false;
       console.error("Einem Trainer muss eine SubjektId zugeordnet sein");
       
     }
-    if(!this.firstName){
+    if(!this.firstName || this.firstName === ''){
       result = false;
       console.error("Vorname darf nicht leer sein");
       
     }
-    if(!this.lastName){
+    if(!this.lastName || this.lastName === ''){
       result = false;
       console.error("Nachname darf nicht leer sein");
       
     }
-    if(!this.phone){
+    if(!this.phone || this.phone === ''){
       result = false;
       console.error("Telefonnummer darf nicht leer sein");
       
