@@ -1,5 +1,5 @@
 import { Location } from '../location/Location';
-import { CategoryPrice } from '../price/NewPrice';
+import { CategoryPrice } from '../price/CategoryPrice';
 import { Qualification } from '../qualification/Qualification';
 import { PostCourseTemplate } from './PostCourseTemplate';
 

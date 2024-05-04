@@ -7,7 +7,7 @@ import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
 import { cloneDeep } from 'lodash';
 import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
-import { CategoryPrice } from '../../../models/price/NewPrice';
+import { CategoryPrice } from '../../../models/price/CategoryPrice';
 
 @Component({
   selector: 'app-course-template-list',

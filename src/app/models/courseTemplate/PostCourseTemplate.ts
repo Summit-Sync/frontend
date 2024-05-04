@@ -1,4 +1,4 @@
-import { CategoryPrice } from "../price/NewPrice";
+import { CategoryPrice } from "../price/CategoryPrice";
 
 export class PostCourseTemplate{
     constructor(

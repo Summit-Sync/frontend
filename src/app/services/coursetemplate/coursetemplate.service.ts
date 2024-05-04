@@ -5,7 +5,7 @@ import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
 import { Location } from '../../models/location/Location';
 import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
 import { Qualification } from '../../models/qualification/Qualification';
-import { CategoryPrice } from '../../models/price/NewPrice';
+import { CategoryPrice } from '../../models/price/CategoryPrice';
 
 @Injectable({
   providedIn: 'root',
