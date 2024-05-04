@@ -3,7 +3,7 @@ import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
 import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Location } from '../location/Location';
-import { CategoryPrice } from '../price/NewPrice';
+import { CategoryPrice } from '../price/CategoryPrice';
 import { Status } from '../status/Status';
 
 export class Course {
