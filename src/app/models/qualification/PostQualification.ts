@@ -1,15 +1,12 @@
 export class PostQualification{
   constructor(public name: string) {}
   validate(): boolean {
+    let result: boolean = true;
     if (!this.name){
-      return false;
+      result = false;
+      console.error("Qualifikationsname darf nicht leer sein");
+      
     }
-    return true;
+    return result;
   }
 }
-/*
-export type PostQualification ={
-    name:string
-}
-
- */
