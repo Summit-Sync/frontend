@@ -53,7 +53,7 @@ export class UpdateCourse {
       console.error("Ein Kurs muss mindestens einen Preis haben");
       result = false;      
     }
-    if(!this.location){
+    if(!this.location || this.location < 1){
       console.error("Ein Kurs muss einem Ort zugeordnet sein");
       result = false;
     }
@@ -65,7 +65,7 @@ export class UpdateCourse {
       console.error("Einem Kurs muss mindestens eine QUalifikation zugeordnet werden");
       result = false;
     }
-    if(this.numberTrainers){
+    if(this.numberTrainers < 1){
       console.error("Mindestens ein Trainer muss einem Kurs zugeordnet werden können");
       result = false;
     }
