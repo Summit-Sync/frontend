@@ -3,15 +3,12 @@ export class PostStatus{
   }
 
   validate(): boolean {
+    let result : boolean = true;
     if (!this.text){
-      return false;
+      result = false;
+      console.error("Statustext darf nicht leer sein");
+      
     }
-    return true;
+    return result;
   }
 }
-/*
-export type PostStatusDTO={
-    text:string
-}
-
- */
