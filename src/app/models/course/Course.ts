@@ -68,15 +68,19 @@ export class Course {
       console.error("Es müssen Preise für Kurse existieren");
       result = false;
     }
-    if (
-      this.prices.length === 0 ||
-      this.requiredQualifications.length === 0 ||
-      this.participants.length === 0 ||
-      this.dates.length === 0
-    ) {
-      return false;
+    if(this.requiredQualifications.length === 0 ){
+      console.error("Es müssen Qualifikationen für den Kurs existieren");
+      result = false;
     }
-
+    if(this.participants.length === 0){
+      console.error("Es müssen Teilnehmer im Kurs vorhanden sein");
+      result = false;
+    }
+    if(this.dates.length === 0){
+      console.error("Es müssen Daten für den Kurs vorliegen");
+      result = false;
+      
+    }
     //validate arrays content
     if (
       !this.prices.every((price) => {

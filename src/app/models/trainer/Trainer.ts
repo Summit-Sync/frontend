@@ -15,26 +15,45 @@ export class Trainer implements CheckboxList {
     this.displayFullName = this.firstName + ' ' + this.lastName;
   }
   validate(): boolean {
-    if (
-      !this.id ||
-      !this.email ||
-      !this.subjectId ||
-      !this.firstName ||
-      !this.lastName ||
-      !this.phone ||
-      this.qualification.length === 0
-    ) {
-      return false;
+    let result: boolean = true;
+    if(!this.id){
+      result = false;
+      console.error("Ein Trainer muss eine Id haben");
+      
     }
-
+    if(!this.email){
+      result = false;
+      console.error("Trainer müssen eine E-Mail haben");
+      
+    }
+    if(!this.subjectId){
+      result = false;
+      console.error("Einem Trainer muss eine SubjektId zugeordnet sein");
+      
+    }
+    if(!this.firstName){
+      result = false;
+      console.error("Vorname darf nicht leer sein");
+      
+    }
+    if(!this.lastName){
+      result = false;
+      console.error("Nachname darf nicht leer sein");
+      
+    }
+    if(!this.phone){
+      result = false;
+      console.error("Telefonnummer darf nicht leer sein");
+      
+    }
     if (
       !this.qualification.every((qualification) => {
         return qualification.validate();
       })
     ) {
-      return false;
+      result = false;
     }
-    return true;
+    return result;
   }
 
   createCopy(trainer: Trainer): void{
