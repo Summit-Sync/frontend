@@ -19,41 +19,78 @@ export class PostGroup {
     public trainers: number[]
   ) {}
 
-  validate(): boolean {
-    if (
-      !this.title ||
-      !this.description ||
-      !this.numberOfDates ||
-      !this.contact ||
-      !this.duration ||
-      !this.numberParticipants ||
-      !this.location ||
-      !this.meetingPoint ||
-      !this.trainerPricePerHour ||
-      !this.pricePerParticipant ||
-      !this.participantsPerTrainer
-    ) {
-      return false;
+    validate(): boolean {
+      let result: boolean = true;
+      if(!this.title || this.title === ''){
+        result = false;
+        console.error("Titel darf nicht leer sein");
+        
+      }
+      if(!this.description || this.description === ''){
+        result = false;
+        console.error("Abkürzung darf nicht leer sein");
+        
+      }
+      if(this.numberOfDates < 1){
+        result = false;
+        console.error("Terminanzahl darf nicht leer sein");
+        
+      }
+      if(this.duration < 1){
+        result = false;
+        console.error("Dauer darf nicht leer sein");
+        
+      }
+      if(this.contact < 1){
+        result = false;
+        console.error("Einer Gruppe muss ein Kontakt zugeordnet werden");
+        
+      }
+      if(this.events.length === 0){
+        result = false;
+        console.error("Gruppen müssen Daten zugeordnet werden");
+        
+      }
+      if(this.numberParticipants < 1){
+        result = false;
+        console.error("Gruppen muss mindestens ein Teilnehmer zugeordnet werden können");
+        
+      }
+      if(this.location < 1){
+        result = false;
+        console.error("EIner Gruppe muss ein Ort zugeordnet werden");
+        
+      }
+      if(!this.meetingPoint || this.meetingPoint === ''){
+        result = false;
+        console.error("Treffpunkt darf nicht leer sein");
+        
+      }
+      if(this.trainerPricePerHour < 1){
+        result = false;
+        console.error("Trainerpreis darf nicht leer sein");
+        
+      }
+      if(this.participantsPerTrainer < 1){
+        result = false;
+        console.error("Trainerschlüssel darf nicht leer sein");
+        
+      }
+      if(this.pricePerParticipant <= 0){
+        result = false;
+        console.error("Preis pro Teilnehmer darf nicht 0 sein");
+        
+      }
+      if (this.trainers.length === 0) {
+        result = false;
+        console.error("Trainerliste darf nicht leer sein");
+        
+      }
+      if(this.requiredQualifications.length === 0){
+        result = false;
+        console.error("Einer Gruppe müssen Qualifikationen zugeordnet werden");
+        
+      }  
+      return result;
     }
-
-    if (
-      this.participantsPerTrainer === 0 ||
-      this.duration === 0 ||
-      this.numberParticipants === 0 ||
-      this.pricePerParticipant === 0 ||
-      this.trainerPricePerHour === 0
-    ) {
-      return false;
-    }
-
-    if (
-      this.events.length === 0 ||
-      this.requiredQualifications.length === 0 ||
-      this.trainers.length === 0
-    ) {
-      return false;
-    }
-
-    return true;
-  }
 }

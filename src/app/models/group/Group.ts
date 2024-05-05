@@ -28,56 +28,91 @@ export class Group {
   ) {}
 
   validate(): boolean {
-    if (
-      !this.title ||
-      !this.groupNumber ||
-      !this.description ||
-      !this.contact ||
-      !this.trainerPricePerHour ||
-      !this.participantsPerTrainer ||
-      !this.totalPrice ||
-      !this.meetingPoint ||
-      !this.pricePerParticipant
-    ) {
-      return false;
+    let result: boolean = true;
+    if(!this.id || this.id < 0){
+      result = false;
+      console.error("Id darf nicht leer sein");
+      
     }
-
-    if (
-      this.numberOfDates === 0 ||
-      this.duration === 0 ||
-      this.numberParticipants === 0 ||
-      this.participantsPerTrainer === 0 ||
-      this.pricePerParticipant === 0 ||
-      this.trainerPricePerHour === 0 ||
-      this.totalPrice === 0
-    ) {
-      return false;
+    if(!this.title || this.title === ''){
+      result = false;
+      console.error("Titel darf nicht leer sein");
+      
     }
-
-    if (
-      this.dates.length === 0 ||
-      this.requiredQualifications.length === 0 ||
-      this.trainers.length === 0
-    ) {
-      return false;
+    if(!this.description || this.description === ''){
+      result = false;
+      console.error("Abkürzung darf nicht leer sein");
+      
     }
-
+    if(this.numberOfDates < 1){
+      result = false;
+      console.error("Terminanzahl darf nicht leer sein");
+      
+    }
+    if(this.duration < 1){
+      result = false;
+      console.error("Dauer darf nicht leer sein");
+      
+    }
+    if(!this.contact.validate()){
+      result = false;
+    }
+    if(this.dates.length === 0){
+      result = false;
+      console.error("Gruppen müssen Daten zugeordnet werden");
+      
+    }
+    if(this.numberParticipants < 1){
+      result = false;
+      console.error("Gruppen muss mindestens ein Teilnehmer zugeordnet werden können");
+      
+    }
+    if(!this.location.validate()){
+      result = false;
+    }
+    if(!this.meetingPoint || this.meetingPoint === ''){
+      result = false;
+      console.error("Treffpunkt darf nicht leer sein");
+      
+    }
+    if(this.trainerPricePerHour < 1){
+      result = false;
+      console.error("Trainerpreis darf nicht leer sein");
+      
+    }
+    if(this.participantsPerTrainer < 1){
+      result = false;
+      console.error("Trainerschlüssel darf nicht leer sein");
+      
+    }
+    if(this.totalPrice <= 0){
+      result = false;
+      console.error("Ein Kurs muss einen Gesamtpreis haben");
+      
+    }
+    if (this.trainers.length === 0) {
+      result = false;
+      console.error("Trainerliste darf nicht leer sein");
+      
+    }
+    if(!this.trainers.every(t => {
+      return t.validate();
+    })){
+      result = false;      
+    }
+    if(this.requiredQualifications.length === 0){
+      result = false;
+      console.error("Einer Gruppe müssen Qualifikationen zugeordnet werden");
+      
+    }
     if (
-      this.requiredQualifications.some((tq) => {
-        return tq.validate();
+      !this.requiredQualifications.every((q) => {
+        return q.validate();
       })
     ) {
-      return false;
+      result = false;
     }
 
-    if (
-      this.trainers.some((trainer) => {
-        return trainer.validate();
-      })
-    ) {
-      return false;
-    }
-
-    return true;
+    return result;
   }
 }
