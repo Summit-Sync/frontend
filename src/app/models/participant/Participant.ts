@@ -10,12 +10,15 @@ export class Participant {
     public phone: string
   ) {}
   validate(): boolean {
+    let result: boolean = true;
     const allFilled =
       this.lastName != '' &&
       this.firstName != '' &&
       this.status.validate() &&
       (this.email != '' || this.phone != '');
     if (!allFilled) {
+      console.error("Alle Angaben müssen leer sein");
+      
       return false;
     }
     return true;
@@ -34,18 +37,10 @@ export class Participant {
       this.status.validate() &&
       (this.email != '' || this.phone != '');
     if (!(allEmpty || allFilled)) {
+      console.error("Alle ANgaben müssen leer oder gefüllt sein");
+      
       return false;
     }
     return true;
   }
 }
-/*
-export type ParticipantDTO={
-    id:number
-    name:string
-    firstName:string
-    status:Status
-    email:string
-}
-
- */
