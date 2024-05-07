@@ -90,7 +90,6 @@ export class CourseService {
   }
 
   updateCourseDetails(course: Course) {
-    console.log();
     this.currentCourse.next(course);
   }
 
@@ -177,9 +176,9 @@ export class CourseService {
   course1: Course = new Course(
     0,
     'Introduction to Programming',
-    'CS101',
-    '2',
     'CS',
+    'CS101',
+    'Introducing the basics of programming',
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
     260,
     [
@@ -247,9 +246,9 @@ export class CourseService {
   course2: Course = new Course(
     1,
     'Web Development Bootcamp',
-    'WD200',
-    '4',
     'WD',
+    'WD200',
+    'Learning web development on real examples',
     [new Date('2024-04-01'), new Date('2024-04-08'), new Date('2024-04-15')],
     210,
     [

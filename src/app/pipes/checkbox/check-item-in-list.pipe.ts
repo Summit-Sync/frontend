@@ -10,6 +10,7 @@ export class CheckItemInListPipe implements PipeTransform {
     qualification: T,
     inCourseQualificationList: T[]
   ): boolean {
+    console.log('test');
     return inCourseQualificationList.some((q) => q.id === qualification.id);
   }
 }
