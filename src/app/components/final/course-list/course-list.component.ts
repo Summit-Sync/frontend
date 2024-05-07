@@ -135,6 +135,9 @@ export class CourseListComponent implements OnInit {
       width: '70dvw',
     });
 
+    let instance = dialogRef.componentInstance;
+    instance.isDelete = this.showingDelete;
+
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
       if (obj.method == 'accept') {
