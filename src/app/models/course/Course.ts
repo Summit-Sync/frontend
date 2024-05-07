@@ -34,7 +34,7 @@ export class Course {
   validate(): boolean {
     // Check if required fields are present
 
-    if (!this.title || !this.description || !this.notes) {
+    if (!this.title || !this.description || !this.notes || !this.meetingPoint) {
       console.error('string empty');
       return false;
     }
@@ -131,6 +131,7 @@ export class Course {
     course.trainers.forEach((trainer) => {
       this.trainers.push(trainer);
     });
+    this.meetingPoint = course.meetingPoint;
     this.notes = course.notes;
     this.visible = course.visible;
     this.canceled = course.canceled;
