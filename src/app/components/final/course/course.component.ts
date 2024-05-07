@@ -261,7 +261,6 @@ export class CourseComponent implements OnInit {
     if (numberParticipants < participantsLength) {
       participants.splice(participantsLength - 1, 1);
     } else {
-      console.log(participants);
       this.addParticipant(numberParticipants, participants);
     }
   }
