@@ -1,10 +1,9 @@
 export enum FilterOption {
   None = 'none',
-  Trainer = 'Trainer',
-  Qualification = 'Qualification',
-  PriceValue = 'PriceValue',
-  PriceName = 'PriceName',
-  Date = 'Date',
-  LocationStreet = 'LocationStreet',
-  LocationPostCode = 'LocationPostCode',
+  CourseAcronym = 'Kursart',
+  FreeTrainerSpots = 'Freie Trainer stellen',
+  FreeParticipantSpots = 'Freie Plätze',
+  NoParticipants = 'keine Teilnehmer',
+  StartDate = 'Start-Datum',
+  TrainerFullName = 'Trainer Name',
 }
