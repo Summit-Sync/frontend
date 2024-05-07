@@ -90,7 +90,6 @@ export class CourseService {
   }
 
   updateCourseDetails(course: Course) {
-    console.log();
     this.currentCourse.next(course);
   }
 
