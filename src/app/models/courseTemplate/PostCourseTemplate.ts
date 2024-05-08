@@ -1,4 +1,5 @@
 import { CategoryPrice } from "../price/CategoryPrice";
+import { PostCategoryPrice } from "../price/PostCategoryPrice";
 
 export class PostCourseTemplate{
     constructor(
@@ -11,7 +12,7 @@ export class PostCourseTemplate{
         public numberWaitlist:number,
         public location:number,
         public meetingPoint:string,
-        public price:CategoryPrice[],
+        public price: PostCategoryPrice[],
         public requiredQualifications:number[],
         public numberTrainers:number,
     ){}
@@ -74,7 +75,7 @@ export class PostCourseTemplate{
           //dirty fix as price doesnt seem to be a category price  
           console.log(price.constructor.name);
                   
-          if (!new CategoryPrice(price.name,price.price).validate()) {
+          if (!price.validate()) {
             result = false; // PostPrice validation failed
           }
         }

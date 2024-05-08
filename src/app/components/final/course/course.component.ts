@@ -181,7 +181,7 @@ export class CourseComponent implements OnInit {
   }
 
   addPrice() {
-    this.courseData.prices.push(new CategoryPrice('', 0));
+    this.courseData.prices.push(new CategoryPrice(0,'', 0));
   }
 
   deletePrice(index: number) {

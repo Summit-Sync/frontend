@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 import { FormsModule } from '@angular/forms';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
+import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
 
 @Component({
   selector: 'app-add-course-template',
@@ -65,17 +66,15 @@ export class AddCourseTemplateComponent {
   ngOnInit() {
     this.isEdit = this.data.isEdit;
     this.selectedCourseTemplate = this.data.selectedTemplate;
-    let priceList: CategoryPrice[] = [];
+    let priceList: PostCategoryPrice[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
-      priceList.push(new CategoryPrice('', 0));
+      priceList.push(new PostCategoryPrice('', 0));
     }
     if (this.isEdit) {
       console.log(this.selectedCourseTemplate)
       this.courseTemplate =
         this.selectedCourseTemplate.createPostCourseTemplate();
-
-      console.log(this.courseTemplate);
-      
+      console.log(this.courseTemplate);     
       this.addSelectedLocation();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
@@ -135,7 +134,7 @@ export class AddCourseTemplateComponent {
     for (let location of data) {
       checkboxList.push({
         id: location.locationId,
-        displayFullName: 'location.room',
+        displayFullName: location.title,
       });
     }
     console.log(checkboxList);
@@ -143,7 +142,7 @@ export class AddCourseTemplateComponent {
   }
 
   addPrice() {
-    this.courseTemplate.price.push(new CategoryPrice('', 0));
+    this.courseTemplate.price.push(new PostCategoryPrice('', 0));
   }
   removePrice() {
     this.courseTemplate.price.length = this.courseTemplate.price.length - 1;

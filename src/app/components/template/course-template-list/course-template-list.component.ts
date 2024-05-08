@@ -9,6 +9,7 @@ import { cloneDeep } from 'lodash';
 import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
 import { CategoryPrice } from '../../../models/price/CategoryPrice';
 import { tick } from '@angular/core/testing';
+import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
 
 @Component({
   selector: 'app-course-template-list',
@@ -50,7 +51,7 @@ export class CourseTemplateListComponent {
     dialogRef.afterClosed().subscribe(result => {
       const obj = JSON.parse(result);
       if(obj.method == 'accept'){
-        console.log('Dialog output: ' + obj.data)
+        console.log('Dialog output: ' + obj.data)        
         this.courseTemplateService.putCourseTemplate(obj.data,template.id).subscribe({
           next: (response) => console.log('Template has been updated'),
           error: (error) => console.error('Template could not be updated'),
@@ -79,9 +80,9 @@ export class CourseTemplateListComponent {
   }
 
   openCreateDialog(){
-    let priceList: CategoryPrice[] = [];
+    let priceList: PostCategoryPrice[] = [];
     for(let x=0; x<3;x++){
-      priceList.push(new CategoryPrice('',0))
+      priceList.push(new PostCategoryPrice('',0))
     }
     const dialogref = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,

@@ -1,5 +1,6 @@
 import { Location } from '../location/Location';
 import { CategoryPrice } from '../price/CategoryPrice';
+import { PostCategoryPrice } from '../price/PostCategoryPrice';
 import { Qualification } from '../qualification/Qualification';
 import { PostCourseTemplate } from './PostCourseTemplate';
 
@@ -94,6 +95,10 @@ export class CourseTemplate {
     for(let q of this.requiredQualifications){
       qualificationIdList.push(q.id);
     }
+    let priceList: PostCategoryPrice[] = [];
+    for(let price of this.price){
+      priceList.push(new PostCategoryPrice(price.name,price.price))
+    }
     return new PostCourseTemplate(
       this.acronym,
       this.title,
@@ -104,7 +109,7 @@ export class CourseTemplate {
       this.numberWaitlist,
       this.location.locationId,
       this.meetingPoint,
-      this.price,
+      priceList,
       qualificationIdList,
       this.numberTrainers
     );
