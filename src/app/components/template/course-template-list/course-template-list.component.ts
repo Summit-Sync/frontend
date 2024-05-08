@@ -60,7 +60,12 @@ export class CourseTemplateListComponent {
   }
 
   updateList(){
-    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>this.courseTemplateList=data)
+    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>{
+      this.courseTemplateList=data;
+      console.log(data);
+      
+    }
+    )
   }
 
   openDetails(template:CourseTemplate){

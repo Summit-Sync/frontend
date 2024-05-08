@@ -3,12 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Course} from "../../models/course/Course";
 import {Group} from "../../models/group/Group";
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrainerApplicationService {
-  baseUrl: string = 'http://localhost:8080/api/v1/trainer/application';
+  baseUrl: string = `${environment.serviceUrl}/trainer/application`;
 
   constructor(private http: HttpClient) { }
 

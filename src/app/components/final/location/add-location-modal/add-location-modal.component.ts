@@ -29,6 +29,8 @@ export class AddLocationModalComponent {
   }
 
   save(){
+    console.log(this.editableLocation);
+    
     if(this.editableLocation.validate()){
       console.log(this.editableLocation)
       this.dialogRef.close(JSON.stringify({

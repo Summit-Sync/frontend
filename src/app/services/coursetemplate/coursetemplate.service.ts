@@ -6,81 +6,23 @@ import { Location } from '../../models/location/Location';
 import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
 import { Qualification } from '../../models/qualification/Qualification';
 import { CategoryPrice } from '../../models/price/CategoryPrice';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursetemplateService {
-  baseUrl: string = 'http://localhost:8080/api/v1/template/course';
-  l1 = new Location(
-    1,
-    'Morgenstraße 2',
-    '27816',
-    'Deutschland',
-    'filler@email.com',
-    '0148131564156156',
-    'https://www.test.com/firstTest',
-    'title 1',
-    'city 1'
-  );
-  l2 = new Location(
-    2,
-    'Abendstraße',
-    '27816',
-    'Deutschland',
-    'test@email.com',
-    '0156487947787853',
-    'https://www.test.com/secondTest',
-    'title 2',
-    'city 2'
-  );
-  t1 = new CourseTemplate(
-    1,
-    'quick climb',
-    'qc',
-    'learn to climb quick but careful',
-    2,
-    120,
-    4,
-    2,
-    [new CategoryPrice('Regular', 100), new CategoryPrice('Special', 80)],
-    'vor der großen Halle',
-    [
-      new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
-      new Qualification(3, 'Erweiterte Sicherheitsmaßnahmen'),
-    ],
-    1,
-    this.l1
-  );
-  t2 = new CourseTemplate(
-    2,
-    'high climb',
-    'hc',
-    'learn to climb higher, than the regular classes',
-    1,
-    200,
-    5,
-    2,
-    [new CategoryPrice('Erweiterter Kurs', 130)],
-    'vor der großen Halle',
-    [
-      new Qualification(1, 'Mehrfache Erfahrung mit Gruppen'),
-      new Qualification(3, 'Kletterschein 2'),
-    ],
-    2,
-    this.l2
-  );
+  baseUrl: string = `${environment.serviceUrl}/template/course`;
+  
   constructor(private http: HttpClient) {}
 
   //Get
   getAllCourseTemplates(): Observable<CourseTemplate[]> {
-    // return this.http.get<CourseTemplate[]>(this.baseUrl);
-    return of([this.t1, this.t2]);
+    return this.http.get<CourseTemplate[]>(this.baseUrl);
   }
 
   getCourseTemplateById(id: string): Observable<CourseTemplate> {
-    // return this.http.get<CourseTemplate>(`${this.url}/${id}`);
-    return of(this.t1);
+    return this.http.get<CourseTemplate>(`${this.baseUrl}/${id}`);
   }
 
   //Put
