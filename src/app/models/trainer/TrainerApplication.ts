@@ -12,7 +12,7 @@ export class TrainerApplication {
   }
   validate(): boolean{
     let result: boolean = true;
-    if(!this.id || this.id < 1){
+    if(this.id < 1){
       result = false;
       console.error("Id darf nicht leer sein");
       
