@@ -53,7 +53,7 @@ export class UpdateCourse {
       console.error("Ein Kurs muss mindestens einen Preis haben");
       result = false;      
     }
-    if(!this.location || this.location < 1){
+    if(this.location < 1){
       console.error("Ein Kurs muss einem Ort zugeordnet sein");
       result = false;
     }
