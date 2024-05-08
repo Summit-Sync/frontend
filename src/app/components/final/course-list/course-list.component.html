@@ -16,14 +16,21 @@
     </div>
   </div>
   <input
-    [type]="displayOption == FilterOption.StartDate ? 'date' : 'text'"
+    type="text"
     *ngIf="
-      displayOption == FilterOption.StartDate ||
       displayOption == FilterOption.TrainerFullName ||
       displayOption == FilterOption.CourseAcronym
     "
     [(ngModel)]="searchText"
   />
+  <div *ngIf="displayOption == FilterOption.StartDate">
+    Von
+    <input type="date" [(ngModel)]="searchDate" />
+  </div>
+  <div *ngIf="displayOption == FilterOption.StartDate">
+    Bis
+    <input type="date" [(ngModel)]="searchEndDate" />
+  </div>
   <!-- <svg
     xmlns="http://www.w3.org/2000/svg"
     width="30"
@@ -55,7 +62,11 @@
   </thead>
   <tbody>
     <ng-container *ngFor="let c of courses | async">
-      <tr *ngIf="c | search : displayOption : searchText">
+      <tr
+        *ngIf="
+          c | search : displayOption : searchText : searchDate : searchEndDate
+        "
+      >
         <!-- <tr> -->
         <td>{{ c.acronym }}</td>
         <td>{{ c.courseNumber }}</td>

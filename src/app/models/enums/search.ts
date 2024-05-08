@@ -4,6 +4,6 @@ export enum FilterOption {
   FreeTrainerSpots = 'Freie Trainer stellen',
   FreeParticipantSpots = 'Freie Plätze',
   NoParticipants = 'keine Teilnehmer',
-  StartDate = 'Start-Datum',
+  StartDate = 'Datum Von-Bis',
   TrainerFullName = 'Trainer Name',
 }
