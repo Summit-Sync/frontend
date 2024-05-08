@@ -4,7 +4,7 @@ export class CategoryPrice{
         public price: number
     ){}
 
-    validate(): boolean{
+        validate(): boolean{
         let result: boolean = true;
         if(this.price <= 0){
             result = false;
