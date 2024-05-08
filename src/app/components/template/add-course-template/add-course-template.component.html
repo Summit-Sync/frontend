@@ -25,11 +25,11 @@
         </div>
         <div class="number-of-participants">
             <label for="number-of-participants">Teilnehmeranzahl</label>
-            <input id="number-of-participants" type="text" [(ngModel)]="courseTemplate.numberOfParticipants">
+            <input id="number-of-participants" type="text" [(ngModel)]="courseTemplate.numberParticipants">
         </div>
         <div class="number-waitlist">
             <label for="number-waitlist">Wartelistenlänge</label>
-            <input id="number-waitlist" type="text" [(ngModel)]="courseTemplate.numberOfWaitlist">
+            <input id="number-waitlist" type="text" [(ngModel)]="courseTemplate.numberWaitlist">
         </div>
         <div class="price">
             <div>
@@ -42,7 +42,7 @@
                 <span>Preis</span>
             </div>
             <div *ngFor="let price of courseTemplate.price">
-                <input [(ngModel)]="price.category">
+                <input [(ngModel)]="price.name">
                 <input [(ngModel)]="price.price">
             </div>
         </div>

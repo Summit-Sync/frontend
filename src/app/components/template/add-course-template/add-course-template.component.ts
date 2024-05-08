@@ -70,11 +70,16 @@ export class AddCourseTemplateComponent {
       priceList.push(new CategoryPrice('', 0));
     }
     if (this.isEdit) {
+      console.log(this.selectedCourseTemplate)
       this.courseTemplate =
         this.selectedCourseTemplate.createPostCourseTemplate();
-      this.courseTemplate.price = priceList;
+
+      console.log(this.courseTemplate);
+      
       this.addSelectedLocation();
       this.addSelectedQualification();
+      console.log(this.requiredQualifications);
+      
     } else {
       this.courseTemplate = this.data.template;
     }
@@ -155,9 +160,9 @@ export class AddCourseTemplateComponent {
   }
 
   addSelectedQualification() {
-    // this.courseLocation.push({
-    //   id: this.selectedCourseTemplate.location.locationId,
-    //   displayFullName: this.selectedCourseTemplate.location.room,
-    // });
+    this.courseLocation.push({
+      id: this.selectedCourseTemplate.location.locationId,
+      displayFullName: this.selectedCourseTemplate.location.street  ,
+    });
   }
 }

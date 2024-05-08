@@ -8,6 +8,7 @@ import { AddCourseTemplateComponent } from '../add-course-template/add-course-te
 import { cloneDeep } from 'lodash';
 import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
 import { CategoryPrice } from '../../../models/price/CategoryPrice';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-course-template-list',
@@ -41,7 +42,7 @@ export class CourseTemplateListComponent {
       width: '40dvw',
       height: '80dvh',
       data: {
-        selectedTemplate: cloneDeep(template),
+        selectedTemplate: new CourseTemplate(template.id,template.title,template.acronym, template.description, template.numberOfDates, template.duration, template.numberParticipants, template.numberWaitlist, template.price, template.meetingPoint, template.requiredQualifications, template.numberTrainers, template.location),
         isEdit: true
       }
     });
@@ -53,7 +54,7 @@ export class CourseTemplateListComponent {
         this.courseTemplateService.putCourseTemplate(obj.data,template.id).subscribe({
           next: (response) => console.log('Template has been updated'),
           error: (error) => console.error('Template could not be updated'),
-          complete: () => this.updateList   
+          complete: () => this.updateList()   
         })
       }
     })
@@ -62,8 +63,6 @@ export class CourseTemplateListComponent {
   updateList(){
     this.courseTemplateService.getAllCourseTemplates().subscribe(data=>{
       this.courseTemplateList=data;
-      console.log(data);
-      
     }
     )
   }

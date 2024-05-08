@@ -11,7 +11,7 @@ export class CourseTemplate {
     public description: string,
     public numberOfDates: number,
     public duration: number,
-    public numberOfParticipants: number,
+    public numberParticipants: number,
     public numberWaitlist: number,
     public price: CategoryPrice[],
     public meetingPoint: string,
@@ -52,7 +52,7 @@ export class CourseTemplate {
       console.error("Kursvorlagen müssen eine Dauer haben");
       
     }
-    if(this.numberOfParticipants < 1){
+    if(this.numberParticipants < 1){
       result = false;
       console.error("Kursvorlagen müssen mindestens einen Teilnehmer haben können");
       
@@ -100,7 +100,7 @@ export class CourseTemplate {
       this.description,
       this.numberOfDates,
       this.duration,
-      this.numberOfParticipants,
+      this.numberParticipants,
       this.numberWaitlist,
       this.location.locationId,
       this.meetingPoint,

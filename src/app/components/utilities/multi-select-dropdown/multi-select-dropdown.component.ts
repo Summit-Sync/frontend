@@ -18,7 +18,9 @@ export class MultiSelectDropdownComponent implements OnInit {
   checkedBoxes: boolean[] = [];
   showList: boolean = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    console.log(this.selectedOptions.length);
+    
     this.allOptions.forEach((aOption) =>
       this.checkedBoxes.push(
         this.selectedOptions.some((sOption) => {

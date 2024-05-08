@@ -190,8 +190,8 @@ export class CourseComponent implements OnInit {
 
   checkUnfinishedPrice() {
     const unfinishedPrices = this.courseData.prices.some((wp) => {
-      const allEmpty = wp.category == '' && wp.price == 0;
-      const allFilled = wp.category != '' && wp.price != 0;
+      const allEmpty = wp.name == '' && wp.price == 0;
+      const allFilled = wp.name != '' && wp.price != 0;
       if (!(allEmpty || allFilled)) {
         console.error(`Preis unvollständig (filler)`);
         return true;

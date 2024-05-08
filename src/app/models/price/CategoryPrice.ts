@@ -1,6 +1,6 @@
 export class CategoryPrice{
     constructor(
-        public category: string,
+        public name: string,
         public price: number
     ){}
 
@@ -11,7 +11,7 @@ export class CategoryPrice{
             console.error("Preis darf nicht leer sein");
             
         }
-        if(!this.category){
+        if(!this.name){
             result = false;
             console.error("Kategorie darf nicht leer sein");
             
