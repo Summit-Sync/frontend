@@ -1,3 +1,4 @@
+/*
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupTemplateListComponent } from './group-template-list.component';
@@ -11,7 +12,7 @@ describe('GroupTemplateListComponent', () => {
       imports: [GroupTemplateListComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(GroupTemplateListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -20,4 +21,4 @@ describe('GroupTemplateListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+}); *///

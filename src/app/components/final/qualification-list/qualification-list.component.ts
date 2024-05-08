@@ -46,15 +46,27 @@ export class QualificationListComponent implements OnInit{
       const obj = JSON.parse(result);
       if (obj.method == 'confirm'){
         console.log("Dialog output: ", obj.data);
+        this.qualificationService.postQualification(obj.data).subscribe({
+          next: () => {
+            this.qualification$ = this.qualificationService.getAllQualifications();
+          },
+          error: () => {
+            console.error("Something went wrong while Posting a Qualification");
+          }
+        });
       }
     })
   }
 
   deleteQualification(id: number){
     this.qualificationService.deleteQualification(id).subscribe({
-      next: (response)=>console.log("Qualification was deleted"),
-      error: (err)=> console.error("Qualification could not be deleted"),
-      complete: ()=> this.updateList()       
+      next: (response)=> {
+        console.log("Qualification was deleted");
+        this.updateList();
+      },
+      error: (err)=> {
+        console.error("Qualification could not be deleted");
+      }
     })
   }
 
@@ -72,18 +84,16 @@ export class QualificationListComponent implements OnInit{
 
   saveQualification(){
     if(this.editableQualification!.validate()){
-      this.qualificationService.putQualification(this.editableQualification!.id, this.editableQualification!).pipe(
-        finalize(()=>{
+      this.qualificationService.putQualification(this.editableQualification!.id, this.editableQualification!).subscribe({
+        next: (response)=>{
+          console.log("Qualification has been updated", response)
           this.updateList();
-          this.editableQualification = null;
-        },)
-      ).subscribe({
-        next: (response)=>console.log("Qualification has beed updated", response),
+        },
         error: (err)=> {
           console.error("Qualification could not be updated", err);
-          this.editableQualification = null;
-        },
+        }
       })
+      this.editableQualification = null;
     }
 
   }

@@ -11,6 +11,7 @@ import {QualificationsService} from "../../../services/qualifications/qualificat
 import {PostTrainer} from "../../../models/trainer/PostTrainer";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 
 @Component({
   selector: 'app-add-trainer',
@@ -62,15 +63,18 @@ export class AddTrainerComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.trainerService.currentTrainer.subscribe(t => {
-      if (!t){
-        console.error("No trainer to show");
+    if (this.isEdit){
+      this.trainerService.currentTrainer.subscribe(t => {
+        if (!t){
+          console.error("No trainer to show");
+          return;
+        }
+        this.trainerData.createCopy(t);
+        this.trainerData.qualification = [];
+        console.log('onInit', this.trainerData);
         return;
-      }
-      this.trainerData.createCopy(t);
-      console.log('onInit', this.trainerData);
-      return;
-    });
+      });
+    }
     this.qualificationService.getAllQualifications().subscribe(q => {
       this.allQualification = q;
     });
@@ -79,37 +83,22 @@ export class AddTrainerComponent implements OnInit{
   saveCreate(): void{
     console.log("Created: ", this.createTrainerData);
     if (this.createTrainerData.validate()){
-      this.dialogRef.close(JSON.stringify({methode: 'confirm'}));
-      this.trainerService.postTrainer(this.createTrainerData);
+      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.createTrainerData}));
     }
-    /*
-    this.dialogRef.close(JSON.stringify({
-      method: 'confirm',
-      data: this.addTrainerForm.value
-    }));
-
-     */
   }
 
   saveUpdate(): void{
+    console.log(this.allQualification);
+    console.log(this.trainerData.qualification);
+    //this.trainerData.qualification[] = this.selectedQualification;
     console.log('updated: ', this.trainerData);
     if (this.trainerData.validate()){
-      this.dialogRef.close(JSON.stringify({method: 'confirm'}))
-      this.trainerService.putTrainer(this.trainerData.id, this.trainerData);
+      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.trainerData}))
+      //this.trainerService.putTrainer(this.trainerData.id, this.trainerData);
     }
   }
 
   cancel(): void{
     this.dialogRef.close({method: 'cancel'})
   }
-
-
-  addTrainerForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-    phone: new FormControl('')
-  })
 }

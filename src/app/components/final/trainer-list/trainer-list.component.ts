@@ -55,9 +55,16 @@ export class TrainerListComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       const obj = JSON.parse(result);
-      if (obj.method == 'confirm'){
+      if (obj.method == 'confirm') {
         console.log("Löschen bestätigt", obj.result);
-        this.trainerService.deleteTrainerById(trainer.id);
+        this.trainerService.deleteTrainerById(trainer.id).subscribe({
+          next: () => {
+            this.trainer$ = this.trainerService.getAllTrainers();
+          },
+          error: () => {
+            console.error("Something went wrong while deleting a Trainer");
+          }
+        });
       }
     });
   }
@@ -73,6 +80,16 @@ export class TrainerListComponent {
       const obj = JSON.parse(result);
       if (obj.method == 'confirm') {
         console.log("Dialog output: ", obj.data);
+        this.trainerService.postTrainer(obj.data).subscribe({
+          next: () => {
+            this.trainer$ = this.trainerService.getAllTrainers();
+          },
+          error: () => {
+            console.error("Something went wrong while Posting a Trainer");
+          }
+
+        });
+
       }
     })
   }
@@ -89,7 +106,20 @@ export class TrainerListComponent {
       let instance = dialogRef.componentInstance;
       instance.isEdit = this.showingEdit;
 
-
+      dialogRef.afterClosed().subscribe((result) => {
+        const obj = JSON.parse(result);
+        if (obj.method == 'confirm') {
+          console.log("Dialog output: ", obj.data);
+          this.trainerService.putTrainer(obj.data.id, obj.data).subscribe({
+            next: () => {
+              this.trainer$ = this.trainerService.getAllTrainers();
+            },
+            error: () => {
+              console.error("Something went wrong while Posting a Trainer");
+            }
+          })
+        }
+      })
     } else {
       const dialogRef = this.dialog.open(TrainerComponent, {
         disableClose: false,
@@ -99,14 +129,4 @@ export class TrainerListComponent {
       });
     }
   }
-
-  /*
-  dialogRef.afterClosed().subscribe(result => {
-      const obj = JSON.parse(result);
-      if (obj.method == 'accept') {
-        console.log('Dialog output: ', obj.data);
-      }
-    });
-   */
-
 }

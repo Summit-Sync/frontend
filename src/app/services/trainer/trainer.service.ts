@@ -11,45 +11,6 @@ import {Course} from "../../models/course/Course";
 export class TrainerService {
   public currentTrainer: BehaviorSubject<Trainer | null> =
   new BehaviorSubject<Trainer | null>(null)
-  trainer1 = new Trainer(
-    0,
-    'testsID',
-    'Lukas',
-    'Müller',
-    'testEmail',
-    'testphone',
-    []
-  );
-  trainer2 = new Trainer(
-    1,
-    'testsID',
-    'John',
-    'Doe',
-    'testEmail',
-    'testphone',
-    []
-  );
-  // trainer3 = new Trainer(2, 'Max', 'Fischer');
-  // trainer4 = new Trainer(3, 'Anna', 'Weber');
-  // trainer5 = new Trainer(4, 'Felix', 'Schneider');
-  // trainer6 = new Trainer(5, 'Laura', 'Meyer');
-  // trainer7 = new Trainer(6, 'Hannah', 'Wagner');
-
-  trainers: Observable<Trainer[]> = of([
-    this.trainer1,
-
-    this.trainer2,
-    // this.trainer3,
-    // this.trainer4,
-    // this.trainer5,
-    // this.trainer6,
-    // this.trainer7,
-    // this.trainer3,
-    // this.trainer4,
-    // this.trainer5,
-    // this.trainer6,
-    // this.trainer7,
-  ]);
 
   constructor(private http: HttpClient) {}
 
@@ -59,8 +20,8 @@ export class TrainerService {
   getAllTrainers(): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}`;
 
-    return this.trainers;
-    // return this.http.get<Trainer[]>(apiUrl);
+    //return this.trainers;
+    return this.http.get<Trainer[]>(apiUrl);
   }
 
 
@@ -91,9 +52,9 @@ export class TrainerService {
   }
 
   //Delete
-  deleteTrainerById(id: number): void {
+  deleteTrainerById(id: number): Observable<any> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl);
+    return this.http.delete(apiUrl);
   }
 
   deleteQualificationOfTrainerById(

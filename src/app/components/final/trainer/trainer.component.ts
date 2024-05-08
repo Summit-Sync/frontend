@@ -51,7 +51,6 @@ export class TrainerComponent implements OnInit{
 
 
   ngOnInit(): void {
-    debugger;
     this.trainerService.currentTrainer.subscribe(t => {
       if (!t){
         console.error("No trainer to show");
@@ -67,6 +66,13 @@ export class TrainerComponent implements OnInit{
     });
   }
 
+
+
+  cancel(): void{
+    console.log("cancel: ", this.trainerData);
+    this.dialogRef.close(JSON.stringify({method: 'cancel'}));
+  }
+  /*
   saveUpdate(): void{
     console.log("Updated: ", this.trainerData);
     if (this.trainerData.validate()){
@@ -74,15 +80,12 @@ export class TrainerComponent implements OnInit{
     }
   }
 
-  cancel(): void{
-    console.log("cancel: ", this.trainerData);
-    this.dialogRef.close(JSON.stringify({method: 'cancel'}));
-  }
-
   deleteTrainer(): void{
     this.dialogRef.close(JSON.stringify({method: 'delete'}));
     console.log("Delete: ", this.trainerData);
   }
+
+   */
 
 
 
