@@ -11,7 +11,7 @@ import { PostQualification } from '../../models/qualification/PostQualification'
 })
 export class QualificationsService {
   baseUrl: string = 'http://localhost:8080/api/v1/qualification';
-
+/*
   qualification1 = new Qualification(1, 'hoch klettern');
   qualification2 = new Qualification(2, 'weit klettern');
   qualification3 = new Qualification(3, 'tief klettern');
@@ -29,12 +29,13 @@ export class QualificationsService {
     this.qualification6,
     this.qualification7,
   ]);
+  */
 
   constructor(private http: HttpClient) {}
 
   //Get
   getAllQualifications(): Observable<Qualification[]>{
-    return this.qualifications;
+    //return this.qualifications;
     return this.http.get<Qualification[]>(this.baseUrl);
   }
 
@@ -54,10 +55,7 @@ export class QualificationsService {
   }
 
   //Put
-  putQualification(
-    id: number,
-    quali: Qualification
-  ): Observable<Qualification> {
+  putQualification(id: number, quali: Qualification): Observable<Qualification> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.put<Qualification>(apiUrl, quali);
   }
@@ -72,11 +70,4 @@ export class QualificationsService {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.delete<void>(apiUrl);
   }
-
-  /*
-  getAllQualifications(): Observable<Qualification[]> {
-    return this.qualifications;
-  }
-
- */
 }
