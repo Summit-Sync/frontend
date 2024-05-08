@@ -25,7 +25,9 @@ export class AddLocationModalComponent {
   }
 
   cancel(){
-    this.dialogRef.close()
+    this.dialogRef.close(JSON.stringify({
+      method: 'cancel'
+    }))
   }
 
   save(){
