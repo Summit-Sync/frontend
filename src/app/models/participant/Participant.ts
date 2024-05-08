@@ -10,6 +10,7 @@ export class Participant {
     public phone: string
   ) {}
   validate(): boolean {
+    //check if all necessary values exist
     let result: boolean = true;
     const allFilled =
       this.lastName != '' &&
@@ -25,19 +26,20 @@ export class Participant {
   }
 
   validateExceptAllEmpty(): boolean {
+    //check if all necessary values exist or none exist
     const allEmpty =
-      this.lastName == '' &&
-      this.firstName == '' &&
+      !this.lastName &&
+      !this.firstName &&
       !this.status.validate() &&
-      this.email == '' &&
-      this.phone == '';
+      !this.email &&
+      !this.phone;
     const allFilled =
-      this.lastName != '' &&
-      this.firstName != '' &&
+      this.lastName &&
+      this.firstName &&
       this.status.validate() &&
-      (this.email != '' || this.phone != '');
+      (this.email || this.phone);
     if (!(allEmpty || allFilled)) {
-      console.error("Alle ANgaben müssen leer oder gefüllt sein");
+      console.error("Alle Angaben müssen leer oder gefüllt sein");
       
       return false;
     }
