@@ -12,9 +12,20 @@ export class SearchPipe implements PipeTransform {
   transform(
     list: Course | Group,
     selectedOption: FilterOption,
-    condition: string
+    condition: string,
+    date1?: Date,
+    date2?: Date
   ) {
-    condition = condition.toLowerCase();
+    condition = condition.toLowerCase().trim();
+
+    let wordsSpace = condition.indexOf(' ');
+    let firstPart: string;
+    let secondPart;
+    if (wordsSpace != -1) {
+      firstPart = condition.substring(0, wordsSpace);
+      secondPart = condition.substring(wordsSpace + 1, condition.length);
+    }
+
     switch (selectedOption) {
       case FilterOption.None:
         return true;
@@ -27,18 +38,34 @@ export class SearchPipe implements PipeTransform {
       case FilterOption.NoParticipants:
         return (list as Course).participants.length === 0;
       case FilterOption.StartDate:
+        if (!date1 || !date2) {
+          return true;
+        }
         let startDate = list.dates[0];
-        let startDay = startDate.getDate().toString();
-        let startMonthNum = startDate.getMonth() + 1;
-        let startMonth = startMonthNum.toString();
-        return startDay.includes(condition) || startMonth.includes(condition);
+
+        const target = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate()
+        );
+        const start = new Date(date1);
+        const end = new Date(date2);
+        target.setHours(0, 0, 0, 0);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
+        console.log(target, start, target == start);
+        return target >= start && target <= end;
       case FilterOption.TrainerFullName:
         return (
           list.trainers.filter((trainer) => {
-            console.log(
-              trainer.lastName.toLowerCase().includes(condition) ||
-                trainer.firstName.toLowerCase().includes(condition)
-            );
+            if (firstPart) {
+              return (
+                (trainer.lastName.toLowerCase().includes(firstPart) &&
+                  trainer.firstName.toLowerCase().includes(secondPart!)) ||
+                (trainer.lastName.toLowerCase().includes(secondPart!) &&
+                  trainer.firstName.toLowerCase().includes(firstPart))
+              );
+            }
             return (
               trainer.lastName.toLowerCase().includes(condition) ||
               trainer.firstName.toLowerCase().includes(condition)

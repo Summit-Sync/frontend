@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { Observable, of } from 'rxjs';
 import { Course } from '../../../models/course/Course';
@@ -32,6 +25,8 @@ export class CourseListComponent implements OnInit {
   displayDropdown: boolean = false;
   dropdownContent: any;
   searchText: string = '';
+  searchDate?: Date;
+  searchEndDate?: Date;
   displayOption: FilterOption = FilterOption.None;
   filterOptions: FilterOption[] = [
     FilterOption.None,
