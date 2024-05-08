@@ -63,15 +63,18 @@ export class AddTrainerComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.trainerService.currentTrainer.subscribe(t => {
-      if (!t){
-        console.error("No trainer to show");
+    if (this.isEdit){
+      this.trainerService.currentTrainer.subscribe(t => {
+        if (!t){
+          console.error("No trainer to show");
+          return;
+        }
+        this.trainerData.createCopy(t);
+        this.trainerData.qualification = [];
+        console.log('onInit', this.trainerData);
         return;
-      }
-      this.trainerData.createCopy(t);
-      console.log('onInit', this.trainerData);
-      return;
-    });
+      });
+    }
     this.qualificationService.getAllQualifications().subscribe(q => {
       this.allQualification = q;
     });
