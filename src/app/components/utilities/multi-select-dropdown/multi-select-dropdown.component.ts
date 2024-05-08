@@ -18,7 +18,6 @@ export class MultiSelectDropdownComponent implements OnInit, OnChanges {
   checkedBoxes: boolean[] = [];
   showList: boolean = false;
 
-  constructor(private iterableDiffers:IterableDiffers){}
   ngOnChanges(changes: SimpleChanges): void {
     this.allOptions.forEach((aOption) =>
       this.checkedBoxes.push(
