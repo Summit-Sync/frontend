@@ -7,6 +7,7 @@ import {AppComponent} from "./app.component";
 import { CourseTemplateListComponent } from './components/template/course-template-list/course-template-list.component';
 import {QualificationListComponent} from "./components/final/qualification-list/qualification-list.component";
 import {TrainerListComponent} from "./components/final/trainer-list/trainer-list.component";
+import { LocationListComponent } from './components/final/location/location-list/location-list.component';
 
 export const routes: Routes = [
   // Kurs Routen
@@ -23,6 +24,8 @@ export const routes: Routes = [
   { path: 'qualifikation', component: QualificationListComponent, canActivate: []},
   //Trainer
   { path: 'trainer', component: TrainerListComponent, canActivate: []},
+  //Location
+  { path: 'standort', component: LocationListComponent, canActivate: []},
   // Root Routen
   { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},

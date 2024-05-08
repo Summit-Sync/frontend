@@ -7,25 +7,23 @@ export class Contact {
     public phone: string) { }
 
   validate(): boolean {
-    if (
-      !this.contactId ||
-      !this.firstName ||
-      !this.lastName ||
-      !this.email ||
-      !this.phone) {
+    let result: boolean = true;
+    if (!this.contactId) {
+      console.error("KontaktId muss gegeben sein")
       return false;
     }
-    return true;
+    if(!this.firstName){
+      console.error("Vorname darf nicht leer sein");
+      result = false;
+    }
+    if(!this.lastName){
+      console.error("Nachname darf nicht leer sein");
+      result = false;
+    }
+    if(!this.email || !this.phone){
+      console.error("Es muss eine E-Mail Adresse oder Telefonnummer angegeben werden");
+      result = false;
+    }
+    return result;
   }
 }
-
-/*
-export type Contact={
-    contactId:number
-    firstName:string
-    lastName:string
-    email:string
-    phone:string
-}
-
- */

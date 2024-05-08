@@ -1,4 +1,3 @@
-import { PostPrice } from '../price/PostPrice';
 import { Qualification } from '../qualification/Qualification';
 
 export class GroupTemplate {
@@ -15,30 +14,60 @@ export class GroupTemplate {
   ) {}
 
   validate(): boolean {
-    if (!this.groupTitle || !this.groupAbbreviation || !this.description) {
-      return false;
+    let result: boolean = true;
+    if(!this.id || this.id < 0){
+      result = false;
+      console.error("Id darf nicht leer sein");
+      
     }
-
-    if (
-      this.datesCount === 0 ||
-      this.duration === 0 ||
-      this.pricePerTrainerPerHour === 0 ||
-      this.trainerKey === 0
-    ) {
-      return false;
+    if(!this.groupTitle){
+      result = false;
+      console.error("Titel darf nicht leer sein");
+      
     }
-
+    if(!this.groupAbbreviation){
+      result = false;
+      console.error("Abkürzung darf nicht leer sein");
+      
+    }
+    if(!this.description){
+      result = false;
+      console.error("Beschreibung darf nicht leer sein");
+      
+    }
+    if(this.datesCount < 1){
+      result = false;
+      console.error("Terminanzahl darf nicht leer sein");
+      
+    }
+    if(this.duration < 1){
+      result = false;
+      console.error("Dauer darf nicht leer sein");
+      
+    }
+    if(this.pricePerTrainerPerHour < 1){
+      result = false;
+      console.error("Trainerpreis darf nicht leer sein");
+      
+    }
+    if(this.trainerKey < 1){
+      result = false;
+      console.error("Trainerschlüssel darf nicht leer sein");
+      
+    }
     if (this.trainerQualifications.length === 0) {
-      return false;
+      result = false;
+      console.error("Qualifikationsliste darf nicht leer sein");
+      
     }
     if (
-      this.trainerQualifications.some((tq) => {
+      !this.trainerQualifications.every((tq) => {
         return tq.validate();
       })
     ) {
-      return false;
+      result = false;
     }
 
-    return true;
+    return result;
   }
 }

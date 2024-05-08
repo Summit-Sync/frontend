@@ -8,7 +8,7 @@ import { Participant } from '../../models/participant/Participant';
 import { Status } from '../../models/status/Status';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
-import { CategoryPrice } from '../../models/price/NewPrice';
+import { CategoryPrice } from '../../models/price/CategoryPrice';
 import { Location } from '../../models/location/Location';
 
 @Injectable({
@@ -90,7 +90,6 @@ export class CourseService {
   }
 
   updateCourseDetails(course: Course) {
-    console.log();
     this.currentCourse.next(course);
   }
 
@@ -177,9 +176,9 @@ export class CourseService {
   course1: Course = new Course(
     0,
     'Introduction to Programming',
-    'CS101',
-    '2',
     'CS',
+    'CS101',
+    'Introducing the basics of programming',
     [new Date('2024-03-01'), new Date('2024-03-08'), new Date('2024-03-15')],
     260,
     [
@@ -247,9 +246,9 @@ export class CourseService {
   course2: Course = new Course(
     1,
     'Web Development Bootcamp',
-    'WD200',
-    '4',
     'WD',
+    'WD200',
+    'Learning web development on real examples',
     [new Date('2024-04-01'), new Date('2024-04-08'), new Date('2024-04-15')],
     210,
     [
@@ -286,14 +285,14 @@ export class CourseService {
     [new CategoryPrice('Regular', 500), new CategoryPrice('Early Bird', 450)],
     new Location(
       0,
+      'testtesttitle',
       'test Street2',
       '21897',
       'germany',
       'second@mail.com',
       '021867967898564564',
       'tesURL2',
-      'Test 2 Unterwegs - DAV Kletterzentrum Bremen',
-      'Test Stadt'
+      'testcity'
     ),
     'In-person - City Center',
     [new Qualification(2, 'Certified Web Developer')],

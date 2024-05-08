@@ -1,4 +1,4 @@
-import { CategoryPrice } from "../price/NewPrice";
+import { CategoryPrice } from "../price/CategoryPrice";
 
 export class PostCourseTemplate{
     constructor(
@@ -17,30 +17,64 @@ export class PostCourseTemplate{
     ){}
 
     public validate():boolean{
-        if(
-            !(this.acronym||this.title||this.description||this.meetingPoint)
-        ){
-            return false;
+        let result:boolean = true;
+        if(!this.title){
+          result = false;
+          console.error("Titel darf nicht leer sein");
         }
-        if(
-            Number(this.numberOfDates) == 0 ||
-            Number(this.duration) == 0 ||
-            Number(this.numberOfParticipants) == 0 ||
-            Number(this.numberOfWaitlist) == 0        ){
-            return false;
+        if(!this.acronym){
+          result = false;
+          console.error("Kürzel darf nicht leer sein");
+          
         }
-        if(this.price.length == 0 || this.location == 0){
-            return false;
+        if(!this.description){
+          result = false;
+          console.error("Beschreibung darf nicht leer sein");
+          
         }
-        for(let categoryPrice of this.price){
-            if(categoryPrice.category == '' || categoryPrice.price == 0){
-                return false;
-            }
+        if(!this.meetingPoint){
+          result = false;
+          console.error("Treffpunkt darf nicht leer sein");
+          
+        }
+        if(this.numberOfDates <1){
+          result = false;
+          console.error("Es muss mindestens einen Termin geben");
+          
+        }
+        if(this.duration < 1){
+          result = false;
+          console.error("Kursvorlagen müssen eine Dauer haben");
+          
+        }
+        if(this.numberOfParticipants < 1){
+          result = false;
+          console.error("Kursvorlagen müssen mindestens einen Teilnehmer haben können");
+          
+        }
+        if(this.numberOfWaitlist < 1){
+          result = false;
+          console.error("Es muss eine Warteliste geben");
+          
+        }
+        // Check if arrays are not empty
+        if (this.price.length === 0) {
+          result = false;
+          console.error("Kursvorlagen müssen mindestens einen Preis haben");
+          
         }
         if(this.requiredQualifications.length === 0){
-            //TODO custom popup
-            window.confirm("Sind Sie sich sicher, dass Sie keine Qualifikationen angeben wollen?")
+          result = false;
+          console.error("Kursvorlagen benötigen mindestens eine Qualifikation haben");
+          
         }
-        return true;
+    
+        // Validate nested objects if necessary
+        for (const price of this.price) {
+          if (!price.validate()) {
+            result = false; // PostPrice validation failed
+          }
+        }
+        return result;
     }
 }

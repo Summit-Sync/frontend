@@ -9,21 +9,37 @@ export class PostTrainer{
   ) {
   }
   validate(): boolean{
-    if (!this.username || !this.firstName ||!this.lastName || !this.password || !this.email || !this.phone){
-      return false
+    let result: boolean = true;
+    if(!this.username){
+      result = false;
+      console.error("Benutzername darf nicht leer sein");
+      
     }
-    return true;
+    if(!this.firstName){
+      result = false;
+      console.error("Vorname darf nicht leer sein");
+      
+    }
+    if(!this.lastName){
+      result = false;
+      console.error("Nachname darf nicht leer sein");
+      
+    }
+    if(!this.password){
+      result = false;
+      console.error("Passwort darf nicht leer sein");
+      
+    }
+    if(!this.email){
+      result = false;
+      console.error("E-Mail darf nicht leer sein");
+      
+    }
+    if(!this.phone){
+      result = false;
+      console.error("Telefonnummer darf nicht leer sein");
+      
+    }
+    return result;
   }
 }
-
-/*
-export type PostTrainer={
-    username:string
-    firstName:string
-    lastName:string
-    password:string
-    email:string
-    phone:string
-}
-
- */

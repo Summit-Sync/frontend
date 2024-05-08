@@ -3,7 +3,7 @@ import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
 import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Location } from '../location/Location';
-import { CategoryPrice } from '../price/NewPrice';
+import { CategoryPrice } from '../price/CategoryPrice';
 import { Status } from '../status/Status';
 
 export class Course {
@@ -33,49 +33,66 @@ export class Course {
 
   validate(): boolean {
     // Check if required fields are present
-
-    if (
-      !this.title ||
-      // !this.acronym ||
-      !this.description ||
-      !this.notes
-    ) {
-      return false;
+    let result: boolean = true;
+    if(!this.title){
+      console.error("Titel darf nicht leer sein");
+      result = false;
     }
-
+    if(!this.description){
+      console.error("Die Beschreibung darf nicht leer sein");
+      result = false;
+    }
+    if(!this.meetingPoint){
+      result = false;
+      console.error("Treffpunkt darf nicht leer sein");
+      
+    }
+    if(!this.notes){
+      console.error("Die Notizen dürfen nicht leer sein");
+      result = false;
+    }
     // Check if numerical fields are not zero
-    if (
-      // this.courseNumber === 0 ||
-      this.duration === 0 ||
-      this.numberParticipants === 0 ||
-      this.numberWaitlist === 0
-    ) {
-      return false;
+    if(this.duration < 1){
+      console.error("Die Dauer darf nicht kleiner als 1 sein");
+      result = false;
     }
-
-    console.log(
-      !this.prices.every((price) => {
-        return price.validate();
-      })
-    );
-
+    if(this.numberParticipants < 1){
+      console.error("Die Teilnehmeranzahl darf nicht kleiner als 1 sein");
+      result = false;
+    }
+    if(this.numberWaitlist < 1){
+      console.error("Wartelistenlänge darf nicht kleiner als 1 sein");
+      result = false;
+    }
+    if(this.numberTrainers < 1){
+      console.error("Traineranzahl darf nicht kleiner als 1 sein");
+      result = false;
+    }
     // Check if arrays are not empty
-    if (
-      this.prices.length === 0 ||
-      this.requiredQualifications.length === 0 ||
-      this.participants.length === 0 ||
-      this.dates.length === 0
-    ) {
-      return false;
+    if(this.prices.length === 0){
+      console.error("Es müssen Preise für Kurse existieren");
+      result = false;
     }
-
+    if(this.requiredQualifications.length === 0 ){
+      console.error("Es müssen Qualifikationen für den Kurs existieren");
+      result = false;
+    }
+    if(this.participants.length === 0){
+      console.error("Es müssen Teilnehmer im Kurs vorhanden sein");
+      result = false;
+    }
+    if(this.dates.length === 0){
+      console.error("Es müssen Daten für den Kurs vorliegen");
+      result = false;
+      
+    }
     //validate arrays content
     if (
       !this.prices.every((price) => {
         return price.validate();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (
@@ -83,7 +100,7 @@ export class Course {
         return qualification.validate();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (
@@ -91,7 +108,7 @@ export class Course {
         return participant.validateExceptAllEmpty();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (
@@ -99,14 +116,14 @@ export class Course {
         return wc.validateExceptAllEmpty();
       })
     ) {
-      return false;
+      result = false;
     }
 
     if (!this.location.validate()) {
-      return false;
+      result = false;
     }
 
-    return true;
+    return result;
   }
 
   createCopy(course: Course) {
@@ -135,6 +152,7 @@ export class Course {
     course.trainers.forEach((trainer) => {
       this.trainers.push(trainer);
     });
+    this.meetingPoint = course.meetingPoint;
     this.notes = course.notes;
     this.visible = course.visible;
     this.canceled = course.canceled;
@@ -142,7 +160,8 @@ export class Course {
   }
 
   createCourseFromTemplate(courseTemplate: CourseTemplate) {
-    this.title = courseTemplate.acronym;
+    this.title = courseTemplate.title;
+    this.acronym = courseTemplate.acronym;
     this.description = courseTemplate.description;
     this.duration = courseTemplate.duration;
     this.id = courseTemplate.id;
@@ -160,7 +179,6 @@ export class Course {
     this.numberWaitlist = courseTemplate.numberWaitlist;
     this.prices = courseTemplate.price;
     this.requiredQualifications = courseTemplate.requiredQualifications;
-    this.title = courseTemplate.title;
   }
 
   deleteEmptyParticipants(participantsList: Participant[]) {

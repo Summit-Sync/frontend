@@ -5,7 +5,7 @@ import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
 import { Location } from '../../models/location/Location';
 import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
 import { Qualification } from '../../models/qualification/Qualification';
-import { CategoryPrice } from '../../models/price/NewPrice';
+import { CategoryPrice } from '../../models/price/CategoryPrice';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class CoursetemplateService {
   t1 = new CourseTemplate(
     1,
     'quick climb',
-    'qc34',
+    'qc',
     'learn to climb quick but careful',
     2,
     120,
@@ -55,7 +55,7 @@ export class CoursetemplateService {
   t2 = new CourseTemplate(
     2,
     'high climb',
-    'hc21',
+    'hc',
     'learn to climb higher, than the regular classes',
     1,
     200,

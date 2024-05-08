@@ -61,9 +61,16 @@
 
     <div>
       <p>Maximale Teilnehmeanzahl:</p>
-      <p>
-        {{ courseData.numberParticipants }}
-      </p>
+      <input
+        type="number"
+        [(ngModel)]="courseData.numberParticipants"
+        (input)="
+          onMaxParticipantsChange(
+            this.courseData.numberParticipants,
+            this.courseData.participants
+          )
+        "
+      />
     </div>
     <div class="listWrapper">
       <table>
@@ -118,22 +125,10 @@
                   [placeholder]="p.phone ? p.phone : 'leer'"
                 />
               </td>
-              <td *ngI>
-                <button (click)="deleteParticipant(i, courseData.participants)">
-                  -
-                </button>
-              </td>
             </tr>
           </ng-container>
         </tbody>
       </table>
-      <button
-        (click)="
-          addParticipant(courseData.numberParticipants, courseData.participants)
-        "
-      >
-        Teilnehmer hinzufügen
-      </button>
     </div>
     <div>
       <p>Maximale Wartelistenlänge:</p>
@@ -199,20 +194,10 @@
                   [placeholder]="wp.phone ? wp.phone : 'leer'"
                 />
               </td>
-              <td *ngI>
-                <button (click)="deleteParticipant(i, courseData.waitList)">
-                  -
-                </button>
-              </td>
             </tr>
           </ng-container>
         </tbody>
       </table>
-      <button
-        (click)="addParticipant(courseData.numberWaitlist, courseData.waitList)"
-      >
-        Teilnehmer hinzufügen
-      </button>
     </div>
     <div>
       <div>

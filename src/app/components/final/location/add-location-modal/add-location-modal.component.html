@@ -1,1 +1,43 @@
-<p>add-location-modal works!</p>
+<div>
+    <div class="header">
+
+    </div>
+    <div class="body">
+        <div>
+            <label>Titel:</label>
+            <input type="text" [(ngModel)]="editableLocation.title">
+        </div>
+        <div>
+            <label>Straße:</label>
+            <input type="text" [(ngModel)]="editableLocation.street">
+        </div>
+        <div>
+            <label>Postleitzahl:</label>
+            <input type="text" [(ngModel)]="editableLocation.postcode">
+        </div>
+        <div>
+            <label>Stadt:</label>
+            <input type="text" [(ngModel)]="editableLocation.city">
+        </div>
+        <div>
+            <label>Land:</label>
+            <input type="text" [(ngModel)]="editableLocation.country">
+        </div>
+        <div>
+            <label>E-Mail:</label>
+            <input type="text" [(ngModel)]="editableLocation.email">
+        </div>
+        <div>
+            <label>Telefonnummer:</label>
+            <input type="text" [(ngModel)]="editableLocation.phone">
+        </div>
+        <div>
+            <label>Google Maps URL:</label>
+            <input type="text" [(ngModel)]="editableLocation.mapsUrl">
+        </div>
+    </div>
+    <div class="footer">
+        <button (click)="save()">Speichern</button>
+        <button (click)="cancel()">Abbrechen</button>
+    </div>
+</div>
