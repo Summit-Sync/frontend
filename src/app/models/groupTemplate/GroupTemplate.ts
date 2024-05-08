@@ -20,17 +20,17 @@ export class GroupTemplate {
       console.error("Id darf nicht leer sein");
       
     }
-    if(!this.groupTitle || this.groupTitle === ''){
+    if(!this.groupTitle){
       result = false;
       console.error("Titel darf nicht leer sein");
       
     }
-    if(!this.groupAbbreviation || this.groupAbbreviation === ''){
+    if(!this.groupAbbreviation){
       result = false;
       console.error("Abkürzung darf nicht leer sein");
       
     }
-    if(!this.description || this.description === ''){
+    if(!this.description){
       result = false;
       console.error("Beschreibung darf nicht leer sein");
       

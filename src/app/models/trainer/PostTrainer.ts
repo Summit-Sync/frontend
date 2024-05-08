@@ -20,22 +20,22 @@ export class PostTrainer{
       console.error("Vorname darf nicht leer sein");
       
     }
-    if(!this.lastName || this.lastName === ''){
+    if(!this.lastName){
       result = false;
       console.error("Nachname darf nicht leer sein");
       
     }
-    if(!this.password || this.password === ''){
+    if(!this.password){
       result = false;
       console.error("Passwort darf nicht leer sein");
       
     }
-    if(!this.email || this.email === ''){
+    if(!this.email){
       result = false;
       console.error("E-Mail darf nicht leer sein");
       
     }
-    if(!this.phone || this.phone === ''){
+    if(!this.phone){
       result = false;
       console.error("Telefonnummer darf nicht leer sein");
       

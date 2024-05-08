@@ -22,46 +22,71 @@ export class CourseTemplate {
 
   validate(): boolean {
     // Check if required fields are present
-    if (
-      !this.title ||
-      !this.acronym ||
-      !this.description ||
-      !this.meetingPoint
-    ) {
-      return false;
+    let result:boolean = true;
+    if(!this.title){
+      let result = false;
+      console.error("Titel darf nicht leer sein");
     }
-    console.log(this.numberWaitlist)
-    // Check if numerical fields are not zero
-    if (
-      Number(this.numberOfDates) == 0 ||
-      Number(this.duration) == 0 ||
-      Number(this.numberOfParticipants) == 0 ||
-      Number(this.numberWaitlist) == 0
-    ) {
-      return false;
+    if(!this.acronym){
+      let result = false;
+      console.error("Kürzel darf nicht leer sein");
+      
     }
-
+    if(!this.description){
+      let result = false;
+      console.error("Beschreibung darf nicht leer sein");
+      
+    }
+    if(!this.meetingPoint){
+      result = false;
+      console.error("Treffpunkt darf nicht leer sein");
+      
+    }
+    if(this.numberOfDates <1){
+      result = false;
+      console.error("Es muss mindestens einen Termin geben");
+      
+    }
+    if(this.duration < 1){
+      result = false;
+      console.error("Kursvorlagen müssen eine Dauer haben");
+      
+    }
+    if(this.numberOfParticipants < 1){
+      result = false;
+      console.error("Kursvorlagen müssen mindestens einen Teilnehmer haben können");
+      
+    }
+    if(this.numberWaitlist < 1){
+      result = false;
+      console.error("Es muss eine Warteliste geben");
+      
+    }
     // Check if arrays are not empty
-    if (
-      this.price.length === 0 ||
-      this.requiredQualifications.length === 0
-    ) {
-      return false;
+    if (this.price.length === 0) {
+      result = false;
+      console.error("Kursvorlagen müssen mindestens einen Preis haben");
+      
+    }
+    if(this.requiredQualifications.length === 0){
+      result = false;
+      console.error("Kursvorlagen benötigen mindestens eine Qualifikation haben");
+      
     }
 
     // Validate nested objects if necessary
     for (const price of this.price) {
       if (!price.validate()) {
-        return false; // PostPrice validation failed
+        result = false; // PostPrice validation failed
       }
     }
 
     for (const qualification of this.requiredQualifications) {
       if (!qualification.validate()) {
-        return false; // Qualification validation failed
+        result = false; // Qualification validation failed
       }
     }
-    return true;
+    return result;
   }
 
   createPostCourseTemplate():PostCourseTemplate{

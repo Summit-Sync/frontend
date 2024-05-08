@@ -20,42 +20,42 @@ export class Location{
       console.error("Id darf nicht leer sein");
       
     }
-    if(!this.title || this.title === ''){
+    if(!this.title){
       result = false;
       console.error("Titel darf nicht leer sein");
       
     }
-    if(!this.street || this.street === ''){
+    if(!this.street){
       result = false;
       console.error("Straße darf nicht leer sein");
       
     }
-    if(!this.postCode || this.postCode === ''){
+    if(!this.postCode){
       result = false;
       console.error("Postleitzahl darf nicht leer sein");
       
     }
-    if(!this.email || this.email === ''){
+    if(!this.email){
       result = false;
       console.error("E-Mail darf nicht leer sein");
       
     }
-    if(!this.phone || this.phone === ''){
+    if(!this.phone){
       result = false;
       console.error("Telefonnummer darf nicht leer sein");
       
     }
-    if(!this.country || this.country === ''){
+    if(!this.country){
       result = false;
       console.error("Land darf nicht leer sein");
       
     }
-    if(!this.mapsUrl || this.mapsUrl === ''){
+    if(!this.mapsUrl){
       result = false;
       console.error("Maps Url darf nicht leer sein");
       
     }
-    if(!this.city || this.city === ''){
+    if(!this.city){
       result = false;
       console.error("Stadt darf nicht leer sein");
       

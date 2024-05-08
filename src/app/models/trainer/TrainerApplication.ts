@@ -17,32 +17,27 @@ export class TrainerApplication {
       console.error("Id darf nicht leer sein");
       
     }
-    if(!this.accepted){
-      result = false;
-      console.error("Accepted darf nicht leer sein");
-      
-    }
-    if(!this.firstName || this.firstName === ''){
+    if(!this.firstName){
       result = false;
       console.error("Vorname darf nicht leer sein");
       
     }
-    if(!this.lastName || this.lastName === ''){
+    if(!this.lastName){
       result = false;
       console.error("Nachname darf nicht leer sein");
       
     }
-    if(!this.email || this.email === ''){
+    if(!this.email){
       result = false;
       console.error("E-Mail darf nicht leer sein");
       
     }
-    if(!this.phone || this.phone === ''){
+    if(!this.phone){
       result = false;
       console.error("Telefonnummer darf nicht leer sein");
       
     }
-    if(!this.subjectId || this.subjectId === ''){
+    if(!this.subjectId){
       result = false;
       console.error("SubjektId darf nicht leer sein");
       

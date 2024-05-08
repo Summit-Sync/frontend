@@ -34,12 +34,12 @@ export class Group {
       console.error("Id darf nicht leer sein");
       
     }
-    if(!this.title || this.title === ''){
+    if(!this.title){
       result = false;
       console.error("Titel darf nicht leer sein");
       
     }
-    if(!this.description || this.description === ''){
+    if(!this.description){
       result = false;
       console.error("Abkürzung darf nicht leer sein");
       
@@ -70,7 +70,7 @@ export class Group {
     if(!this.location.validate()){
       result = false;
     }
-    if(!this.meetingPoint || this.meetingPoint === ''){
+    if(!this.meetingPoint){
       result = false;
       console.error("Treffpunkt darf nicht leer sein");
       

@@ -11,7 +11,7 @@ export class CategoryPrice{
             console.error("Preis darf nicht leer sein");
             
         }
-        if(!this.category || this.category === ''){
+        if(!this.category){
             result = false;
             console.error("Kategorie darf nicht leer sein");
             
