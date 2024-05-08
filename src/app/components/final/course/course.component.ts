@@ -226,12 +226,10 @@ export class CourseComponent implements OnInit {
   }
 
   save(): void {
-    console.log('test');
     if (this.courseData.validate()) {
       this.courseData.deleteEmptyParticipants(this.courseData.participants);
       this.courseData.deleteEmptyParticipants(this.courseData.waitList);
       this.courseData.location = this.selectedLocation[0];
-      console.log(this.courseData.location, this.selectedLocation[0]);
       if (this.isCreate) {
         this.saveCreated();
       } else {
@@ -253,17 +251,18 @@ export class CourseComponent implements OnInit {
   cancel(): void {
     this.courseData.deleteEmptyParticipants(this.courseData.participants);
     this.courseData.deleteEmptyParticipants(this.courseData.waitList);
-    console.log('cancel: ', this.courseData);
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
 
   onMaxParticipantsChange(
-    participants: Participant[],
-    numberParticipants: number
+    numberParticipants: number,
+    participants: Participant[]
   ): void {
     const participantsLength = participants.length;
     if (numberParticipants < participantsLength) {
       participants.splice(participantsLength - 1, 1);
+    } else {
+      this.addParticipant(numberParticipants, participants);
     }
   }
 
@@ -274,6 +273,7 @@ export class CourseComponent implements OnInit {
     if (numberParticipants <= participants.length) {
       return;
     }
+
     let p = participants;
     p.push(new Participant(p.length, '', '', new Status(0, ''), '', ''));
   }

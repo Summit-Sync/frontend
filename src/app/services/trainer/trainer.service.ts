@@ -59,8 +59,8 @@ export class TrainerService {
   getAllTrainers(): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}`;
 
-    return this.trainers;
-    // return this.http.get<Trainer[]>(apiUrl);
+    //return this.trainers;
+    return this.http.get<Trainer[]>(apiUrl);
   }
 
 

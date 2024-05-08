@@ -49,6 +49,7 @@
             <mat-option *ngFor="let q of allQualification" value="{{q.id}}">{{q.name}}</mat-option>
           </mat-select>
           -->
+          <!-- [selectedOptions]= "trainerData.qualification" -->
           <app-multi-select-dropdown id="multiSelect"
             [allOptions]="allQualification"
             [selectedOptions]="trainerData.qualification"
