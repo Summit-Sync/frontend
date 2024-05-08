@@ -18,7 +18,7 @@ export class Participant {
       this.status.validate() &&
       (this.email != '' || this.phone != '');
     if (!allFilled) {
-      console.error("Alle Angaben müssen leer sein");
+      console.error("Alle Angaben müssen ausgefüllt sein. Nur entweder die Email oder die Telefonnummer dürfen leer sein");
       
       return false;
     }
