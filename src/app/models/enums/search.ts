@@ -1,5 +1,5 @@
 export enum FilterOption {
-  None = 'none',
+  None = 'Kein Filter',
   CourseAcronym = 'Kursart',
   FreeTrainerSpots = 'Freie Trainer stellen',
   FreeParticipantSpots = 'Freie Plätze',
