@@ -18,12 +18,12 @@ export class PostGroupTemplate {
 
   validate(): boolean {
     let result = true;
-    if(!this.title || this.title === ''){
+    if(!this.title){
       result = false;
       console.error("Titel darf nicht leer sein");
       
     }
-    if(!this.acronym || this.acronym === ''){
+    if(!this.acronym){
       result = false;
       console.error("Kürzel darf nicht leer sein");
       
@@ -33,12 +33,12 @@ export class PostGroupTemplate {
       console.error("Preis pro Teilnehmer darf nicht 0 sein");
       
     }
-    if(!this.description || this.description === ''){
+    if(!this.description){
       result = false;
       console.error("Beschreibung darf nicht leer sein");
       
     }
-    if(!this.meetingPoint || this.meetingPoint === ''){
+    if(!this.meetingPoint){
       result = false;
       console.error("Treffpunkt darf nicht leer sein");
       

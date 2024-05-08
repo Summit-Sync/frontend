@@ -22,12 +22,12 @@ export class UpdateGroup{
 
   validate(): boolean {
     let result: boolean = true;
-    if(!this.title || this.title === ''){
+    if(!this.title){
       result = false;
       console.error("Titel darf nicht leer sein");
       
     }
-    if(!this.description || this.description === ''){
+    if(!this.description){
       result = false;
       console.error("Abkürzung darf nicht leer sein");
       
@@ -62,7 +62,7 @@ export class UpdateGroup{
       console.error("EIner Gruppe muss ein Ort zugeordnet werden");
       
     }
-    if(!this.meetingPoint || this.meetingPoint === ''){
+    if(!this.meetingPoint){
       result = false;
       console.error("Treffpunkt darf nicht leer sein");
       
