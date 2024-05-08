@@ -8,7 +8,7 @@ export class Status {
       console.error("Statustext darf nicht leer sein");
       
     }
-    if(!this.statusId || this.statusId < 1){
+    if(this.statusId < 1){
       result = false;
       console.error("StatusId darf nicht leer sein");
       
