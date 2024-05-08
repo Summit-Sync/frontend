@@ -8,7 +8,7 @@ import { Participant } from '../../models/participant/Participant';
 import { Status } from '../../models/status/Status';
 import { Qualification } from '../../models/qualification/Qualification';
 import { Trainer } from '../../models/trainer/Trainer';
-import { CategoryPrice } from '../../models/price/NewPrice';
+import { CategoryPrice } from '../../models/price/CategoryPrice';
 import { Location } from '../../models/location/Location';
 
 @Injectable({

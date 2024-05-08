@@ -15,7 +15,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 import { Status } from '../../../models/status/Status';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
-import { CategoryPrice } from '../../../models/price/NewPrice';
+import { CategoryPrice } from '../../../models/price/CategoryPrice';
 import { LocationService } from '../../../services/location/location.service';
 import { Location } from '../../../models/location/Location';
 

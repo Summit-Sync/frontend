@@ -7,16 +7,17 @@ export class Qualification implements CheckboxList {
   }
 
   validate(): boolean {
-    if (!this.id || !this.name) {
-      return false;
+    let result: boolean = true;
+    if (!this.name){
+      result = false;
+      console.error("Qualifikationsname darf nicht leer sein");
+      
     }
-    return true;
+    if(!this.id || this.id < 1){
+      result = false;
+      console.error("Id muss vorhanden sein");
+      
+    }
+    return result;
   }
 }
-/*
-export type Qualification={
-    id:number
-    name:string
-}
-
- */

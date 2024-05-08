@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
 import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
-import { CategoryPrice } from '../../../models/price/NewPrice';
+import { CategoryPrice } from '../../../models/price/CategoryPrice';
 import { Qualification } from '../../../models/qualification/Qualification';
 import { LocationService } from '../../../services/location/location.service';
 import { CategoryPriceService } from '../../../services/price/price.service';

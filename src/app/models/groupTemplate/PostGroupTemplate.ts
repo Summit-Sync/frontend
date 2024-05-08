@@ -17,39 +17,60 @@ export class PostGroupTemplate {
   }
 
   validate(): boolean {
-    if (
-      !this.acronym ||
-      !this.title ||
-      !this.description ||
-      !this.numberOfDates ||
-      !this.duration ||
-      !this.meetingPoint ||
-      this.locationDTO.validate() ||
-      !this.TrainerPricePerHour ||
-      !this.PricePerParticipant ||
-      this.requiredQualifications.length === 0 ||
-      !this.participantsPerTrainer
-    ) {
-      return false;
+    let result = true;
+    if(!this.title){
+      result = false;
+      console.error("Titel darf nicht leer sein");
+      
     }
-    return true;
+    if(!this.acronym){
+      result = false;
+      console.error("Kürzel darf nicht leer sein");
+      
+    }
+    if(this.PricePerParticipant <= 0){
+      result = false;
+      console.error("Preis pro Teilnehmer darf nicht 0 sein");
+      
+    }
+    if(!this.description){
+      result = false;
+      console.error("Beschreibung darf nicht leer sein");
+      
+    }
+    if(!this.meetingPoint){
+      result = false;
+      console.error("Treffpunkt darf nicht leer sein");
+      
+    }
+    if(this.numberOfDates < 1){
+      result = false;
+      console.error("Terminanzahl darf nicht leer sein");
+      
+    }
+    if(this.duration < 1){
+      result = false;
+      console.error("Dauer darf nicht leer sein");
+      
+    }
+    if(!this.locationDTO.validate()){
+      result = false;
+    }
+    if(this.TrainerPricePerHour < 1){
+      result = false;
+      console.error("Trainerpreis darf nicht leer sein");
+      
+    }
+    if(this.participantsPerTrainer < 1){
+      result = false;
+      console.error("Trainerschlüssel darf nicht leer sein");
+      
+    }
+    if (this.requiredQualifications.length === 0) {
+      result = false;
+      console.error("Qualifikationsliste darf nicht leer sein");
+      
+    }
+    return result;
   }
 }
-
-/*
-export type PostGroupTemplate ={
-    acronym:string
-    title:string
-    description:string
-    numberOfDates:number
-    duration:number
-    numberOfParticipant:number
-    locationDTO:Location
-    meetingPoint:string
-    priceList:PostPrice[]
-    requiredQualificationList:Qualification[]
-    numberOfTrainers:number
-}
-
-
- */

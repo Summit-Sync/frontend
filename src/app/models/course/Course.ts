@@ -3,7 +3,7 @@ import { Qualification } from '../qualification/Qualification';
 import { Trainer } from '../trainer/Trainer';
 import { CourseTemplate } from '../courseTemplate/CourseTemplate';
 import { Location } from '../location/Location';
-import { CategoryPrice } from '../price/NewPrice';
+import { CategoryPrice } from '../price/CategoryPrice';
 import { Status } from '../status/Status';
 
 export class Course {
@@ -33,41 +33,66 @@ export class Course {
 
   validate(): boolean {
     // Check if required fields are present
-
-    if (!this.title || !this.description || !this.notes || !this.meetingPoint) {
-      console.error('string empty');
-      return false;
+    let result: boolean = true;
+    if(!this.title){
+      console.error("Titel darf nicht leer sein");
+      result = false;
     }
-
+    if(!this.description){
+      console.error("Die Beschreibung darf nicht leer sein");
+      result = false;
+    }
+    if(!this.meetingPoint){
+      result = false;
+      console.error("Treffpunkt darf nicht leer sein");
+      
+    }
+    if(!this.notes){
+      console.error("Die Notizen dürfen nicht leer sein");
+      result = false;
+    }
     // Check if numerical fields are not zero
-    if (
-      this.duration === 0 ||
-      this.numberParticipants === 0 ||
-      this.numberWaitlist === 0
-    ) {
-      console.error('number empty');
-      return false;
+    if(this.duration < 1){
+      console.error("Die Dauer darf nicht kleiner als 1 sein");
+      result = false;
     }
-
+    if(this.numberParticipants < 1){
+      console.error("Die Teilnehmeranzahl darf nicht kleiner als 1 sein");
+      result = false;
+    }
+    if(this.numberWaitlist < 1){
+      console.error("Wartelistenlänge darf nicht kleiner als 1 sein");
+      result = false;
+    }
+    if(this.numberTrainers < 1){
+      console.error("Traineranzahl darf nicht kleiner als 1 sein");
+      result = false;
+    }
     // Check if arrays are not empty
-    if (
-      this.prices.length === 0 ||
-      this.requiredQualifications.length === 0 ||
-      this.participants.length === 0 ||
-      this.dates.length === 0
-    ) {
-      console.error('array empty');
-      return false;
+    if(this.prices.length === 0){
+      console.error("Es müssen Preise für Kurse existieren");
+      result = false;
     }
-
+    if(this.requiredQualifications.length === 0 ){
+      console.error("Es müssen Qualifikationen für den Kurs existieren");
+      result = false;
+    }
+    if(this.participants.length === 0){
+      console.error("Es müssen Teilnehmer im Kurs vorhanden sein");
+      result = false;
+    }
+    if(this.dates.length === 0){
+      console.error("Es müssen Daten für den Kurs vorliegen");
+      result = false;
+      
+    }
     //validate arrays content
     if (
       !this.prices.every((price) => {
         return price.validate();
       })
     ) {
-      console.error('price failed');
-      return false;
+      result = false;
     }
 
     if (
@@ -75,8 +100,7 @@ export class Course {
         return qualification.validate();
       })
     ) {
-      console.error('qualification failed');
-      return false;
+      result = false;
     }
 
     if (
@@ -84,8 +108,7 @@ export class Course {
         return participant.validateExceptAllEmpty();
       })
     ) {
-      console.error('participant failed');
-      return false;
+      result = false;
     }
 
     if (
@@ -93,16 +116,14 @@ export class Course {
         return wc.validateExceptAllEmpty();
       })
     ) {
-      console.error('waitlist failed');
-      return false;
+      result = false;
     }
 
     if (!this.location.validate()) {
-      console.error('location failed');
-      return false;
+      result = false;
     }
 
-    return true;
+    return result;
   }
 
   createCopy(course: Course) {
