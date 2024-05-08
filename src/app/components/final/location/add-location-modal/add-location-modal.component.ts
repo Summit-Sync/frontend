@@ -25,10 +25,14 @@ export class AddLocationModalComponent {
   }
 
   cancel(){
-    this.dialogRef.close()
+    this.dialogRef.close(JSON.stringify({
+      method: 'cancel'
+    }))
   }
 
   save(){
+    console.log(this.editableLocation);
+    
     if(this.editableLocation.validate()){
       console.log(this.editableLocation)
       this.dialogRef.close(JSON.stringify({

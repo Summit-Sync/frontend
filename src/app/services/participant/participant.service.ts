@@ -3,12 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Participant} from "../../models/participant/Participant";
 import {PostParticipant} from "../../models/participant/PostParticipant";
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipantService {
-  baseUrl:string="http://localhost:8080/api/v1/participant"
+  baseUrl:string=`${environment.serviceUrl}/participant`
   constructor(private http: HttpClient) { }
 
   //Get

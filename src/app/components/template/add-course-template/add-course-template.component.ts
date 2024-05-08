@@ -30,8 +30,8 @@ export class AddCourseTemplateComponent {
   requiredQualifications: CheckboxList[] = [];
   courseLocation: CheckboxList[] = [];
 
-  locationList: CheckboxList[];
-  qualificationList: CheckboxList[];
+  locationList: CheckboxList[] = [];
+  qualificationList: CheckboxList[] = [];
 
   defaultPriceListLength = 3;
 

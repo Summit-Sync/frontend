@@ -3,13 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {GroupTemplate} from "../../models/groupTemplate/GroupTemplate";
 import {PostGroupTemplate} from "../../models/groupTemplate/PostGroupTemplate";
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrouptemplateService {
 
-  baseUrl:string="http://localhost:8080/api/v1/template/group"
+  baseUrl:string=`${environment.serviceUrl}/template/group`
   constructor(private http: HttpClient) { }
 
   //Get

@@ -3,41 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { Location } from '../../models/location/Location';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
-  baseUrl: string = 'http://localhost:8080/api/v1/location';
+  baseUrl: string = `${environment.serviceUrl}/location`;
 
   constructor(private http: HttpClient) {}
 
   //Get
   getAllLocations(): Observable<Location[]> {
-    let location1: Location = new Location(
-      1,
-      'Morgenstraße 2',
-      '27816',
-      'Deutschland',
-      'filler@email.com',
-      '0148131564156156',
-      'https://www.test.com/firstTest',
-      'title 1',
-      'city1'
-    );
-    let location2: Location = new Location(
-      2,
-      'Abendstraße',
-      '27816',
-      'Deutschland',
-      'test@email.com',
-      '0156487947787853',
-      'https://www.test.com/secondTest',
-      'title 2',
-      'city2'
-    );
-    return of([location1, location2]);
-    // return this.http.get<Location[]>(this.baseUrl);
+    return this.http.get<Location[]>(this.baseUrl);
   }
 
   getLocationById(id: number): Observable<Location> {
@@ -46,8 +24,10 @@ export class LocationService {
   }
 
   //Put
-  putLocation(id: number, location: Location): Observable<Location> {
-    const apiUrl: string = `${this.baseUrl}/${id}`;
+  putLocation(id: number, location: Location): Observable<Location> {    
+    console.log(location);
+    
+    let apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.put<Location>(apiUrl, location);
   }
 
