@@ -42,6 +42,11 @@ export class Course {
       console.error("Die Beschreibung darf nicht leer sein");
       result = false;
     }
+    if(!this.meetingPoint){
+      result = false;
+      console.error("Treffpunkt darf nicht leer sein");
+      
+    }
     if(!this.notes){
       console.error("Die Notizen dürfen nicht leer sein");
       result = false;
