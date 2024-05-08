@@ -10,12 +10,12 @@ export class PostTrainer{
   }
   validate(): boolean{
     let result: boolean = true;
-    if(!this.username || this.username === ''){
+    if(!this.username){
       result = false;
       console.error("Benutzername darf nicht leer sein");
       
     }
-    if(!this.firstName || this.firstName === ''){
+    if(!this.firstName){
       result = false;
       console.error("Vorname darf nicht leer sein");
       
