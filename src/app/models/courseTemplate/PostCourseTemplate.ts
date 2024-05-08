@@ -19,16 +19,16 @@ export class PostCourseTemplate{
     public validate():boolean{
         let result:boolean = true;
         if(!this.title){
-          let result = false;
+          result = false;
           console.error("Titel darf nicht leer sein");
         }
         if(!this.acronym){
-          let result = false;
+          result = false;
           console.error("Kürzel darf nicht leer sein");
           
         }
         if(!this.description){
-          let result = false;
+          result = false;
           console.error("Beschreibung darf nicht leer sein");
           
         }
