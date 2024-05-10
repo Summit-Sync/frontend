@@ -1,5 +1,6 @@
 import { Location } from '../location/Location';
 import { CategoryPrice } from '../price/CategoryPrice';
+import { PostCategoryPrice } from '../price/PostCategoryPrice';
 import { Qualification } from '../qualification/Qualification';
 import { PostCourseTemplate } from './PostCourseTemplate';
 
@@ -11,7 +12,7 @@ export class CourseTemplate {
     public description: string,
     public numberOfDates: number,
     public duration: number,
-    public numberOfParticipants: number,
+    public numberParticipants: number,
     public numberWaitlist: number,
     public price: CategoryPrice[],
     public meetingPoint: string,
@@ -52,7 +53,7 @@ export class CourseTemplate {
       console.error("Kursvorlagen müssen eine Dauer haben");
       
     }
-    if(this.numberOfParticipants < 1){
+    if(this.numberParticipants < 1){
       result = false;
       console.error("Kursvorlagen müssen mindestens einen Teilnehmer haben können");
       
@@ -94,17 +95,21 @@ export class CourseTemplate {
     for(let q of this.requiredQualifications){
       qualificationIdList.push(q.id);
     }
+    let priceList: PostCategoryPrice[] = [];
+    for(let price of this.price){
+      priceList.push(new PostCategoryPrice(price.name,price.price))
+    }
     return new PostCourseTemplate(
       this.acronym,
       this.title,
       this.description,
       this.numberOfDates,
       this.duration,
-      this.numberOfParticipants,
+      this.numberParticipants,
       this.numberWaitlist,
       this.location.locationId,
       this.meetingPoint,
-      this.price,
+      priceList,
       qualificationIdList,
       this.numberTrainers
     );

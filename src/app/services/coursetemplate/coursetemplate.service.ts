@@ -49,7 +49,7 @@ export class CoursetemplateService {
 
   //Delete
   deleteCourseTemplate(id: number): Observable<void> {
-    return this.http.delete<void>(this.baseUrl);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   deleteQualificationFromCourseTemplate(

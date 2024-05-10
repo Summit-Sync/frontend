@@ -1,4 +1,5 @@
 import { CategoryPrice } from "../price/CategoryPrice";
+import { PostCategoryPrice } from "../price/PostCategoryPrice";
 
 export class PostCourseTemplate{
     constructor(
@@ -7,11 +8,11 @@ export class PostCourseTemplate{
         public description:string,
         public numberOfDates:number,
         public duration:number,
-        public numberOfParticipants:number,
-        public numberOfWaitlist:number,
+        public numberParticipants:number,
+        public numberWaitlist:number,
         public location:number,
         public meetingPoint:string,
-        public price:CategoryPrice[],
+        public price: PostCategoryPrice[],
         public requiredQualifications:number[],
         public numberTrainers:number,
     ){}
@@ -47,12 +48,12 @@ export class PostCourseTemplate{
           console.error("Kursvorlagen müssen eine Dauer haben");
           
         }
-        if(this.numberOfParticipants < 1){
+        if(this.numberParticipants < 1){
           result = false;
           console.error("Kursvorlagen müssen mindestens einen Teilnehmer haben können");
           
         }
-        if(this.numberOfWaitlist < 1){
+        if(this.numberWaitlist < 1){
           result = false;
           console.error("Es muss eine Warteliste geben");
           
@@ -71,6 +72,9 @@ export class PostCourseTemplate{
     
         // Validate nested objects if necessary
         for (const price of this.price) {
+          //dirty fix as price doesnt seem to be a category price  
+          console.log(price.constructor.name);
+                  
           if (!price.validate()) {
             result = false; // PostPrice validation failed
           }

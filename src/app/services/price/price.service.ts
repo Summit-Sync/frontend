@@ -14,9 +14,6 @@ export class CategoryPriceService {
   constructor(private http:HttpClient) { }
 
   getAllCategoryPrices():Observable<CategoryPrice[]>{
-    let price1=new CategoryPrice("new",1.111);
-    let price2=new CategoryPrice("intermediate",2.222)
-    return of([price1,price2])
     return this.http.get<CategoryPrice[]>(this.baseUrl);
   }
 
