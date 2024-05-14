@@ -13,6 +13,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 import { FormsModule } from '@angular/forms';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
+import { CheckboxListMapperService } from '../../../services/checkboxListMapper/checkbox-list-mapper.service';
 
 @Component({
   selector: 'app-add-course-template',
@@ -39,6 +40,7 @@ export class AddCourseTemplateComponent {
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
     private locationService: LocationService,
+    private checkboxListMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService
   ) {
@@ -52,14 +54,16 @@ export class AddCourseTemplateComponent {
     locationService
       .getAllLocations()
       .subscribe(
-        (data) => (this.locationList = this.mapLocationListToCheckboxList(data))
+        (data) =>
+          (this.locationList =
+            this.checkboxListMapper.mapLocationListToCheckboxList(data))
       );
     qualificationService
       .getAllQualifications()
       .subscribe(
         (data) =>
           (this.qualificationList =
-            this.mapQualificationListToCheckboxList(data))
+            this.checkboxListMapper.mapQualificationListToCheckboxList(data))
       );
   }
 
@@ -71,24 +75,24 @@ export class AddCourseTemplateComponent {
       priceList.push(new PostCategoryPrice('', 0));
     }
     if (this.isEdit) {
-      console.log(this.selectedCourseTemplate)
+      console.log(this.selectedCourseTemplate);
       this.courseTemplate =
         this.selectedCourseTemplate.createPostCourseTemplate();
-      console.log(this.courseTemplate);     
+      console.log(this.courseTemplate);
       this.addSelectedLocation();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
-      
     } else {
       this.courseTemplate = this.data.template;
     }
   }
 
   save() {
-    let qualificationIds: number[] = this.mapCheckboxListToNumberList(
-      this.requiredQualifications
-    );
-    let location: number = this.mapCheckboxListToNumberList(
+    let qualificationIds: number[] =
+      this.checkboxListMapper.mapCheckboxListToNumberList(
+        this.requiredQualifications
+      );
+    let location: number = this.checkboxListMapper.mapCheckboxListToNumberList(
       this.courseLocation
     )[0];
     this.courseTemplate.requiredQualifications = qualificationIds;
@@ -108,37 +112,6 @@ export class AddCourseTemplateComponent {
 
   cancel() {
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
-  }
-
-  mapCheckboxListToNumberList(data: CheckboxList[]): number[] {
-    let list: number[] = [];
-    for (let entry of data) {
-      list.push(entry.id);
-    }
-    return list;
-  }
-
-  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
-    let checkboxList: CheckboxList[] = [];
-    for (let qualification of data) {
-      checkboxList.push({
-        id: qualification.id,
-        displayFullName: qualification.name,
-      });
-    }
-    return checkboxList;
-  }
-
-  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
-    let checkboxList: CheckboxList[] = [];
-    for (let location of data) {
-      checkboxList.push({
-        id: location.locationId,
-        displayFullName: location.title,
-      });
-    }
-    console.log(checkboxList);
-    return checkboxList;
   }
 
   addPrice() {
@@ -161,7 +134,7 @@ export class AddCourseTemplateComponent {
   addSelectedQualification() {
     this.courseLocation.push({
       id: this.selectedCourseTemplate.location.locationId,
-      displayFullName: this.selectedCourseTemplate.location.street  ,
+      displayFullName: this.selectedCourseTemplate.location.street,
     });
   }
 }
