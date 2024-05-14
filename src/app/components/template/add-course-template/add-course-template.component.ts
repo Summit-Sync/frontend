@@ -13,7 +13,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 import { FormsModule } from '@angular/forms';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
-import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-list-mapper";
+import { CheckboxListMapperService } from '../../../services/checkboxListMapper/checkbox-list-mapper.service';
 
 @Component({
   selector: 'app-add-course-template',
@@ -40,7 +40,7 @@ export class AddCourseTemplateComponent {
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
     private locationService: LocationService,
-    private checkBoxMapper: CheckboxListMapper,
+    private checkboxListMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService
   ) {
@@ -82,7 +82,6 @@ export class AddCourseTemplateComponent {
       this.addSelectedLocation();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
-
     } else {
       this.courseTemplate = this.data.template;
     }
@@ -113,40 +112,6 @@ export class AddCourseTemplateComponent {
 
   cancel() {
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
-  }
-
-  mapCheckboxListToNumberList(data: CheckboxList[]): number[] {
-    return this.checkBoxMapper.mapCheckboxListToNumberList(data);
-    // let list: number[] = [];
-    // for (let entry of data) {
-    //   list.push(entry.id);
-    // }
-    // return list;
-  }
-
-  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
-    return this.checkBoxMapper.mapQualificationListToCheckboxList(data);
-    // let checkboxList: CheckboxList[] = [];
-    // for (let qualification of data) {
-    //   checkboxList.push({
-    //     id: qualification.id,
-    //     displayFullName: qualification.name,
-    //   });
-    // }
-    // return checkboxList;
-  }
-
-  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
-    return this.checkBoxMapper.mapLocationListToCheckboxList(data);
-    // let checkboxList: CheckboxList[] = [];
-    // for (let location of data) {
-    //   checkboxList.push({
-    //     id: location.locationId,
-    //     displayFullName: location.title,
-    //   });
-    // }
-    // console.log(checkboxList);
-    // return checkboxList;
   }
 
   addPrice() {
