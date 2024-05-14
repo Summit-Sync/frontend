@@ -46,7 +46,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let c of courses | async">
+    <ng-container *ngFor="let c of courses">
       <tr
         *ngIf="
           c | search : displayOption : searchText : searchDate : searchEndDate
@@ -77,6 +77,9 @@
         </td>
         <td>
           <button (click)="delete(c)">Löschen</button>
+        </td>
+        <td>
+          <button (click)="cancelCourse(c)">Kurs absagen</button>
         </td>
       </tr>
     </ng-container>

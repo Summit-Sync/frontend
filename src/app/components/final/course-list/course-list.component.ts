@@ -20,7 +20,7 @@ import {ToastService} from "../../../services/toast/toast.service";
   styleUrl: './course-list.component.scss',
 })
 export class CourseListComponent implements OnInit {
-  courses: Observable<Course[]> = of([]);
+  courses: Course[] = [];
   showingEdit: boolean = false;
   showingDelete: boolean = false;
   displayDropdown: boolean = false;
@@ -47,8 +47,9 @@ export class CourseListComponent implements OnInit {
     private elementRef: ElementRef
   ) {}
 
-  ngOnInit(): void {
-    this.courses = this.courseService.getAllCourses();
+  ngOnInit() {
+    this.updateList();
+    console.log(this.courses);
   }
 
   @HostListener('document:click', ['$event'])
@@ -151,6 +152,19 @@ export class CourseListComponent implements OnInit {
     this.showingDelete = false;
   }
 
+  updateList() {
+    this.courseService.getAllCourses().subscribe((data) => {
+      this.courses = data;
+
+      // Iterate over courses and convert dates to Date objects
+      this.courses.forEach((course) => {
+        course.dates = course.dates.map((dateStr) => new Date(dateStr));
+      });
+
+      console.log(this.courses); // Log updated courses with Date objects
+    });
+  }
+
   // MatDialog on hold for now
   // openDialog() {
   //   this.dialog.open(CourseComponent, {
@@ -159,4 +173,8 @@ export class CourseListComponent implements OnInit {
   //     position: { top: '50%', left: '50%' },
   //   });
   // }
+
+  cancelCourse(course: Course) {
+    this.courseService.putCourseCancel(course.id, !course.canceled);
+  }
 }
