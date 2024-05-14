@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment.development';
 export class CourseService {
   public currentCourse: BehaviorSubject<Course | null> =
     new BehaviorSubject<Course | null>(null);
-  baseUrl: string = `${environment.serviceUrl}/api/v1/course`;
+  baseUrl: string = `${environment.serviceUrl}/course`;
   constructor(private http: HttpClient) {}
 
   //Get
