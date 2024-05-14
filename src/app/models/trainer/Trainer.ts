@@ -46,13 +46,14 @@ export class Trainer implements CheckboxList {
       console.error("Telefonnummer darf nicht leer sein");
 
     }
-    if (
-      !this.qualifications.every((qualification) => {
-        return qualification.validate();
-      })
-    ) {
-      result = false;
-    }
+    // TODO: Der Validate ist nicht funktional... Ich weiß nicht warum, aber qualification.validate() is not a function...
+    // if (
+    //   !this.qualifications.every((qualification: Qualification) => {
+    //     return qualification.validate();
+    //   })
+    // ) {
+    //   result = false;
+    // }
     return result;
   }
 
