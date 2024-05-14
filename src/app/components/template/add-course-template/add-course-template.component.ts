@@ -54,14 +54,16 @@ export class AddCourseTemplateComponent {
     locationService
       .getAllLocations()
       .subscribe(
-        (data) => (this.locationList = this.mapLocationListToCheckboxList(data))
+        (data) =>
+          (this.locationList =
+            this.checkboxListMapper.mapLocationListToCheckboxList(data))
       );
     qualificationService
       .getAllQualifications()
       .subscribe(
         (data) =>
           (this.qualificationList =
-            this.mapQualificationListToCheckboxList(data))
+            this.checkboxListMapper.mapQualificationListToCheckboxList(data))
       );
   }
 
@@ -73,7 +75,7 @@ export class AddCourseTemplateComponent {
       priceList.push(new PostCategoryPrice('', 0));
     }
     if (this.isEdit) {
-      console.log(this.selectedCourseTemplate)
+      console.log(this.selectedCourseTemplate);
       this.courseTemplate =
         this.selectedCourseTemplate.createPostCourseTemplate();
       console.log(this.courseTemplate);
@@ -87,10 +89,11 @@ export class AddCourseTemplateComponent {
   }
 
   save() {
-    let qualificationIds: number[] = this.mapCheckboxListToNumberList(
-      this.requiredQualifications
-    );
-    let location: number = this.mapCheckboxListToNumberList(
+    let qualificationIds: number[] =
+      this.checkboxListMapper.mapCheckboxListToNumberList(
+        this.requiredQualifications
+      );
+    let location: number = this.checkboxListMapper.mapCheckboxListToNumberList(
       this.courseLocation
     )[0];
     this.courseTemplate.requiredQualifications = qualificationIds;
@@ -166,7 +169,7 @@ export class AddCourseTemplateComponent {
   addSelectedQualification() {
     this.courseLocation.push({
       id: this.selectedCourseTemplate.location.locationId,
-      displayFullName: this.selectedCourseTemplate.location.street  ,
+      displayFullName: this.selectedCourseTemplate.location.street,
     });
   }
 }
