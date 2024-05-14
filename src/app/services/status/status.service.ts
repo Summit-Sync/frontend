@@ -3,12 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Status} from "../../models/status/Status";
 import {PostStatus} from "../../models/status/PostStatus";
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusService {
-  baseUrl:string="http://localhost:8080/api/v1/status"
+  baseUrl:string=`${environment.serviceUrl}/status`
   constructor(private http: HttpClient) { }
 
   //Get

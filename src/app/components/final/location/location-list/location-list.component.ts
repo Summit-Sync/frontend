@@ -29,12 +29,25 @@ export class LocationListComponent {
   }
 
   openEditDialog(location: Location){
+    console.log(location);
+    
     const dialogRef = this.dialog.open(AddLocationModalComponent,{
       disableClose: true,
       height: '80dvh',
       width: '40dvw',
       data:{
-        location: location.createPostLocation()
+        location: new PostLocation(location.title,location.street, location.postCode, location.country, location.email, location.phone, location.mapsUrl, location.city)
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      const obj = JSON.parse(result);
+      if(obj.method == 'accept'){
+        console.log('Dialog output: ' + obj.data)
+        this.locationService.putLocation(location.locationId, obj.data).subscribe({
+          next: (response) => console.log('Location has been updated'),
+          error: (error) => console.error('Location could not be updated'),
+          complete: () => this.updateList()   
+        })
       }
     })
   }
@@ -45,7 +58,7 @@ export class LocationListComponent {
       height: '80dvh',
       width: '40dvw',
       data:{
-
+        location: location
       }
     })
   }
@@ -55,7 +68,8 @@ export class LocationListComponent {
       finalize(() => this.updateList())
     ).subscribe({
       next: (response) => console.log('Locations was deleted'),
-      error: (err) => console.error('Location could not be deleted', err)
+      error: (err) => console.error('Location could not be deleted', err),
+      complete: () => this.updateList()
     })
   }
 
@@ -66,6 +80,17 @@ export class LocationListComponent {
       width: '40dvw',
       data:{
         location: new PostLocation("","","","","","","","")
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      const obj = JSON.parse(result);
+      if(obj.method == 'accept'){
+        console.log('Dialog output: ' + obj.data)
+        this.locationService.postLocation(obj.data).subscribe({
+          next: (response) => console.log('Location has been created'),
+          error: (error) => console.error('Location could not be created'),
+          complete: () => this.updateList()   
+        })
       }
     })
   }

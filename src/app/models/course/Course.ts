@@ -174,7 +174,7 @@ export class Course {
       addedDate.setMinutes(0);
       this.dates.push(addedDate);
     }
-    this.numberParticipants = courseTemplate.numberOfParticipants;
+    this.numberParticipants = courseTemplate.numberParticipants;
     this.numberTrainers = courseTemplate.numberTrainers;
     this.numberWaitlist = courseTemplate.numberWaitlist;
     this.prices = courseTemplate.price;

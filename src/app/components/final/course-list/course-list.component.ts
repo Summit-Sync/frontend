@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { Observable, of } from 'rxjs';
 import { Course } from '../../../models/course/Course';
@@ -32,19 +25,19 @@ export class CourseListComponent implements OnInit {
   displayDropdown: boolean = false;
   dropdownContent: any;
   searchText: string = '';
-  filterText: string = '';
-  selectedOption: FilterOption = FilterOption.None;
+  searchDate?: Date;
+  searchEndDate?: Date;
   displayOption: FilterOption = FilterOption.None;
   filterOptions: FilterOption[] = [
     FilterOption.None,
-    FilterOption.Trainer,
-    FilterOption.Qualification,
-    FilterOption.PriceValue,
-    FilterOption.PriceName,
-    FilterOption.Date,
-    FilterOption.LocationStreet,
-    FilterOption.LocationPostCode,
+    FilterOption.CourseAcronym,
+    FilterOption.FreeTrainerSpots,
+    FilterOption.FreeParticipantSpots,
+    FilterOption.NoParticipants,
+    FilterOption.StartDate,
+    FilterOption.TrainerFullName,
   ];
+  FilterOption = FilterOption;
 
   constructor(
     public courseService: CourseService,
@@ -70,9 +63,9 @@ export class CourseListComponent implements OnInit {
     this.displayOption = filterOption;
   }
 
-  searchFilteredCourses() {
-    this.selectedOption = this.displayOption;
-  }
+  // searchFilteredCourses() {
+  //   this.selectedOption = this.displayOption;
+  // }
 
   showDetails(course: Course) {
     this.showingEdit = false;

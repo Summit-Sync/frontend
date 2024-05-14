@@ -1,17 +1,11 @@
-export class CategoryPrice{
+export class PostCategoryPrice{
     constructor(
-        public id: number,
         public name: string,
         public price: number
     ){}
 
-        validate(): boolean{
+    validate(): boolean{
         let result: boolean = true;
-        if(!this.id){
-            result = false;
-            console.error("Preis muss eine Id haben");
-            
-        }
         if(this.price <= 0){
             result = false;
             console.error("Preis darf nicht leer sein");

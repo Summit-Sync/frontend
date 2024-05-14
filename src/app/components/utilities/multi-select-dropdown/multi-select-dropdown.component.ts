@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
 import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 
@@ -10,7 +10,7 @@ import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
   templateUrl: './multi-select-dropdown.component.html',
   styleUrl: './multi-select-dropdown.component.scss',
 })
-export class MultiSelectDropdownComponent implements OnInit {
+export class MultiSelectDropdownComponent implements OnInit, OnChanges {
   @Input() allOptions: CheckboxList[];
   @Input() selectedOptions: CheckboxList[];
   @Input() dropdownHeadline: string;
@@ -18,7 +18,19 @@ export class MultiSelectDropdownComponent implements OnInit {
   checkedBoxes: boolean[] = [];
   showList: boolean = false;
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    this.allOptions.forEach((aOption) =>
+      this.checkedBoxes.push(
+        this.selectedOptions.some((sOption) => {
+          return sOption.id == aOption.id;
+        })
+      )
+    );    
+  }
+
+  ngOnInit(): void {    
+    console.log(this.selectedOptions.length);
+    
     this.allOptions.forEach((aOption) =>
       this.checkedBoxes.push(
         this.selectedOptions.some((sOption) => {
@@ -27,6 +39,8 @@ export class MultiSelectDropdownComponent implements OnInit {
       )
     );
   }
+
+
 
   test(i: number) {
     console.log(i);

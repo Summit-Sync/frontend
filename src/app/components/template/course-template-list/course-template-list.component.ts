@@ -8,6 +8,8 @@ import { AddCourseTemplateComponent } from '../add-course-template/add-course-te
 import { cloneDeep } from 'lodash';
 import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
 import { CategoryPrice } from '../../../models/price/CategoryPrice';
+import { tick } from '@angular/core/testing';
+import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
 
 @Component({
   selector: 'app-course-template-list',
@@ -41,7 +43,7 @@ export class CourseTemplateListComponent {
       width: '40dvw',
       height: '80dvh',
       data: {
-        selectedTemplate: cloneDeep(template),
+        selectedTemplate: new CourseTemplate(template.id,template.title,template.acronym, template.description, template.numberOfDates, template.duration, template.numberParticipants, template.numberWaitlist, template.price, template.meetingPoint, template.requiredQualifications, template.numberTrainers, template.location),
         isEdit: true
       }
     });
@@ -49,18 +51,21 @@ export class CourseTemplateListComponent {
     dialogRef.afterClosed().subscribe(result => {
       const obj = JSON.parse(result);
       if(obj.method == 'accept'){
-        console.log('Dialog output: ' + obj.data)
+        console.log('Dialog output: ' + obj.data)        
         this.courseTemplateService.putCourseTemplate(obj.data,template.id).subscribe({
           next: (response) => console.log('Template has been updated'),
           error: (error) => console.error('Template could not be updated'),
-          complete: () => this.updateList   
+          complete: () => this.updateList()   
         })
       }
     })
   }
 
   updateList(){
-    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>this.courseTemplateList=data)
+    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>{
+      this.courseTemplateList=data;
+    }
+    )
   }
 
   openDetails(template:CourseTemplate){
@@ -75,9 +80,9 @@ export class CourseTemplateListComponent {
   }
 
   openCreateDialog(){
-    let priceList: CategoryPrice[] = [];
+    let priceList: PostCategoryPrice[] = [];
     for(let x=0; x<3;x++){
-      priceList.push(new CategoryPrice('',0))
+      priceList.push(new PostCategoryPrice('',0))
     }
     const dialogref = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,

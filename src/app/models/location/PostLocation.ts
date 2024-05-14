@@ -1,5 +1,5 @@
 export class PostLocation {
-  constructor(public title: string, public street: string, public postcode: string, public country: string, public email: string, public phone: string, public mapsUrl: string, public city: string) {
+  constructor(public title: string, public street: string, public postCode: string, public country: string, public email: string, public phone: string, public mapsUrl: string, public city: string) {
   }
   validate(): boolean{
     let result: boolean = true;
@@ -13,7 +13,7 @@ export class PostLocation {
       console.error("Straße darf nicht leer sein");
       
     }
-    if(!this.postcode){
+    if(!this.postCode){
       result = false;
       console.error("Postleitzahl darf nicht leer sein");
       

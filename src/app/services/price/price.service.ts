@@ -2,20 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CategoryPrice } from '../../models/price/CategoryPrice';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryPriceService {
 
-  baseUrl:string="http://localhost:8080/api/v1/price"
+  baseUrl:string=`${environment.serviceUrl}/price`
 
   constructor(private http:HttpClient) { }
 
   getAllCategoryPrices():Observable<CategoryPrice[]>{
-    let price1=new CategoryPrice("new",1.111);
-    let price2=new CategoryPrice("intermediate",2.222)
-    return of([price1,price2])
     return this.http.get<CategoryPrice[]>(this.baseUrl);
   }
 

@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PostTrainer } from '../../models/trainer/PostTrainer';
 import {Course} from "../../models/course/Course";
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -11,16 +12,15 @@ import {Course} from "../../models/course/Course";
 export class TrainerService {
   public currentTrainer: BehaviorSubject<Trainer | null> =
   new BehaviorSubject<Trainer | null>(null)
-
+  
   constructor(private http: HttpClient) {}
 
-  baseUrl: string = 'http://localhost:8080/api/v1/trainer';
+  baseUrl: string = `${environment.serviceUrl}/trainer`;
 
   //Get
   getAllTrainers(): Observable<Trainer[]> {
     const apiUrl: string = `${this.baseUrl}`;
 
-    //return this.trainers;
     return this.http.get<Trainer[]>(apiUrl);
   }
 

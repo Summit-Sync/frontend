@@ -24,7 +24,7 @@
             </div>
             <div class="number-of-participants">
                 <span>Maximale Teilnehmeranzahl: </span>
-                <span>{{courseTemplate.numberOfParticipants}}</span>
+                <span>{{courseTemplate.numberParticipants}}</span>
             </div>
             <div class="number-of-waitlist">
                 <span>Wartelistenlänge: </span>
@@ -41,7 +41,7 @@
             <div class="price">
                 <span>Preisliste: </span>
                 <div>
-                    <span *ngFor="let price of courseTemplate.price">{{price.category}}:{{price.price}}</span>
+                    <span *ngFor="let price of courseTemplate.price">{{price.name}}:{{price.price}}</span>
                 </div>
             </div>
             <div class="required-qualifications">

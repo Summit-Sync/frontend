@@ -205,7 +205,7 @@
       </div>
       <div class="priceWrapper">
         <ng-container *ngFor="let price of courseData.prices; let i = index">
-          <input type="text" [(ngModel)]="price.category" />
+          <input type="text" [(ngModel)]="price.name" />
           <input type="number" [(ngModel)]="price.price" />
           <button (click)="deletePrice(i)">-</button>
         </ng-container>
