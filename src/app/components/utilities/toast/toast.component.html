@@ -1,0 +1,18 @@
+<div class="wrapper">
+  <aside *ngFor="let toast of currentToasts">
+    <div class="notification"
+         [ngClass]="
+            {'is-info': toast.type == 'info',
+            'is-danger': toast.type == 'danger',
+            'is-success': toast.type == 'success'
+    }">
+      <div class="type">
+        <h2>{{toast.title}}</h2>
+      </div>
+      <div class="message">
+        <p>{{toast.message}}</p>
+      </div>
+
+    </div>
+  </aside>
+</div>

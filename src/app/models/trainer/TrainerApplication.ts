@@ -15,37 +15,37 @@ export class TrainerApplication {
     if(this.id < 1){
       result = false;
       console.error("Id darf nicht leer sein");
-      
+
     }
     if(!this.firstName){
       result = false;
       console.error("Vorname darf nicht leer sein");
-      
+
     }
     if(!this.lastName){
       result = false;
       console.error("Nachname darf nicht leer sein");
-      
+
     }
     if(!this.email){
       result = false;
       console.error("E-Mail darf nicht leer sein");
-      
+
     }
     if(!this.phone){
       result = false;
       console.error("Telefonnummer darf nicht leer sein");
-      
+
     }
     if(!this.subjectId){
       result = false;
       console.error("SubjektId darf nicht leer sein");
-      
+
     }
     if(this.qualifications.length === 0){
       result = false;
       console.error("Es müssen Qualifikationen gegeben sein");
-      
+
     }
     if (!this.qualifications.every((qualification) => {
       return qualification.validate();

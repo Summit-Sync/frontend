@@ -7,6 +7,7 @@ import {AsyncPipe, DatePipe, NgForOf} from "@angular/common";
 import {AddTrainerComponent} from "../add-trainer/add-trainer.component";
 import {TrainerComponent} from "../trainer/trainer.component";
 import {ConfirmationDialogComponent} from "../../../dialog/confirmation-dialog/confirmation-dialog.component";
+import {ToastService} from "../../../services/toast/toast.service";
 
 @Component({
   selector: 'app-trainer-list',
@@ -25,7 +26,8 @@ export class TrainerListComponent {
 
   constructor(
     private trainerService: TrainerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toast: ToastService
   ) {
   }
 
@@ -56,13 +58,15 @@ export class TrainerListComponent {
     dialogRef.afterClosed().subscribe(result => {
       const obj = JSON.parse(result);
       if (obj.method == 'confirm') {
-        console.log("Löschen bestätigt", obj.result);
+        // console.log("Löschen bestätigt", obj.result);
         this.trainerService.deleteTrainerById(trainer.id).subscribe({
           next: () => {
             this.trainer$ = this.trainerService.getAllTrainers();
+            this.toast.showSuccessToast("Trainer erfolgreich gelöscht");
           },
-          error: () => {
-            console.error("Something went wrong while deleting a Trainer");
+          error: (err) => {
+            this.toast.showErrorToast("Löschen fehlgeschlagen\n" + err)
+            // console.error("Something went wrong while deleting a Trainer");
           }
         });
       }
@@ -83,9 +87,11 @@ export class TrainerListComponent {
         this.trainerService.postTrainer(obj.data).subscribe({
           next: () => {
             this.trainer$ = this.trainerService.getAllTrainers();
+            this.toast.showSuccessToast("Trainer erfolgreich angelegt");
           },
-          error: () => {
-            console.error("Something went wrong while Posting a Trainer");
+          error: (err) => {
+            // console.error("Something went wrong while Posting a Trainer");
+            this.toast.showErrorToast("Trainer anlage fehlgeschlagen\n" + err);
           }
 
         });
@@ -113,9 +119,12 @@ export class TrainerListComponent {
           this.trainerService.putTrainer(obj.data.id, obj.data).subscribe({
             next: () => {
               this.trainer$ = this.trainerService.getAllTrainers();
+              this.toast.showSuccessToast("Trainer erfolgreich aktualisiert");
             },
-            error: () => {
-              console.error("Something went wrong while Posting a Trainer");
+            error: (err) => {
+
+              // console.error("Something went wrong while Posting a Trainer");
+              this.toast.showErrorToast("Trainer aktualisierung fehlgeschlagen \n" + err);
             }
           })
         }

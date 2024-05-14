@@ -12,6 +12,7 @@ import {PostTrainer} from "../../../models/trainer/PostTrainer";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
 import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
+import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-list-mapper";
 
 @Component({
   selector: 'app-add-trainer',
@@ -36,7 +37,7 @@ import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 export class AddTrainerComponent implements OnInit{
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
-  allQualification: Qualification[];
+  allQualification: CheckboxList[];
   createTrainerData: PostTrainer = new PostTrainer(
     '',
     '',
@@ -58,8 +59,12 @@ export class AddTrainerComponent implements OnInit{
   constructor(
     private dialogRef: MatDialogRef<AddTrainerComponent>,
     private trainerService: TrainerService,
-    private qualificationService: QualificationsService
+    private qualificationService: QualificationsService,
+    private checkBoxMapper: CheckboxListMapper
   ) {
+    this.qualificationService.getAllQualifications().subscribe(q => {
+      this.allQualification = this.checkBoxMapper.mapQualificationListToCheckboxList(q);
+    });
   }
 
   ngOnInit(): void {
@@ -70,14 +75,11 @@ export class AddTrainerComponent implements OnInit{
           return;
         }
         this.trainerData.createCopy(t);
-        this.trainerData.qualification = [];
         console.log('onInit', this.trainerData);
         return;
       });
     }
-    this.qualificationService.getAllQualifications().subscribe(q => {
-      this.allQualification = q;
-    });
+
   }
 
   saveCreate(): void{
@@ -89,7 +91,7 @@ export class AddTrainerComponent implements OnInit{
 
   saveUpdate(): void{
     console.log(this.allQualification);
-    console.log(this.trainerData.qualification);
+    console.log(this.trainerData.qualifications);
     //this.trainerData.qualification[] = this.selectedQualification;
     console.log('updated: ', this.trainerData);
     if (this.trainerData.validate()){

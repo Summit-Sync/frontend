@@ -1,5 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  MatDialogActions,
+  MatDialogContainer,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from "@angular/material/dialog";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
 import {Observable} from "rxjs";
 import {Qualification} from "../../../models/qualification/Qualification";
@@ -7,6 +13,10 @@ import {QualificationsService} from "../../../services/qualifications/qualificat
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {Trainer} from "../../../models/trainer/Trainer";
 import {MatButton} from "@angular/material/button";
+import {FormsModule} from "@angular/forms";
+import {NgIf} from "@angular/common";
+import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-list-mapper";
+import {CheckboxList} from "../../../models/interfaces/CheckBoxList";
 
 @Component({
   selector: 'app-mass-assign-qualification',
@@ -14,44 +24,53 @@ import {MatButton} from "@angular/material/button";
   imports: [
     MatDialogTitle,
     MatDialogContent,
-    MultiSelectDropdownComponent,
     MatDialogActions,
-    MatButton
+    MatButton,
+    FormsModule,
+    MultiSelectDropdownComponent,
+    NgIf,
+    MatDialogContainer
   ],
   templateUrl: './mass-assign-qualification.component.html',
   styleUrl: './mass-assign-qualification.component.css'
 })
-export class MassAssignQualificationComponent implements OnInit{
-  //allQualifications: Qualification[];
-  @Input() qualification: Qualification = new Qualification(999, 'Keine Qualifikation')
-  allTrainers: Trainer[];
-  selectedTrainers: Trainer[];
+export class MassAssignQualificationComponent implements OnInit {
+  @Input() qualification: Qualification;
+  allTrainers: CheckboxList[];
+  selectedTrainers: Trainer[] = [];
+
   constructor(
     private qualificationService: QualificationsService,
-    private trainerServie: TrainerService,
+    private trainerService: TrainerService,
+    private checkBoxMapper: CheckboxListMapper,
     private dialogRef: MatDialogRef<MassAssignQualificationComponent>
   ) {
-  }
-
-  ngOnInit() {
-    this.trainerServie.getAllTrainers().subscribe(t => {
-      this.allTrainers = t;
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      } else if (event.key === 'Enter') {
+        this.save();
+      }
+    });
+    this.trainerService.getAllTrainers().subscribe(t => {
+      this.allTrainers = this.checkBoxMapper.mapTrainerListToCheckboxList(t);
+      console.log(t);
     });
   }
 
-  save(qualiId: number): void{
-    if (this.selectedTrainers.length === 0){
-      console.log("Keinen Trainer ausgewählt");
-    }else {
-      for (let trainer of this.selectedTrainers) {
-        this.trainerServie.postQualificationOfTrainerById(trainer.id, qualiId)
-      }
+  ngOnInit() {
+  }
 
+  save(): void {
+    if (this.selectedTrainers.length === 0) {
+      console.log("Keinen Trainer ausgewählt");
+    } else {
+      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.selectedTrainers}));
     }
   }
 
-  cancel(): void{
-
+  cancel(): void {
+    this.dialogRef.close(JSON.stringify({method: 'cancel'}));
   }
 
 }

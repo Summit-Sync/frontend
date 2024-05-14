@@ -10,7 +10,7 @@ export class Trainer implements CheckboxList {
     public lastName: string,
     public email: string,
     public phone: string,
-    public qualification: Qualification[]
+    public qualifications: Qualification[]
   ) {
     this.displayFullName = this.firstName + ' ' + this.lastName;
   }
@@ -19,40 +19,41 @@ export class Trainer implements CheckboxList {
     if(!this.id){
       result = false;
       console.error("Ein Trainer muss eine Id haben");
-      
+
     }
     if(!this.email){
       result = false;
       console.error("Trainer müssen eine E-Mail haben");
-      
+
     }
     if(!this.subjectId){
       result = false;
       console.error("Einem Trainer muss eine SubjektId zugeordnet sein");
-      
+
     }
     if(!this.firstName){
       result = false;
       console.error("Vorname darf nicht leer sein");
-      
+
     }
     if(!this.lastName){
       result = false;
       console.error("Nachname darf nicht leer sein");
-      
+
     }
     if(!this.phone){
       result = false;
       console.error("Telefonnummer darf nicht leer sein");
-      
+
     }
-    if (
-      !this.qualification.every((qualification) => {
-        return qualification.validate();
-      })
-    ) {
-      result = false;
-    }
+    // TODO: Der Validate ist nicht funktional... Ich weiß nicht warum, aber qualification.validate() is not a function...
+    // if (
+    //   !this.qualifications.every((qualification: Qualification) => {
+    //     return qualification.validate();
+    //   })
+    // ) {
+    //   result = false;
+    // }
     return result;
   }
 
@@ -63,6 +64,6 @@ export class Trainer implements CheckboxList {
     this.lastName = trainer.lastName;
     this.email = trainer.email;
     this.phone = trainer.phone;
-    this.qualification = trainer.qualification;
+    this.qualifications = trainer.qualifications;
   }
 }

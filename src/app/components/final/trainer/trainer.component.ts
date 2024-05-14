@@ -30,7 +30,6 @@ export class TrainerComponent implements OnInit{
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
   @Input() isDelete: boolean = false;
-  trainers$: Observable<Trainer[]>;
   allQualifications: Qualification[];
   trainerData: Trainer = new Trainer(
     0,

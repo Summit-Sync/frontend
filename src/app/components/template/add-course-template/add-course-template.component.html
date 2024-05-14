@@ -20,7 +20,7 @@
             <input id="number-of-dates" type="text" [(ngModel)]="courseTemplate.numberOfDates">
         </div>
         <div class="duration">
-            <label id="duration">Dauer in Minuten</label>
+            <label for="duration">Dauer in Minuten</label>
             <input id="duration" type="text" [(ngModel)]="courseTemplate.duration">
         </div>
         <div class="number-of-participants">
@@ -48,7 +48,7 @@
         </div>
         <div class="location">
             <label for="location">Ort</label>
-            <app-multi-select-dropdown
+            <app-multi-select-dropdown id="location"
             [allowMultiple]="false"
             [allOptions]="locationList"
             [selectedOptions]="courseLocation"
@@ -60,7 +60,7 @@
         </div>
         <div class="required-qualifications">
             <label for="required-qualifications">Qualifikationen</label>
-            <app-multi-select-dropdown
+            <app-multi-select-dropdown id="required-qualifications"
             [allOptions]="qualificationList"
             [selectedOptions]="requiredQualifications"
             [dropdownHeadline]="'Qualifikationen'"
@@ -70,7 +70,7 @@
             <label for="number-trainers">Anzahl Trainer</label>
             <input id="number-trainers" type="text" [(ngModel)]="courseTemplate.numberTrainers">
         </div>
-        
+
     </div>
     <div class="footer">
         <button class="save-button dialog-button" (click)="save()">Speichern</button>
