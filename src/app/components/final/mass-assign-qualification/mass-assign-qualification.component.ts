@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
 import {Observable} from "rxjs";
@@ -7,51 +7,64 @@ import {QualificationsService} from "../../../services/qualifications/qualificat
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {Trainer} from "../../../models/trainer/Trainer";
 import {MatButton} from "@angular/material/button";
+import {FormsModule} from "@angular/forms";
+import {NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-mass-assign-qualification',
-  standalone: true,
-  imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MultiSelectDropdownComponent,
-    MatDialogActions,
-    MatButton
-  ],
-  templateUrl: './mass-assign-qualification.component.html',
-  styleUrl: './mass-assign-qualification.component.css'
+    selector: 'app-mass-assign-qualification',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatButton,
+        FormsModule,
+        MultiSelectDropdownComponent,
+        NgIf
+    ],
+    templateUrl: './mass-assign-qualification.component.html',
+    styleUrl: './mass-assign-qualification.component.css'
 })
-export class MassAssignQualificationComponent implements OnInit{
-  //allQualifications: Qualification[];
-  @Input() qualification: Qualification = new Qualification(999, 'Keine Qualifikation')
-  allTrainers: Trainer[];
-  selectedTrainers: Trainer[];
-  constructor(
-    private qualificationService: QualificationsService,
-    private trainerServie: TrainerService,
-    private dialogRef: MatDialogRef<MassAssignQualificationComponent>
-  ) {
-  }
+export class MassAssignQualificationComponent implements OnInit {
+    @Output() close = new EventEmitter();
+    //allQualifications: Qualification[];
+    @Input() qualification: Qualification = new Qualification(99999, 'Keine Qualifikation')
+    allTrainers: Trainer[];
+    selectedTrainers: Trainer[];
 
-  ngOnInit() {
-    this.trainerServie.getAllTrainers().subscribe(t => {
-      this.allTrainers = t;
-    });
-  }
+    constructor(
+        private qualificationService: QualificationsService,
+        private trainerService: TrainerService,
+        private dialogRef: MatDialogRef<MassAssignQualificationComponent>
+    ) {
+        this.trainerService.getAllTrainers().subscribe(t => {
+            this.allTrainers = t;
+            console.log(t);
+        });
+    }
 
-  save(qualiId: number): void{
-    if (this.selectedTrainers.length === 0){
-      console.log("Keinen Trainer ausgewählt");
-    }else {
-      for (let trainer of this.selectedTrainers) {
-        this.trainerServie.postQualificationOfTrainerById(trainer.id, qualiId)
-      }
+    ngOnInit() {
+        if (this.qualification.id === 99999){
+            debugger;
+        }
+        this.qualificationService.getQualificationById(this.qualification.id).subscribe({
+            next:() => {
+                console.log("Pew")
+        }
+        })
 
     }
-  }
 
-  cancel(): void{
+    save(qualiId: number): void {
+        if (this.selectedTrainers.length === 0) {
+            console.log("Keinen Trainer ausgewählt");
+        } else {
+            this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.selectedTrainers}));
+        }
+    }
 
-  }
+    cancel(): void {
+        this.dialogRef.close(JSON.stringify({method: 'cancel'}));
+    }
 
 }

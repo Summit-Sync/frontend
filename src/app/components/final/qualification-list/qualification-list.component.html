@@ -5,6 +5,7 @@
     <th>Name</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -22,6 +23,9 @@
       <td>
         <button *ngIf="!isEditableQualification(q.id)" (click)="deleteQualification(q.id)">Löschen</button>
         <button *ngIf="isEditableQualification(q.id)" (click)="cancelEditing()">Abbrechen</button>
+      </td>
+      <td>
+        <button (click)="massAllocationOfQualification(q)">Diese Qualifikation Massenzuweisen</button>
       </td>
     </tr>
   </ng-container>

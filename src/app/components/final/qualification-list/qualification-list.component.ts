@@ -6,6 +6,8 @@ import {Qualification} from "../../../models/qualification/Qualification";
 import {AsyncPipe, CommonModule, NgForOf} from "@angular/common";
 import {AddQualificationComponent} from "../add-qualification/add-qualification.component";
 import { FormsModule } from '@angular/forms';
+import {MassAssignQualificationComponent} from "../mass-assign-qualification/mass-assign-qualification.component";
+import {TrainerService} from "../../../services/trainer/trainer.service";
 
 @Component({
   selector: 'app-qualification-list',
@@ -26,6 +28,7 @@ export class QualificationListComponent implements OnInit{
 
   constructor(
     private qualificationService: QualificationsService,
+    private trainerService: TrainerService,
     private dialog: MatDialog
   ) {
   }
@@ -55,7 +58,7 @@ export class QualificationListComponent implements OnInit{
           }
         });
       }
-    })
+    });
   }
 
   deleteQualification(id: number){
@@ -68,6 +71,33 @@ export class QualificationListComponent implements OnInit{
         console.error("Qualification could not be deleted");
       }
     })
+  }
+
+    massAllocationOfQualification(quali: Qualification){
+    const dialogRef = this.dialog.open(MassAssignQualificationComponent, {
+      disableClose:true,
+      autoFocus:true,
+      height:'50dvh',
+      width:'35dvw',
+    });
+    let instance = dialogRef.componentInstance;
+    instance.qualification = quali;
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method == 'confirm'){
+        console.log("Dialog output: ", obj.data);
+        for (let trainer of obj.data) {
+          this.trainerService.postQualificationOfTrainerById(trainer.id, quali.id).subscribe({
+              next: () => {
+                console.log("Successfully assigned Qualifications to Trainer" + trainer.firstName)
+              },
+              error: () => {
+            console.error("Something went wrong while assigning Qualifications");
+          }
+          });
+        }
+      }
+    });
   }
 
   editQualification(qualification: Qualification){
