@@ -35,9 +35,7 @@ import {CheckboxList} from "../../../models/interfaces/CheckBoxList";
   styleUrl: './mass-assign-qualification.component.css'
 })
 export class MassAssignQualificationComponent implements OnInit {
-  // @Output() close = new EventEmitter();
-  //allQualifications: Qualification[];
-  @Input() qualification: Qualification = new Qualification(99999, 'Keine Qualifikation')
+  @Input() qualification: Qualification;
   allTrainers: CheckboxList[];
   selectedTrainers: Trainer[] = [];
 
