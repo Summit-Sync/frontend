@@ -1,4 +1,4 @@
-<div class="outer" *ngIf="!isEdit else editTemplate">
+<div class="outer" *ngIf="!isEdit; else editTemplate">
   <div class="header">
     <h1 mat-dialog-title>Trainer erstellen</h1>
   </div>
@@ -6,23 +6,49 @@
     <div>
       <mat-dialog-content>
         <div>
-          <input matInput placeholder="Vorname" [(ngModel)]="createTrainerData.firstName">
-          <input matInput placeholder="Nachname" [(ngModel)]="createTrainerData.lastName">
+          <input
+            matInput
+            placeholder="Vorname"
+            [(ngModel)]="createTrainerData.firstName"
+          />
+          <input
+            matInput
+            placeholder="Nachname"
+            [(ngModel)]="createTrainerData.lastName"
+          />
         </div>
         <div>
-          <input matInput placeholder="Nutzername" [(ngModel)]="createTrainerData.username">
-          <input matInput placeholder="Passwort" [(ngModel)]="createTrainerData.password">
+          <input
+            matInput
+            placeholder="Nutzername"
+            [(ngModel)]="createTrainerData.username"
+          />
+          <input
+            matInput
+            placeholder="Passwort"
+            [(ngModel)]="createTrainerData.password"
+          />
         </div>
         <div>
-          <input matInput placeholder="Email" [(ngModel)]="createTrainerData.email">
-          <input matInput placeholder="Telefonnummer" [(ngModel)]="createTrainerData.phone">
+          <input
+            matInput
+            placeholder="Email"
+            [(ngModel)]="createTrainerData.email"
+          />
+          <input
+            matInput
+            placeholder="Telefonnummer"
+            [(ngModel)]="createTrainerData.phone"
+          />
         </div>
       </mat-dialog-content>
     </div>
   </div>
   <div class="buttonDiv">
     <mat-dialog-actions>
-      <button mat-raised-button color="primary" (click)="saveCreate()">Trainer anlegen</button>
+      <button mat-raised-button color="primary" (click)="saveCreate()">
+        Trainer anlegen
+      </button>
       <button mat-raised-button (click)="cancel()">Abbrechen</button>
     </mat-dialog-actions>
   </div>
@@ -37,12 +63,28 @@
       <div>
         <mat-dialog-content>
           <div>
-            <input matInput placeholder="Vorname" [(ngModel)]="trainerData.firstName">
-            <input matInput placeholder="Nachname" [(ngModel)]="trainerData.lastName">
+            <input
+              matInput
+              placeholder="Vorname"
+              [(ngModel)]="trainerData.firstName"
+            />
+            <input
+              matInput
+              placeholder="Nachname"
+              [(ngModel)]="trainerData.lastName"
+            />
           </div>
           <div>
-            <input matInput placeholder="Email" [(ngModel)]="trainerData.email">
-            <input matInput placeholder="Telefonnummer" [(ngModel)]="trainerData.phone">
+            <input
+              matInput
+              placeholder="Email"
+              [(ngModel)]="trainerData.email"
+            />
+            <input
+              matInput
+              placeholder="Telefonnummer"
+              [(ngModel)]="trainerData.phone"
+            />
           </div>
           <!--
           <mat-select placeholder="Qualifikation auswählen">
@@ -50,17 +92,19 @@
           </mat-select>
           -->
           <!-- [selectedOptions]= "trainerData.qualification" -->
-          <app-multi-select-dropdown id="multiSelect"
+          <!-- <app-multi-select-dropdown id="multiSelect"
             [allOptions]="allQualification"
             [selectedOptions]="trainerData.qualification"
             [dropdownHeadline]="'Qualifikationen'"
-            [allowMultiple]="true"></app-multi-select-dropdown>
+            [allowMultiple]="true"></app-multi-select-dropdown> -->
         </mat-dialog-content>
       </div>
     </div>
     <div class="buttonDiv">
       <mat-dialog-actions>
-        <button mat-raised-button color="primary" (click)="saveUpdate()">Trainer updaten</button>
+        <button mat-raised-button color="primary" (click)="saveUpdate()">
+          Trainer updaten
+        </button>
         <button mat-raised-button (click)="cancel()">Abbrechen</button>
       </mat-dialog-actions>
     </div>
