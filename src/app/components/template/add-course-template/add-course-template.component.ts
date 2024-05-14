@@ -13,6 +13,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 import { FormsModule } from '@angular/forms';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
+import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-list-mapper";
 
 @Component({
   selector: 'app-add-course-template',
@@ -39,6 +40,7 @@ export class AddCourseTemplateComponent {
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
     private locationService: LocationService,
+    private checkBoxMapper: CheckboxListMapper,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService
   ) {
@@ -74,11 +76,11 @@ export class AddCourseTemplateComponent {
       console.log(this.selectedCourseTemplate)
       this.courseTemplate =
         this.selectedCourseTemplate.createPostCourseTemplate();
-      console.log(this.courseTemplate);     
+      console.log(this.courseTemplate);
       this.addSelectedLocation();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
-      
+
     } else {
       this.courseTemplate = this.data.template;
     }
@@ -111,34 +113,37 @@ export class AddCourseTemplateComponent {
   }
 
   mapCheckboxListToNumberList(data: CheckboxList[]): number[] {
-    let list: number[] = [];
-    for (let entry of data) {
-      list.push(entry.id);
-    }
-    return list;
+    return this.checkBoxMapper.mapCheckboxListToNumberList(data);
+    // let list: number[] = [];
+    // for (let entry of data) {
+    //   list.push(entry.id);
+    // }
+    // return list;
   }
 
   mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
-    let checkboxList: CheckboxList[] = [];
-    for (let qualification of data) {
-      checkboxList.push({
-        id: qualification.id,
-        displayFullName: qualification.name,
-      });
-    }
-    return checkboxList;
+    return this.checkBoxMapper.mapQualificationListToCheckboxList(data);
+    // let checkboxList: CheckboxList[] = [];
+    // for (let qualification of data) {
+    //   checkboxList.push({
+    //     id: qualification.id,
+    //     displayFullName: qualification.name,
+    //   });
+    // }
+    // return checkboxList;
   }
 
   mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
-    let checkboxList: CheckboxList[] = [];
-    for (let location of data) {
-      checkboxList.push({
-        id: location.locationId,
-        displayFullName: location.title,
-      });
-    }
-    console.log(checkboxList);
-    return checkboxList;
+    return this.checkBoxMapper.mapLocationListToCheckboxList(data);
+    // let checkboxList: CheckboxList[] = [];
+    // for (let location of data) {
+    //   checkboxList.push({
+    //     id: location.locationId,
+    //     displayFullName: location.title,
+    //   });
+    // }
+    // console.log(checkboxList);
+    // return checkboxList;
   }
 
   addPrice() {

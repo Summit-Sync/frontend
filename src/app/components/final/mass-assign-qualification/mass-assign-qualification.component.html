@@ -1,22 +1,22 @@
 <div>
-    <div class="header">
-        <h1 mat-dialog-title [(ngModel)]="qualification">Massenzuweisung von Qualifikation '{{qualification.name}}'</h1>
-    </div>
+   <div class="header">
+        <p mat-dialog-title >Massenzuweisung von Qualifikation '{{this.qualification.name}}' </p>
+   </div>
     <div class="body">
         <div>
             <mat-dialog-content>
-                    <app-multi-select-dropdown id="multiSelect"
-                                               [allOptions]="allTrainers"
+                    <app-multi-select-dropdown [allOptions]="allTrainers"
                                                [selectedOptions]="selectedTrainers"
                                                [dropdownHeadline]="'Trainer'"
-                                               [allowMultiple]="true">
+                                               [allowMultiple]="true"
+                                               >
                     </app-multi-select-dropdown>
             </mat-dialog-content>
         </div>
     </div>
     <div class="buttonDiv">
         <mat-dialog-actions>
-            <button mat-raised-button color="primary" (click)="save(qualification.id)">Trainer zuweisen</button>
+            <button mat-raised-button color="primary" (click)="save()">Trainer zuweisen</button>
             <button mat-raised-button (click)="cancel()">Abbrechen</button>
         </mat-dialog-actions>
     </div>

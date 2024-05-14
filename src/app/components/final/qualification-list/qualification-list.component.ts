@@ -5,9 +5,10 @@ import {Observable, finalize} from "rxjs";
 import {Qualification} from "../../../models/qualification/Qualification";
 import {AsyncPipe, CommonModule, NgForOf} from "@angular/common";
 import {AddQualificationComponent} from "../add-qualification/add-qualification.component";
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {MassAssignQualificationComponent} from "../mass-assign-qualification/mass-assign-qualification.component";
 import {TrainerService} from "../../../services/trainer/trainer.service";
+import {Trainer} from "../../../models/trainer/Trainer";
 
 @Component({
   selector: 'app-qualification-list',
@@ -20,10 +21,9 @@ import {TrainerService} from "../../../services/trainer/trainer.service";
   templateUrl: './qualification-list.component.html',
   styleUrl: './qualification-list.component.css'
 })
-export class QualificationListComponent implements OnInit{
+export class QualificationListComponent implements OnInit {
 
   qualification$: Observable<Qualification[]>;
-
   editableQualification: Qualification | null;
 
   constructor(
@@ -33,21 +33,21 @@ export class QualificationListComponent implements OnInit{
   ) {
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.updateList();
   }
 
 
   createNewQualification() {
     const dialogRef = this.dialog.open(AddQualificationComponent, {
-      disableClose:true,
-      autoFocus:true,
-      height:'50dvh',
-      width:'35dvw',
+      disableClose: true,
+      autoFocus: true,
+      height: '50dvh',
+      width: '35dvw',
     });
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'confirm'){
+      if (obj.method == 'confirm') {
         console.log("Dialog output: ", obj.data);
         this.qualificationService.postQualification(obj.data).subscribe({
           next: () => {
@@ -61,65 +61,66 @@ export class QualificationListComponent implements OnInit{
     });
   }
 
-  deleteQualification(id: number){
+  deleteQualification(id: number) {
     this.qualificationService.deleteQualification(id).subscribe({
-      next: (response)=> {
+      next: (response) => {
         console.log("Qualification was deleted");
         this.updateList();
       },
-      error: (err)=> {
+      error: (err) => {
         console.error("Qualification could not be deleted");
       }
     })
   }
 
-    massAllocationOfQualification(quali: Qualification){
+  massAllocationOfQualification(quali: Qualification) {
+
     const dialogRef = this.dialog.open(MassAssignQualificationComponent, {
-      disableClose:true,
-      autoFocus:true,
-      height:'50dvh',
-      width:'35dvw',
+      disableClose: true,
+      autoFocus: true,
+      height: '50dvh',
+      width: '35dvw',
     });
     let instance = dialogRef.componentInstance;
     instance.qualification = quali;
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'confirm'){
+      if (obj.method == 'confirm') {
         console.log("Dialog output: ", obj.data);
         for (let trainer of obj.data) {
           this.trainerService.postQualificationOfTrainerById(trainer.id, quali.id).subscribe({
-              next: () => {
-                console.log("Successfully assigned Qualifications to Trainer" + trainer.firstName)
-              },
-              error: () => {
-            console.error("Something went wrong while assigning Qualifications");
-          }
+            next: () => {
+              console.log("Successfully assigned Qualifications to Trainer" + trainer.firstName)
+            },
+            error: () => {
+              console.error("Something went wrong while assigning Qualifications");
+            }
           });
         }
       }
     });
   }
 
-  editQualification(qualification: Qualification){
+  editQualification(qualification: Qualification) {
     this.editableQualification = new Qualification(qualification.id, qualification.name);
   }
 
-  updateList(){
-    this.qualification$=this.qualificationService.getAllQualifications();
+  updateList() {
+    this.qualification$ = this.qualificationService.getAllQualifications();
   }
 
-  cancelEditing(){
+  cancelEditing() {
     this.editableQualification = null
   }
 
-  saveQualification(){
-    if(this.editableQualification!.validate()){
+  saveQualification() {
+    if (this.editableQualification!.validate()) {
       this.qualificationService.putQualification(this.editableQualification!.id, this.editableQualification!).subscribe({
-        next: (response)=>{
+        next: (response) => {
           console.log("Qualification has been updated", response)
           this.updateList();
         },
-        error: (err)=> {
+        error: (err) => {
           console.error("Qualification could not be updated", err);
         }
       })
@@ -128,10 +129,10 @@ export class QualificationListComponent implements OnInit{
 
   }
 
-  isEditableQualification(qualificationId:number):boolean{
-    if(this.editableQualification==null){
+  isEditableQualification(qualificationId: number): boolean {
+    if (this.editableQualification == null) {
       return false;
     }
-    return this.editableQualification.id==qualificationId;
+    return this.editableQualification.id == qualificationId;
   }
 }

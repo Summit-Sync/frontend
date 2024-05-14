@@ -70,7 +70,7 @@ export class AddTrainerComponent implements OnInit{
           return;
         }
         this.trainerData.createCopy(t);
-        this.trainerData.qualification = [];
+        this.trainerData.qualifications = [];
         console.log('onInit', this.trainerData);
         return;
       });
@@ -89,7 +89,7 @@ export class AddTrainerComponent implements OnInit{
 
   saveUpdate(): void{
     console.log(this.allQualification);
-    console.log(this.trainerData.qualification);
+    console.log(this.trainerData.qualifications);
     //this.trainerData.qualification[] = this.selectedQualification;
     console.log('updated: ', this.trainerData);
     if (this.trainerData.validate()){
