@@ -58,7 +58,6 @@ export class PostCourse {
       console.error('Ein Kurs muss ein Treffpunkt zugeordnet werden');
       result = false;
     }
-    console.log(this.requiredQualifications.length);
     if (this.requiredQualifications.length < 1) {
       console.error(
         'Einem Kurs muss mindestens eine Qualifikation zugeordnet werden'

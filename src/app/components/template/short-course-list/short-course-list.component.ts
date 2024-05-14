@@ -39,6 +39,7 @@ export class ShortCourseListComponent implements OnInit {
     let instance = courseDialogRef.componentInstance;
     instance.isCreate = true;
     instance.courseTemplate = courseTemplate;
+    courseDialogRef.afterClosed().subscribe(() => this.selfDialogRef.close());
   }
 
   //         qualificationService.getAllQualifications().subscribe(data=>this.qualificationList=data);

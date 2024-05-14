@@ -10,7 +10,7 @@ import { FilterOption } from '../../../models/enums/search';
 import { SearchPipe } from '../../../pipes/search/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CourseViewComponent } from '../course-view/course-view.component';
-import {ToastService} from "../../../services/toast/toast.service";
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-course-list',
@@ -118,7 +118,7 @@ export class CourseListComponent implements OnInit {
       if (obj.method == 'accept') {
         console.log('Dialog output:', obj.data);
         //TODO: Muss in das next() event des Update calls
-        this.toast.showSuccessToast("Kurs wurde erfolgreich aktualisiert");
+        this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
         // Validate Input
         //
       }
@@ -139,6 +139,7 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
+      this.updateList();
       if (obj.method == 'accept') {
         console.log('Dialog output:', obj.data);
         // Validate Input

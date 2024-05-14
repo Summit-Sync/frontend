@@ -115,6 +115,7 @@ export class CourseComponent implements OnInit {
       this.courseData.numberWaitlist
     );
     this.mapDateTime();
+    console.log(this.courseData);
   }
 
   mapSelectedListsToCheckBoxLists() {
