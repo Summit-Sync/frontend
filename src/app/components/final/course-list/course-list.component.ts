@@ -10,6 +10,7 @@ import { FilterOption } from '../../../models/enums/search';
 import { SearchPipe } from '../../../pipes/search/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CourseViewComponent } from '../course-view/course-view.component';
+import {ToastService} from "../../../services/toast/toast.service";
 
 @Component({
   selector: 'app-course-list',
@@ -42,6 +43,7 @@ export class CourseListComponent implements OnInit {
   constructor(
     public courseService: CourseService,
     private dialog: MatDialog,
+    private toast: ToastService,
     private elementRef: ElementRef
   ) {}
 
@@ -101,6 +103,7 @@ export class CourseListComponent implements OnInit {
   }
 
   showEditCourse(course: Course) {
+    //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
     this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseComponent, {
       disableClose: false,
@@ -113,6 +116,8 @@ export class CourseListComponent implements OnInit {
       const obj = JSON.parse(result);
       if (obj.method == 'accept') {
         console.log('Dialog output:', obj.data);
+        //TODO: Muss in das next() event des Update calls
+        this.toast.showSuccessToast("Kurs wurde erfolgreich aktualisiert");
         // Validate Input
         //
       }

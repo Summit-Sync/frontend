@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {MassAssignQualificationComponent} from "../mass-assign-qualification/mass-assign-qualification.component";
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {Trainer} from "../../../models/trainer/Trainer";
+import {ToastService} from "../../../services/toast/toast.service";
 
 @Component({
   selector: 'app-qualification-list',
@@ -29,6 +30,7 @@ export class QualificationListComponent implements OnInit {
   constructor(
     private qualificationService: QualificationsService,
     private trainerService: TrainerService,
+    private toast: ToastService,
     private dialog: MatDialog
   ) {
   }
@@ -52,9 +54,11 @@ export class QualificationListComponent implements OnInit {
         this.qualificationService.postQualification(obj.data).subscribe({
           next: () => {
             this.qualification$ = this.qualificationService.getAllQualifications();
+            this.toast.showSuccessToast("Qualifikation erfolgreich erstellt");
           },
-          error: () => {
-            console.error("Something went wrong while Posting a Qualification");
+          error: (err) => {
+            this.toast.showErrorToast("Erstellung der Qualifikation fehlgeschlagen \n" + err);
+            // console.error("Something went wrong while Posting a Qualification");
           }
         });
       }
@@ -64,11 +68,13 @@ export class QualificationListComponent implements OnInit {
   deleteQualification(id: number) {
     this.qualificationService.deleteQualification(id).subscribe({
       next: (response) => {
-        console.log("Qualification was deleted");
+        // console.log("Qualification was deleted");
+        this.toast.showSuccessToast("Qualifikation erfolgreich gelöscht");
         this.updateList();
       },
       error: (err) => {
-        console.error("Qualification could not be deleted");
+        this.toast.showErrorToast("Löschen der Qualifikation fehlgeschlagen \n" + err);
+        // console.error("Qualification could not be deleted");
       }
     })
   }
@@ -90,10 +96,12 @@ export class QualificationListComponent implements OnInit {
         for (let trainer of obj.data) {
           this.trainerService.postQualificationOfTrainerById(trainer.id, quali.id).subscribe({
             next: () => {
-              console.log("Successfully assigned Qualifications to Trainer" + trainer.firstName)
+              this.toast.showSuccessToast("Massenpflege erfolgreich");
+              // console.log("Successfully assigned Qualifications to Trainer" + trainer.firstName)
             },
             error: () => {
-              console.error("Something went wrong while assigning Qualifications");
+              this.toast.showErrorToast("Massenpflege fehlgeschlagen");
+              // console.error("Something went wrong while assigning Qualifications");
             }
           });
         }
@@ -117,11 +125,13 @@ export class QualificationListComponent implements OnInit {
     if (this.editableQualification!.validate()) {
       this.qualificationService.putQualification(this.editableQualification!.id, this.editableQualification!).subscribe({
         next: (response) => {
-          console.log("Qualification has been updated", response)
+          this.toast.showSuccessToast("Qualifikation wurde aktualisiert");
+          // console.log("Qualification has been updated", response)
           this.updateList();
         },
         error: (err) => {
-          console.error("Qualification could not be updated", err);
+          this.toast.showErrorToast("Aktualisierung fehlgeschlagen");
+          // console.error("Qualification could not be updated", err);
         }
       })
       this.editableQualification = null;

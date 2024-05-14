@@ -1,0 +1,42 @@
+.wrapper {
+  top: 10dvh;
+  right: 20px;
+}
+
+.notification {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /*background: #5bc0de;*/
+  width: 300px; /* Passe die Breite an deine Anforderungen an */
+}
+
+.is-info {
+  background-color: #5bc0de;
+  color: #000000;
+}
+
+.is-danger {
+  background-color: #d9534f;
+  color: #000000;
+}
+
+.is-success {
+  background-color: #5cb85c;
+  color: #000000;
+}
+
+.delete {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #ffffff;
+  padding: 0;
+}
