@@ -18,6 +18,9 @@ import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { CategoryPrice } from '../../../models/price/CategoryPrice';
 import { LocationService } from '../../../services/location/location.service';
 import { Location } from '../../../models/location/Location';
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
+import { CheckboxListMapperService } from '../../../services/checkboxListMapper/checkbox-list-mapper.service';
+import { PostCourse } from '../../../models/course/PostCourse';
 
 @Component({
   selector: 'app-course',
@@ -36,10 +39,17 @@ export class CourseComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isCreate: boolean = false;
 
+  allCheckboxListQualifications: CheckboxList[] = [];
+  allCheckboxListTrainers: CheckboxList[] = [];
+  allCheckboxListLocations: CheckboxList[] = [];
+  selectedQualifications: CheckboxList[] = [];
+  selectedTrainers: CheckboxList[] = [];
+  selectedLocations: CheckboxList[] = [];
+
+  allLocations: Location[];
   allQualifications: Qualification[];
   allTrainers: Trainer[];
-  allLocations: Location[];
-  selectedLocation: Location[] = [];
+
   courseTemplate: CourseTemplate | undefined;
   courseData: Course = new Course(
     0,
@@ -71,6 +81,7 @@ export class CourseComponent implements OnInit {
     public qualifcationsService: QualificationsService,
     public trainerService: TrainerService,
     public locationService: LocationService,
+    public checkBoxListMapper: CheckboxListMapperService,
     private dateTimeMapper: DateTimeMapperService,
     private dialogRef: MatDialogRef<CourseComponent>
   ) {}
@@ -85,7 +96,6 @@ export class CourseComponent implements OnInit {
         this.courseData.createCopy(c);
         // this.fillDatesList();
       });
-      this.selectedLocation.push(this.courseData.location);
     } else {
       if (this.courseTemplate) {
         this.courseData.createCourseFromTemplate(this.courseTemplate);
@@ -93,15 +103,9 @@ export class CourseComponent implements OnInit {
         console.error('Template missing!');
       }
     }
-    this.qualifcationsService.getAllQualifications().subscribe((q) => {
-      this.allQualifications = q;
-    });
-    this.trainerService.getAllTrainers().subscribe((t) => {
-      this.allTrainers = t;
-    });
-    this.locationService.getAllLocations().subscribe((l) => {
-      this.allLocations = l;
-    });
+    this.mapAllListsToCheckboxLists();
+    this.mapSelectedListsToCheckBoxLists();
+
     this.courseData.fillParticipantsList(
       this.courseData.participants,
       this.courseData.numberParticipants
@@ -111,7 +115,39 @@ export class CourseComponent implements OnInit {
       this.courseData.numberWaitlist
     );
     this.mapDateTime();
-    // console.log('courseData: ', this.courseData);
+  }
+
+  mapSelectedListsToCheckBoxLists() {
+    this.selectedLocations =
+      this.checkBoxListMapper.mapSingleLocationToCheckboxList(
+        this.courseData.location
+      );
+    this.selectedTrainers =
+      this.checkBoxListMapper.mapTrainerListToCheckboxList(
+        this.courseData.trainers
+      );
+    this.selectedQualifications =
+      this.checkBoxListMapper.mapQualificationListToCheckboxList(
+        this.courseData.requiredQualifications
+      );
+  }
+
+  mapAllListsToCheckboxLists() {
+    this.qualifcationsService.getAllQualifications().subscribe((q) => {
+      this.allCheckboxListQualifications =
+        this.checkBoxListMapper.mapQualificationListToCheckboxList(q);
+      this.allQualifications = q;
+    });
+    this.trainerService.getAllTrainers().subscribe((t) => {
+      this.allCheckboxListTrainers =
+        this.checkBoxListMapper.mapTrainerListToCheckboxList(t);
+      this.allTrainers = t;
+    });
+    this.locationService.getAllLocations().subscribe((l) => {
+      this.allCheckboxListLocations =
+        this.checkBoxListMapper.mapLocationListToCheckboxList(l);
+      this.allLocations = l;
+    });
   }
 
   mapDateTime() {
@@ -181,7 +217,7 @@ export class CourseComponent implements OnInit {
   }
 
   addPrice() {
-    this.courseData.prices.push(new CategoryPrice(0,'', 0));
+    this.courseData.prices.push(new CategoryPrice(0, '', 0));
   }
 
   deletePrice(index: number) {
@@ -212,39 +248,53 @@ export class CourseComponent implements OnInit {
     this.courseData.requiredQualifications = tqList;
   }
 
-  addQualification(clickedQualification: Qualification) {
-    this.courseData.requiredQualifications.push(clickedQualification);
-  }
-
-  onQualificationCheckBoxClick(event: Event, index: number) {
-    const checkbox = event.target as HTMLInputElement;
-    const clickedQualification = this.allQualifications[index];
-    checkbox.checked
-      ? this.addQualification(clickedQualification)
-      : this.deleteQualification(clickedQualification);
-  }
-
   save(): void {
-    if (this.courseData.validate()) {
-      this.courseData.deleteEmptyParticipants(this.courseData.participants);
-      this.courseData.deleteEmptyParticipants(this.courseData.waitList);
-      this.courseData.location = this.selectedLocation[0];
-      if (this.isCreate) {
-        this.saveCreated();
-      } else {
-        this.saveUpdate();
-      }
+    this.courseData.location = this.allLocations.find((location) => {
+      return location.locationId == this.selectedLocations[0].id;
+    })!;
+    this.courseData.requiredQualifications = [];
+    this.selectedQualifications.forEach((sQual) => {
+      this.courseData.requiredQualifications.push(
+        this.allQualifications.find((qual) => {
+          return sQual.id == qual.id;
+        })!
+      );
+    })!;
+    this.selectedTrainers.forEach((sTrain) => {
+      this.courseData.trainers.push(
+        this.allTrainers.find((train) => {
+          return sTrain.id == train.id;
+        })!
+      );
+    })!;
+
+    console.log(this.courseData.requiredQualifications);
+
+    if (this.isCreate) {
+      this.saveCreated();
+    } else {
+      this.saveUpdate();
     }
   }
 
   saveUpdate(): void {
-    console.log('save Updated Version: ', this.courseData);
-    this.dialogRef.close(JSON.stringify({ method: 'save' }));
+    this.dialogRef.close(JSON.stringify({ method: 'update' }));
   }
 
   saveCreated(): void {
-    console.log('save Created Course: ', this.courseData);
-    this.dialogRef.close(JSON.stringify({ method: 'save' }));
+    let postCourse: PostCourse = this.courseData.CourseToPostCourse();
+    if (postCourse.validate()) {
+      this.courseService.postCourse(postCourse).subscribe({
+        next: (response) => {
+          console.log('Course has been created');
+          this.courseData.deleteEmptyParticipants(this.courseData.participants);
+          this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+        },
+        error: (error) => console.error('Course could not be created'),
+        complete: () =>
+          this.dialogRef.close(JSON.stringify({ method: 'save' })),
+      });
+    }
   }
 
   cancel(): void {
@@ -279,5 +329,12 @@ export class CourseComponent implements OnInit {
 
   deleteParticipant(index: number, participants: Participant[]): void {
     participants.splice(index, 1);
+  }
+
+  cancelCourse() {
+    this.courseService.putCourseCancel(
+      this.courseData.id,
+      !this.courseData.canceled
+    );
   }
 }

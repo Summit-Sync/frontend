@@ -215,8 +215,8 @@
     <div>
       <p>Ort:</p>
       <app-multi-select-dropdown
-        [allOptions]="allLocations"
-        [selectedOptions]="selectedLocation"
+        [allOptions]="allCheckboxListLocations"
+        [selectedOptions]="selectedLocations"
         [dropdownHeadline]="'Location'"
         [allowMultiple]="false"
       >
@@ -229,19 +229,19 @@
     <div>
       <p>Trainer Qualifikation:</p>
       <app-multi-select-dropdown
-        [allOptions]="allQualifications"
-        [selectedOptions]="courseData.requiredQualifications"
+        [allOptions]="allCheckboxListQualifications"
+        [selectedOptions]="selectedQualifications"
         [dropdownHeadline]="'Qualifikationen'"
         [allowMultiple]="true"
       >
       </app-multi-select-dropdown>
     </div>
-    <div>
+    <div *ngIf="!isCreate">
       <p>Trainer:</p>
 
       <app-multi-select-dropdown
-        [allOptions]="allTrainers"
-        [selectedOptions]="courseData.trainers"
+        [allOptions]="allCheckboxListTrainers"
+        [selectedOptions]="selectedTrainers"
         [dropdownHeadline]="'Trainer'"
         [allowMultiple]="true"
       >
@@ -256,5 +256,6 @@
   <div class="button-div">
     <button (click)="save()">Speichern</button>
     <button (click)="cancel()">Abbrechen</button>
+    <button *ngIf="!isCreate" (click)="cancelCourse()">Kurs absagen</button>
   </div>
 </div>
