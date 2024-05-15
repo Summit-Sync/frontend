@@ -26,6 +26,7 @@ export class CourseViewComponent {
   ngOnInit(): void {
     this.courseService.currentCourse.subscribe((currenCourse) => {
       this.viewData = currenCourse!;
+      console.log(currenCourse, currenCourse instanceof Course);
     });
     this.viewData.fillParticipantsList(
       this.viewData.participants,
@@ -42,6 +43,7 @@ export class CourseViewComponent {
     this.viewData.deleteEmptyParticipants(this.viewData.waitList);
     console.log('cancel: ', this.viewData);
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
+    console.log('cancel: ', this.viewData);
   }
 
   deleteCourse(): void {
