@@ -45,7 +45,6 @@ export class CourseViewComponent {
   }
 
   deleteCourse(): void {
-    this.dialogRef.close(JSON.stringify({ method: 'delete' }));
-    console.log('delete');
+    this.courseService.deleteCourse(this.viewData.id);
   }
 }
