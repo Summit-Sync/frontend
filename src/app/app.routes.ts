@@ -27,6 +27,5 @@ export const routes: Routes = [
   //Location
   { path: 'standort', component: LocationListComponent, canActivate: []},
   // Root Routen
-  { path: '', component: AppComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
   { path: '**', redirectTo:'', canActivate:[]},
 ];
