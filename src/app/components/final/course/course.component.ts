@@ -21,6 +21,7 @@ import { Location } from '../../../models/location/Location';
 import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 import { CheckboxListMapperService } from '../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 import { PostCourse } from '../../../models/course/PostCourse';
+import { UpdateCourse } from '../../../models/course/UpdateCourse';
 
 @Component({
   selector: 'app-course',
@@ -279,7 +280,23 @@ export class CourseComponent implements OnInit {
   }
 
   saveUpdate(): void {
-    this.dialogRef.close(JSON.stringify({ method: 'update' }));
+    let updateCourse: UpdateCourse = this.courseData.CourseToUpdateCourse();
+    if (updateCourse.validate()) {
+      this.courseService
+        .putCourseDetail(this.courseData.id, updateCourse)
+        .subscribe({
+          next: (response) => {
+            console.log('Course has been updated', this.courseData);
+            this.courseData.deleteEmptyParticipants(
+              this.courseData.participants
+            );
+            this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+          },
+          error: (error) => console.error('Course could not be updated'),
+          complete: () =>
+            this.dialogRef.close(JSON.stringify({ method: 'save' })),
+        });
+    }
   }
 
   saveCreated(): void {
@@ -333,9 +350,8 @@ export class CourseComponent implements OnInit {
   }
 
   cancelCourse() {
-    this.courseService.putCourseCancel(
-      this.courseData.id,
-      !this.courseData.canceled
-    );
+    this.courseService
+      .putCourseCancel(this.courseData.id, !this.courseData.canceled)
+      .subscribe();
   }
 }
