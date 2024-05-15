@@ -91,12 +91,12 @@
             <mat-option *ngFor="let q of allQualification" value="{{q.id}}">{{q.name}}</mat-option>
           </mat-select>
           -->
-          <!-- [selectedOptions]= "trainerData.qualification" -->
-          <!-- <app-multi-select-dropdown id="multiSelect"
-            [allOptions]="allQualification"
-            [selectedOptions]="trainerData.qualification"
-            [dropdownHeadline]="'Qualifikationen'"
-            [allowMultiple]="true"></app-multi-select-dropdown> -->
+          <app-multi-select-dropdown id="multiSelect"
+                                               [allOptions]="allQualification"
+                                               [selectedOptions]="trainerData.qualifications"
+                                               [dropdownHeadline]="'Qualifikationen'"
+                                               [allowMultiple]="true">
+          </app-multi-select-dropdown>
         </mat-dialog-content>
       </div>
     </div>
