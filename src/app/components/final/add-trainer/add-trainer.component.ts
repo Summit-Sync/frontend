@@ -11,8 +11,8 @@ import {QualificationsService} from "../../../services/qualifications/qualificat
 import {PostTrainer} from "../../../models/trainer/PostTrainer";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
-import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
-import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-list-mapper";
+import {CheckboxList} from '../../../models/interfaces/CheckBoxList';
+import {CheckboxListMapperService} from "../../../services/checkBoxListMapper/checkbox-list-mapper.service";
 
 @Component({
   selector: 'app-add-trainer',
@@ -34,10 +34,12 @@ import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-
   templateUrl: './add-trainer.component.html',
   styleUrl: './add-trainer.component.css'
 })
-export class AddTrainerComponent implements OnInit{
+export class AddTrainerComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
+  @Input() trainerData: Trainer;
   allQualification: CheckboxList[];
+  selectedQualification: CheckboxList[] = [];
   createTrainerData: PostTrainer = new PostTrainer(
     '',
     '',
@@ -46,61 +48,48 @@ export class AddTrainerComponent implements OnInit{
     '',
     ''
   )
-  trainerData: Trainer = new Trainer(
-    0,
-    '',
-    '',
-    '',
-    '',
-    '',
-    []
-  )
+
 
   constructor(
     private dialogRef: MatDialogRef<AddTrainerComponent>,
     private trainerService: TrainerService,
     private qualificationService: QualificationsService,
-    private checkBoxMapper: CheckboxListMapper
+    private checkBoxMapper: CheckboxListMapperService
   ) {
-    this.qualificationService.getAllQualifications().subscribe(q => {
-      this.allQualification = this.checkBoxMapper.mapQualificationListToCheckboxList(q);
-    });
+
+
   }
 
   ngOnInit(): void {
-    if (this.isEdit){
-      this.trainerService.currentTrainer.subscribe(t => {
-        if (!t){
-          console.error("No trainer to show");
-          return;
-        }
-        this.trainerData.createCopy(t);
-        console.log('onInit', this.trainerData);
-        return;
+    if (this.isEdit) {
+      this.qualificationService.getAllQualifications().subscribe(q => {
+        this.allQualification = this.checkBoxMapper.mapQualificationListToCheckboxList(q);
       });
+      this.selectedQualification = this.checkBoxMapper.mapQualificationListToCheckboxList(this.trainerData.qualifications);
     }
 
   }
 
-  saveCreate(): void{
+  saveCreate(): void {
     console.log("Created: ", this.createTrainerData);
-    if (this.createTrainerData.validate()){
+    if (this.createTrainerData.validate()) {
       this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.createTrainerData}));
     }
   }
 
-  saveUpdate(): void{
+  saveUpdate(): void {
     console.log(this.allQualification);
     console.log(this.trainerData.qualifications);
     //this.trainerData.qualification[] = this.selectedQualification;
     console.log('updated: ', this.trainerData);
-    if (this.trainerData.validate()){
-      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.trainerData}))
-      //this.trainerService.putTrainer(this.trainerData.id, this.trainerData);
+    this.trainerData.qualifications = this.checkBoxMapper.mapCheckboxListToQualificationList(this.selectedQualification);
+    this.trainerData = new Trainer(this.trainerData.id, this.trainerData.subjectId, this.trainerData.firstName, this.trainerData.lastName, this.trainerData.email, this.trainerData.phone, this.trainerData.qualifications)
+    if (this.trainerData.validate()) {
+      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.trainerData}));
     }
   }
 
-  cancel(): void{
+  cancel(): void {
     this.dialogRef.close({method: 'cancel'})
   }
 }

@@ -13,7 +13,7 @@ import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropd
 import { FormsModule } from '@angular/forms';
 import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
 import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
-import { CheckboxListMapperService } from '../../../services/checkboxListMapper/checkbox-list-mapper.service';
+import { CheckboxListMapperService } from '../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 
 @Component({
   selector: 'app-add-course-template',

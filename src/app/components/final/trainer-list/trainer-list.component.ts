@@ -107,10 +107,15 @@ export class TrainerListComponent {
         disableClose: false,
         autoFocus: true,
         height: '90dvh',
-        width: '40dvw'
+        width: '40dvw',
+        //data: {
+        //  trainerData: new Trainer(trainer.id, trainer.subjectId, trainer.firstName, trainer.lastName, trainer.email, trainer.phone, trainer.qualifications),
+        //  isEdit: this.showingEdit
+        //}
       });
       let instance = dialogRef.componentInstance;
       instance.isEdit = this.showingEdit;
+      instance.trainerData = trainer;
 
       dialogRef.afterClosed().subscribe((result) => {
         const obj = JSON.parse(result);

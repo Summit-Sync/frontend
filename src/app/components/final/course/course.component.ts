@@ -19,7 +19,7 @@ import { CategoryPrice } from '../../../models/price/CategoryPrice';
 import { LocationService } from '../../../services/location/location.service';
 import { Location } from '../../../models/location/Location';
 import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
-import { CheckboxListMapperService } from '../../../services/checkboxListMapper/checkbox-list-mapper.service';
+import { CheckboxListMapperService } from '../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 import { PostCourse } from '../../../models/course/PostCourse';
 
 @Component({

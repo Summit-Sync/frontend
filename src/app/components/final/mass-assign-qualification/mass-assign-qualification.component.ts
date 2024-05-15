@@ -7,7 +7,6 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
-import {Observable} from "rxjs";
 import {Qualification} from "../../../models/qualification/Qualification";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
 import {TrainerService} from "../../../services/trainer/trainer.service";
@@ -15,8 +14,8 @@ import {Trainer} from "../../../models/trainer/Trainer";
 import {MatButton} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import {CheckboxListMapper} from "../../../services/CheckBoxListMapper/checkbox-list-mapper";
 import {CheckboxList} from "../../../models/interfaces/CheckBoxList";
+import {CheckboxListMapperService} from "../../../services/checkBoxListMapper/checkbox-list-mapper.service";
 
 @Component({
   selector: 'app-mass-assign-qualification',
@@ -42,7 +41,7 @@ export class MassAssignQualificationComponent implements OnInit {
   constructor(
     private qualificationService: QualificationsService,
     private trainerService: TrainerService,
-    private checkBoxMapper: CheckboxListMapper,
+    private checkBoxMapper: CheckboxListMapperService,
     private dialogRef: MatDialogRef<MassAssignQualificationComponent>
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
