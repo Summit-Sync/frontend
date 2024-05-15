@@ -1,18 +1,32 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 // import { UserService } from '../user.service';
-import { from, switchMap } from 'rxjs';
+import { EMPTY, from, map, switchMap } from 'rxjs';
+import { LoginService } from './login/login.service';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  let token: string =
-    'eyJhbGciOiJFUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKRHlvU2NsRWI4UE9ydkp4UlFYYzRoTVNmT3YzUUFYbGRYSG1wVEJxNXlzIn0.eyJleHAiOjE3MTU4MDU4OTAsImlhdCI6MTcxNTc2OTg5MCwianRpIjoiOTE5OWUyNjgtOTRkYi00ZDNmLWE1NDctMWY3ZDAzYzlmMWU3IiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5zdW1taXRzeW5jLm1lc2NodGVyLm1lL3JlYWxtcy9zdW1taXQtc3luYyIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50Iiwic3VtbWl0c3luYyIsImFjY291bnQiXSwic3ViIjoiNzI1NGRkNWUtZGM4MC00M2FlLWE3YjEtZTFiNTg5MGUwNDg0IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic3VtbWl0LXN5bmMtYmZmIiwic2Vzc2lvbl9zdGF0ZSI6IjBiY2QyYTNkLTI2Y2YtNDAxMy04Y2U3LWYzYTFhMmE3MmI0ZiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cHM6Ly9hcGkuc3MiLCJodHRwOi8vMTI3LjAuMC4xOjQyMDAiLCJodHRwOi8vbG9jYWxob3N0OjQyMDAiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtc3VtbWl0LXN5bmMiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwibWFuYWdlLXVzZXJzIiwidmlldy11c2VycyIsInF1ZXJ5LWdyb3VwcyIsInF1ZXJ5LXVzZXJzIl19LCJzdW1taXRzeW5jIjp7InJvbGVzIjpbImFkbWluIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwic2lkIjoiMGJjZDJhM2QtMjZjZi00MDEzLThjZTctZjNhMWEyYTcyYjRmIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiVGVzdCBBZG1pbiIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3RfYWRtaW4iLCJnaXZlbl9uYW1lIjoiVGVzdCIsImZhbWlseV9uYW1lIjoiQWRtaW4ifQ.6WbXAe9B5forCN9pYE_VOYp6PNuIGdqcL5Ir3e24h8lf76Kq41IBbaXvvtMTVBV3tYnKYI4T1NLl5FK2SFpwYQ';
+  const url = new URL(req.url);
+  console.log(url);
+  if (url.pathname.startsWith("/auth")) {
+    return next(req);
+  }
 
-  //   const userService = inject(UserService);
+  const loginService = inject(LoginService);
+  var token = loginService.getAccessToken;
+  if (token !== null) {
+    console.log('token not null, injecting');
+    return next(addHeader(req, token.accessToken));
+  }
 
-  console.log('injecting token');
-  return next(
-    req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token}`),
+  return loginService.doLogin().pipe(
+    switchMap(token => {
+      return next(addHeader(req, token.accessToken));
     })
-  );
+  )
 };
+
+const addHeader = (req: HttpRequest<unknown>, token: string) => {
+  return req.clone({
+    headers: req.headers.set('Authorization', `Bearer ${token}`),
+  })
+}
