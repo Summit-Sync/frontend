@@ -1,16 +1,21 @@
+import { Location } from '../location/Location';
 import { Qualification } from '../qualification/Qualification';
+import { PostGroupTemplate } from './PostGroupTemplate';
 
 export class GroupTemplate {
   constructor(
     public id: number,
-    public groupTitle: string,
-    public groupAbbreviation: string,
+    public acronym: string,
+    public title: string,
     public description: string,
-    public datesCount: number,
+    public numberOfDates: number,
     public duration: number,
-    public pricePerTrainerPerHour: number,
-    public trainerKey: number,
-    public trainerQualifications: Qualification[]
+    public location: Location,
+    public meetingPoint: string,
+    public trainerPricePerHours: number,
+    public pricePerParticipant: number,
+    public requiredQualificationList: Qualification[],
+    public participantsPerTrainer: number
   ) {}
 
   validate(): boolean {
@@ -20,12 +25,12 @@ export class GroupTemplate {
       console.error("Id darf nicht leer sein");
       
     }
-    if(!this.groupTitle){
+    if(!this.title){
       result = false;
       console.error("Titel darf nicht leer sein");
       
     }
-    if(!this.groupAbbreviation){
+    if(!this.acronym){
       result = false;
       console.error("Abkürzung darf nicht leer sein");
       
@@ -35,7 +40,7 @@ export class GroupTemplate {
       console.error("Beschreibung darf nicht leer sein");
       
     }
-    if(this.datesCount < 1){
+    if(this.numberOfDates < 1){
       result = false;
       console.error("Terminanzahl darf nicht leer sein");
       
@@ -45,29 +50,43 @@ export class GroupTemplate {
       console.error("Dauer darf nicht leer sein");
       
     }
-    if(this.pricePerTrainerPerHour < 1){
+    if(!this.location.validate()){
+      result = false;
+    }
+    if(!this.meetingPoint){
+      result = false;
+      console.error("Es muss einen Treffpunkt geben");
+      
+    }
+    if(this.trainerPricePerHours < 1){
       result = false;
       console.error("Trainerpreis darf nicht leer sein");
       
     }
-    if(this.trainerKey < 1){
+    if(this.pricePerParticipant < 1){
+      result = false;
+      console.error('Teilnehmerpreis darf nicht leer sein');
+      
+    }
+    if(this.participantsPerTrainer < 1){
       result = false;
       console.error("Trainerschlüssel darf nicht leer sein");
       
     }
-    if (this.trainerQualifications.length === 0) {
+    if (this.requiredQualificationList.length === 0) {
       result = false;
       console.error("Qualifikationsliste darf nicht leer sein");
       
     }
-    if (
-      !this.trainerQualifications.every((tq) => {
-        return tq.validate();
-      })
-    ) {
+    if(!this.requiredQualificationList.every(q => q.validate())){
       result = false;
     }
 
     return result;
+  }
+
+  createPostGroupTemplate(): PostGroupTemplate{
+    let qualificationList: number[]=[];
+    return new PostGroupTemplate(this.acronym, this.title, this.description, this.numberOfDates, this.duration, this.location.locationId, this.meetingPoint, this.trainerPricePerHours, this.pricePerParticipant, qualificationList, this.participantsPerTrainer);
   }
 }

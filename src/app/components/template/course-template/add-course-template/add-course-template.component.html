@@ -20,15 +20,15 @@
             <input id="number-of-dates" type="text" [(ngModel)]="courseTemplate.numberOfDates">
         </div>
         <div class="duration">
-            <label for="duration">Dauer in Minuten</label>
+            <label for="duration">Dauer pro Termin (Minuten)</label>
             <input id="duration" type="text" [(ngModel)]="courseTemplate.duration">
         </div>
         <div class="number-of-participants">
-            <label for="number-of-participants">Teilnehmeranzahl</label>
+            <label for="number-of-participants">Max. Teilnehmeranzahl</label>
             <input id="number-of-participants" type="text" [(ngModel)]="courseTemplate.numberParticipants">
         </div>
         <div class="number-waitlist">
-            <label for="number-waitlist">Wartelistenlänge</label>
+            <label for="number-waitlist">Max. Wartelistenlänge</label>
             <input id="number-waitlist" type="text" [(ngModel)]="courseTemplate.numberWaitlist">
         </div>
         <div class="price">
@@ -67,7 +67,7 @@
             [allowMultiple]="true"></app-multi-select-dropdown>
         </div>
         <div class="number-trainers">
-            <label for="number-trainers">Anzahl Trainer</label>
+            <label for="number-trainers">Benötigte Trainer</label>
             <input id="number-trainers" type="text" [(ngModel)]="courseTemplate.numberTrainers">
         </div>
 

@@ -1,19 +1,19 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
-import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
-import { CategoryPrice } from '../../../models/price/CategoryPrice';
-import { Qualification } from '../../../models/qualification/Qualification';
-import { LocationService } from '../../../services/location/location.service';
-import { CategoryPriceService } from '../../../services/price/price.service';
-import { QualificationsService } from '../../../services/qualifications/qualifications.service';
-import { Location } from '../../../models/location/Location';
+import { PostCourseTemplate } from '../../../../models/courseTemplate/PostCourseTemplate';
+import { CheckboxList } from '../../../../models/interfaces/CheckBoxList';
+import { CategoryPrice } from '../../../../models/price/CategoryPrice';
+import { Qualification } from '../../../../models/qualification/Qualification';
+import { LocationService } from '../../../../services/location/location.service';
+import { CategoryPriceService } from '../../../../services/price/price.service';
+import { QualificationsService } from '../../../../services/qualifications/qualifications.service';
+import { Location } from '../../../../models/location/Location';
 import { CommonModule } from '@angular/common';
-import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
+import { MultiSelectDropdownComponent } from '../../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 import { FormsModule } from '@angular/forms';
-import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
-import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
-import { CheckboxListMapperService } from '../../../services/checkBoxListMapper/checkbox-list-mapper.service';
+import { CourseTemplate } from '../../../../models/courseTemplate/CourseTemplate';
+import { PostCategoryPrice } from '../../../../models/price/PostCategoryPrice';
+import { CheckboxListMapperService } from '../../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 
 @Component({
   selector: 'app-add-course-template',
@@ -40,7 +40,7 @@ export class AddCourseTemplateComponent {
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
     private locationService: LocationService,
-    private checkboxListMapper: CheckboxListMapperService,
+    private checkBoxMapper: CheckboxListMapper,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService
   ) {
@@ -54,16 +54,14 @@ export class AddCourseTemplateComponent {
     locationService
       .getAllLocations()
       .subscribe(
-        (data) =>
-          (this.locationList =
-            this.checkboxListMapper.mapLocationListToCheckboxList(data))
+        (data) => (this.locationList = this.mapLocationListToCheckboxList(data))
       );
     qualificationService
       .getAllQualifications()
       .subscribe(
         (data) =>
           (this.qualificationList =
-            this.checkboxListMapper.mapQualificationListToCheckboxList(data))
+            this.mapQualificationListToCheckboxList(data))
       );
   }
 
@@ -75,24 +73,24 @@ export class AddCourseTemplateComponent {
       priceList.push(new PostCategoryPrice('', 0));
     }
     if (this.isEdit) {
-      console.log(this.selectedCourseTemplate);
+      console.log(this.selectedCourseTemplate)
       this.courseTemplate =
         this.selectedCourseTemplate.createPostCourseTemplate();
       console.log(this.courseTemplate);
       this.addSelectedLocation();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
+
     } else {
       this.courseTemplate = this.data.template;
     }
   }
 
   save() {
-    let qualificationIds: number[] =
-      this.checkboxListMapper.mapCheckboxListToNumberList(
-        this.requiredQualifications
-      );
-    let location: number = this.checkboxListMapper.mapCheckboxListToNumberList(
+    let qualificationIds: number[] = this.mapCheckboxListToNumberList(
+      this.requiredQualifications
+    );
+    let location: number = this.mapCheckboxListToNumberList(
       this.courseLocation
     )[0];
     this.courseTemplate.requiredQualifications = qualificationIds;
@@ -112,6 +110,18 @@ export class AddCourseTemplateComponent {
 
   cancel() {
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
+  }
+
+  mapCheckboxListToNumberList(data: CheckboxList[]): number[] {
+    return this.checkBoxMapper.mapCheckboxListToNumberList(data);
+  }
+
+  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
+    return this.checkBoxMapper.mapQualificationListToCheckboxList(data);
+  }
+
+  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
+    return this.checkBoxMapper.mapLocationListToCheckboxList(data);
   }
 
   addPrice() {
@@ -134,7 +144,7 @@ export class AddCourseTemplateComponent {
   addSelectedQualification() {
     this.courseLocation.push({
       id: this.selectedCourseTemplate.location.locationId,
-      displayFullName: this.selectedCourseTemplate.location.street,
+      displayFullName: this.selectedCourseTemplate.location.street  ,
     });
   }
 }

@@ -8,16 +8,16 @@ export class PostGroupTemplate {
     public description: string,
     public numberOfDates: number,
     public duration: number,
-    public locationDTO: Location,
+    public location: number,
     public meetingPoint: string,
-    public TrainerPricePerHour: number,
-    public PricePerParticipant: number,
-    public requiredQualifications : number[],
-    public participantsPerTrainer: number) {
-  }
+    public trainerPricePerHours: number,
+    public pricePerParticipant: number,
+    public requiredQualificationList: number[],
+    public participantsPerTrainer: number
+  ) {}
 
   validate(): boolean {
-    let result = true;
+    let result: boolean = true;
     if(!this.title){
       result = false;
       console.error("Titel darf nicht leer sein");
@@ -25,22 +25,12 @@ export class PostGroupTemplate {
     }
     if(!this.acronym){
       result = false;
-      console.error("Kürzel darf nicht leer sein");
-      
-    }
-    if(this.PricePerParticipant <= 0){
-      result = false;
-      console.error("Preis pro Teilnehmer darf nicht 0 sein");
+      console.error("Abkürzung darf nicht leer sein");
       
     }
     if(!this.description){
       result = false;
       console.error("Beschreibung darf nicht leer sein");
-      
-    }
-    if(!this.meetingPoint){
-      result = false;
-      console.error("Treffpunkt darf nicht leer sein");
       
     }
     if(this.numberOfDates < 1){
@@ -53,12 +43,19 @@ export class PostGroupTemplate {
       console.error("Dauer darf nicht leer sein");
       
     }
-    if(!this.locationDTO.validate()){
+    if(!this.meetingPoint){
       result = false;
+      console.error("Es muss einen Treffpunkt geben");
+      
     }
-    if(this.TrainerPricePerHour < 1){
+    if(this.trainerPricePerHours < 1){
       result = false;
       console.error("Trainerpreis darf nicht leer sein");
+      
+    }
+    if(this.pricePerParticipant < 1){
+      result = false;
+      console.error('Teilnehmerpreis darf nicht leer sein');
       
     }
     if(this.participantsPerTrainer < 1){
@@ -66,11 +63,12 @@ export class PostGroupTemplate {
       console.error("Trainerschlüssel darf nicht leer sein");
       
     }
-    if (this.requiredQualifications.length === 0) {
+    if (this.requiredQualificationList.length === 0) {
       result = false;
       console.error("Qualifikationsliste darf nicht leer sein");
       
     }
+
     return result;
   }
 }
