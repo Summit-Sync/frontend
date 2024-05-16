@@ -1,0 +1,63 @@
+<div class="outer">
+    <div class="header">
+    </div>
+    <div class="body">
+            <div class="title">
+                <span>Titel: </span>
+                <span>{{courseTemplate.title}}</span>
+            </div>
+            <div class="acronym">
+                <span>Kürzel: </span>
+                <span>{{courseTemplate.acronym}}</span>
+            </div>
+            <div class="description">
+                <span>Beschreibung: </span>
+                <span>{{courseTemplate.description}}</span>
+            </div>
+            <div class="number-of-dates">
+                <span>Anzahl Terminen: </span>
+                <span>{{courseTemplate.numberOfDates}}</span>
+            </div>
+            <div class="duration">
+                <span>Dauer pro Termin (Minuten): </span>
+                <span>{{courseTemplate.duration}}</span>
+            </div>
+            <div class="number-of-participants">
+                <span>Max. Teilnehmeranzahl: </span>
+                <span>{{courseTemplate.numberParticipants}}</span>
+            </div>
+            <div class="number-of-waitlist">
+                <span>Max. Wartelistenlänge: </span>
+                <span>{{courseTemplate.numberWaitlist}}</span>
+            </div>
+            <div class="location">
+                <span>Ort: </span>
+                <span>{{courseTemplate.location.title}}</span>
+            </div>
+            <div class="meeting-point">
+                <span>Treffpunkt: </span>
+                <span>{{courseTemplate.meetingPoint}}</span>
+            </div>
+            <div class="price">
+                <span>Preisliste: </span>
+                <div>
+                    <span *ngFor="let price of courseTemplate.price">{{price.name}}:{{price.price}}</span>
+                </div>
+            </div>
+            <div class="required-qualifications">
+                <span>Benötigte Qualifikationen: </span>
+                <div>
+                    <span *ngFor="let qualification of courseTemplate.requiredQualifications">
+                        {{qualification.name}}
+                    </span>
+                </div>
+            </div>
+            <div class="number-of-trainers">
+                <span>Benötigte Trainer: </span>
+                <span>{{courseTemplate.numberTrainers}}</span>
+            </div>
+    </div>
+    <div class="footer">
+        <button (click)="closeDialog()">Schließen</button>
+    </div>
+</div>

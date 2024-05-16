@@ -1,0 +1,63 @@
+<div class="outer">
+    <div class="header">
+
+    </div>
+    <div class="body">
+        <div class="title">
+            <label for="title">Titel</label>
+            <input id="title" type="text" [(ngModel)]="groupTemplate.title">
+        </div>
+        <div class="acronym">
+            <label for="acronym">Kürzel</label>
+            <input id="acronym" type="text" [(ngModel)]="groupTemplate.acronym">
+        </div>
+        <div class="description">
+            <label for="description">Beschreibung</label>
+            <input id="description" type="text" [(ngModel)]="groupTemplate.description">
+        </div>
+        <div class="number-of-dates">
+            <label for="number-of-dates">Anzahl Termine</label>
+            <input id="number-of-dates" type="text" [(ngModel)]="groupTemplate.numberOfDates">
+        </div>
+        <div class="duration">
+            <label for="duration">Dauer pro Termin (Minuten)</label>
+            <input id="duration" type="text" [(ngModel)]="groupTemplate.duration">
+        </div>
+        <div class="location">
+            <label for="location">Ort</label>
+            <app-multi-select-dropdown id="location"
+            [allowMultiple]="false"
+            [allOptions]="locationList"
+            [selectedOptions]="courseLocation"
+            [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
+        </div>
+        <div class="meeting-point">
+            <label for="meeting-point">Treffpunkt</label>
+            <input id="meeting-point" type="text" [(ngModel)]="groupTemplate.meetingPoint">
+        </div>
+        <div>
+            <label for="trainer-price-per-hour">Trainerpreis (Stunde)</label>
+            <input id="trainer-price-per-hour" type="text" [(ngModel)]="groupTemplate.trainerPricePerHour">
+        </div>
+        <div>
+            <label for="price-per-participant">Teilnehmerpreis</label>
+            <input id="price-per-participant" type="text" [(ngModel)]="groupTemplate.pricePerParticipant">
+        </div>
+        <div class="required-qualifications">
+            <label for="required-qualifications">Qualifikationen</label>
+            <app-multi-select-dropdown id="required-qualifications"
+            [allOptions]="qualificationList"
+            [selectedOptions]="requiredQualifications"
+            [dropdownHeadline]="'Qualifikationen'"
+            [allowMultiple]="true"></app-multi-select-dropdown>
+        </div>
+        <div class="participantsPerTrainer">
+            <label for="participantsPerTrainer">Trainerschlüssel</label>
+            <input id="participantsPerTrainer" type="text" [(ngModel)]="groupTemplate.participantsPerTrainer">
+        </div>
+      </div>
+    <div class="footer">
+        <button class="save-button dialog-button" (click)="save()">Speichern</button>
+        <button class="dialog button" (click)="cancel()">Abbrechen</button>
+    </div>
+</div>

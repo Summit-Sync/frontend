@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
-import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
+import { CoursetemplateService } from '../../../../services/coursetemplate/coursetemplate.service';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseTemplateDetailViewComponent } from '../course-template-detail-view/course-template-detail-view.component';
-import { CourseTemplate } from '../../../models/courseTemplate/CourseTemplate';
-import { cloneDeep } from 'lodash';
-import { PostCourseTemplate } from '../../../models/courseTemplate/PostCourseTemplate';
-import { CategoryPrice } from '../../../models/price/CategoryPrice';
-import { tick } from '@angular/core/testing';
-import { PostCategoryPrice } from '../../../models/price/PostCategoryPrice';
-import { AddCourseTemplateComponent } from '../course-template/add-course-template/add-course-template.component';
+import { CourseTemplate } from '../../../../models/courseTemplate/CourseTemplate';
+import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
+import { PostCourseTemplate } from '../../../../models/courseTemplate/PostCourseTemplate';
+import { PostCategoryPrice } from '../../../../models/price/PostCategoryPrice';
 
 @Component({
   selector: 'app-course-template-list',
@@ -101,7 +98,7 @@ export class CourseTemplateListComponent {
         this.courseTemplateService.postCourseTemplate(obj.data,).subscribe({
           next: (response) => console.log('Template has been created'),
           error: (error) => console.error('Template could not be created'),
-          complete: () => this.updateList   
+          complete: () => this.updateList()
         })
       }
     })
