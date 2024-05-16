@@ -228,7 +228,10 @@ export class Course {
       this.meetingPoint,
       postCourseQualis,
       this.numberTrainers,
-      this.notes
+      this.notes,
+      this.trainers,
+      this.participants,
+      this.waitList
     );
   }
 
@@ -260,7 +263,10 @@ export class Course {
       this.meetingPoint,
       postCourseQualis,
       this.numberTrainers,
-      this.notes
+      this.notes,
+      this.trainers,
+      this.participants,
+      this.waitList
     );
   }
 }
