@@ -1,3 +1,6 @@
+import { Participant } from '../participant/Participant';
+import { Trainer } from '../trainer/Trainer';
+
 export class UpdateCourse {
   constructor(
     public visible: boolean,
@@ -15,7 +18,10 @@ export class UpdateCourse {
     public meetingPoint: string,
     public requiredQualifications: number[],
     public numberTrainers: number,
-    public notes: string
+    public notes: string,
+    public trainers: Trainer[],
+    public participants: Participant[],
+    public waitList: Participant[]
   ) {}
 
   validate(): boolean {

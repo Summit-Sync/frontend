@@ -291,6 +291,7 @@ export class CourseComponent implements OnInit {
               this.courseData.participants
             );
             this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+            // this.addMissingBackendData();
           },
           error: (error) => console.error('Course could not be updated'),
           complete: () =>
@@ -307,6 +308,7 @@ export class CourseComponent implements OnInit {
           console.log('Course has been created');
           this.courseData.deleteEmptyParticipants(this.courseData.participants);
           this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+          // this.addMissingBackendData();
         },
         error: (error) => console.error('Course could not be created'),
         complete: () =>
@@ -314,6 +316,34 @@ export class CourseComponent implements OnInit {
       });
     }
   }
+
+  // addMissingBackendData() {
+  //   let trianerIds: number[] = [];
+  //   let participantIds: number[] = [];
+  //   let waitlistIds: number[] = [];
+  //   this.courseData.trainers.forEach((trainer) => {
+  //     trianerIds.push(trainer.id);
+  //   });
+  //   this.courseData.participants.forEach((participant) => {
+  //     participantIds.push(participant.id);
+  //   });
+  //   this.courseData.waitList.forEach((waitParticipant) => {
+  //     waitlistIds.push(waitParticipant.id);
+  //   });
+
+  //   this.courseService
+  //     .putCourseTrainers(this.courseData.id, trianerIds)
+  //     .subscribe();
+  //   this.courseService
+  //     .putCourseParticipants(this.courseData.id, participantIds)
+  //     .subscribe();
+  //   this.courseService
+  //     .(this.courseData.id, participantIds)
+  //     .subscribe();
+  //   this.courseService
+  //     .putCourseWaitlist(this.courseData.id, waitlistIds)
+  //     .subscribe();
+  // }
 
   cancel(): void {
     this.courseData.deleteEmptyParticipants(this.courseData.participants);
