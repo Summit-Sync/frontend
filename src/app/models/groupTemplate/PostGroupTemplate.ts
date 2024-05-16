@@ -10,7 +10,7 @@ export class PostGroupTemplate {
     public duration: number,
     public location: number,
     public meetingPoint: string,
-    public trainerPricePerHours: number,
+    public trainerPricePerHour: number,
     public pricePerParticipant: number,
     public requiredQualificationList: number[],
     public participantsPerTrainer: number
@@ -48,7 +48,7 @@ export class PostGroupTemplate {
       console.error("Es muss einen Treffpunkt geben");
       
     }
-    if(this.trainerPricePerHours < 1){
+    if(this.trainerPricePerHour < 1){
       result = false;
       console.error("Trainerpreis darf nicht leer sein");
       

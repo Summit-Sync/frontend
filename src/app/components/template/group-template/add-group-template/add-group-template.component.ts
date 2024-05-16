@@ -11,11 +11,11 @@ import { Qualification } from '../../../../models/qualification/Qualification';
 import { PostGroupTemplate } from '../../../../models/groupTemplate/PostGroupTemplate';
 import { GroupTemplate } from '../../../../models/groupTemplate/GroupTemplate';
 import { LocationService } from '../../../../services/location/location.service';
-import { CheckboxListMapper } from '../../../../services/CheckBoxListMapper/checkbox-list-mapper';
 import { QualificationsService } from '../../../../services/qualifications/qualifications.service';
 import { Location } from '../../../../models/location/Location';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from "../../../utilities/multi-select-dropdown/multi-select-dropdown.component";
+import { CheckboxListMapperService } from '../../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 
  @Component({
     selector: 'app-add-group-template',
@@ -41,7 +41,7 @@ import { MultiSelectDropdownComponent } from "../../../utilities/multi-select-dr
   constructor(
     private dialogRef: MatDialogRef<AddGroupTemplateComponent>,
     private locationService: LocationService,
-    private checkBoxMapper: CheckboxListMapper,
+    private checkBoxMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService
   ) {

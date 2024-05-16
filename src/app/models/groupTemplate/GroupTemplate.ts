@@ -12,7 +12,7 @@ export class GroupTemplate {
     public duration: number,
     public location: Location,
     public meetingPoint: string,
-    public trainerPricePerHours: number,
+    public trainerPricePerHour: number,
     public pricePerParticipant: number,
     public requiredQualificationList: Qualification[],
     public participantsPerTrainer: number
@@ -58,7 +58,7 @@ export class GroupTemplate {
       console.error("Es muss einen Treffpunkt geben");
       
     }
-    if(this.trainerPricePerHours < 1){
+    if(this.trainerPricePerHour < 1){
       result = false;
       console.error("Trainerpreis darf nicht leer sein");
       
@@ -87,6 +87,6 @@ export class GroupTemplate {
 
   createPostGroupTemplate(): PostGroupTemplate{
     let qualificationList: number[]=[];
-    return new PostGroupTemplate(this.acronym, this.title, this.description, this.numberOfDates, this.duration, this.location.locationId, this.meetingPoint, this.trainerPricePerHours, this.pricePerParticipant, qualificationList, this.participantsPerTrainer);
+    return new PostGroupTemplate(this.acronym, this.title, this.description, this.numberOfDates, this.duration, this.location.locationId, this.meetingPoint, this.trainerPricePerHour, this.pricePerParticipant, qualificationList, this.participantsPerTrainer);
   }
 }

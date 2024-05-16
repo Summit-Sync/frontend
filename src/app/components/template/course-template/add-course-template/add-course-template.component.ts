@@ -40,7 +40,7 @@ export class AddCourseTemplateComponent {
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
     private locationService: LocationService,
-    private checkBoxMapper: CheckboxListMapper,
+    private checkBoxMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService
   ) {
