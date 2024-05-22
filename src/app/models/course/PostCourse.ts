@@ -1,3 +1,6 @@
+import { Participant } from '../participant/Participant';
+import { Trainer } from '../trainer/Trainer';
+
 export class PostCourse {
   constructor(
     public visible: boolean,
@@ -13,7 +16,10 @@ export class PostCourse {
     public meetingPoint: string,
     public requiredQualifications: number[],
     public numberTrainers: number,
-    public notes: string
+    public notes: string,
+    public trainers: Trainer[],
+    public participants: Participant[],
+    public waitList: Participant[]
   ) {}
 
   validate(): boolean {

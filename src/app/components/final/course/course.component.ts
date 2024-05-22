@@ -21,6 +21,7 @@ import { Location } from '../../../models/location/Location';
 import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 import { CheckboxListMapperService } from '../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 import { PostCourse } from '../../../models/course/PostCourse';
+import { UpdateCourse } from '../../../models/course/UpdateCourse';
 
 @Component({
   selector: 'app-course',
@@ -279,7 +280,24 @@ export class CourseComponent implements OnInit {
   }
 
   saveUpdate(): void {
-    this.dialogRef.close(JSON.stringify({ method: 'update' }));
+    let updateCourse: UpdateCourse = this.courseData.CourseToUpdateCourse();
+    if (updateCourse.validate()) {
+      this.courseService
+        .putCourseDetail(this.courseData.id, updateCourse)
+        .subscribe({
+          next: (response) => {
+            console.log('Course has been updated', this.courseData);
+            this.courseData.deleteEmptyParticipants(
+              this.courseData.participants
+            );
+            this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+            // this.addMissingBackendData();
+          },
+          error: (error) => console.error('Course could not be updated'),
+          complete: () =>
+            this.dialogRef.close(JSON.stringify({ method: 'save' })),
+        });
+    }
   }
 
   saveCreated(): void {
@@ -290,6 +308,7 @@ export class CourseComponent implements OnInit {
           console.log('Course has been created');
           this.courseData.deleteEmptyParticipants(this.courseData.participants);
           this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+          // this.addMissingBackendData();
         },
         error: (error) => console.error('Course could not be created'),
         complete: () =>
@@ -297,6 +316,34 @@ export class CourseComponent implements OnInit {
       });
     }
   }
+
+  // addMissingBackendData() {
+  //   let trianerIds: number[] = [];
+  //   let participantIds: number[] = [];
+  //   let waitlistIds: number[] = [];
+  //   this.courseData.trainers.forEach((trainer) => {
+  //     trianerIds.push(trainer.id);
+  //   });
+  //   this.courseData.participants.forEach((participant) => {
+  //     participantIds.push(participant.id);
+  //   });
+  //   this.courseData.waitList.forEach((waitParticipant) => {
+  //     waitlistIds.push(waitParticipant.id);
+  //   });
+
+  //   this.courseService
+  //     .putCourseTrainers(this.courseData.id, trianerIds)
+  //     .subscribe();
+  //   this.courseService
+  //     .putCourseParticipants(this.courseData.id, participantIds)
+  //     .subscribe();
+  //   this.courseService
+  //     .(this.courseData.id, participantIds)
+  //     .subscribe();
+  //   this.courseService
+  //     .putCourseWaitlist(this.courseData.id, waitlistIds)
+  //     .subscribe();
+  // }
 
   cancel(): void {
     this.courseData.deleteEmptyParticipants(this.courseData.participants);
@@ -333,9 +380,8 @@ export class CourseComponent implements OnInit {
   }
 
   cancelCourse() {
-    this.courseService.putCourseCancel(
-      this.courseData.id,
-      !this.courseData.canceled
-    );
+    this.courseService
+      .putCourseCancel(this.courseData.id, !this.courseData.canceled)
+      .subscribe();
   }
 }

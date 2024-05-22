@@ -51,7 +51,7 @@ export class CourseService {
 
   putCourseCancel(id: number, isCanceled: boolean): Observable<Course> {
     const apiUrl: string = `${this.baseUrl}/${id}/cancel`;
-    return this.http.put<Course>(apiUrl, isCanceled);
+    return this.http.put<Course>(apiUrl, null);
   }
 
   putCoursePublish(id: number, isPublished: boolean): Observable<Course> {
@@ -72,7 +72,7 @@ export class CourseService {
   //Delete
   deleteCourse(id: number) {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl);
+    this.http.delete(apiUrl).subscribe();
   }
 
   deleteTrainerFromCourse(

@@ -6,6 +6,7 @@ import { Location } from '../location/Location';
 import { Status } from '../status/Status';
 import { CategoryPrice } from '../price/CategoryPrice';
 import { PostCourse } from './PostCourse';
+import { UpdateCourse } from './UpdateCourse';
 
 export class Course {
   constructor(
@@ -142,6 +143,7 @@ export class Course {
     });
     this.numberParticipants = course.numberParticipants;
     this.numberWaitlist = course.numberWaitlist;
+    this.numberTrainers = course.numberTrainers;
     course.prices.forEach((price) => {
       this.prices.push(price);
     });
@@ -226,7 +228,45 @@ export class Course {
       this.meetingPoint,
       postCourseQualis,
       this.numberTrainers,
-      this.notes
+      this.notes,
+      this.trainers,
+      this.participants,
+      this.waitList
+    );
+  }
+
+  CourseToUpdateCourse(): UpdateCourse {
+    let postCoursePrices: number[] = [];
+    let postCourseQualis: number[] = [];
+    let postCourseLocation: number;
+    this.prices.forEach((price) => {
+      postCoursePrices.push(price.id);
+    });
+    this.requiredQualifications.forEach((rq) => {
+      postCourseQualis.push(rq.id);
+    });
+    postCourseLocation = this.location.locationId;
+
+    return new UpdateCourse(
+      this.visible,
+      this.canceled,
+      this.finished,
+      this.acronym,
+      this.title,
+      this.description,
+      this.dates,
+      this.duration,
+      this.numberParticipants,
+      this.numberWaitlist,
+      postCoursePrices,
+      postCourseLocation,
+      this.meetingPoint,
+      postCourseQualis,
+      this.numberTrainers,
+      this.notes,
+      this.trainers,
+      this.participants,
+      this.waitList
     );
   }
 }

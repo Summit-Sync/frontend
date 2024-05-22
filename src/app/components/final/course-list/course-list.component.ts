@@ -176,6 +176,6 @@ export class CourseListComponent implements OnInit {
   // }
 
   cancelCourse(course: Course) {
-    this.courseService.putCourseCancel(course.id, !course.canceled);
+    this.courseService.putCourseCancel(course.id, !course.canceled).subscribe();
   }
 }
