@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PostLocation } from '../../../../models/location/PostLocation';
-import { Location } from '../../../../models/location/Location';
+import { PostLocationDTO } from '../../../../models/location/PostLocationDTO';
+import { Location } from '../../../../models/location/LocationDTO';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddLocationModalComponent {
   
-  editableLocation: PostLocation;
+  editableLocation: PostLocationDTO;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

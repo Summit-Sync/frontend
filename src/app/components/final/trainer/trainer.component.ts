@@ -4,7 +4,7 @@ import {Trainer} from "../../../models/trainer/Trainer";
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
-import {Qualification} from "../../../models/qualification/Qualification";
+import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
@@ -30,7 +30,7 @@ export class TrainerComponent implements OnInit{
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
   @Input() isDelete: boolean = false;
-  allQualifications: Qualification[];
+  allQualifications: QualificationDTO[];
   trainerData: Trainer = new Trainer(
     0,
     '',

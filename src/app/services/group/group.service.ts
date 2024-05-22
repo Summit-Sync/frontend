@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Group } from '../../models/group/Group';
-import { Qualification } from '../../models/qualification/Qualification';
-import { Trainer } from '../../models/trainer/Trainer';
+import { GroupDTO } from '../../models/group/Group';
 import { HttpClient } from '@angular/common/http';
-import { PostGroupTemplate } from '../../models/groupTemplate/PostGroupTemplate';
-import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
-import {PostGroup} from "../../models/group/PostGroup";
-import {UpdateGroup} from "../../models/group/UpdateGroup";
+import {PostGroupDTO} from "../../models/group/PostGroup";
 import { environment } from '../../../environments/environment.development';
+import { UpdateGroupDTO } from '../../models/group/UpdateGroup';
 
 @Injectable({
   providedIn: 'root',
@@ -20,40 +16,40 @@ export class GroupService {
   constructor(private http:HttpClient) {}
 
   //Get
-  getAllGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(this.baseUrl);
+  getAllGroups(): Observable<GroupDTO[]> {
+    return this.http.get<GroupDTO[]>(this.baseUrl);
     //return this.groups;
   }
 
-  getGroupById(id: number): Observable<Group>{
+  getGroupById(id: number): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Group>(apiUrl);
+    return this.http.get<GroupDTO>(apiUrl);
   }
 
   //Put
-  putGroup(id: number, updateGroup: UpdateGroup): Observable<Group>{
+  putGroup(id: number, updateGroup: UpdateGroupDTO): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Group>(apiUrl, updateGroup);
+    return this.http.put<GroupDTO>(apiUrl, updateGroup);
   }
 
-  putGroupTrainers(courseId: number, trainerIds: number[]): Observable<Group>{
+  putGroupTrainers(courseId: number, trainerIds: number[]): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${courseId}/trainer/`;
-    return this.http.put<Group>(apiUrl, trainerIds);
+    return this.http.put<GroupDTO>(apiUrl, trainerIds);
   }
 
-  putGroupCanceled(id: number, isCanceled: boolean): Observable<Group>{
+  putGroupCanceled(id: number, isCanceled: boolean): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}/cancel`;
-    return this.http.put<Group>(apiUrl, isCanceled);
+    return this.http.put<GroupDTO>(apiUrl, isCanceled);
   }
 
-  putGroupFinished(id: number, isFinished: boolean): Observable<Group>{
+  putGroupFinished(id: number, isFinished: boolean): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}/finished`;
-    return this.http.put<Group>(apiUrl, isFinished);
+    return this.http.put<GroupDTO>(apiUrl, isFinished);
   }
 
   //Post
-  postGroup(postGroup: PostGroup): Observable<Group>{
-    return this.http.post<Group>(this.baseUrl, postGroup);
+  postGroup(postGroup: PostGroupDTO): Observable<GroupDTO>{
+    return this.http.post<GroupDTO>(this.baseUrl, postGroup);
   }
 
   //Delete
@@ -62,8 +58,8 @@ export class GroupService {
     this.http.delete(apiUrl);
   }
 
-  deleteTrainerFromCourse(groupId: number, trainerId: number): Observable<Group>{
+  deleteTrainerFromCourse(groupId: number, trainerId: number): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${groupId}/trainer/${trainerId}`;
-    return this.http.delete<Group>(apiUrl);
+    return this.http.delete<GroupDTO>(apiUrl);
   }
 }

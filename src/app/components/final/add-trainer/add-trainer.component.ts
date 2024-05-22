@@ -5,7 +5,7 @@ import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgForOf, NgIf} from "@angular/common";
 import {TrainerService} from "../../../services/trainer/trainer.service";
-import {Qualification} from "../../../models/qualification/Qualification";
+import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
 import {Trainer} from "../../../models/trainer/Trainer";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
 import {PostTrainer} from "../../../models/trainer/PostTrainer";

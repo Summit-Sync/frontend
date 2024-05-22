@@ -5,7 +5,7 @@ import {CourseComponent} from "./components/final/course/course.component";
 import {GroupComponent} from "./components/final/group/group.component";
 import {AppComponent} from "./app.component";
 import { CourseTemplateListComponent } from './components/template/course-template-list/course-template-list.component';
-import {QualificationListComponent} from "./components/final/qualification-list/qualification-list.component";
+import {QualificationListComponent} from "./components/final/qualification/qualification-list/qualification-list.component";
 import {TrainerListComponent} from "./components/final/trainer-list/trainer-list.component";
 import { LocationListComponent } from './components/final/location/location-list/location-list.component';
 import { GroupTemplate } from './models/groupTemplate/GroupTemplate';

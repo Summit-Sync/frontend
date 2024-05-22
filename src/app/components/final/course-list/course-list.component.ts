@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { Observable, of } from 'rxjs';
-import { Course } from '../../../models/course/Course';
+import { CourseDTO } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
 import { CourseComponent } from '../course/course.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,7 +20,7 @@ import { ToastService } from '../../../services/toast/toast.service';
   styleUrl: './course-list.component.scss',
 })
 export class CourseListComponent implements OnInit {
-  courses: Course[] = [];
+  courses: CourseDTO[] = [];
   showingEdit: boolean = false;
   showingDelete: boolean = false;
   displayDropdown: boolean = false;
@@ -70,17 +70,17 @@ export class CourseListComponent implements OnInit {
   //   this.selectedOption = this.displayOption;
   // }
 
-  showDetails(course: Course) {
+  showDetails(course: CourseDTO) {
     this.showingEdit = false;
     this.showCourseView(course);
   }
 
-  showEdit(course: Course) {
+  showEdit(course: CourseDTO) {
     this.showingEdit = true;
     this.showEditCourse(course);
   }
 
-  delete(course: Course) {
+  delete(course: CourseDTO) {
     this.showingDelete = true;
     this.showCourseView(course);
   }
@@ -103,7 +103,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  showEditCourse(course: Course) {
+  showEditCourse(course: CourseDTO) {
     //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
     this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseComponent, {
@@ -125,7 +125,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  showCourseView(course: Course) {
+  showCourseView(course: CourseDTO) {
     this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseViewComponent, {
       disableClose: false,
@@ -175,7 +175,7 @@ export class CourseListComponent implements OnInit {
   //   });
   // }
 
-  cancelCourse(course: Course) {
+  cancelCourse(course: CourseDTO) {
     this.courseService.putCourseCancel(course.id, !course.canceled).subscribe();
   }
 }

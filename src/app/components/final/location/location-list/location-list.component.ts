@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { LocationService } from '../../../../services/location/location.service';
-import { Location } from '../../../../models/location/Location';
+import { Location } from '../../../../models/location/LocationDTO';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { LocationDetailViewComponent } from '../location-detail-view/location-detail-view.component';
-import { PostLocation } from '../../../../models/location/PostLocation';
+import { PostLocationDTO } from '../../../../models/location/PostLocationDTO';
 
 @Component({
   selector: 'app-location-list',
@@ -36,7 +36,7 @@ export class LocationListComponent {
       height: '80dvh',
       width: '40dvw',
       data:{
-        location: new PostLocation(location.title,location.street, location.postCode, location.country, location.email, location.phone, location.mapsUrl, location.city)
+        location: new PostLocationDTO(location.title,location.street, location.postCode, location.country, location.email, location.phone, location.mapsUrl, location.city)
       }
     })
     dialogRef.afterClosed().subscribe(result => {
@@ -79,7 +79,7 @@ export class LocationListComponent {
       height: '80dvh',
       width: '40dvw',
       data:{
-        location: new PostLocation("","","","","","","","")
+        location: new PostLocationDTO("","","","","","","","")
       }
     })
     dialogRef.afterClosed().subscribe(result => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Group } from '../../../models/group/Group';
+import { GroupDTO } from '../../../models/group/Group';
 import { Observable, of } from 'rxjs';
 import { GroupService } from '../../../services/group/group.service';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './group-list.component.css',
 })
 export class GroupListComponent {
-  groups: Observable<Group[]> = of([]);
+  groups: Observable<GroupDTO[]> = of([]);
 
   constructor(public groupSerice: GroupService) {}
 
@@ -20,7 +20,7 @@ export class GroupListComponent {
     this.groups = this.groupSerice.getAllGroups();
   }
 
-  showDetails(group: Group) {}
-  showEdit(group: Group) {}
-  delete(group: Group) {}
+  showDetails(group: GroupDTO) {}
+  showEdit(group: GroupDTO) {}
+  delete(group: GroupDTO) {}
 }

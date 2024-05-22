@@ -3,10 +3,10 @@ import { CoursetemplateService } from '../../../../services/coursetemplate/cours
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseTemplateDetailViewComponent } from '../course-template-detail-view/course-template-detail-view.component';
-import { CourseTemplate } from '../../../../models/courseTemplate/CourseTemplate';
+import { CourseTemplateDTO } from '../../../../models/courseTemplate/CourseTemplate';
 import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
-import { PostCourseTemplate } from '../../../../models/courseTemplate/PostCourseTemplate';
-import { PostCategoryPrice } from '../../../../models/price/PostCategoryPrice';
+import { PostCourseTemplateDTO } from '../../../../models/courseTemplate/PostCourseTemplate';
+import { PostCategoryPriceDTO } from '../../../../models/price/PostCategoryPriceDTO';
 
 @Component({
   selector: 'app-course-template-list',
@@ -17,7 +17,7 @@ import { PostCategoryPrice } from '../../../../models/price/PostCategoryPrice';
 })
 export class CourseTemplateListComponent {
 
-  courseTemplateList: CourseTemplate[] = [];
+  courseTemplateList: CourseTemplateDTO[] = [];
 
   constructor(
     private courseTemplateService: CoursetemplateService,
@@ -34,7 +34,7 @@ export class CourseTemplateListComponent {
     });
   }
 
-  editTemplate(template: CourseTemplate){
+  editTemplate(template: CourseTemplateDTO){
     const dialogRef = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,
       width: '40dvw',
@@ -65,7 +65,7 @@ export class CourseTemplateListComponent {
     )
   }
 
-  openDetails(template:CourseTemplate){
+  openDetails(template:CourseTemplateDTO){
     const dialogRef= this.dialog.open(CourseTemplateDetailViewComponent, {
       disableClose: true,
       width: '40dvw',
@@ -77,9 +77,9 @@ export class CourseTemplateListComponent {
   }
 
   openCreateDialog(){
-    let priceList: PostCategoryPrice[] = [];
+    let priceList: PostCategoryPriceDTO[] = [];
     for(let x=0; x<3;x++){
-      priceList.push(new PostCategoryPrice('',0))
+      priceList.push(new PostCategoryPriceDTO('',0))
     }
     const dialogref = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,

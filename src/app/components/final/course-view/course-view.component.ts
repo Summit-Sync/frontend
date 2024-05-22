@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Course } from '../../../models/course/Course';
+import { CourseDTO } from '../../../models/course/Course';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EndTimePipe } from '../../../pipes/endTime/end-time.pipe';
 import { CourseService } from '../../../services/course/course.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Location } from '../../../models/location/Location';
+import { Location } from '../../../models/location/LocationDTO';
 
 @Component({
   selector: 'app-course-view',
@@ -16,7 +16,7 @@ import { Location } from '../../../models/location/Location';
 })
 export class CourseViewComponent {
   @Input() isDelete: boolean = false;
-  viewData: Course;
+  viewData: CourseDTO;
 
   constructor(
     public courseService: CourseService,
