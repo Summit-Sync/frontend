@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment.development';
 })
 export class GroupService {
 
-  private baseUrl:string=`${environment.serviceUrl}/template/group`;
+  private baseUrl:string=`${environment.serviceUrl}/group`;
 
   constructor(private http:HttpClient) {}
 

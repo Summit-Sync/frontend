@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let g of groups | async">
+    <ng-container *ngFor="let g of group$ | async">
       <tr>
         <td>{{ g.title }}</td>
         <!-- <td>{{ g.dates?.[1] || "-" }}</td>
@@ -38,3 +38,4 @@
     </ng-container>
   </tbody>
 </table>
+<button (click)="createNewGroupFromTemplate()">Neue Gruppe erstellen</button>

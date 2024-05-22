@@ -1,1 +1,142 @@
-<p>group works!</p>
+<div class="outer">
+  <div class="header">
+
+  </div>
+  <div class="body">
+    <div class="title">
+      <label for="title">Titel</label>
+      <input id="title" type="text" [(ngModel)]="groupDataCreate.title">
+    </div>
+    <div class="acronym">
+      <label for="acronym">Kürzel</label>
+      <input id="acronym" type="text" [(ngModel)]="groupDataCreate.acronym">
+    </div>
+    <div class="description">
+      <label for="description">Beschreibung</label>
+      <input id="description" type="text" [(ngModel)]="groupDataCreate.description">
+    </div>
+    <div class="number-of-dates">
+      <label for="number-of-dates">Anzahl Termine</label>
+      <input id="number-of-dates" type="text" [(ngModel)]="groupDataCreate.numberOfDates">
+    </div>
+    <div class="duration">
+      <label for="duration">Dauer pro Termin (Minuten)</label>
+      <input id="duration" type="text" [(ngModel)]="groupDataCreate.duration">
+    </div>
+    <div class="contact">
+      <label for="contact">Contact</label>
+      <div id="contact">
+        <label for="contact-firstName">Vorname</label>
+        <input id="contact-firstName" type="text" [(ngModel)]="groupDataCreate.contact.firstName">
+        <label for="contact-lastName">Nachname</label>
+        <input id="contact-lastName" type="text" [(ngModel)]="groupDataCreate.contact.lastName">
+        <label for="contact-email">E-Mail</label>
+        <input id="contact-email" type="email" [(ngModel)]="groupDataCreate.contact.email">
+        <label for="contact-phone">Telefon Nummer</label>
+        <input id="contact-phone" type="tel" [(ngModel)]="groupDataCreate.contact.phone">
+      </div>
+    </div>
+    <div class="dates">
+      <div class="listWrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Start Zeit</th>
+            <th>End Zeit</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container
+            *ngFor="let currentDate of groupDataCreate.events; let i = index"
+          >
+            <tr>
+              <td>
+                <input
+                  type="date"
+                  [ngModel]="currentDate | date : 'yyyy-MM-dd'"
+                  (input)="onDateChange($event, i)"
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  [ngModel]="mappedDateTime[i][0]"
+                  (input)="onStartTimeChange($event, i)"
+                />
+              </td>
+              <td>
+                <!-- <input
+                      type="time"
+                      [ngModel]="mappedDateTime[i][1]"
+                      (input)="onEndTimeChange($event, i)"
+                    /> -->
+                {{ mappedDateTime[i][1] }}
+              </td>
+              <button (click)="deleteDate(i)">-</button>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+        <button (click)="addDate()">Termin hinzufügen</button>
+      </div>
+    </div>
+    <div class="number-participants">
+      <label for="number-participants">Anzahl Teilnehmer</label>
+      <input id="number-participants" type="number" [(ngModel)]="groupDataCreate.numberParticipants">
+    </div>
+    <div class="location">
+      <label for="location">Ort</label>
+      <app-multi-select-dropdown id="location"
+                                 [allowMultiple]="false"
+                                 [allOptions]="allLocationsCheck"
+                                 [selectedOptions]="selectedLocationsCheck"
+                                 [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
+    </div>
+    <div class="meeting-point">
+      <label for="meeting-point">Treffpunkt</label>
+      <input id="meeting-point" type="text" [(ngModel)]="groupDataCreate.meetingPoint">
+    </div>
+    <div>
+      <label for="trainer-price-per-hour">Trainerpreis (Stunde)</label>
+      <input id="trainer-price-per-hour" type="text" [(ngModel)]="groupDataCreate.trainerPricePerHour">
+    </div>
+    <div>
+      <label for="price-per-participant">Teilnehmerpreis</label>
+      <input id="price-per-participant" type="text" [(ngModel)]="groupDataCreate.pricePerParticipant">
+    </div>
+    <div class="required-qualifications">
+      <label for="required-qualifications">Qualifikationen</label>
+      <app-multi-select-dropdown id="required-qualifications"
+                                 [allOptions]="allQualificationsCheck"
+                                 [selectedOptions]="selectedLocationsCheck"
+                                 [dropdownHeadline]="'Qualifikationen'"
+                                 [allowMultiple]="true"></app-multi-select-dropdown>
+    </div>
+    <div class="participantsPerTrainer">
+      <label for="participantsPerTrainer">Trainerschlüssel</label>
+      <input id="participantsPerTrainer" type="text" [(ngModel)]="groupDataCreate.participantsPerTrainer">
+    </div>
+    <div class="trainers">
+      <label for="trainer">Trainer</label>
+      <app-multi-select-dropdown id="trainer"
+                                 [allOptions]="allTrainersCheck"
+                                 [selectedOptions]="selectedTrainersCheck"
+                                 [dropdownHeadline]="'Trainer'"
+                                 [allowMultiple]="true"></app-multi-select-dropdown>
+    </div>
+    <!--
+    <div class="total-price">
+      <label for="total-price">Gesamt Preis</label>
+      <input id="total-price" type="number" [(ngModel)]="groupDataCreate.">
+    </div>
+    -->
+  </div>
+  <div class="footer">
+    <button class="save-button dialog-button" (click)="save()">Speichern</button>
+    <button class="dialog button" (click)="cancel()">Abbrechen</button>
+    <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
+    <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
+    -->
+  </div>
+</div>

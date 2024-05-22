@@ -23,11 +23,11 @@ export const routes: Routes = [
   {path: 'gruppenvorlage', component:GroupTemplateListComponent, canActivate:[]},
   //Kursvorlagen
   {path:'kursvorlage', component:CourseTemplateListComponent, canActivate:[]},
-  //Qualifikationen
+  // Qualifikationen
   { path: 'qualifikation', component: QualificationListComponent, canActivate: []},
-  //Trainer
+  // Trainer
   { path: 'trainer', component: TrainerListComponent, canActivate: []},
-  //Location
+  // Location
   { path: 'standort', component: LocationListComponent, canActivate: []},
   // Root Routen
   { path: '', component: HomeViewComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
