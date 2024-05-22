@@ -1,19 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PostCourseTemplate } from '../../../../models/courseTemplate/PostCourseTemplate';
+import { PostCourseTemplateDTO } from '../../../../models/courseTemplate/PostCourseTemplate';
 import { CheckboxList } from '../../../../models/interfaces/CheckBoxList';
-import { CategoryPrice } from '../../../../models/price/CategoryPrice';
-import { Qualification } from '../../../../models/qualification/Qualification';
+import { CategoryPriceDTO } from '../../../../models/price/CategoryPriceDTO';
+import { QualificationDTO } from '../../../../models/qualification/QualificationDTO';
 import { LocationService } from '../../../../services/location/location.service';
 import { CategoryPriceService } from '../../../../services/price/price.service';
 import { QualificationsService } from '../../../../services/qualifications/qualifications.service';
-import { Location } from '../../../../models/location/Location';
 import { CommonModule } from '@angular/common';
 import { MultiSelectDropdownComponent } from '../../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 import { FormsModule } from '@angular/forms';
-import { CourseTemplate } from '../../../../models/courseTemplate/CourseTemplate';
-import { PostCategoryPrice } from '../../../../models/price/PostCategoryPrice';
+import { CourseTemplateDTO } from '../../../../models/courseTemplate/CourseTemplate';
+import { PostCategoryPriceDTO } from '../../../../models/price/PostCategoryPriceDTO';
 import { CheckboxListMapperService } from '../../../../services/checkBoxListMapper/checkbox-list-mapper.service';
+import { LocationDTO } from '../../../../models/location/LocationDTO';
+import { PostCourseTemplateValidatorService } from '../../../../services/validation/course-template/post-course-template/post-course-template-validator.service';
 
 @Component({
   selector: 'app-add-course-template',
@@ -24,13 +25,13 @@ import { CheckboxListMapperService } from '../../../../services/checkBoxListMapp
 })
 export class AddCourseTemplateComponent {
   //Selected template
-  selectedCourseTemplate: CourseTemplate;
+  selectedCourseTemplate: CourseTemplateDTO;
 
-  courseTemplate: PostCourseTemplate;
+  courseTemplate: PostCourseTemplateDTO;
   isEdit: boolean;
 
   requiredQualifications: CheckboxList[] = [];
-  courseLocation: CheckboxList[] = [];
+  courseLocationDTO: CheckboxList[] = [];
 
   locationList: CheckboxList[] = [];
   qualificationList: CheckboxList[] = [];
@@ -42,7 +43,8 @@ export class AddCourseTemplateComponent {
     private locationService: LocationService,
     private checkBoxMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private qualificationService: QualificationsService
+    private qualificationService: QualificationsService,
+    private postCourseTemplateValidator: PostCourseTemplateValidatorService
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
@@ -52,9 +54,9 @@ export class AddCourseTemplateComponent {
       }
     });
     locationService
-      .getAllLocations()
+      .getAllLocationDTOs()
       .subscribe(
-        (data) => (this.locationList = this.mapLocationListToCheckboxList(data))
+        (data) => (this.locationList = this.mapLocationDTOListToCheckboxList(data))
       );
     qualificationService
       .getAllQualifications()
@@ -68,16 +70,33 @@ export class AddCourseTemplateComponent {
   ngOnInit() {
     this.isEdit = this.data.isEdit;
     this.selectedCourseTemplate = this.data.selectedTemplate;
-    let priceList: PostCategoryPrice[] = [];
+    let priceList: PostCategoryPriceDTO[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
-      priceList.push(new PostCategoryPrice('', 0));
+      let price:PostCategoryPriceDTO= {
+        name: '',
+        price: 0
+      }
+      priceList.push(price);
     }
     if (this.isEdit) {
       console.log(this.selectedCourseTemplate)
-      this.courseTemplate =
-        this.selectedCourseTemplate.createPostCourseTemplate();
+      this.courseTemplate = {
+        acronym: this.selectedCourseTemplate.acronym,
+        title: this.selectedCourseTemplate.title,
+        description: this.selectedCourseTemplate.description,
+        numberOfDates: this.selectedCourseTemplate.numberOfDates,
+        duration: this.selectedCourseTemplate.duration,
+        numberParticipants: this.selectedCourseTemplate.numberParticipants,
+        numberWaitlist: this.selectedCourseTemplate.numberWaitlist,
+        location: this.selectedCourseTemplate.location.locationId,
+        meetingPoint: this.selectedCourseTemplate.meetingPoint,
+        numberTrainers: this.selectedCourseTemplate.numberTrainers,
+        price:this.selectedCourseTemplate.price,
+        requiredQualifications: this.selectedCourseTemplate.requiredQualifications.map(q=>q.id)
+      }
+        // this.selectedCourseTemplate.createPostCourseTemplate();
       console.log(this.courseTemplate);
-      this.addSelectedLocation();
+      this.addSelectedLocationDTO();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
 
@@ -91,12 +110,12 @@ export class AddCourseTemplateComponent {
       this.requiredQualifications
     );
     let location: number = this.mapCheckboxListToNumberList(
-      this.courseLocation
+      this.courseLocationDTO
     )[0];
     this.courseTemplate.requiredQualifications = qualificationIds;
     this.courseTemplate.location = location;
     console.log(this.courseTemplate);
-    if (this.courseTemplate.validate()) {
+    if (this.postCourseTemplateValidator.validate(this.courseTemplate)) {
       this.dialogRef.close(
         JSON.stringify({
           data: this.courseTemplate,
@@ -116,22 +135,26 @@ export class AddCourseTemplateComponent {
     return this.checkBoxMapper.mapCheckboxListToNumberList(data);
   }
 
-  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
+  mapQualificationListToCheckboxList(data: QualificationDTO[]): CheckboxList[] {
     return this.checkBoxMapper.mapQualificationListToCheckboxList(data);
   }
 
-  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
+  mapLocationDTOListToCheckboxList(data: LocationDTO[]): CheckboxList[] {
     return this.checkBoxMapper.mapLocationListToCheckboxList(data);
   }
 
   addPrice() {
-    this.courseTemplate.price.push(new PostCategoryPrice('', 0));
+    let price:PostCategoryPriceDTO= {
+      name: '',
+      price: 0
+    }
+    this.courseTemplate.price.push(price);
   }
   removePrice() {
     this.courseTemplate.price.length = this.courseTemplate.price.length - 1;
   }
 
-  addSelectedLocation() {
+  addSelectedLocationDTO() {
     for (let qualification of this.selectedCourseTemplate
       .requiredQualifications) {
       this.requiredQualifications.push({
@@ -142,7 +165,7 @@ export class AddCourseTemplateComponent {
   }
 
   addSelectedQualification() {
-    this.courseLocation.push({
+    this.courseLocationDTO.push({
       id: this.selectedCourseTemplate.location.locationId,
       displayFullName: this.selectedCourseTemplate.location.street  ,
     });

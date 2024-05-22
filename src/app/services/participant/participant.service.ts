@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Participant} from "../../models/participant/Participant";
-import {PostParticipant} from "../../models/participant/PostParticipant";
+import {ParticipantDTO} from "../../models/participant/ParticipantDTO";
+import {PostParticipantDTO} from "../../models/participant/PostParticipantDTO";
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -13,24 +13,24 @@ export class ParticipantService {
   constructor(private http: HttpClient) { }
 
   //Get
-  getAllParticipants(): Observable<Participant>{
-    return this.http.get<Participant>(this.baseUrl);
+  getAllParticipants(): Observable<ParticipantDTO>{
+    return this.http.get<ParticipantDTO>(this.baseUrl);
   }
 
-  getParticipantById(id: number): Observable<Participant>{
+  getParticipantById(id: number): Observable<ParticipantDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Participant>(apiUrl);
+    return this.http.get<ParticipantDTO>(apiUrl);
   }
 
   //Put
-  putParticipant(id: number, postParticipant: PostParticipant): Observable<Participant>{
+  putParticipant(id: number, postParticipant: PostParticipantDTO): Observable<ParticipantDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Participant>(apiUrl, postParticipant);
+    return this.http.put<ParticipantDTO>(apiUrl, postParticipant);
   }
 
   //Post
-  postParticipant(postParticipant: PostParticipant): Observable<Participant>{
-    return this.http.post<Participant>(this.baseUrl, postParticipant);
+  postParticipant(postParticipant: PostParticipantDTO): Observable<ParticipantDTO>{
+    return this.http.post<ParticipantDTO>(this.baseUrl, postParticipant);
   }
 
   //Delete

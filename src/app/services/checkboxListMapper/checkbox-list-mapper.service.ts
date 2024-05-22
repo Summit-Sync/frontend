@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CheckboxList } from '../../models/interfaces/CheckBoxList';
-import { Qualification } from '../../models/qualification/Qualification';
-import { Location } from '../../models/location/Location';
-import { Trainer } from '../../models/trainer/Trainer';
+import { QualificationDTO } from '../../models/qualification/QualificationDTO';
+import { LocationDTO } from '../../models/location/LocationDTO';
+import { TrainerDTO } from '../../models/trainer/Trainer';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class CheckboxListMapperService {
     return list;
   }
 
-  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
+  mapQualificationListToCheckboxList(data: QualificationDTO[]): CheckboxList[] {
     let checkboxList: CheckboxList[] = [];
     for (let qualification of data) {
       checkboxList.push({
@@ -29,30 +29,18 @@ export class CheckboxListMapperService {
     return checkboxList;
   }
 
-  mapCheckboxListToQualificationList(data: CheckboxList[]): Qualification[] {
-    let qualificationList: Qualification[] = [];
+  mapCheckboxListToQualificationList(data: CheckboxList[]): QualificationDTO[] {
+    let qualificationList: QualificationDTO[] = [];
     for (let checkBox of data) {
       qualificationList.push({
         id: checkBox.id,
         name: checkBox.displayFullName,
-        validate(): boolean {
-          let result: boolean = true;
-          if (!this.name) {
-            result = false;
-            console.error('Qualifikationsname darf nicht leer sein');
-          }
-          if (!this.id || this.id < 1) {
-            result = false;
-            console.error('Id muss vorhanden sein');
-          }
-          return result;
-        }
       })
     }
     return qualificationList;
   }
 
-  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
+  mapLocationListToCheckboxList(data: LocationDTO[]): CheckboxList[] {
     let checkboxList: CheckboxList[] = [];
     for (let location of data) {
       checkboxList.push({
@@ -63,7 +51,7 @@ export class CheckboxListMapperService {
     return checkboxList;
   }
 
-  mapTrainerListToCheckboxList(data: Trainer[]): CheckboxList[] {
+  mapTrainerListToCheckboxList(data: TrainerDTO[]): CheckboxList[] {
     let checkboxList: CheckboxList[] = [];
     for (let trainer of data) {
       checkboxList.push({
@@ -74,7 +62,7 @@ export class CheckboxListMapperService {
     return checkboxList;
   }
 
-  mapSingleLocationToCheckboxList(location: Location) {
+  mapSingleLocationToCheckboxList(location: LocationDTO) {
     let checkboxList: CheckboxList[] = [];
     checkboxList.push({
       id: location.locationId,

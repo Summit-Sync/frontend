@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {GroupTemplate} from "../../models/groupTemplate/GroupTemplate";
-import {PostGroupTemplate} from "../../models/groupTemplate/PostGroupTemplate";
 import { environment } from '../../../environments/environment.development';
+import { GroupTemplateDTO } from '../../models/groupTemplate/GroupTemplate';
+import { PostGroupTemplateDTO } from '../../models/groupTemplate/PostGroupTemplate';
 
 @Injectable({
   providedIn: 'root'
@@ -14,29 +14,29 @@ export class GrouptemplateService {
   constructor(private http: HttpClient) { }
 
   //Get
-  getAllGroupTemplates(): Observable<GroupTemplate[]>{
-    return this.http.get<GroupTemplate[]>(this.baseUrl);
+  getAllGroupTemplateDTOs(): Observable<GroupTemplateDTO[]>{
+    return this.http.get<GroupTemplateDTO[]>(this.baseUrl);
   }
 
-  getGroupTemplatesById(id: number): Observable<GroupTemplate>{
+  getGroupTemplateDTOsById(id: number): Observable<GroupTemplateDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<GroupTemplate>(apiUrl);
+    return this.http.get<GroupTemplateDTO>(apiUrl);
   }
 
   //Put
-  putGroupTemplate(id: number, postGroupTemplate: PostGroupTemplate): Observable<GroupTemplate>{
+  putGroupTemplateDTO(id: number, postGroupTemplateDTO: PostGroupTemplateDTO): Observable<GroupTemplateDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<GroupTemplate>(apiUrl, postGroupTemplate);
+    return this.http.put<GroupTemplateDTO>(apiUrl, postGroupTemplateDTO);
   }
 
   //Post
-  postGroupTemplate(postGroupTemplate: PostGroupTemplate): Observable<GroupTemplate>{
-    return this.http.post<GroupTemplate>(this.baseUrl, postGroupTemplate);
+  postGroupTemplateDTO(postGroupTemplateDTO: PostGroupTemplateDTO): Observable<GroupTemplateDTO>{
+    return this.http.post<GroupTemplateDTO>(this.baseUrl, postGroupTemplateDTO);
   }
 
   //Delete
-  deleteGroupTemplate(id: number): void{
+  deleteGroupTemplateDTO(id: number): Observable<void>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl);
+    return this.http.delete<void>(apiUrl);
   }
 }

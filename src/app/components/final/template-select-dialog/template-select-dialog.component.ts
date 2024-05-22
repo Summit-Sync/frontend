@@ -6,7 +6,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {CourseTemplate} from "../../../models/courseTemplate/CourseTemplate";
+import {CourseTemplateDTO} from "../../../models/courseTemplate/CourseTemplate";
 import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
 import {Observable} from "rxjs";
 import {CourseService} from "../../../services/course/course.service";
@@ -36,8 +36,8 @@ import {MatButton} from "@angular/material/button";
   styleUrl: './template-select-dialog.component.css'
 })
 export class TemplateSelectDialogComponent {
-  template$: Observable<CourseTemplate[] | GroupTemplate[]>;
-  courseTemplate: Observable<CourseTemplate[]>;
+  template$: Observable<CourseTemplateDTO[] | GroupTemplate[]>;
+  courseTemplate: Observable<CourseTemplateDTO[]>;
   selectedTemplateId: number;
   isCourse: boolean;
 

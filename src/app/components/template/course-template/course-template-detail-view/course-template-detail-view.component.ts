@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from "../../../utilities/multi-select-dropdown/multi-select-dropdown.component";
-import { CourseTemplate } from '../../../../models/courseTemplate/CourseTemplate';
+import { CourseTemplateDTO } from '../../../../models/courseTemplate/CourseTemplate';
 import { CheckboxList } from '../../../../models/interfaces/CheckBoxList';
 
 @Component({
@@ -15,9 +15,9 @@ import { CheckboxList } from '../../../../models/interfaces/CheckBoxList';
 })
 export class CourseTemplateDetailViewComponent {
 
-  courseTemplate: CourseTemplate
+  courseTemplate: CourseTemplateDTO
 
-  editableTemplate: CourseTemplate
+  editableTemplate: CourseTemplateDTO
 
   qualificationList: CheckboxList[];
   requiredQualifications: CheckboxList[];

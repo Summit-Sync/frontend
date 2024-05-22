@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Status} from "../../models/status/Status";
-import {PostStatus} from "../../models/status/PostStatus";
+import {StatusDTO} from "../../models/status/Status";
+import {PostStatusDTO} from "../../models/status/PostStatus";
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -13,24 +13,24 @@ export class StatusService {
   constructor(private http: HttpClient) { }
 
   //Get
-  getAllStatuses(): Observable<Status>{
-    return this.http.get<Status>(this.baseUrl);
+  getAllStatuses(): Observable<StatusDTO>{
+    return this.http.get<StatusDTO>(this.baseUrl);
   }
 
-  getStatusById(id: number): Observable<Status>{
+  getStatusById(id: number): Observable<StatusDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Status>(apiUrl);
+    return this.http.get<StatusDTO>(apiUrl);
   }
 
   //Put
-  putStatus(id: number, postStatus: PostStatus): Observable<Status>{
+  putStatus(id: number, postStatus: PostStatusDTO): Observable<StatusDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Status>(apiUrl, postStatus);
+    return this.http.put<StatusDTO>(apiUrl, postStatus);
   }
 
   //Post
-  postStatus(postStatus: PostStatus): Observable<Status>{
-    return this.http.post<Status>(this.baseUrl, postStatus);
+  postStatus(postStatus: PostStatusDTO): Observable<StatusDTO>{
+    return this.http.post<StatusDTO>(this.baseUrl, postStatus);
   }
 
   //Delete
