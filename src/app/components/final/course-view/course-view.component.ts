@@ -35,7 +35,7 @@ export class CourseViewComponent {
     this.participantListService.fillParticipantsList(
       this.viewData.waitList,
       this.viewData.numberWaitlist
-    );
+    )
   }
 
   cancel(): void {
