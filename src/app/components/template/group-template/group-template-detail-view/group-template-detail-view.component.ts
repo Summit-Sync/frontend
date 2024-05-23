@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GroupTemplateDTO } from '../../../../models/groupTemplate/GroupTemplate';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-group-template-detail-view',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule],
   templateUrl: './group-template-detail-view.component.html',
   styleUrl: './group-template-detail-view.component.css'
 })
