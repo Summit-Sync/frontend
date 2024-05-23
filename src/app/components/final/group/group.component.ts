@@ -20,6 +20,7 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {method} from "lodash";
 import {PostGroup} from "../../../models/group/PostGroup";
 import {PostContact} from "../../../models/contact/PostContact";
+import {ToastService} from "../../../services/toast/toast.service";
 
 @Component({
   selector: 'app-group',
@@ -38,7 +39,28 @@ import {PostContact} from "../../../models/contact/PostContact";
 export class GroupComponent implements OnInit {
   @Input() template: GroupTemplate | undefined;
   @Input() isCreate: boolean = false;
-
+  @Input() groupDataUpdate: Group =  new Group(
+      -999,
+      false,
+      '',
+      false,
+      '',
+      '',
+      '',
+      0,
+      0,
+      new Contact(0, '', '', '', ''),
+      [],
+      0,
+      new Location(0, '', '', '', '', '', '', '', ''),
+      '',
+      0,
+      0,
+      [],
+      0,
+      [],
+      0,
+  );
   allQualificationsCheck: CheckboxList[] = [];
   allTrainersCheck: CheckboxList[] = [];
   allLocationsCheck: CheckboxList[] = [];
@@ -70,29 +92,6 @@ export class GroupComponent implements OnInit {
     []
   )
 
-  groupDataUpdate: Group = new Group(
-    0,
-    false,
-    '',
-    false,
-    '',
-    '',
-    '',
-    0,
-    0,
-    new Contact(0, '', '', '', ''),
-    [],
-    0,
-    new Location(0, '', '', '', '', '', '', '', ''),
-    '',
-    0,
-    0,
-    [],
-    0,
-    [],
-    0,
-  );
-
   constructor(
     private groupService: GroupService,
     private qualificationService: QualificationsService,
@@ -101,17 +100,24 @@ export class GroupComponent implements OnInit {
     private checkBoxMapper: CheckboxListMapperService,
     private dateTimeMapper: DateTimeMapperService,
     private dialogRef: MatDialogRef<GroupComponent>,
-    public login: LoginService
+    public login: LoginService,
+    public toast: ToastService
   ) {
   }
 
   ngOnInit(): void {
     if (!this.isCreate) {
       // TODO: Edit Modus hier initialiseren
+      if (this.groupDataUpdate.id === -999){
+        this.toast.showErrorToast("Keine Gruppe ausgewählt");
+        this.dialogRef.close(JSON.stringify({method: 'cancel'}))
+      }
+
     } else {
       if (this.template) {
         this.groupDataCreate.createPostGroupFromTemplate(this.template)
       } else {
+        this.toast.showErrorToast("Vorlage nicht vorhanden");
         console.log("Template missing!");
       }
     }
@@ -167,7 +173,7 @@ export class GroupComponent implements OnInit {
     if (this.isCreate) {
       this.dateTimeMapper.mapDateTime(this.groupDataCreate.duration, this.groupDataCreate.events, this.mappedDateTime);
     } else {
-      this.dateTimeMapper.mapDateTime(this.groupDataUpdate.duration, this.groupDataUpdate.dates, this.mappedDateTime);
+      this.dateTimeMapper.mapDateTime(this.groupDataUpdate!.duration, this.groupDataUpdate!.dates, this.mappedDateTime);
     }
   }
 
@@ -175,7 +181,7 @@ export class GroupComponent implements OnInit {
     if (this.isCreate) {
       this.dateTimeMapper.addDate(this.groupDataCreate.duration, this.groupDataCreate.events, this.mappedDateTime);
     } else {
-      this.dateTimeMapper.addDate(this.groupDataUpdate.duration, this.groupDataUpdate.dates, this.mappedDateTime);
+      this.dateTimeMapper.addDate(this.groupDataUpdate!.duration, this.groupDataUpdate!.dates, this.mappedDateTime);
     }
   }
 
@@ -183,7 +189,7 @@ export class GroupComponent implements OnInit {
     if (this.isCreate) {
       this.groupDataCreate.events = this.dateTimeMapper.deleteDate(index, this.groupDataCreate.events, this.mappedDateTime);
     } else {
-      this.groupDataUpdate.dates = this.dateTimeMapper.deleteDate(index, this.groupDataUpdate.dates, this.mappedDateTime);
+      this.groupDataUpdate!.dates = this.dateTimeMapper.deleteDate(index, this.groupDataUpdate!.dates, this.mappedDateTime);
     }
     this.mappedDateTime.splice(index, 1);
   }
@@ -192,7 +198,7 @@ export class GroupComponent implements OnInit {
     if (this.isCreate) {
       this.groupDataCreate.events = this.dateTimeMapper.onDateChange(event, index, this.groupDataCreate.events, this.mappedDateTime);
     } else {
-      this.groupDataUpdate.dates = this.dateTimeMapper.onDateChange(event, index, this.groupDataUpdate.dates, this.mappedDateTime);
+      this.groupDataUpdate!.dates = this.dateTimeMapper.onDateChange(event, index, this.groupDataUpdate!.dates, this.mappedDateTime);
     }
   }
 
@@ -200,8 +206,34 @@ export class GroupComponent implements OnInit {
     if (this.isCreate) {
       this.groupDataCreate.events = this.dateTimeMapper.onStartTimeChange(event, index, this.groupDataCreate.duration, this.groupDataCreate.events, this.mappedDateTime);
     } else {
-      this.groupDataUpdate.dates = this.dateTimeMapper.onStartTimeChange(event, index, this.groupDataUpdate.duration, this.groupDataUpdate.dates, this.mappedDateTime);
+      this.groupDataUpdate!.dates = this.dateTimeMapper.onStartTimeChange(event, index, this.groupDataUpdate!.duration, this.groupDataUpdate!.dates, this.mappedDateTime);
     }
   }
 
 }
+
+
+/*
+groupDataUpdate: Group = new Group(
+    0,
+    false,
+    '',
+    false,
+    '',
+    '',
+    '',
+    0,
+    0,
+    new Contact(0, '', '', '', ''),
+    [],
+    0,
+    new Location(0, '', '', '', '', '', '', '', ''),
+    '',
+    0,
+    0,
+    [],
+    0,
+    [],
+    0,
+  );
+ */
