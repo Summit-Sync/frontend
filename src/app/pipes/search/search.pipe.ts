@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Course } from '../../models/course/Course';
-import { Group } from '../../models/group/Group';
+import { CourseDTO } from '../../models/course/Course';
+import { GroupDTO } from '../../models/group/Group';
 import { FilterOption } from '../../models/enums/search';
 import { cond } from 'lodash';
 
@@ -10,7 +10,7 @@ import { cond } from 'lodash';
 })
 export class SearchPipe implements PipeTransform {
   transform(
-    list: Course | Group,
+    list: CourseDTO | GroupDTO,
     selectedOption: FilterOption,
     condition: string,
     date1?: Date,
@@ -30,13 +30,13 @@ export class SearchPipe implements PipeTransform {
       case FilterOption.None:
         return true;
       case FilterOption.CourseAcronym:
-        return (list as Course).acronym.toLowerCase().includes(condition);
+        return (list as CourseDTO).acronym.toLowerCase().includes(condition);
       case FilterOption.FreeTrainerSpots:
-        return list.trainers.length < (list as Course).numberTrainers;
+        return list.trainers.length < (list as CourseDTO).numberTrainers;
       case FilterOption.FreeParticipantSpots:
-        return (list as Course).participants.length < list.numberParticipants;
+        return (list as CourseDTO).participants.length < list.numberParticipants;
       case FilterOption.NoParticipants:
-        return (list as Course).participants.length === 0;
+        return (list as CourseDTO).participants.length === 0;
       case FilterOption.StartDate:
         if (!date1 || !date2) {
           return true;

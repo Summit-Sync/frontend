@@ -6,16 +6,17 @@ import {
 } from "@angular/material/dialog";
 import { CommonModule } from '@angular/common';
 import { CheckboxList } from '../../../../models/interfaces/CheckBoxList';
-import { PostCategoryPrice } from '../../../../models/price/PostCategoryPrice';
-import { Qualification } from '../../../../models/qualification/Qualification';
-import { PostGroupTemplate } from '../../../../models/groupTemplate/PostGroupTemplate';
-import { GroupTemplate } from '../../../../models/groupTemplate/GroupTemplate';
-import { LocationService } from '../../../../services/location/location.service';
+import { PostCategoryPriceDTO } from '../../../../models/price/PostCategoryPriceDTO';
+import { QualificationDTO } from '../../../../models/qualification/QualificationDTO';
 import { QualificationsService } from '../../../../services/qualifications/qualifications.service';
-import { Location } from '../../../../models/location/Location';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from "../../../utilities/multi-select-dropdown/multi-select-dropdown.component";
-import { CheckboxListMapperService } from '../../../../services/checkBoxListMapper/checkbox-list-mapper.service';
+import { GroupTemplateDTO } from '../../../../models/groupTemplate/GroupTemplate';
+import { PostGroupTemplateDTO } from '../../../../models/groupTemplate/PostGroupTemplate';
+import { LocationService } from '../../../../services/location/location.service';
+import { LocationDTO } from '../../../../models/location/LocationDTO';
+import { PostGroupTemplateValidatorService } from '../../../../services/validation/group-template/post-group-template/post-group-template-validator.service';
+import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 
  @Component({
     selector: 'app-add-group-template',
@@ -25,9 +26,9 @@ import { CheckboxListMapperService } from '../../../../services/checkBoxListMapp
     imports: [CommonModule, FormsModule, MultiSelectDropdownComponent]
 })
  export class AddGroupTemplateComponent {
-  selectedGroupTemplate: GroupTemplate;
+  selectedGroupTemplate: GroupTemplateDTO;
 
-  groupTemplate: PostGroupTemplate;
+  groupTemplate: PostGroupTemplateDTO;
   isEdit: boolean;
 
   requiredQualifications: CheckboxList[] = [];
@@ -43,7 +44,8 @@ import { CheckboxListMapperService } from '../../../../services/checkBoxListMapp
     private locationService: LocationService,
     private checkBoxMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private qualificationService: QualificationsService
+    private qualificationService: QualificationsService,
+    private postGroupTemplateValidator: PostGroupTemplateValidatorService
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
@@ -69,14 +71,29 @@ import { CheckboxListMapperService } from '../../../../services/checkBoxListMapp
   ngOnInit() {
     this.isEdit = this.data.isEdit;
     this.selectedGroupTemplate = this.data.selectedTemplate;
-    let priceList: PostCategoryPrice[] = [];
+    let priceList: PostCategoryPriceDTO[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
-      priceList.push(new PostCategoryPrice('', 0));
+      let price:PostCategoryPriceDTO= {
+        name: '',
+        price: 0
+      }
+      priceList.push(price);
     }
     if (this.isEdit) {
       console.log(this.selectedGroupTemplate)
-      this.groupTemplate =
-        this.selectedGroupTemplate.createPostGroupTemplate();
+      this.groupTemplate = {
+          acronym: this.selectedGroupTemplate.acronym,
+          title: this.selectedGroupTemplate.title,
+          description: this.selectedGroupTemplate.description,
+          numberOfDates: this.selectedGroupTemplate.numberOfDates,
+          duration: this.selectedGroupTemplate.duration,
+          location: this.selectedGroupTemplate.location.locationId,
+          meetingPoint: this.selectedGroupTemplate.meetingPoint,
+          trainerPricePerHour: this.selectedGroupTemplate.trainerPricePerHour,
+          participantsPerTrainer: this.selectedGroupTemplate.participantsPerTrainer,
+          pricePerParticipant: this.selectedGroupTemplate.pricePerParticipant,
+          requiredQualificationList: this.selectedGroupTemplate.requiredQualificationList.map(q => q.id)
+        }
       console.log(this.groupTemplate);
       this.addSelectedLocation();
       this.addSelectedQualification();
@@ -97,7 +114,7 @@ import { CheckboxListMapperService } from '../../../../services/checkBoxListMapp
     this.groupTemplate.requiredQualificationList = qualificationIds;
     this.groupTemplate.location = location;
     console.log(this.groupTemplate);
-    if (this.groupTemplate.validate()) {
+    if (this.postGroupTemplateValidator.validate(this.groupTemplate)) {
       this.dialogRef.close(
         JSON.stringify({
           data: this.groupTemplate,
@@ -117,12 +134,12 @@ import { CheckboxListMapperService } from '../../../../services/checkBoxListMapp
     return this.checkBoxMapper.mapCheckboxListToNumberList(data);
   }
 
-  mapQualificationListToCheckboxList(data: Qualification[]): CheckboxList[] {
+  mapQualificationListToCheckboxList(data: QualificationDTO[]): CheckboxList[] {
     return this.checkBoxMapper.mapQualificationListToCheckboxList(data);
 
   }
 
-  mapLocationListToCheckboxList(data: Location[]): CheckboxList[] {
+  mapLocationListToCheckboxList(data: LocationDTO[]): CheckboxList[] {
     return this.checkBoxMapper.mapLocationListToCheckboxList(data);
   }
 

@@ -1,11 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 
 interface AccessTokenResponse {
   accessToken: string,
   expiresIn: number,
   role: string
+  refreshTokenExpiresIn: string
 }
 
 @Injectable({
@@ -16,6 +17,15 @@ export class LoginService {
   private accessToken: AccessTokenResponse | null = null;
   constructor(private httpClient: HttpClient) { };
 
+  public getOrRefreshAccessToken(): Observable<AccessTokenResponse> {
+    if (!this.accessToken || this.accessToken.expiresIn <= 10) {
+      console.log("no access token, or expired, refreshing...")
+      return this.doLogin()
+    }
+
+    return of(this.accessToken)
+  }
+
   get getAccessToken() {
     if (!this.accessToken) {
       return null;
@@ -24,7 +34,6 @@ export class LoginService {
     if (this.accessToken.expiresIn <= 10) {
       this.accessToken = null;
       this.loggedIn = false;
-
       return null;
     }
 
@@ -42,8 +51,9 @@ export class LoginService {
   public doLogin() {
     return this.httpClient.get<AccessTokenResponse>("http://localhost:8080/auth/access_token", {withCredentials: true})
       .pipe(
-        catchError(this.handleAccessTokenError),
+        catchError((err) => this.handleAccessTokenError(err, this)),
         map(res => {
+          console.log('successful response from the bff access token endpoint')
           this.accessToken = res;
           this.loggedIn = true;
 
@@ -52,8 +62,12 @@ export class LoginService {
       )
   }
 
-  private handleAccessTokenError(error: HttpErrorResponse) {
+  private handleAccessTokenError(error: HttpErrorResponse, that: LoginService) {
+    console.log(`bff access token returned a non success response: ${error.status}`)
+    that.accessToken = null;
+    that.loggedIn = false;
     if (error.status === 400) {
+      console.log('error is 400, redirect to auth url')
       window.location.href = "http://localhost:8080/auth/authorization_url"
     }
 

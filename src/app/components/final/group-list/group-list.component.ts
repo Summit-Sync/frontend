@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
-import {Group} from '../../../models/group/Group';
-import {Observable, of} from 'rxjs';
-import {GroupService} from '../../../services/group/group.service';
-import {CommonModule} from '@angular/common';
+import { Component } from '@angular/core';
+import { GroupDTO } from '../../../models/group/Group';
+import { Observable, of } from 'rxjs';
+import { GroupService } from '../../../services/group/group.service';
+import { CommonModule } from '@angular/common';
 import {MatDialog} from "@angular/material/dialog";
 import {ToastService} from "../../../services/toast/toast.service";
 import {AddQualificationComponent} from "../add-qualification/add-qualification.component";
 import {GroupComponent} from "../group/group.component";
 import {ShortGroupListComponent} from "../../template/short-group-list/short-group-list.component";
 import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
+
 
 @Component({
   selector: 'app-group-list',
@@ -19,7 +20,7 @@ import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
 })
 export class GroupListComponent {
   //groups: Observable<Group[]> = of([]);
-  group$: Observable<Group[]>;
+  group$: Observable<GroupDTO[]>;
 
   constructor(
     public groupService: GroupService,
@@ -95,7 +96,5 @@ export class GroupListComponent {
 
   showEdit(group: Group) {
   }
-
-  delete(group: Group) {
-  }
+  delete(group: GroupDTO) {}
 }

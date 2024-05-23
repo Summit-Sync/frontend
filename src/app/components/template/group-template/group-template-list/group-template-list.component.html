@@ -13,6 +13,7 @@
         <th>Ort</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
+        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -23,8 +24,9 @@
         <td>{{template.pricePerParticipant}}</td>
         <td>{{template.trainerPricePerHour}}</td>
         <td>{{template.location.title}}</td>
-        <td><button>Bearbeiten</button></td>
-        <td><button>Löschen</button></td>
+        <td><button (click)="editTemplate(template)">Bearbeiten</button></td>
+        <td><button (click)="deleteTemplate(template.id)">Löschen</button></td>
+        <td><button (click)="viewDetails(template)">Details</button></td>
       </tr>
     </tbody>
   </table>

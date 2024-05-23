@@ -12,15 +12,9 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const loginService = inject(LoginService);
-  var token = loginService.getAccessToken;
-  if (token !== null) {
-    console.log('token not null, injecting');
-    return next(addHeader(req, token.accessToken));
-  }
-
-  return loginService.doLogin().pipe(
+  return loginService.getOrRefreshAccessToken().pipe(
     switchMap(token => {
-      return next(addHeader(req, token.accessToken));
+      return next(addHeader(req, token.accessToken))
     })
   )
 };

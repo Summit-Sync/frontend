@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Location } from '../../../../models/location/Location';
+import { LocationDTO } from '../../../../models/location/LocationDTO';
 
 @Component({
   selector: 'app-location-detail-view',
@@ -11,7 +11,7 @@ import { Location } from '../../../../models/location/Location';
 })
 export class LocationDetailViewComponent {
 
-  selectedLocation: Location;
+  selectedLocation: LocationDTO;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

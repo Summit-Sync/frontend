@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Course} from "../../models/course/Course";
-import {Group} from "../../models/group/Group";
+import {CourseDTO} from "../../models/course/Course";
+import {GroupDTO} from "../../models/group/Group";
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -14,47 +14,47 @@ export class TrainerApplicationService {
   constructor(private http: HttpClient) { }
 
   //Get
-  getCoursesByTrainerId(id: number): Observable<Course[]>{
+  getCoursesByTrainerId(id: number): Observable<CourseDTO[]>{
     const apiUrl: string = `${this.baseUrl}/${id}/course`;
-    return this.http.get<Course[]>(apiUrl);
+    return this.http.get<CourseDTO[]>(apiUrl);
   }
 
-  getGroupsByTrainerId(id: number): Observable<Group[]>{
+  getGroupsByTrainerId(id: number): Observable<GroupDTO[]>{
     const apiUrl: string = `${this.baseUrl}/${id}/group`;
-    return this.http.get<Group[]>(apiUrl);
+    return this.http.get<GroupDTO[]>(apiUrl);
   }
 
   //Put
-  putTrainerIntoCourseById(trainerId: number, courseId: number): Observable<Course>{
+  putTrainerIntoCourseById(trainerId: number, courseId: number): Observable<CourseDTO>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/course/${courseId}`;
-    return this.http.put<Course>(apiUrl, trainerId);
+    return this.http.put<CourseDTO>(apiUrl, trainerId);
   }
 
-  putTrainerIntoGroupById(trainerId: number, groupId: number): Observable<Group>{
+  putTrainerIntoGroupById(trainerId: number, groupId: number): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/group/${groupId}`;
-    return this.http.put<Group>(apiUrl, trainerId);
+    return this.http.put<GroupDTO>(apiUrl, trainerId);
   }
 
   //Approve
-  putTrainerIntoCourseApprove(trainerId: number, courseId: number): Observable<Course>{
+  putTrainerIntoCourseApprove(trainerId: number, courseId: number): Observable<CourseDTO>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/course/${courseId}/approve`;
-    return this.http.put<Course>(apiUrl, trainerId);
+    return this.http.put<CourseDTO>(apiUrl, trainerId);
   }
 
-  putTrainerIntoGroupApprove(trainerId: number, groupId: number): Observable<Group>{
+  putTrainerIntoGroupApprove(trainerId: number, groupId: number): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/group/${groupId}/approve`;
-    return this.http.put<Group>(apiUrl, trainerId);
+    return this.http.put<GroupDTO>(apiUrl, trainerId);
   }
 
   //Reject
-  putTrainerIntoCourseReject(trainerId: number, courseId: number): Observable<Course>{
+  putTrainerIntoCourseReject(trainerId: number, courseId: number): Observable<CourseDTO>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/course/${courseId}/reject`;
-    return this.http.put<Course>(apiUrl, trainerId);
+    return this.http.put<CourseDTO>(apiUrl, trainerId);
   }
 
-  putTrainerIntoGroupReject(trainerId: number, groupId: number): Observable<Group>{
+  putTrainerIntoGroupReject(trainerId: number, groupId: number): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${trainerId}/group/${groupId}/reject`;
-    return this.http.put<Group>(apiUrl, trainerId);
+    return this.http.put<GroupDTO>(apiUrl, trainerId);
   }
 
 }

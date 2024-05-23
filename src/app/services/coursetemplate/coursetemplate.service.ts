@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { CourseTemplate } from '../../models/courseTemplate/CourseTemplate';
-import { Location } from '../../models/location/Location';
-import { PostCourseTemplate } from '../../models/courseTemplate/PostCourseTemplate';
-import { Qualification } from '../../models/qualification/Qualification';
-import { CategoryPrice } from '../../models/price/CategoryPrice';
+import { CourseTemplateDTO } from '../../models/courseTemplate/CourseTemplate';
+import { PostCourseTemplateDTO } from '../../models/courseTemplate/PostCourseTemplate';
+import { QualificationDTO } from '../../models/qualification/QualificationDTO';
+import { CategoryPriceDTO } from '../../models/price/CategoryPriceDTO';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -17,34 +16,34 @@ export class CoursetemplateService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllCourseTemplates(): Observable<CourseTemplate[]> {
-    return this.http.get<CourseTemplate[]>(this.baseUrl);
+  getAllCourseTemplates(): Observable<CourseTemplateDTO[]> {
+    return this.http.get<CourseTemplateDTO[]>(this.baseUrl);
   }
 
-  getCourseTemplateById(id: string): Observable<CourseTemplate> {
-    return this.http.get<CourseTemplate>(`${this.baseUrl}/${id}`);
+  getCourseTemplateById(id: string): Observable<CourseTemplateDTO> {
+    return this.http.get<CourseTemplateDTO>(`${this.baseUrl}/${id}`);
   }
 
   //Put
   putCourseTemplate(
-    template: PostCourseTemplate,
+    template: PostCourseTemplateDTO,
     id: number
-  ): Observable<CourseTemplate> {
-    return this.http.put<CourseTemplate>(`${this.baseUrl}/${id}`, template);
+  ): Observable<CourseTemplateDTO> {
+    return this.http.put<CourseTemplateDTO>(`${this.baseUrl}/${id}`, template);
   }
 
   //Post
-  postCourseTemplate(template: PostCourseTemplate): Observable<CourseTemplate> {
-    return this.http.post<CourseTemplate>(this.baseUrl, template);
+  postCourseTemplate(template: PostCourseTemplateDTO): Observable<CourseTemplateDTO> {
+    return this.http.post<CourseTemplateDTO>(this.baseUrl, template);
   }
 
   postQualificationToCourseTemplate(
     courseId: number,
     qualiId: number,
-    postCourse: PostCourseTemplate
-  ): Observable<CourseTemplate> {
+    postCourse: PostCourseTemplateDTO
+  ): Observable<CourseTemplateDTO> {
     const apiUrl: string = `${this.baseUrl}/${courseId}/qualification/${qualiId}`;
-    return this.http.post<CourseTemplate>(apiUrl, postCourse);
+    return this.http.post<CourseTemplateDTO>(apiUrl, postCourse);
   }
 
   //Delete
@@ -55,8 +54,8 @@ export class CoursetemplateService {
   deleteQualificationFromCourseTemplate(
     courseId: number,
     qualiId: number
-  ): Observable<CourseTemplate> {
+  ): Observable<CourseTemplateDTO> {
     const apiUrl: string = `${this.baseUrl}/${courseId}/qualification/${qualiId}`;
-    return this.http.delete<CourseTemplate>(apiUrl);
+    return this.http.delete<CourseTemplateDTO>(apiUrl);
   }
 }

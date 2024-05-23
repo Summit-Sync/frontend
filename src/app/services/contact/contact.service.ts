@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Contact} from "../../models/contact/Contact";
-import {PostContact} from "../../models/contact/PostContact";
+import {ContactDTO} from "../../models/contact/Contact";
+import {PostContactDTO} from "../../models/contact/PostContact";
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -13,24 +13,24 @@ export class ContactService {
   constructor(private http: HttpClient) { }
 
   //Get
-  getAllContacts(): Observable<Contact>{
-    return this.http.get<Contact>(this.baseUrl);
+  getAllContacts(): Observable<ContactDTO>{
+    return this.http.get<ContactDTO>(this.baseUrl);
   }
 
-  getContactById(id: number): Observable<Contact>{
+  getContactById(id: number): Observable<ContactDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Contact>(apiUrl);
+    return this.http.get<ContactDTO>(apiUrl);
   }
 
   //Put
-  putContact(id: number, postContact: PostContact): Observable<Contact>{
+  putContact(id: number, postContact: PostContactDTO): Observable<ContactDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Contact>(apiUrl, postContact);
+    return this.http.put<ContactDTO>(apiUrl, postContact);
   }
 
   //Post
-  postContact(postContact: PostContact): Observable<Contact>{
-    return this.http.post<Contact>(this.baseUrl, postContact);
+  postContact(postContact: PostContactDTO): Observable<ContactDTO>{
+    return this.http.post<ContactDTO>(this.baseUrl, postContact);
   }
 
   //Delete

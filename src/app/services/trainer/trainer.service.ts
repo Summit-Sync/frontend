@@ -1,50 +1,49 @@
 import { Injectable } from '@angular/core';
-import { Trainer } from '../../models/trainer/Trainer';
+import { TrainerDTO } from '../../models/trainer/Trainer';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { PostTrainer } from '../../models/trainer/PostTrainer';
-import { Course } from '../../models/course/Course';
+import { PostTrainerDTO } from '../../models/trainer/PostTrainer';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrainerService {
-  public currentTrainer: BehaviorSubject<Trainer | null> =
-    new BehaviorSubject<Trainer | null>(null);
+  public currentTrainer: BehaviorSubject<TrainerDTO | null> =
+    new BehaviorSubject<TrainerDTO | null>(null);
 
   constructor(private http: HttpClient) {}
 
   baseUrl: string = `${environment.serviceUrl}/trainer`;
 
   //Get
-  getAllTrainers(): Observable<Trainer[]> {
-    return this.http.get<Trainer[]>(this.baseUrl);
+  getAllTrainers(): Observable<TrainerDTO[]> {
+    return this.http.get<TrainerDTO[]>(this.baseUrl);
   }
 
-  getTrainerById(id: number): Observable<Trainer> {
+  getTrainerById(id: number): Observable<TrainerDTO> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Trainer>(apiUrl);
+    return this.http.get<TrainerDTO>(apiUrl);
   }
 
   //Put
-  putTrainer(id: number, Trainer: Trainer): Observable<Trainer> {
+  putTrainer(id: number, Trainer: TrainerDTO): Observable<TrainerDTO> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Trainer>(apiUrl, Trainer);
+    return this.http.put<TrainerDTO>(apiUrl, Trainer);
   }
 
   //Post
-  postTrainer(trainerToPost: PostTrainer): Observable<Trainer> {
+  postTrainer(trainerToPost: PostTrainerDTO): Observable<TrainerDTO> {
     const apiUrl: string = `${this.baseUrl}`;
-    return this.http.post<Trainer>(apiUrl, trainerToPost);
+    return this.http.post<TrainerDTO>(apiUrl, trainerToPost);
   }
 
   postQualificationOfTrainerById(
     trainerId: number,
     qualificationId: number
-  ): Observable<Trainer> {
+  ): Observable<TrainerDTO> {
     const apiUrl: string = `${this.baseUrl}/${trainerId}/qualification/${qualificationId}`;
-    return this.http.post<Trainer>(apiUrl, qualificationId);
+    return this.http.post<TrainerDTO>(apiUrl, qualificationId);
   }
 
   //Delete
@@ -56,12 +55,12 @@ export class TrainerService {
   deleteQualificationOfTrainerById(
     trainerId: number,
     qualificationId: number
-  ): Observable<Trainer> {
+  ): Observable<TrainerDTO> {
     const apiUrl: string = `${this.baseUrl}/${trainerId}/qualification/${qualificationId}`;
-    return this.http.delete<Trainer>(apiUrl);
+    return this.http.delete<TrainerDTO>(apiUrl);
   }
 
-  updateTrainerDetails(trainer: Trainer): void {
+  updateTrainerDetails(trainer: TrainerDTO): void {
     console.log('Current trainer updated: ' + trainer);
     this.currentTrainer.next(trainer);
   }
