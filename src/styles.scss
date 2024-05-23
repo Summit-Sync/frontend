@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --hover-color: #ffbf00;
+  --klz-bg-color: #ffc932;
+}
+
+.tableWrapper {
+  height: 300px;
+  width: fit-content;
+  margin: 0 auto;
+  table {
+    margin: 0 auto;
+    border: var(--klz-bg-color) solid 2px;
+    th, td {
+      padding: 0 2px;
+      border: var(--klz-bg-color) solid 2px;
+    }
+    td {
+      text-align: center;
+    }
+  }
+}
