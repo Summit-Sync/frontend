@@ -20,8 +20,11 @@ import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
 import { PostCourseDTO } from '../../../models/course/PostCourse';
 import { UpdateCourseDTO } from '../../../models/course/UpdateCourse';
 import { LocationDTO } from '../../../models/location/LocationDTO';
-import { CheckboxListMapperService } from '../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 import { TrainerDTO } from '../../../models/trainer/Trainer';
+import { UpdateCourseValidatorService } from '../../../services/validation/course/update-course/update-course-validator.service';
+import { PostCourseValidatorService } from '../../../services/validation/course/post-course/post-course-validator.service';
+import { CheckboxListMapperService } from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
+import { ParticipantListServiceService } from '../../../services/participant-list-service/participant-list-service.service';
 
 @Component({
   selector: 'app-course',
@@ -42,12 +45,12 @@ export class CourseComponent implements OnInit {
 
   allCheckboxListQualifications: CheckboxList[] = [];
   allCheckboxListTrainers: CheckboxList[] = [];
-  allCheckboxListLocationDTOs: CheckboxList[] = [];
+  allCheckboxListLocations: CheckboxList[] = [];
   selectedQualifications: CheckboxList[] = [];
   selectedTrainers: CheckboxList[] = [];
-  selectedLocationDTOs: CheckboxList[] = [];
+  selectedLocations: CheckboxList[] = [];
 
-  allLocationDTOs: LocationDTO[];
+  allLocations: LocationDTO[];
   allQualifications: QualificationDTO[];
   allTrainers: TrainerDTO[];
 
@@ -94,7 +97,10 @@ export class CourseComponent implements OnInit {
     public locationService: LocationService,
     public checkBoxListMapper: CheckboxListMapperService,
     private dateTimeMapper: DateTimeMapperService,
-    private dialogRef: MatDialogRef<CourseComponent>
+    private dialogRef: MatDialogRef<CourseComponent>,
+    private updateCourseValidator: UpdateCourseValidatorService,
+    private postCourseValidator: PostCourseValidatorService,
+    private participantListService: ParticipantListServiceService
   ) {}
 
   ngOnInit(): void {
@@ -104,12 +110,42 @@ export class CourseComponent implements OnInit {
           console.error('no course to show');
           return;
         }
-        this.courseData.createCopy(c);
-        // this.fillDatesList();
       });
     } else {
       if (this.courseTemplate) {
-        this.courseData.createCourseFromTemplate(this.courseTemplate);
+        this.courseData = {
+          id: 0,
+          title: this.courseTemplate.title,
+          acronym: this.courseTemplate.acronym,
+          courseNumber: '',
+          description: this.courseTemplate.description,
+          dates: [],
+          duration: this.courseTemplate.duration,
+          participants: [],
+          waitList: [],
+          numberParticipants: this.courseTemplate.numberParticipants,
+          numberWaitlist: this.courseTemplate.numberWaitlist,
+          numberTrainers: this.courseTemplate.numberTrainers,
+          prices: this.courseTemplate.price,
+          location: {
+            locationId: this.courseTemplate.location.locationId,
+            city: this.courseTemplate.location.city,
+            street: this.courseTemplate.location.street,
+            title: this.courseTemplate.location.title,
+            postCode: this.courseTemplate.location.postCode,
+            country: this.courseTemplate.location.country,
+            email: this.courseTemplate.location.email,
+            phone: this.courseTemplate.location.phone,
+            mapsUrl: this.courseTemplate.location.mapsUrl
+          },
+          meetingPoint: this.courseTemplate.meetingPoint,
+          notes:'',
+          requiredQualifications: this.courseTemplate.requiredQualifications,
+          canceled: false,
+          finished: false,
+          visible: false,
+          trainers: []
+        }
       } else {
         console.error('Template missing!');
       }
@@ -117,11 +153,11 @@ export class CourseComponent implements OnInit {
     this.mapAllListsToCheckboxLists();
     this.mapSelectedListsToCheckBoxLists();
 
-    this.courseData.fillParticipantsList(
+    this.participantListService.fillParticipantsList(
       this.courseData.participants,
       this.courseData.numberParticipants
     );
-    this.courseData.fillParticipantsList(
+    this.participantListService.fillParticipantsList(
       this.courseData.waitList,
       this.courseData.numberWaitlist
     );
@@ -130,7 +166,7 @@ export class CourseComponent implements OnInit {
   }
 
   mapSelectedListsToCheckBoxLists() {
-    this.selectedLocationDTOs =
+    this.selectedLocations =
       this.checkBoxListMapper.mapSingleLocationToCheckboxList(
         this.courseData.location
       );
@@ -155,10 +191,10 @@ export class CourseComponent implements OnInit {
         this.checkBoxListMapper.mapTrainerListToCheckboxList(t);
       this.allTrainers = t;
     });
-    this.locationService.getAllLocationDTOs().subscribe((l) => {
-      this.allCheckboxListLocationDTOs =
+    this.locationService.getAllLocations().subscribe((l) => {
+      this.allCheckboxListLocations =
         this.checkBoxListMapper.mapLocationListToCheckboxList(l);
-      this.allLocationDTOs = l;
+      this.allLocations = l;
     });
   }
 
@@ -266,8 +302,8 @@ export class CourseComponent implements OnInit {
   }
 
   save(): void {
-    this.courseData.location = this.allLocationDTOs.find((location) => {
-      return location.locationId == this.selectedLocationDTOs[0].id;
+    this.courseData.location = this.allLocations.find((location) => {
+      return location.locationId == this.selectedLocations[0].id;
     })!;
     this.courseData.requiredQualifications = [];
     this.selectedQualifications.forEach((sQual) => {
@@ -316,18 +352,16 @@ export class CourseComponent implements OnInit {
       waitList: this.courseData.waitList,
       participants: this.courseData.participants
     }
-    // this.courseData.CourseToUpdateCourse();
-    if (updateCourse.validate()) {
+    if (this.updateCourseValidator.validate(updateCourse)) {
       this.courseService
         .putCourseDetail(this.courseData.id, updateCourse)
         .subscribe({
           next: (response) => {
             console.log('Course has been updated', this.courseData);
-            this.courseData.deleteEmptyParticipants(
+            this.participantListService.deleteEmptyParticipants(
               this.courseData.participants
             );
-            this.courseData.deleteEmptyParticipants(this.courseData.waitList);
-            // this.addMissingBackendData();
+            this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
           },
           error: (error) => console.error('Course could not be updated'),
           complete: () =>
@@ -337,13 +371,31 @@ export class CourseComponent implements OnInit {
   }
 
   saveCreated(): void {
-    let postCourse: PostCourseDTO = this.courseData.CourseToPostCourse();
-    if (postCourse.validate()) {
+    let postCourse: PostCourseDTO = {
+      visible: this.courseData.visible,
+      acronym: this.courseData.acronym,
+      title: this.courseData.title,
+      description: this.courseData.description,
+      dates: this.courseData.dates,
+      duration: this.courseData.duration,
+      numberParticipants: this.courseData.numberParticipants,
+      numberWaitlist: this.courseData.numberWaitlist,
+      prices: this.courseData.prices,
+      location: this.courseData.location.locationId,
+      meetingPoint: this.courseData.meetingPoint,
+      requiredQualifications: this.courseData.requiredQualifications.map(q=>q.id),
+      numberTrainers: this.courseData.numberTrainers,
+      notes: this.courseData.notes,
+      trainers: this.courseData.trainers,
+      participants: this.courseData.participants,
+      waitList: this.courseData.waitList
+    }
+    if (this.postCourseValidator.validate(postCourse)) {
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
-          this.courseData.deleteEmptyParticipants(this.courseData.participants);
-          this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+          this.participantListService.deleteEmptyParticipants(this.courseData.participants);
+          this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
         },
         error: (error) => console.error('Course could not be created'),
         complete: () =>
@@ -353,8 +405,8 @@ export class CourseComponent implements OnInit {
   }
 
   cancel(): void {
-    this.courseData.deleteEmptyParticipants(this.courseData.participants);
-    this.courseData.deleteEmptyParticipants(this.courseData.waitList);
+    this.participantListService.deleteEmptyParticipants(this.courseData.participants);
+    this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
 

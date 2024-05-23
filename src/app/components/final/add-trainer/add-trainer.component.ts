@@ -1,18 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgForOf, NgIf} from "@angular/common";
 import {TrainerService} from "../../../services/trainer/trainer.service";
-import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
-import {Trainer} from "../../../models/trainer/Trainer";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
-import {PostTrainer} from "../../../models/trainer/PostTrainer";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
 import {CheckboxList} from '../../../models/interfaces/CheckBoxList';
-import {CheckboxListMapperService} from "../../../services/checkBoxListMapper/checkbox-list-mapper.service";
+import {CheckboxListMapperService} from "../../../services/check-box-list-mapper/checkbox-list-mapper.service";
+import { PostTrainerDTO } from '../../../models/trainer/PostTrainer';
+import { TrainerDTO } from '../../../models/trainer/Trainer';
+import { PostTrainerValidatorService } from '../../../services/validation/trainer/post-trainer/post-trainer-validator.service';
+import { TrainerValidatorService } from '../../../services/validation/trainer/trainer/trainer-validator.service';
 
 @Component({
   selector: 'app-add-trainer',
@@ -37,24 +38,25 @@ import {CheckboxListMapperService} from "../../../services/checkBoxListMapper/ch
 export class AddTrainerComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
-  @Input() trainerData: Trainer;
+  @Input() trainerData: TrainerDTO;
   allQualification: CheckboxList[];
   selectedQualification: CheckboxList[] = [];
-  createTrainerData: PostTrainer = new PostTrainer(
-    '',
-    '',
-    '',
-    '',
-    '',
-    ''
-  )
-
+  createTrainerData: PostTrainerDTO = {
+    username: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    email: '',
+    phone: ''
+  }
 
   constructor(
     private dialogRef: MatDialogRef<AddTrainerComponent>,
     private trainerService: TrainerService,
     private qualificationService: QualificationsService,
-    private checkBoxMapper: CheckboxListMapperService
+    private checkBoxMapper: CheckboxListMapperService,
+    private postTrainerValidator: PostTrainerValidatorService,
+    private trainerValidator: TrainerValidatorService
   ) {
 
 
@@ -72,7 +74,7 @@ export class AddTrainerComponent implements OnInit {
 
   saveCreate(): void {
     console.log("Created: ", this.createTrainerData);
-    if (this.createTrainerData.validate()) {
+    if (this.postTrainerValidator.validate(this.createTrainerData)) {
       this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.createTrainerData}));
     }
   }
@@ -80,11 +82,10 @@ export class AddTrainerComponent implements OnInit {
   saveUpdate(): void {
     console.log(this.allQualification);
     console.log(this.trainerData.qualifications);
-    //this.trainerData.qualification[] = this.selectedQualification;
     console.log('updated: ', this.trainerData);
     this.trainerData.qualifications = this.checkBoxMapper.mapCheckboxListToQualificationList(this.selectedQualification);
-    this.trainerData = new Trainer(this.trainerData.id, this.trainerData.subjectId, this.trainerData.firstName, this.trainerData.lastName, this.trainerData.email, this.trainerData.phone, this.trainerData.qualifications)
-    if (this.trainerData.validate()) {
+    // this.trainerData = new Trainer(this.trainerData.id, this.trainerData.subjectId, this.trainerData.firstName, this.trainerData.lastName, this.trainerData.email, this.trainerData.phone, this.trainerData.qualifications)
+    if (this.trainerValidator.validate(this.trainerData)) {
       this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.trainerData}));
     }
   }

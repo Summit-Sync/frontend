@@ -30,23 +30,4 @@ export interface CourseDTO {
   visible: boolean,
   canceled: boolean,
   finished: boolean
-
-  // deleteEmptyParticipants(participantsList: ParticipantDTO[]) {
-  //   participantsList.splice(
-  //     0,
-  //     participantsList.length,
-  //     ...participantsList.filter((p) => p.firstName !== '')
-  //   );
-  // }
-
-  // fillParticipantsList(
-  //   participantsList: ParticipantDTO[],
-  //   maxParticipants: number
-  // ): void {
-  //   for (let i = participantsList.length; i < maxParticipants; i++) {
-  //     participantsList.push(
-  //       new Participant(i, '', '', new Status(0, ''), '', '')
-  //     );
-  //   }
-  // }
 }

@@ -11,12 +11,12 @@ import { QualificationDTO } from '../../../../models/qualification/Qualification
 import { QualificationsService } from '../../../../services/qualifications/qualifications.service';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectDropdownComponent } from "../../../utilities/multi-select-dropdown/multi-select-dropdown.component";
-import { CheckboxListMapperService } from '../../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 import { GroupTemplateDTO } from '../../../../models/groupTemplate/GroupTemplate';
 import { PostGroupTemplateDTO } from '../../../../models/groupTemplate/PostGroupTemplate';
 import { LocationService } from '../../../../services/location/location.service';
 import { LocationDTO } from '../../../../models/location/LocationDTO';
 import { PostGroupTemplateValidatorService } from '../../../../services/validation/group-template/post-group-template/post-group-template-validator.service';
+import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 
  @Component({
     selector: 'app-add-group-template',
@@ -55,7 +55,7 @@ import { PostGroupTemplateValidatorService } from '../../../../services/validati
       }
     });
     locationService
-      .getAllLocationDTOs()
+      .getAllLocations()
       .subscribe(
         data => (this.locationList = this.mapLocationListToCheckboxList(data))
       );

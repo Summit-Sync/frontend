@@ -38,12 +38,13 @@ export class CourseTemplateListComponent {
   }
 
   editTemplate(template: CourseTemplateDTO){
+
     const dialogRef = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,
       width: '40dvw',
       height: '80dvh',
       data: {
-        selectedTemplate: new CourseTemplate(template.id,template.title,template.acronym, template.description, template.numberOfDates, template.duration, template.numberParticipants, template.numberWaitlist, template.price, template.meetingPoint, template.requiredQualifications, template.numberTrainers, template.location),
+        selectedTemplate: template,
         isEdit: true
       }
     });
@@ -57,6 +58,8 @@ export class CourseTemplateListComponent {
           error: (error) => console.error('Template could not be updated'),
           complete: () => this.updateList()   
         })
+      }else {
+        this.updateList();
       }
     })
   }
@@ -82,14 +85,32 @@ export class CourseTemplateListComponent {
   openCreateDialog(){
     let priceList: PostCategoryPriceDTO[] = [];
     for(let x=0; x<3;x++){
-      priceList.push(new PostCategoryPriceDTO('',0))
+      let p:PostCategoryPriceDTO = {
+        name: '',
+        price: 0
+      }
+      priceList.push(p)
+    }
+    let template: PostCourseTemplateDTO = {
+      acronym: '',
+      title: '',
+      description: '',
+      numberOfDates: 0,
+      numberParticipants: 0,
+      numberWaitlist: 0,
+      duration: 0,
+      numberTrainers: 0,
+      location: 0,
+      meetingPoint: '',
+      price: priceList,
+      requiredQualifications: []
     }
     const dialogref = this.dialog.open(AddCourseTemplateComponent,{
       disableClose: true,
       width: '40dvw',
       height: '80dvh',
       data: {
-        template: new PostCourseTemplate('','','',0,0,0,0,0,'',priceList,[],0),
+        template: template,
         isEdit: false
       }
     });
@@ -101,8 +122,10 @@ export class CourseTemplateListComponent {
         this.courseTemplateService.postCourseTemplate(obj.data,).subscribe({
           next: (response) => console.log('Template has been created'),
           error: (error) => console.error('Template could not be created'),
-          complete: () => this.updateList   
+          complete: () => this.updateList()   
         })
+      } else {
+        this.updateList();
       }
     })
   }

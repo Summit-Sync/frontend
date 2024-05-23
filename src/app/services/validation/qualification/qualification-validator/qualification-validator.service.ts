@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QualificationDTO } from '../../../models/qualification/QualificationDTO';
+import { QualificationDTO } from '../../../../models/qualification/QualificationDTO';
 
 @Injectable({
   providedIn: 'root'
