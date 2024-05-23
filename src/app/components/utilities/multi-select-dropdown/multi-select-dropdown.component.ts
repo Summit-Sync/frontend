@@ -26,7 +26,7 @@ export class MultiSelectDropdownComponent implements OnInit, OnChanges {
     @Input() selectedOptions: CheckboxList[];
     @Input() dropdownHeadline: string;
     @Input() allowMultiple: boolean;
-    @Input() allowedEntries: number;
+    @Input() allowedEntries: number = 999999999999999;
     checkedBoxes: boolean[] = [];
     showList: boolean = false;
 

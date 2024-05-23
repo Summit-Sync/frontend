@@ -1,26 +1,26 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
 import {MultiSelectDropdownComponent} from "../../utilities/multi-select-dropdown/multi-select-dropdown.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {Group} from "../../../models/group/Group";
-import {Contact} from "../../../models/contact/Contact";
-import {Location} from '../../../models/location/Location';
+import {LocationDTO} from '../../../models/location/LocationDTO';
 import {CheckboxList} from "../../../models/interfaces/CheckBoxList";
-import {Qualification} from "../../../models/qualification/Qualification";
-import {Trainer} from "../../../models/trainer/Trainer";
+import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
 import {GroupService} from "../../../services/group/group.service";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {LocationService} from "../../../services/location/location.service";
 import {DateTimeMapperService} from "../../../services/dateTimeMapper/date-time-mapper.service";
 import {MatDialogRef} from "@angular/material/dialog";
-import {CheckboxListMapperService} from "../../../services/checkBoxListMapper/checkbox-list-mapper.service";
 import {LoginService} from "../../../services/login/login.service";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {method} from "lodash";
-import {PostGroup} from "../../../models/group/PostGroup";
-import {PostContact} from "../../../models/contact/PostContact";
 import {ToastService} from "../../../services/toast/toast.service";
+import {GroupDTO} from "../../../models/group/Group";
+import {UpdateGroupDTO} from "../../../models/group/UpdateGroup";
+import {TrainerDTO} from "../../../models/trainer/Trainer";
+import {GroupTemplateDTO} from "../../../models/groupTemplate/GroupTemplate";
+import {PostGroupDTO} from "../../../models/group/PostGroup";
+import {CheckboxListMapperService} from "../../../services/check-box-list-mapper/checkbox-list-mapper.service";
+import {TrainerApplicationDTO} from "../../../models/trainer/TrainerApplication";
+import {PostGroupValidatorService} from "../../../services/validation/group/post-group/post-group-validator.service";
 
 @Component({
   selector: 'app-group',
@@ -37,30 +37,33 @@ import {ToastService} from "../../../services/toast/toast.service";
   styleUrl: './group.component.css'
 })
 export class GroupComponent implements OnInit {
-  @Input() template: GroupTemplate | undefined;
+  @Input() template: GroupTemplateDTO | undefined;
   @Input() isCreate: boolean = false;
-  @Input() groupDataUpdate: Group =  new Group(
-      -999,
-      false,
-      '',
-      false,
-      '',
-      '',
-      '',
-      0,
-      0,
-      new Contact(0, '', '', '', ''),
-      [],
-      0,
-      new Location(0, '', '', '', '', '', '', '', ''),
-      '',
-      0,
-      0,
-      [],
-      0,
-      [],
-      0,
-  );
+  @Input() groupDataUpdate: UpdateGroupDTO ={
+    canceled: false,
+    groupNumber: '',
+    finished: false,
+    title: '',
+    acronym: '',
+    description: '',
+    numberOfDates: 0,
+    duration: 0,
+    contact: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: ''
+    },
+    dates: [],
+    numberParticipants: 0,
+    location: 0,
+    meetingPoint: '',
+    trainerPricePerHour: 0,
+    pricePerParticipant: 0,
+    requiredQualifications: [],
+    participantsPerTrainer: 0,
+    trainers: 0
+  }
   allQualificationsCheck: CheckboxList[] = [];
   allTrainersCheck: CheckboxList[] = [];
   allLocationsCheck: CheckboxList[] = [];
@@ -68,29 +71,34 @@ export class GroupComponent implements OnInit {
   selectedTrainersCheck: CheckboxList[] = [];
   selectedLocationsCheck: CheckboxList[] = [];
 
-  allQualifications: Qualification[];
-  allTrainers: Trainer[];
-  allLocations: Location[];
+  allQualifications: QualificationDTO[];
+  allTrainers: TrainerDTO[];
+  allLocations: LocationDTO[];
 
   mappedDateTime: string[][] = [];
 
-  groupDataCreate: PostGroup = new PostGroup(
-    '',
-    '',
-    '',
-    0,
-    [],
-    0,
-    0,
-    new PostContact('', '', '', ''),
-    0,
-    '',
-    0,
-    0,
-    [],
-    0,
-    []
-  )
+  groupDataCreate: PostGroupDTO = {
+    title: '',
+    acronym: '',
+    description: '',
+    numberOfDates: 0,
+    events: [],
+    duration: 0,
+    numberParticipants: 0,
+    contact: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: ''
+    },
+    location: 0,
+    meetingPoint: '',
+    trainerPricePerHour: 0,
+    pricePerParticipant: 0,
+    requiredQualifications: [],
+    participantsPerTrainer: 0,
+    trainers: []
+  }
 
   constructor(
     private groupService: GroupService,
@@ -101,21 +109,22 @@ export class GroupComponent implements OnInit {
     private dateTimeMapper: DateTimeMapperService,
     private dialogRef: MatDialogRef<GroupComponent>,
     public login: LoginService,
-    public toast: ToastService
+    public toast: ToastService,
+    public postGroupValidator: PostGroupValidatorService
   ) {
   }
 
   ngOnInit(): void {
     if (!this.isCreate) {
       // TODO: Edit Modus hier initialiseren
-      if (this.groupDataUpdate.id === -999){
+      if (this.groupDataUpdate.acronym === ''){
         this.toast.showErrorToast("Keine Gruppe ausgewählt");
         this.dialogRef.close(JSON.stringify({method: 'cancel'}))
       }
 
     } else {
       if (this.template) {
-        this.groupDataCreate.createPostGroupFromTemplate(this.template)
+        this.groupDataCreate = this.createPostGroupFromTemplate(this.template);
       } else {
         this.toast.showErrorToast("Vorlage nicht vorhanden");
         console.log("Template missing!");
@@ -133,7 +142,7 @@ export class GroupComponent implements OnInit {
     this.selectedTrainersCheck.forEach(t => {
       this.groupDataCreate.trainers.push(t.id);
     });
-    if (this.groupDataCreate.validate()) {
+    if (this.postGroupValidator.validate(this.groupDataCreate)) {
       this.dialogRef.close(JSON.stringify({method: 'confirm-create', data: this.groupDataCreate}));
       console.log("Dialog inhalt: " + this.groupDataCreate);
     }
@@ -208,6 +217,38 @@ export class GroupComponent implements OnInit {
     } else {
       this.groupDataUpdate!.dates = this.dateTimeMapper.onStartTimeChange(event, index, this.groupDataUpdate!.duration, this.groupDataUpdate!.dates, this.mappedDateTime);
     }
+  }
+
+  createPostGroupFromTemplate(groupTemplate: GroupTemplateDTO) {
+    let qualiIds: number[] = [];
+    groupTemplate.requiredQualificationList.forEach(quali => {
+      qualiIds.push(quali.id);
+    });
+
+
+    let temp: PostGroupDTO = {
+      title: groupTemplate.title,
+      acronym: groupTemplate.acronym,
+      description: groupTemplate.description,
+      numberOfDates: groupTemplate.numberOfDates,
+      duration: groupTemplate.duration,
+      contact: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone:''
+      },
+      events: [],
+      numberParticipants: 0,
+      location: groupTemplate.location.locationId,
+      meetingPoint: groupTemplate.meetingPoint,
+      trainerPricePerHour: groupTemplate.trainerPricePerHour,
+      pricePerParticipant: groupTemplate.pricePerParticipant,
+      requiredQualifications: qualiIds,
+      participantsPerTrainer: groupTemplate.participantsPerTrainer,
+      trainers: []
+    }
+    return temp;
   }
 
 }

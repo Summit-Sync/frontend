@@ -5,10 +5,9 @@ import { GroupService } from '../../../services/group/group.service';
 import { CommonModule } from '@angular/common';
 import {MatDialog} from "@angular/material/dialog";
 import {ToastService} from "../../../services/toast/toast.service";
-import {AddQualificationComponent} from "../add-qualification/add-qualification.component";
 import {GroupComponent} from "../group/group.component";
 import {ShortGroupListComponent} from "../../template/short-group-list/short-group-list.component";
-import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
+import {GroupTemplateDTO} from "../../../models/groupTemplate/GroupTemplate";
 
 
 @Component({
@@ -45,26 +44,26 @@ export class GroupListComponent {
       if (obj.method == 'confirm') {
         console.log('Template select Dialog output: ' + obj.data);
         let data = obj.data;
-        let template = new GroupTemplate(
-          data.id,
-          data.acronym,
-          data.title,
-          data.description,
-          data.numberOfDates,
-          data.duration,
-          data.location,
-          data.meetingPoint,
-          data.trainerPricePerHour,
-          data.pricePerParticipant,
-          data.requiredQualificationList,
-          data.participantsPerTrainer
-        );
+        let template: GroupTemplateDTO = {
+          id: data.id,
+          acronym: data.acronym,
+          title: data.title,
+          description: data.description,
+          numberOfDates: data.numberOfDates,
+          duration: data.duration,
+          location: data.location,
+          meetingPoint: data.meetingPoint,
+          trainerPricePerHour: data.trainerPricePerHour,
+          pricePerParticipant: data.pricePerParticipant,
+          requiredQualificationList: data.requiredQualificationList,
+          participantsPerTrainer: data.participantsPerTrainer
+        }
         this.openCreateDialog(template)
       }
     }));
   }
 
-  openCreateDialog(template: GroupTemplate) {
+  openCreateDialog(template: GroupTemplateDTO) {
     const dialogRef = this.dialog.open(GroupComponent, {
       disableClose: true,
       autoFocus: true,
@@ -91,10 +90,10 @@ export class GroupListComponent {
     });
   }
 
-  showDetails(group: Group) {
+  showDetails(group: GroupDTO) {
   }
 
-  showEdit(group: Group) {
+  showEdit(group: GroupDTO) {
   }
   delete(group: GroupDTO) {}
 }

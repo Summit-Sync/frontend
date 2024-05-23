@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, of} from "rxjs";
-import {GroupTemplate} from "../../../models/groupTemplate/GroupTemplate";
 import {GrouptemplateService} from "../../../services/grouptemplate/grouptemplate.service";
 import {MatDialogRef} from "@angular/material/dialog";
 import {AsyncPipe, NgForOf} from "@angular/common";
+import {GroupTemplateDTO} from "../../../models/groupTemplate/GroupTemplate";
 
 @Component({
   selector: 'app-short-group-list',
@@ -16,7 +16,7 @@ import {AsyncPipe, NgForOf} from "@angular/common";
   styleUrl: './short-group-list.component.css'
 })
 export class ShortGroupListComponent implements OnInit{
-  groupTemplate$: Observable<GroupTemplate[]> = of([]);
+  groupTemplate$: Observable<GroupTemplateDTO[]> = of([]);
   //selectedTemplate: GroupTemplate;
 
   constructor(
@@ -25,11 +25,11 @@ export class ShortGroupListComponent implements OnInit{
   ) {
   }
   ngOnInit(): void {
-    this.groupTemplate$ = this.gTempService.getAllGroupTemplates();
+    this.groupTemplate$ = this.gTempService.getAllGroupTemplateDTOs();
     console.log('Init: Short-group-list');
   }
 
-  save(template: GroupTemplate): void{
+  save(template: GroupTemplateDTO): void{
     this.dialogRef.close(JSON.stringify({method: 'confirm', data: template}))
   }
 

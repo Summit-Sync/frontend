@@ -1,13 +1,16 @@
+import {PostContactDTO} from "../contact/PostContact";
+
 export interface UpdateGroupDTO{
   canceled: boolean,
   groupNumber: string,
   finished: boolean,
   title: string,
+  acronym: string,
   description: string,
   numberOfDates: number,
   duration: number,
-  contact: number,
-  dates: string[],
+  contact: PostContactDTO,
+  dates: Date[],
   numberParticipants: number,
   location: number,
   meetingPoint: string,
