@@ -48,22 +48,13 @@ export class GroupTemplateListComponent {
       width:'40dvw',
       data:{
         template: data,
-        isEdit: false
+        isEdit: false,
+        templateId: 0
       }
     });
     dialogRef.afterClosed().subscribe(
-      result => {
-        const obj=JSON.parse(result);
-        if(obj.method=='accept'){
-          console.log("Dialog output:", obj.data);
-          this.groupTemplateService.postGroupTemplateDTO(obj.data).subscribe({
-            next: (response) => console.log('Template has been created'),
-            error: (error) => console.error('Template coud not be created'),
-            complete: () => this.updateList()            
-          })         
-        }
-      }
-    );
+      result =>  this.updateList()
+    )
   }
 
   updateList(){
@@ -81,8 +72,7 @@ export class GroupTemplateListComponent {
     this.groupTemplateService.deleteGroupTemplateDTO(id).subscribe({
       next: (response) => console.log('Template was deleted'),
       error: (error) => console.error('Template could not be deleted.' +error),
-      complete: () => this.updateList()
-    })
+    }).add(()=> this.updateList())
   }
 
   viewDetails(template: GroupTemplateDTO){
@@ -98,17 +88,18 @@ export class GroupTemplateListComponent {
   }
 
   editTemplate(template: GroupTemplateDTO){
-    const dialogRef = this.dialog.open(GroupTemplateDetailViewComponent,{
+    const dialogRef = this.dialog.open(AddGroupTemplateComponent,{
       disableClose: true,
       width: '40dvw',
       height: '80dvh',
       data: {
         selectedTemplate: template,
-        isEdit: true
+        isEdit: true,
+        templateId: template.id
       }
     })
     dialogRef.afterClosed().subscribe(result => {
-      
+      this.updateList()
     })
   }
 

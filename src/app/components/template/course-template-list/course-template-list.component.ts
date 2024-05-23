@@ -45,22 +45,13 @@ export class CourseTemplateListComponent {
       height: '80dvh',
       data: {
         selectedTemplate: template,
-        isEdit: true
+        isEdit: true,
+        templateId: template.id
       }
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      const obj = JSON.parse(result);
-      if(obj.method == 'accept'){
-        console.log('Dialog output: ' + obj.data)        
-        this.courseTemplateService.putCourseTemplate(obj.data,template.id).subscribe({
-          next: (response) => console.log('Template has been updated'),
-          error: (error) => console.error('Template could not be updated'),
-          complete: () => this.updateList()   
-        })
-      }else {
         this.updateList();
-      }
     })
   }
 
@@ -116,17 +107,8 @@ export class CourseTemplateListComponent {
     });
 
     dialogref.afterClosed().subscribe(result => {
-      const obj = JSON.parse(result);
-      if(obj.method == 'accept'){
-        console.log('Dialog output: ' + obj.data);
-        this.courseTemplateService.postCourseTemplate(obj.data,).subscribe({
-          next: (response) => console.log('Template has been created'),
-          error: (error) => console.error('Template could not be created'),
-          complete: () => this.updateList()   
-        })
-      } else {
+
         this.updateList();
-      }
     })
   }
 

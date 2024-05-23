@@ -15,6 +15,7 @@ import { PostCategoryPriceDTO } from '../../../../models/price/PostCategoryPrice
 import { LocationDTO } from '../../../../models/location/LocationDTO';
 import { PostCourseTemplateValidatorService } from '../../../../services/validation/course-template/post-course-template/post-course-template-validator.service';
 import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
+import { CoursetemplateService } from '../../../../services/coursetemplate/coursetemplate.service';
 
 @Component({
   selector: 'app-add-course-template',
@@ -36,6 +37,8 @@ export class AddCourseTemplateComponent {
   locationList: CheckboxList[] = [];
   qualificationList: CheckboxList[] = [];
 
+  templateId:number;
+
   defaultPriceListLength = 3;
 
   constructor(
@@ -44,7 +47,8 @@ export class AddCourseTemplateComponent {
     private checkBoxMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService,
-    private postCourseTemplateValidator: PostCourseTemplateValidatorService
+    private postCourseTemplateValidator: PostCourseTemplateValidatorService,
+    private courseTemplateService: CoursetemplateService
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
@@ -70,6 +74,7 @@ export class AddCourseTemplateComponent {
   ngOnInit() {
     this.isEdit = this.data.isEdit;
     this.selectedCourseTemplate = this.data.selectedTemplate;
+    this.templateId = this.data.templateId;
     let priceList: PostCategoryPriceDTO[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
       let price:PostCategoryPriceDTO= {
@@ -94,7 +99,6 @@ export class AddCourseTemplateComponent {
         price:this.selectedCourseTemplate.price,
         requiredQualifications: this.selectedCourseTemplate.requiredQualifications.map(q=>q.id)
       }
-        // this.selectedCourseTemplate.createPostCourseTemplate();
       console.log(this.courseTemplate);
       this.addSelectedLocationDTO();
       this.addSelectedQualification();
@@ -116,12 +120,23 @@ export class AddCourseTemplateComponent {
     this.courseTemplate.location = location;
     console.log(this.courseTemplate);
     if (this.postCourseTemplateValidator.validate(this.courseTemplate)) {
-      this.dialogRef.close(
-        JSON.stringify({
-          data: this.courseTemplate,
-          method: 'accept',
+      if(this.isEdit){
+        this.courseTemplateService.putCourseTemplate(this.courseTemplate,this.templateId).subscribe({
+          next: (response) => console.log('Template has been created'),
+          error: (error) => {
+            console.error('Template could not be created');
+            this.dialogRef.close();
+          },
         })
-      );
+      }else{
+        this.courseTemplateService.postCourseTemplate(this.courseTemplate).subscribe({
+          next: (response) => console.log('Template has been created'),
+          error: (error) => {
+            console.error('Template could not be created');
+            this.dialogRef.close();
+          },
+        })
+      }
     } else {
       console.log('The given template is not valid');
     }
