@@ -10,12 +10,12 @@ import {MultiSelectDropdownComponent} from "../../../utilities/multi-select-drop
 import {QualificationDTO} from "../../../../models/qualification/QualificationDTO";
 import {QualificationsService} from "../../../../services/qualifications/qualifications.service";
 import {TrainerService} from "../../../../services/trainer/trainer.service";
-import {Trainer} from "../../../../models/trainer/Trainer";
 import {MatButton} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {CheckboxList} from "../../../../models/interfaces/CheckBoxList";
-import {CheckboxListMapperService} from "../../../../services/checkBoxListMapper/checkbox-list-mapper.service";
+import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
+import { TrainerDTO } from '../../../../models/trainer/Trainer';
 
 @Component({
   selector: 'app-mass-assign-qualification',
@@ -35,8 +35,9 @@ import {CheckboxListMapperService} from "../../../../services/checkBoxListMapper
 })
 export class MassAssignQualificationComponent implements OnInit {
   @Input() qualification: QualificationDTO;
-  allTrainers: CheckboxList[];
-  selectedTrainers: Trainer[] = [];
+  allTrainers: CheckboxList[] = [];
+  selectedTrainerList: CheckboxList[] = [];
+
 
   constructor(
     private qualificationService: QualificationsService,
@@ -52,8 +53,8 @@ export class MassAssignQualificationComponent implements OnInit {
       }
     });
     this.trainerService.getAllTrainers().subscribe(t => {
+      this.fillSelectedTrainerList(t)
       this.allTrainers = this.checkBoxMapper.mapTrainerListToCheckboxList(t);
-      console.log(t);
     });
   }
 
@@ -61,15 +62,29 @@ export class MassAssignQualificationComponent implements OnInit {
   }
 
   save(): void {
-    if (this.selectedTrainers.length === 0) {
+    if (this.selectedTrainerList.length === 0) {
       console.log("Keinen Trainer ausgewählt");
     } else {
-      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.selectedTrainers}));
+      this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.selectedTrainerList}));
     }
   }
 
   cancel(): void {
     this.dialogRef.close(JSON.stringify({method: 'cancel'}));
+  }
+
+  fillSelectedTrainerList(data: TrainerDTO[]){
+    let trainersWithQualification: TrainerDTO[] = []
+    for(let trainer of data){
+      if(!this.checkIfTrainerHasQualification){
+        trainersWithQualification.push(trainer)
+      }
+    }
+    this.selectedTrainerList= this.checkBoxMapper.mapTrainerListToCheckboxList(trainersWithQualification);
+  }
+
+  checkIfTrainerHasQualification(trainer: TrainerDTO):boolean{
+    return trainer.qualifications.some(q=> q.id === this.qualification.id)
   }
 
 }

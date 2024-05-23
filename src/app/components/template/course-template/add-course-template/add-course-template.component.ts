@@ -12,9 +12,9 @@ import { MultiSelectDropdownComponent } from '../../../utilities/multi-select-dr
 import { FormsModule } from '@angular/forms';
 import { CourseTemplateDTO } from '../../../../models/courseTemplate/CourseTemplate';
 import { PostCategoryPriceDTO } from '../../../../models/price/PostCategoryPriceDTO';
-import { CheckboxListMapperService } from '../../../../services/checkBoxListMapper/checkbox-list-mapper.service';
 import { LocationDTO } from '../../../../models/location/LocationDTO';
 import { PostCourseTemplateValidatorService } from '../../../../services/validation/course-template/post-course-template/post-course-template-validator.service';
+import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 
 @Component({
   selector: 'app-add-course-template',
@@ -31,7 +31,7 @@ export class AddCourseTemplateComponent {
   isEdit: boolean;
 
   requiredQualifications: CheckboxList[] = [];
-  courseLocationDTO: CheckboxList[] = [];
+  courseLocation: CheckboxList[] = [];
 
   locationList: CheckboxList[] = [];
   qualificationList: CheckboxList[] = [];
@@ -54,7 +54,7 @@ export class AddCourseTemplateComponent {
       }
     });
     locationService
-      .getAllLocationDTOs()
+      .getAllLocations()
       .subscribe(
         (data) => (this.locationList = this.mapLocationDTOListToCheckboxList(data))
       );
@@ -110,7 +110,7 @@ export class AddCourseTemplateComponent {
       this.requiredQualifications
     );
     let location: number = this.mapCheckboxListToNumberList(
-      this.courseLocationDTO
+      this.courseLocation
     )[0];
     this.courseTemplate.requiredQualifications = qualificationIds;
     this.courseTemplate.location = location;
@@ -165,7 +165,7 @@ export class AddCourseTemplateComponent {
   }
 
   addSelectedQualification() {
-    this.courseLocationDTO.push({
+    this.courseLocation.push({
       id: this.selectedCourseTemplate.location.locationId,
       displayFullName: this.selectedCourseTemplate.location.street  ,
     });

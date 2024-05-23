@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PostLocationDTO } from '../../../../models/location/PostLocationDTO';
-import { Location } from '../../../../models/location/LocationDTO';
 import { FormsModule } from '@angular/forms';
+import { PostLocationValidatorService } from '../../../../services/validation/location/post-location-validator/post-location-validator.service';
 
 @Component({
   selector: 'app-add-location-modal',
@@ -17,7 +17,8 @@ export class AddLocationModalComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<AddLocationModalComponent>
+    private dialogRef: MatDialogRef<AddLocationModalComponent>,
+    private postLocationValidator: PostLocationValidatorService
   ){}
 
   ngOnInit(){
@@ -33,7 +34,7 @@ export class AddLocationModalComponent {
   save(){
     console.log(this.editableLocation);
     
-    if(this.editableLocation.validate()){
+    if(this.postLocationValidator.validate(this.editableLocation)){
       console.log(this.editableLocation)
       this.dialogRef.close(JSON.stringify({
         data: this.editableLocation,

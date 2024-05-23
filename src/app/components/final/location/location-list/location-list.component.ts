@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { LocationService } from '../../../../services/location/location.service';
-import { Location } from '../../../../models/location/LocationDTO';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { LocationDetailViewComponent } from '../location-detail-view/location-detail-view.component';
-import { PostLocationDTO } from '../../../../models/location/PostLocationDTO';
+import { LocationDTO } from '../../../../models/location/LocationDTO';
 
 @Component({
   selector: 'app-location-list',
@@ -17,7 +16,7 @@ import { PostLocationDTO } from '../../../../models/location/PostLocationDTO';
 })
 export class LocationListComponent {
 
-  locationList: Location[];
+  locationList: LocationDTO[];
 
   constructor(
     private locationService: LocationService,
@@ -28,7 +27,7 @@ export class LocationListComponent {
     this.updateList();
   }
 
-  openEditDialog(location: Location){
+  openEditDialog(location: LocationDTO){
     console.log(location);
     
     const dialogRef = this.dialog.open(AddLocationModalComponent,{
@@ -36,7 +35,7 @@ export class LocationListComponent {
       height: '80dvh',
       width: '40dvw',
       data:{
-        location: new PostLocationDTO(location.title,location.street, location.postCode, location.country, location.email, location.phone, location.mapsUrl, location.city)
+        location: location
       }
     })
     dialogRef.afterClosed().subscribe(result => {
@@ -48,11 +47,13 @@ export class LocationListComponent {
           error: (error) => console.error('Location could not be updated'),
           complete: () => this.updateList()   
         })
+      }else{
+        this.updateList();
       }
     })
   }
 
-  openDetailDialog(location: Location){
+  openDetailDialog(location: LocationDTO){
     const dialogRef = this.dialog.open(LocationDetailViewComponent,{
       disableClose: true,
       height: '80dvh',
@@ -74,12 +75,23 @@ export class LocationListComponent {
   }
 
   openCreateDialog(){
+    let location: LocationDTO = {
+      locationId: 0,
+      city: '',
+      street: '',
+      title: '',
+      postCode: '',
+      email: '',
+      phone: '',
+      mapsUrl: '',
+      country: ''
+    }
     const dialogRef = this.dialog.open(AddLocationModalComponent,{
       disableClose: true,
       height: '80dvh',
       width: '40dvw',
       data:{
-        location: new PostLocationDTO("","","","","","","","")
+        location: location
       }
     })
     dialogRef.afterClosed().subscribe(result => {

@@ -13,17 +13,17 @@ export class LocationService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllLocationDTOs(): Observable<LocationDTO[]> {
+  getAllLocations(): Observable<LocationDTO[]> {
     return this.http.get<LocationDTO[]>(this.baseUrl);
   }
 
-  getLocationDTOById(id: number): Observable<LocationDTO> {
+  getLocationById(id: number): Observable<LocationDTO> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.get<LocationDTO>(apiUrl);
   }
 
   //Put
-  putLocationDTO(id: number, location: LocationDTO): Observable<LocationDTO> {    
+  putLocation(id: number, location: LocationDTO): Observable<LocationDTO> {    
     console.log(location);
     
     let apiUrl: string = `${this.baseUrl}/${id}`;
@@ -31,13 +31,13 @@ export class LocationService {
   }
 
   //Post
-  postLocationDTO(location: LocationDTO): Observable<LocationDTO> {
+  postLocation(location: LocationDTO): Observable<LocationDTO> {
     const apiUrl: string = `${this.baseUrl}`;
     return this.http.post<LocationDTO>(apiUrl, location);
   }
 
   //Delete
-  deleteLocationDTOById(id: number): Observable<void> {
+  deleteLocationById(id: number): Observable<void> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
     return this.http.delete<void>(apiUrl);
   }

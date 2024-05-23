@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from "rxjs";
-import {Trainer} from "../../../models/trainer/Trainer";
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
@@ -9,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
+import { TrainerDTO } from '../../../models/trainer/Trainer';
 
 @Component({
   selector: 'app-trainer',
@@ -31,15 +31,15 @@ export class TrainerComponent implements OnInit{
   @Input() isEdit: boolean = false;
   @Input() isDelete: boolean = false;
   allQualifications: QualificationDTO[];
-  trainerData: Trainer = new Trainer(
-    0,
-    '',
-    '',
-    '',
-    '',
-    '',
-    []
-  )
+  trainerData: TrainerDTO ={ 
+    id:0,
+    subjectId:'',
+    firstName:'',
+    lastName:'',
+    email: '',
+    phone: '',
+    qualifications: []
+  }
 
   constructor(
     public trainerService: TrainerService,
@@ -55,7 +55,6 @@ export class TrainerComponent implements OnInit{
         console.error("No trainer to show");
         return;
       }
-      this.trainerData.createCopy(t);
       console.log('onInit', this.trainerData);
       return;
     });

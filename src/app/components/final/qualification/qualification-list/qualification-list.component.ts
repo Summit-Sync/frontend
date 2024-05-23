@@ -7,10 +7,9 @@ import {AsyncPipe, CommonModule, NgForOf} from "@angular/common";
 import {FormsModule} from '@angular/forms';
 import {MassAssignQualificationComponent} from "../mass-assign-qualification/mass-assign-qualification.component";
 import {TrainerService} from "../../../../services/trainer/trainer.service";
-import {Trainer} from "../../../../models/trainer/Trainer";
 import {ToastService} from "../../../../services/toast/toast.service";
-import { QualificationValidatorService } from '../../../../services/validation/qualification-validator/qualification-validator.service';
 import { AddQualificationComponent } from '../add-qualification/add-qualification.component';
+import { QualificationValidatorService } from '../../../../services/validation/qualification/qualification-validator/qualification-validator.service';
 
 @Component({
   selector: 'app-qualification-list',
@@ -92,8 +91,8 @@ export class QualificationListComponent implements OnInit {
       const obj = JSON.parse(result);
       if (obj.method == 'confirm') {
         console.log("Dialog output: ", obj.data);
-        for (let trainer of obj.data) {
-          this.trainerService.postQualificationOfTrainerById(trainer.id, quali.id).subscribe({
+        for (let id of obj.data) {
+          this.trainerService.postQualificationOfTrainerById(id, quali.id).subscribe({
             next: () => {
               this.toast.showSuccessToast("Massenpflege erfolgreich");
             },
