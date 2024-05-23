@@ -1,5 +1,5 @@
 import { Participant } from '../participant/Participant';
-import { Trainer } from '../trainer/Trainer';
+import { PostCategoryPrice } from '../price/PostCategoryPrice';
 
 export class PostCourse {
   constructor(
@@ -11,13 +11,13 @@ export class PostCourse {
     public duration: number,
     public numberParticipants: number,
     public numberWaitlist: number,
-    public prices: number[],
+    public prices: PostCategoryPrice[],
     public location: number,
     public meetingPoint: string,
     public requiredQualifications: number[],
     public numberTrainers: number,
     public notes: string,
-    public trainers: Trainer[],
+    public trainers: number[],
     public participants: Participant[],
     public waitList: Participant[]
   ) {}

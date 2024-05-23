@@ -1,4 +1,5 @@
 import { Participant } from '../participant/Participant';
+import { PostCategoryPrice } from '../price/PostCategoryPrice';
 import { Trainer } from '../trainer/Trainer';
 
 export class UpdateCourse {
@@ -13,13 +14,13 @@ export class UpdateCourse {
     public duration: number,
     public numberParticipants: number,
     public numberWaitlist: number,
-    public prices: number[],
+    public prices: PostCategoryPrice[],
     public location: number,
     public meetingPoint: string,
     public requiredQualifications: number[],
     public numberTrainers: number,
     public notes: string,
-    public trainers: Trainer[],
+    public trainers: number[],
     public participants: Participant[],
     public waitList: Participant[]
   ) {}

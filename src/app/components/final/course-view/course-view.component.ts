@@ -28,14 +28,14 @@ export class CourseViewComponent {
       this.viewData = currenCourse!;
       console.log(currenCourse, currenCourse instanceof Course);
     });
-    this.viewData.fillParticipantsList(
-      this.viewData.participants,
-      this.viewData.numberParticipants
-    );
-    this.viewData.fillParticipantsList(
-      this.viewData.waitList,
-      this.viewData.numberWaitlist
-    );
+    // this.viewData.fillParticipantsList(
+    //   this.viewData.participants,
+    //   this.viewData.numberParticipants
+    // );
+    // this.viewData.fillParticipantsList(
+    //   this.viewData.waitList,
+    //   this.viewData.numberWaitlist
+    // );
   }
 
   cancel(): void {
@@ -48,5 +48,6 @@ export class CourseViewComponent {
 
   deleteCourse(): void {
     this.courseService.deleteCourse(this.viewData.id);
+    this.dialogRef.close(JSON.stringify({ method: 'delete' }));
   }
 }

@@ -7,6 +7,7 @@ import { Status } from '../status/Status';
 import { CategoryPrice } from '../price/CategoryPrice';
 import { PostCourse } from './PostCourse';
 import { UpdateCourse } from './UpdateCourse';
+import { PostCategoryPrice } from '../price/PostCategoryPrice';
 
 export class Course {
   constructor(
@@ -203,14 +204,18 @@ export class Course {
   }
 
   CourseToPostCourse(): PostCourse {
-    let postCoursePrices: number[] = [];
+    let postCoursePrices: PostCategoryPrice[] = [];
     let postCourseQualis: number[] = [];
+    let postCourseTrainers: number[] = [];
     let postCourseLocation: number;
     this.prices.forEach((price) => {
-      postCoursePrices.push(price.id);
+      postCoursePrices.push(new PostCategoryPrice(price.name, price.price));
     });
     this.requiredQualifications.forEach((rq) => {
       postCourseQualis.push(rq.id);
+    });
+    this.trainers.forEach((trainer) => {
+      postCourseTrainers.push(trainer.id);
     });
     postCourseLocation = this.location.locationId;
 
@@ -229,23 +234,27 @@ export class Course {
       postCourseQualis,
       this.numberTrainers,
       this.notes,
-      this.trainers,
+      postCourseTrainers,
       this.participants,
       this.waitList
     );
   }
 
   CourseToUpdateCourse(): UpdateCourse {
-    let postCoursePrices: number[] = [];
-    let postCourseQualis: number[] = [];
-    let postCourseLocation: number;
+    let updateCoursePrices: PostCategoryPrice[] = [];
+    let updateCourseQualis: number[] = [];
+    let updateCourseTrainers: number[] = [];
+    let updateCourseLocation: number;
     this.prices.forEach((price) => {
-      postCoursePrices.push(price.id);
+      updateCoursePrices.push(new PostCategoryPrice(price.name, price.price));
     });
     this.requiredQualifications.forEach((rq) => {
-      postCourseQualis.push(rq.id);
+      updateCourseQualis.push(rq.id);
     });
-    postCourseLocation = this.location.locationId;
+    this.trainers.forEach((trainer) => {
+      updateCourseTrainers.push(trainer.id);
+    });
+    updateCourseLocation = this.location.locationId;
 
     return new UpdateCourse(
       this.visible,
@@ -258,13 +267,13 @@ export class Course {
       this.duration,
       this.numberParticipants,
       this.numberWaitlist,
-      postCoursePrices,
-      postCourseLocation,
+      updateCoursePrices,
+      updateCourseLocation,
       this.meetingPoint,
-      postCourseQualis,
+      updateCourseQualis,
       this.numberTrainers,
       this.notes,
-      this.trainers,
+      updateCourseTrainers,
       this.participants,
       this.waitList
     );
