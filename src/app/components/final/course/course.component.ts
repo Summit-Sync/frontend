@@ -365,7 +365,7 @@ export class CourseComponent implements OnInit {
           },
           error: (error) => console.error('Course could not be updated'),
           complete: () =>
-            this.dialogRef.close(JSON.stringify({ method: 'save' })),
+            this.dialogRef.close(JSON.stringify({ method: 'updated' })),
         });
     }
   }
@@ -399,7 +399,7 @@ export class CourseComponent implements OnInit {
         },
         error: (error) => console.error('Course could not be created'),
         complete: () =>
-          this.dialogRef.close(JSON.stringify({ method: 'save' })),
+          this.dialogRef.close(JSON.stringify({ method: 'created' })),
       });
     }
   }

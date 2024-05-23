@@ -12,7 +12,7 @@ export class ParticipantValidatorService {
     //check if all necessary values exist
     let result: boolean = true;
     const allFilled =
-      data.lastName != '' &&
+      data.name != '' &&
       data.firstName != '' &&
       data.status.validate() &&
       (data.email != '' || data.phone != '');
@@ -27,13 +27,13 @@ export class ParticipantValidatorService {
   validateExceptAllEmpty(data: ParticipantDTO): boolean {
     //check if all necessary values exist or none exist
     const allEmpty =
-      !data.lastName &&
+      !data.name &&
       !data.firstName &&
       !data.status.validate() &&
       !data.email &&
       !data.phone;
     const allFilled =
-      data.lastName &&
+      data.name &&
       data.firstName &&
       data.status.validate() &&
       (data.email || data.phone);
