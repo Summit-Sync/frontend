@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Qualification } from '../../models/qualification/Qualification';
+import { QualificationDTO } from '../../models/qualification/QualificationDTO';
 import { HttpClient } from '@angular/common/http';
-import { Trainer } from '../../models/trainer/Trainer';
-import { Course } from '../../models/course/Course';
-import { PostQualification } from '../../models/qualification/PostQualification';
+import { CourseDTO } from '../../models/course/Course';
+import { PostQualificationDTO } from '../../models/qualification/PostQualificationDTO';
 import { environment } from '../../../environments/environment.development';
+import { TrainerDTO } from '../../models/trainer/Trainer';
 
 @Injectable({
   providedIn: 'root',
@@ -17,34 +17,34 @@ export class QualificationsService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllQualifications(): Observable<Qualification[]>{
-    return this.http.get<Qualification[]>(this.baseUrl);
+  getAllQualifications(): Observable<QualificationDTO[]>{
+    return this.http.get<QualificationDTO[]>(this.baseUrl);
   }
 
-  getQualificationById(id: number): Observable<Qualification> {
+  getQualificationById(id: number): Observable<QualificationDTO> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Qualification>(apiUrl);
+    return this.http.get<QualificationDTO>(apiUrl);
   }
 
-  getTrainersByQualification(id: number): Observable<Trainer[]> {
+  getTrainerDTOsByQualification(id: number): Observable<TrainerDTO[]> {
     const apiUrl: string = `${this.baseUrl}/${id}/trainer`;
-    return this.http.get<Trainer[]>(apiUrl);
+    return this.http.get<TrainerDTO[]>(apiUrl);
   }
 
-  getCoursesByQualification(id: number): Observable<Course[]> {
+  getCoursesByQualification(id: number): Observable<CourseDTO[]> {
     const apiUrl: string = `${this.baseUrl}/${id}/course`;
-    return this.http.get<Course[]>(apiUrl);
+    return this.http.get<CourseDTO[]>(apiUrl);
   }
 
   //Put
-  putQualification(id: number, quali: Qualification): Observable<Qualification> {
+  putQualification(id: number, quali: QualificationDTO): Observable<QualificationDTO> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Qualification>(apiUrl, quali);
+    return this.http.put<QualificationDTO>(apiUrl, quali);
   }
 
   // Post
-  postQualification(quali: PostQualification): Observable<Qualification> {
-    return this.http.post<Qualification>(this.baseUrl, quali);
+  postQualification(quali: PostQualificationDTO): Observable<QualificationDTO> {
+    return this.http.post<QualificationDTO>(this.baseUrl, quali);
   }
 
   //Delete

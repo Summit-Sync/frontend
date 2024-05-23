@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs';
-import { Location } from '../../models/location/Location';
+import { LocationDTO } from '../../models/location/LocationDTO';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -14,27 +13,27 @@ export class LocationService {
   constructor(private http: HttpClient) {}
 
   //Get
-  getAllLocations(): Observable<Location[]> {
-    return this.http.get<Location[]>(this.baseUrl);
+  getAllLocations(): Observable<LocationDTO[]> {
+    return this.http.get<LocationDTO[]>(this.baseUrl);
   }
 
-  getLocationById(id: number): Observable<Location> {
+  getLocationById(id: number): Observable<LocationDTO> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<Location>(apiUrl);
+    return this.http.get<LocationDTO>(apiUrl);
   }
 
   //Put
-  putLocation(id: number, location: Location): Observable<Location> {    
+  putLocation(id: number, location: LocationDTO): Observable<LocationDTO> {    
     console.log(location);
     
     let apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<Location>(apiUrl, location);
+    return this.http.put<LocationDTO>(apiUrl, location);
   }
 
   //Post
-  postLocation(location: Location): Observable<Location> {
+  postLocation(location: LocationDTO): Observable<LocationDTO> {
     const apiUrl: string = `${this.baseUrl}`;
-    return this.http.post<Location>(apiUrl, location);
+    return this.http.post<LocationDTO>(apiUrl, location);
   }
 
   //Delete

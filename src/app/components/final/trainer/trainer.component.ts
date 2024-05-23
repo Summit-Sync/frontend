@@ -1,14 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from "rxjs";
-import {Trainer} from "../../../models/trainer/Trainer";
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
-import {Qualification} from "../../../models/qualification/Qualification";
+import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
+import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
+import { TrainerDTO } from '../../../models/trainer/Trainer';
+import { TrainerDTO } from '../../../models/trainer/Trainer';
 
 @Component({
   selector: 'app-trainer',
@@ -30,16 +32,16 @@ export class TrainerComponent implements OnInit{
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
   @Input() isDelete: boolean = false;
-  allQualifications: Qualification[];
-  trainerData: Trainer = new Trainer(
-    0,
-    '',
-    '',
-    '',
-    '',
-    '',
-    []
-  )
+  allQualifications: QualificationDTO[];
+  trainerData: TrainerDTO ={ 
+    id:0,
+    subjectId:'',
+    firstName:'',
+    lastName:'',
+    email: '',
+    phone: '',
+    qualifications: []
+  }
 
   constructor(
     public trainerService: TrainerService,
@@ -53,11 +55,10 @@ export class TrainerComponent implements OnInit{
     this.trainerService.currentTrainer.subscribe(t => {
       if (!t){
         console.error("No trainer to show");
-        return;
+      }else{
+        this.trainerData = t
+        console.log('onInit', this.trainerData);
       }
-      this.trainerData.createCopy(t);
-      console.log('onInit', this.trainerData);
-      return;
     });
 
     this.qualificationService.getAllQualifications().subscribe(q => {

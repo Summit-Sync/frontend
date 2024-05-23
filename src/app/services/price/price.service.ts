@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { CategoryPrice } from '../../models/price/CategoryPrice';
+import { CategoryPriceDTO } from '../../models/price/CategoryPriceDTO';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -13,24 +13,24 @@ export class CategoryPriceService {
 
   constructor(private http:HttpClient) { }
 
-  getAllCategoryPrices():Observable<CategoryPrice[]>{
-    return this.http.get<CategoryPrice[]>(this.baseUrl);
+  getAllCategoryPrices():Observable<CategoryPriceDTO[]>{
+    return this.http.get<CategoryPriceDTO[]>(this.baseUrl);
   }
 
-  getCategoryPriceById(id: number): Observable<CategoryPrice>{
+  getCategoryPriceById(id: number): Observable<CategoryPriceDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.get<CategoryPrice>(apiUrl);
+    return this.http.get<CategoryPriceDTO>(apiUrl);
   }
 
   //Put
-  putCategoryPrice(id: number, price: CategoryPrice): Observable<CategoryPrice>{
+  putCategoryPrice(id: number, price: CategoryPriceDTO): Observable<CategoryPriceDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    return this.http.put<CategoryPrice>(apiUrl, price);
+    return this.http.put<CategoryPriceDTO>(apiUrl, price);
   }
 
   //Post
-  postCategoryPrice(price: CategoryPrice): Observable<CategoryPrice>{
-    return this.http.post<CategoryPrice>(this.baseUrl, price);
+  postCategoryPrice(price: CategoryPriceDTO): Observable<CategoryPriceDTO>{
+    return this.http.post<CategoryPriceDTO>(this.baseUrl, price);
   }
 
   //Delete

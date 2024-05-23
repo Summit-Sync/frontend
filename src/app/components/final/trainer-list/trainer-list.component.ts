@@ -2,12 +2,12 @@ import {Component} from '@angular/core';
 import {TrainerService} from "../../../services/trainer/trainer.service";
 import {MatDialog} from "@angular/material/dialog";
 import {Observable} from "rxjs";
-import {Trainer} from "../../../models/trainer/Trainer";
 import {AsyncPipe, DatePipe, NgForOf} from "@angular/common";
 import {AddTrainerComponent} from "../add-trainer/add-trainer.component";
 import {TrainerComponent} from "../trainer/trainer.component";
 import {ConfirmationDialogComponent} from "../../../dialog/confirmation-dialog/confirmation-dialog.component";
 import {ToastService} from "../../../services/toast/toast.service";
+import { TrainerDTO } from '../../../models/trainer/Trainer';
 
 @Component({
   selector: 'app-trainer-list',
@@ -21,7 +21,7 @@ import {ToastService} from "../../../services/toast/toast.service";
   styleUrl: './trainer-list.component.css'
 })
 export class TrainerListComponent {
-  trainer$: Observable<Trainer[]>;
+  trainer$: Observable<TrainerDTO[]>;
   showingEdit: boolean = false;
 
   constructor(
@@ -35,30 +35,29 @@ export class TrainerListComponent {
     this.trainer$ = this.trainerService.getAllTrainers();
   }
 
-  showDetails(trainer: Trainer) {
+  showDetails(trainer: TrainerDTO) {
     this.showingEdit = false;
     this.showTrainer(trainer);
   }
 
-  showEdit(trainer: Trainer) {
+  showEdit(trainer: TrainerDTO) {
     this.showingEdit = true;
     this.showTrainer(trainer);
   }
 
-  delete(trainer: Trainer) {
+  delete(trainer: TrainerDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       disableClose: true,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
       data: {
-        name: trainer.displayFullName
+        name: trainer.lastName +', '+trainer.firstName
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       const obj = JSON.parse(result);
       if (obj.method == 'confirm') {
-        // console.log("Löschen bestätigt", obj.result);
         this.trainerService.deleteTrainerById(trainer.id).subscribe({
           next: () => {
             this.trainer$ = this.trainerService.getAllTrainers();
@@ -100,7 +99,7 @@ export class TrainerListComponent {
     })
   }
 
-  showTrainer(trainer: Trainer) {
+  showTrainer(trainer: TrainerDTO) {
     this.trainerService.currentTrainer.next(trainer);
     if (this.showingEdit) {
       const dialogRef = this.dialog.open(AddTrainerComponent, {

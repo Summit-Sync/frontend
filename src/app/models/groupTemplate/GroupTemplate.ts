@@ -1,92 +1,17 @@
-import { Location } from '../location/Location';
-import { Qualification } from '../qualification/Qualification';
-import { PostGroupTemplate } from './PostGroupTemplate';
+import { LocationDTO } from '../location/LocationDTO';
+import { QualificationDTO } from '../qualification/QualificationDTO';
 
-export class GroupTemplate {
-  constructor(
-    public id: number,
-    public acronym: string,
-    public title: string,
-    public description: string,
-    public numberOfDates: number,
-    public duration: number,
-    public location: Location,
-    public meetingPoint: string,
-    public trainerPricePerHour: number,
-    public pricePerParticipant: number,
-    public requiredQualificationList: Qualification[],
-    public participantsPerTrainer: number
-  ) {}
-
-  validate(): boolean {
-    let result: boolean = true;
-    if(!this.id || this.id < 0){
-      result = false;
-      console.error("Id darf nicht leer sein");
-      
-    }
-    if(!this.title){
-      result = false;
-      console.error("Titel darf nicht leer sein");
-      
-    }
-    if(!this.acronym){
-      result = false;
-      console.error("Abkürzung darf nicht leer sein");
-      
-    }
-    if(!this.description){
-      result = false;
-      console.error("Beschreibung darf nicht leer sein");
-      
-    }
-    if(this.numberOfDates < 1){
-      result = false;
-      console.error("Terminanzahl darf nicht leer sein");
-      
-    }
-    if(this.duration < 1){
-      result = false;
-      console.error("Dauer darf nicht leer sein");
-      
-    }
-    if(!this.location.validate()){
-      result = false;
-    }
-    if(!this.meetingPoint){
-      result = false;
-      console.error("Es muss einen Treffpunkt geben");
-      
-    }
-    if(this.trainerPricePerHour < 1){
-      result = false;
-      console.error("Trainerpreis darf nicht leer sein");
-      
-    }
-    if(this.pricePerParticipant < 1){
-      result = false;
-      console.error('Teilnehmerpreis darf nicht leer sein');
-      
-    }
-    if(this.participantsPerTrainer < 1){
-      result = false;
-      console.error("Trainerschlüssel darf nicht leer sein");
-      
-    }
-    if (this.requiredQualificationList.length === 0) {
-      result = false;
-      console.error("Qualifikationsliste darf nicht leer sein");
-      
-    }
-    if(!this.requiredQualificationList.every(q => q.validate())){
-      result = false;
-    }
-
-    return result;
-  }
-
-  createPostGroupTemplate(): PostGroupTemplate{
-    let qualificationList: number[]=[];
-    return new PostGroupTemplate(this.acronym, this.title, this.description, this.numberOfDates, this.duration, this.location.locationId, this.meetingPoint, this.trainerPricePerHour, this.pricePerParticipant, qualificationList, this.participantsPerTrainer);
-  }
+export interface GroupTemplateDTO {
+    id: number,
+    acronym: string,
+    title: string,
+    description: string,
+    numberOfDates: number,
+    duration: number,
+    location: LocationDTO,
+    meetingPoint: string,
+    trainerPricePerHour: number,
+    pricePerParticipant: number,
+    requiredQualificationList: QualificationDTO[],
+    participantsPerTrainer: number
 }
