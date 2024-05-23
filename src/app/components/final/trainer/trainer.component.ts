@@ -4,12 +4,10 @@ import {TrainerService} from "../../../services/trainer/trainer.service";
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {QualificationsService} from "../../../services/qualifications/qualifications.service";
 import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
-import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
-import { TrainerDTO } from '../../../models/trainer/Trainer';
 import { TrainerDTO } from '../../../models/trainer/Trainer';
 
 @Component({
@@ -33,7 +31,7 @@ export class TrainerComponent implements OnInit{
   @Input() isEdit: boolean = false;
   @Input() isDelete: boolean = false;
   allQualifications: QualificationDTO[];
-  trainerData: TrainerDTO ={ 
+  trainerData: TrainerDTO ={
     id:0,
     subjectId:'',
     firstName:'',
