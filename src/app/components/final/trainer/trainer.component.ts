@@ -53,10 +53,10 @@ export class TrainerComponent implements OnInit{
     this.trainerService.currentTrainer.subscribe(t => {
       if (!t){
         console.error("No trainer to show");
-        return;
+      }else{
+        this.trainerData = t
+        console.log('onInit', this.trainerData);
       }
-      console.log('onInit', this.trainerData);
-      return;
     });
 
     this.qualificationService.getAllQualifications().subscribe(q => {

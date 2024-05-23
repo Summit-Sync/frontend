@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { GroupTemplateDTO } from '../../../../models/groupTemplate/GroupTemplate';
 
 @Component({
   selector: 'app-group-template-detail-view',
@@ -9,4 +11,25 @@ import { Component } from '@angular/core';
 })
 export class GroupTemplateDetailViewComponent {
 
+  selectedTemplate: GroupTemplateDTO;
+
+  constructor(
+    private dialogRef: MatDialogRef<GroupTemplateDetailViewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      }
+    });
+  }
+
+  ngOnInit(){
+    this.selectedTemplate = this.data.selectedTemplate;
+  }
+
+  close(){
+    this.dialogRef.close();
+  }
 }
+
