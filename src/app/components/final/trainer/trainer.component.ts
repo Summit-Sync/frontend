@@ -42,16 +42,6 @@ export class TrainerComponent implements OnInit{
     phone: '',
     qualifications: []
   }
-  allQualifications: QualificationDTO[];
-  trainerData: TrainerDTO ={ 
-    id:0,
-    subjectId:'',
-    firstName:'',
-    lastName:'',
-    email: '',
-    phone: '',
-    qualifications: []
-  }
 
   constructor(
     public trainerService: TrainerService,
