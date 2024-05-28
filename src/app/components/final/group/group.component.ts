@@ -126,6 +126,19 @@ export class GroupComponent implements OnInit {
     } else {
       if (this.template) {
         this.groupDataCreate = this.createPostGroupFromTemplate(this.template);
+        // TODO: ENRICO, bitte schlag mich nicht für dieses rumgemappe. Es muss sein :p
+        this.locationService.getLocationById(this.groupDataCreate.location).subscribe(l => {
+          let temp: LocationDTO[] = [];
+          temp.push(l);
+          this.selectedLocationsCheck.push(this.checkBoxMapper.mapLocationListToCheckboxList(temp)[0]);
+        });
+        let temp: QualificationDTO[] = [];
+        this.groupDataCreate.requiredQualifications.forEach(q => {
+          this.qualificationService.getQualificationById(q).subscribe(quali => {
+            temp.push(quali);
+          });
+        });
+        this.selectedQualificationsCheck = this.checkBoxMapper.mapQualificationListToCheckboxList(temp);
       } else {
         this.toast.showErrorToast("Vorlage nicht vorhanden");
         console.log("Template missing!");
