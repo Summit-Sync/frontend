@@ -17,6 +17,7 @@ import { LocationService } from '../../../../services/location/location.service'
 import { LocationDTO } from '../../../../models/location/LocationDTO';
 import { PostGroupTemplateValidatorService } from '../../../../services/validation/group-template/post-group-template/post-group-template-validator.service';
 import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
+import { GrouptemplateService } from '../../../../services/grouptemplate/grouptemplate.service';
 
  @Component({
     selector: 'app-add-group-template',
@@ -37,6 +38,8 @@ import { CheckboxListMapperService } from '../../../../services/check-box-list-m
   locationList: CheckboxList[] = [];
   qualificationList: CheckboxList[] = [];
 
+  templateId: number;
+
   defaultPriceListLength = 3;
 
   constructor(
@@ -45,7 +48,8 @@ import { CheckboxListMapperService } from '../../../../services/check-box-list-m
     private checkBoxMapper: CheckboxListMapperService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService,
-    private postGroupTemplateValidator: PostGroupTemplateValidatorService
+    private postGroupTemplateValidator: PostGroupTemplateValidatorService,
+    private groupTemplateService: GrouptemplateService
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
@@ -71,6 +75,9 @@ import { CheckboxListMapperService } from '../../../../services/check-box-list-m
   ngOnInit() {
     this.isEdit = this.data.isEdit;
     this.selectedGroupTemplate = this.data.selectedTemplate;
+    this.templateId = this.data.templateId;
+    console.log(this.templateId);
+    
     let priceList: PostCategoryPriceDTO[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
       let price:PostCategoryPriceDTO= {
@@ -115,12 +122,23 @@ import { CheckboxListMapperService } from '../../../../services/check-box-list-m
     this.groupTemplate.location = location;
     console.log(this.groupTemplate);
     if (this.postGroupTemplateValidator.validate(this.groupTemplate)) {
-      this.dialogRef.close(
-        JSON.stringify({
-          data: this.groupTemplate,
-          method: 'accept',
-        })
-      );
+      if(this.isEdit){
+        this.groupTemplateService.putGroupTemplateDTO(this.templateId, this.groupTemplate).subscribe({
+          next: (response) => {
+            console.log('Template has been created');
+            this.dialogRef.close();
+          },
+          error: (error) => console.error('Template could not be created'),
+        });
+      } else{
+        this.groupTemplateService.postGroupTemplateDTO(this.groupTemplate).subscribe({
+            next: (response) => {
+            console.log('Template has been created');
+            this.dialogRef.close();
+          },
+            error: (error) => console.error('Template could not be created'),
+          });
+      }
     } else {
       console.log('The given template is not valid');
     }
