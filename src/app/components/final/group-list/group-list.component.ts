@@ -8,6 +8,8 @@ import {ToastService} from "../../../services/toast/toast.service";
 import {GroupComponent} from "../group/group.component";
 import {ShortGroupListComponent} from "../../template/short-group-list/short-group-list.component";
 import {GroupTemplateDTO} from "../../../models/groupTemplate/GroupTemplate";
+import {UpdateGroupDTO} from "../../../models/group/UpdateGroup";
+import {PostGroupDTO} from "../../../models/group/PostGroup";
 
 
 @Component({
@@ -94,6 +96,59 @@ export class GroupListComponent {
   }
 
   showEdit(group: GroupDTO) {
+    let reqQuali: number[] = [];
+    let trainers: number[] = [];
+    group.requiredQualifications.forEach(q => {
+      reqQuali.push(q.id);
+    });
+    group.trainers.forEach(t => {
+      trainers.push(t.id);
+    });
+    let temp: UpdateGroupDTO = {
+      canceled: group.canceled,
+      groupNumber: group.groupNumber,
+      finished: group.finished,
+      title: group.title,
+      acronym: group.acronym,
+      description: group.description,
+      numberOfDates: group.numberOfDates,
+      duration: group.duration,
+      contact: group.contact,
+      dates: group.dates,
+      numberParticipants: group.numberParticipants,
+      location: group.location.locationId,
+      meetingPoint: group.meetingPoint,
+      trainerPricePerHour: group.trainerPricePerHour,
+      pricePerParticipant: group.pricePerParticipant,
+      requiredQualifications: reqQuali,
+      participantsPerTrainer: group.participantsPerTrainer,
+      trainers: trainers
+    }
+    const dialogRef = this.dialog.open(GroupComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '80dvh',
+      width: '50dvw',
+    });
+    let instance = dialogRef.componentInstance;
+    instance.groupDataUpdate = temp;
+    instance.isCreate = false;
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method == 'confirm-update') {
+        console.log("Dialog output: ", obj.data);
+        this.groupService.putGroup(obj.data.id, obj.data).subscribe({
+          next: () => {
+            this.group$ = this.groupService.getAllGroups();
+            this.toast.showSuccessToast("Gruppe erfolgreich aktualisiert");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Aktualisierung der Gruppe fehlgeschlagen \n" + err);
+          }
+        });
+      }
+    });
   }
+
   delete(group: GroupDTO) {}
 }

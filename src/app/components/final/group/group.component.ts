@@ -62,7 +62,7 @@ export class GroupComponent implements OnInit {
     pricePerParticipant: 0,
     requiredQualifications: [],
     participantsPerTrainer: 0,
-    trainers: 0
+    trainers: []
   }
   allQualificationsCheck: CheckboxList[] = [];
   allTrainersCheck: CheckboxList[] = [];
@@ -117,6 +117,7 @@ export class GroupComponent implements OnInit {
   ngOnInit(): void {
     if (!this.isCreate) {
       // TODO: Edit Modus hier initialiseren
+      console.log("Dialog inhalt initial" + this.groupDataUpdate);
       if (this.groupDataUpdate.acronym === ''){
         this.toast.showErrorToast("Keine Gruppe ausgewählt");
         this.dialogRef.close(JSON.stringify({method: 'cancel'}))
@@ -139,8 +140,16 @@ export class GroupComponent implements OnInit {
   }
 
   saveCreate(): void {
+    this.groupDataCreate.trainers = [];
+    this.groupDataCreate.requiredQualifications = [];
     this.selectedTrainersCheck.forEach(t => {
       this.groupDataCreate.trainers.push(t.id);
+    });
+    this.selectedQualificationsCheck.forEach(q => {
+      this.groupDataCreate.requiredQualifications.push(q.id);
+    });
+    this.selectedLocationsCheck.forEach(l => {
+      this.groupDataCreate.location = l.id;
     });
     if (this.postGroupValidator.validate(this.groupDataCreate)) {
       this.dialogRef.close(JSON.stringify({method: 'confirm-create', data: this.groupDataCreate}));
@@ -250,31 +259,4 @@ export class GroupComponent implements OnInit {
     }
     return temp;
   }
-
 }
-
-
-/*
-groupDataUpdate: Group = new Group(
-    0,
-    false,
-    '',
-    false,
-    '',
-    '',
-    '',
-    0,
-    0,
-    new Contact(0, '', '', '', ''),
-    [],
-    0,
-    new Location(0, '', '', '', '', '', '', '', ''),
-    '',
-    0,
-    0,
-    [],
-    0,
-    [],
-    0,
-  );
- */

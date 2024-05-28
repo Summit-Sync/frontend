@@ -18,5 +18,5 @@ export interface UpdateGroupDTO{
   pricePerParticipant: number,
   requiredQualifications: number[],
   participantsPerTrainer: number,
-  trainers: number
+  trainers: number[]
   }
