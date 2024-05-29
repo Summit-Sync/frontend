@@ -91,10 +91,7 @@ export class AddTrainerComponent implements OnInit {
 
   saveCreate(): void {
     console.log('Created: ', this.createTrainerData);
-    this.validationObject = this.postTrainerValidator.validate(
-      this.createTrainerData
-    );
-    if (this.validationObject.valid) {
+    if (this.postTrainerValidator.validate(this.createTrainerData)) {
       this.dialogRef.close(
         JSON.stringify({ method: 'confirm', data: this.createTrainerData })
       );
@@ -120,6 +117,6 @@ export class AddTrainerComponent implements OnInit {
   }
 
   cancel(): void {
-    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
+    this.dialogRef.close({ method: 'cancel' });
   }
 }
