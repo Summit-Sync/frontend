@@ -21,6 +21,7 @@ import {PostGroupDTO} from "../../../models/group/PostGroup";
 import {CheckboxListMapperService} from "../../../services/check-box-list-mapper/checkbox-list-mapper.service";
 import {TrainerApplicationDTO} from "../../../models/trainer/TrainerApplication";
 import {PostGroupValidatorService} from "../../../services/validation/group/post-group/post-group-validator.service";
+import {UpdateGroupValidatorService} from "@/app/services/validation/group/update-group/update-group-validator.service";
 
 @Component({
   selector: 'app-group',
@@ -110,7 +111,8 @@ export class GroupComponent implements OnInit {
     private dialogRef: MatDialogRef<GroupComponent>,
     public login: LoginService,
     public toast: ToastService,
-    public postGroupValidator: PostGroupValidatorService
+    public postGroupValidator: PostGroupValidatorService,
+    private updateGroupValidator: UpdateGroupValidatorService
   ) {
   }
 
@@ -171,7 +173,21 @@ export class GroupComponent implements OnInit {
   }
 
   saveUpdate(): void {
-
+    this.groupDataUpdate.trainers = [];
+    this.groupDataUpdate.requiredQualifications = [];
+    this.selectedTrainersCheck.forEach(t => {
+      this.groupDataUpdate.requiredQualifications.push(t.id);
+    });
+    this.selectedQualificationsCheck.forEach(q => {
+      this.groupDataUpdate.requiredQualifications.push(q.id);
+    });
+    this.selectedLocationsCheck.forEach(l => {
+      this.groupDataUpdate.location = l.id;
+    });
+    if (this.updateGroupValidator.validate(this.groupDataUpdate)){
+      this.dialogRef.close(JSON.stringify({method: 'confirm-update', data: this.groupDataUpdate}));
+      console.log("Dialog inhalt: " + this.groupDataUpdate);
+    }
   }
 
   save(): void {
@@ -207,7 +223,7 @@ export class GroupComponent implements OnInit {
       data.forEach(tr => {
         let hasQuali: boolean = true;
           reqQuali.forEach(q =>{
-            if (!tr.qualifications.includes(q)) {
+            if (!tr.qualifications.some(test => test.name === q.name)) {
               hasQuali = false;
             }
         });

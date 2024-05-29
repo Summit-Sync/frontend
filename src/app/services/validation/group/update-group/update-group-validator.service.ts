@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UpdateGroupDTO } from '../../../../models/group/UpdateGroup';
 import { ToastService } from '../../../toast/toast.service';
+import { PostContactValidatorService } from "@/app/services/validation/contact/post-contact/post-contact-validator.service";
+import {TrainerValidatorService} from "@/app/services/validation/trainer/trainer/trainer-validator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ export class UpdateGroupValidatorService {
 
   constructor(
     private toast: ToastService,
+    private contactValidator: PostContactValidatorService,
   ) { }
 
   validate(data: UpdateGroupDTO): boolean {
@@ -22,7 +25,7 @@ export class UpdateGroupValidatorService {
       result = false;
       console.error("Titel darf nicht leer sein");
       this.toast.showErrorToast("Titel darf nicht leer sein");
-      
+
     }
     if(!data.description){
       result = false;
@@ -42,7 +45,7 @@ export class UpdateGroupValidatorService {
       this.toast.showErrorToast("Dauer darf nicht leer sein");
 
     }
-    if(data.contact < 1){
+    if(this.contactValidator.validate(data.contact)){
       result = false;
       console.error("Einer Gruppe muss ein Kontakt zugeordnet werden");
       this.toast.showErrorToast("Einer Gruppe muss ein Kontakt zugeordnet werden");
@@ -90,7 +93,7 @@ export class UpdateGroupValidatorService {
       this.toast.showErrorToast("Preis pro Teilnehmer darf nicht 0 sein");
 
     }
-    if (data.trainers < 0) {
+    if (data.trainers.length < 1) {
       result = false;
       console.error("Einer Gruppe muss ein Trainer zugeordnet sein");
       this.toast.showErrorToast("Einer Gruppe muss ein Trainer zugeordnet sein");
@@ -101,7 +104,7 @@ export class UpdateGroupValidatorService {
       console.error("Einer Gruppe müssen Qualifikationen zugeordnet werden");
       this.toast.showErrorToast("Einer Gruppe müssen Qualifikationen zugeordnet werden");
 
-    }  
+    }
     return result;
   }
 }

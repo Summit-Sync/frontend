@@ -198,7 +198,6 @@ export class CourseComponent implements OnInit {
       this.allQualifications = q;
     });
     this.trainerService.getAllTrainers().subscribe((t) => {
-      //TODO: Experimentell, da noch keine Daten aus Backend kommen :/
       let temp: TrainerDTO[] = [];
       t.forEach(tr => {
         let hasQuali = true;
