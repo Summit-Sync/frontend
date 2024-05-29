@@ -70,9 +70,9 @@ export class CourseService {
   }
 
   //Delete
-  deleteCourse(id: number) {
+  deleteCourse(id: number):Observable<void> {
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl).subscribe();
+    return this.http.delete<void>(apiUrl);
   }
 
   deleteTrainerFromCourse(

@@ -10,6 +10,7 @@ import {TrainerService} from "../../../../services/trainer/trainer.service";
 import {ToastService} from "../../../../services/toast/toast.service";
 import { AddQualificationComponent } from '../add-qualification/add-qualification.component';
 import { QualificationValidatorService } from '../../../../services/validation/qualification/qualification-validator/qualification-validator.service';
+import { ConfirmationDialogComponent } from '../../../../dialog/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-qualification-list',
@@ -65,16 +66,31 @@ export class QualificationListComponent implements OnInit {
     });
   }
 
-  deleteQualification(id: number) {
-    this.qualificationService.deleteQualification(id).subscribe({
-      next: (response) => {
-        this.toast.showSuccessToast("Qualifikation erfolgreich gelöscht");
-        this.updateList();
-      },
-      error: (err) => {
-        this.toast.showErrorToast("Löschen der Qualifikation fehlgeschlagen \n" + err);
+  deleteQualification(qualification:QualificationDTO) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '40dvh',
+      width: '30dvw',
+      data: {
+        name: qualification.name
       }
-    })
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const obj=JSON.parse(result);
+      if(obj.method === 'confirm'){
+        this.qualificationService.deleteQualification(qualification.id).subscribe({
+          next: (response) => {
+            this.toast.showSuccessToast("Standort erfolgreich gelöscht");
+            this.updateList();
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen des Standorts fehlgeschlagen \n");
+            this.updateList()
+          }
+        });
+      }
+    });    
   }
 
   massAllocationOfQualification(quali: QualificationDTO) {

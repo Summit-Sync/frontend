@@ -10,7 +10,9 @@ import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
 import { tick } from '@angular/core/testing';
 import { PostCategoryPriceDTO } from '../../../models/price/PostCategoryPriceDTO';
 import { AddCourseTemplateComponent } from '../course-template/add-course-template/add-course-template.component';
-import {ToastService} from "@/app/services/toast/toast.service";
+import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { ToastService } from '../../../services/toast/toast.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-course-template-list',
@@ -32,17 +34,32 @@ export class CourseTemplateListComponent {
     this.updateList();
   }
 
-  deleteTemplate(id: number) {
-    this.courseTemplateService.deleteCourseTemplate(id).subscribe({
-      next:()=>{
-        this.updateList();
-        this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
-      },
-      error:(err) =>{
-        this.toast.showErrorToast("Vorlage löschen fehlgeschlagen");
+  deleteTemplate(template: CourseTemplateDTO) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '40dvh',
+      width: '30dvw',
+      data: {
+        name: template.title
       }
-
     });
+    dialogRef.afterClosed().subscribe(result => {
+      const obj=JSON.parse(result);
+      if(obj.method === 'confirm'){
+        this.courseTemplateService.deleteCourseTemplate(template.id).pipe(
+          finalize(()=>this.updateList())
+        )
+        .subscribe({
+          next: (response) => {
+            this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen \n");
+          }
+        });
+      }
+    }); 
   }
 
   editTemplate(template: CourseTemplateDTO) {
