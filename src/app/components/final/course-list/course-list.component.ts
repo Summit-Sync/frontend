@@ -119,8 +119,7 @@ export class CourseListComponent implements OnInit {
       if (obj.method == 'updated') {
         console.log('Dialog output:', obj.data);
         this.updateList();
-        //TODO: Muss in das next() event des Update calls
-        this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
+
         // Validate Input
         //
       }
@@ -144,8 +143,6 @@ export class CourseListComponent implements OnInit {
       this.updateList();
       if (obj.method == 'delete') {
         console.log('Dialog output:', obj.data);
-        // Validate Input
-        //
       }
     });
   }
@@ -168,16 +165,15 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  // MatDialog on hold for now
-  // openDialog() {
-  //   this.dialog.open(CourseComponent, {
-  //     height: '100%',
-  //     width: '100%',
-  //     position: { top: '50%', left: '50%' },
-  //   });
-  // }
-
   cancelCourse(course: CourseDTO) {
-    this.courseService.putCourseCancel(course.id, !course.canceled).subscribe();
+    this.courseService.putCourseCancel(course.id, !course.canceled).subscribe({
+      next:()=>{
+        this.toast.showSuccessToast("Kurs erfolgreich abgesagt");
+      },
+      error:()=>{
+        this.toast.showErrorToast("Kurs absagen fehlgeschlagen");
+      }
+    });
+
   }
 }

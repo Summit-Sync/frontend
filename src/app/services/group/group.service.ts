@@ -11,7 +11,7 @@ import { UpdateGroupDTO } from '../../models/group/UpdateGroup';
 })
 export class GroupService {
 
-  private baseUrl:string=`${environment.serviceUrl}/template/group`;
+  private baseUrl:string=`${environment.serviceUrl}/group`;
 
   constructor(private http:HttpClient) {}
 
@@ -53,9 +53,9 @@ export class GroupService {
   }
 
   //Delete
-  deleteGroup(id: number): void{
+  deleteGroup(id: number): Observable<GroupDTO>{
     const apiUrl: string = `${this.baseUrl}/${id}`;
-    this.http.delete(apiUrl);
+    return this.http.delete<GroupDTO>(apiUrl);
   }
 
   deleteTrainerFromCourse(groupId: number, trainerId: number): Observable<GroupDTO>{

@@ -9,6 +9,7 @@ export interface GroupDTO {
   groupNumber: string,
   finished: boolean,
   title: string,
+  acronym: string,
   description: string,
   numberOfDates: number,
   duration: number,

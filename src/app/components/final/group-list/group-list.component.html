@@ -3,22 +3,26 @@
     <thead>
       <tr>
         <th>Gruppenkürzel</th>
+        <!--
         <th>Termin 1.</th>
         <th>Termin 2.</th>
         <th>Termine insgesamt</th>
+        -->
         <th>Kontaktperson</th>
         <th>Trainer</th>
         <th>Teilnehmer</th>
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let g of groups | async">
+      <ng-container *ngFor="let g of group$ | async">
         <tr>
           <td>{{ g.title }}</td>
-          <!-- <td>{{ g.dates?.[1] || "-" }}</td>
-        <td>{{ g.dates?.[2] || "-" }}</td> -->
-          <td>{{ g.dates.length }}</td>
-          <td>{{ g.contact }}</td>
+          <!--
+        <td>{{ g.dates[1] || "-" }}</td>
+        <td>{{ g.dates[2] || "-" }}</td>
+        <td>{{ g.dates.length }}</td>
+        -->
+          <td>{{ g.contact.firstName + ' ' + g.contact.lastName }}</td>
           <td>
             <span *ngFor="let trainer of g.trainers">
               {{ trainer.firstName }}
@@ -40,3 +44,4 @@
     </tbody>
   </table>
 </div>
+<button (click)="createNewGroupFromTemplate()">Neue Gruppe erstellen</button>
