@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { ParticipantDTO } from '../../models/participant/ParticipantDTO';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParticipantListServiceService {
-
-  constructor() { }
+  constructor() {}
 
   deleteEmptyParticipants(participantsList: ParticipantDTO[]) {
     participantsList.splice(
@@ -22,15 +21,15 @@ export class ParticipantListServiceService {
     for (let i = participantsList.length; i < maxParticipants; i++) {
       let p: ParticipantDTO = {
         id: i,
-        lastName: '',
+        name: '',
         firstName: '',
         status: {
           statusId: 0,
-          text: ''
+          text: '',
         },
         phone: '',
-        email: ''
-      }
+        email: '',
+      };
       participantsList.push(p);
     }
   }
