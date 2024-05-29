@@ -3,10 +3,6 @@
     <div>
       <p>Titel:</p>
       <input type="text" [(ngModel)]="editableLocation.title" />
-    </div>
-    <div>
-      <p>Straße:</p>
-      <input type="text" [(ngModel)]="editableLocation.street" />
       <p *ngIf="validationObject.titleError">
         {{ validationObject.titleError }}
       </p>
