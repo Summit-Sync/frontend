@@ -189,9 +189,35 @@ export class GroupComponent implements OnInit {
       this.allQualifications = data;
     });
     this.trainerService.getAllTrainers().subscribe(data => {
+      let temp: TrainerDTO[] = [];
+      let reqQuali: QualificationDTO[] = [];
+      if (this.isCreate){
+        this.groupDataCreate.requiredQualifications.forEach(q => {
+          this.qualificationService.getQualificationById(q).subscribe(qu => {
+            reqQuali.push(qu);
+          });
+        });
+      } else {
+        this.groupDataUpdate.requiredQualifications.forEach(q => {
+          this.qualificationService.getQualificationById(q).subscribe(qu => {
+            reqQuali.push(qu);
+          });
+        })
+      }
+      data.forEach(tr => {
+        let hasQuali: boolean = true;
+          reqQuali.forEach(q =>{
+            if (!tr.qualifications.includes(q)) {
+              hasQuali = false;
+            }
+        });
+        if (hasQuali){
+          temp.push(tr);
+        }
+      })
       this.allTrainersCheck =
-        this.checkBoxMapper.mapTrainerListToCheckboxList(data);
-      this.allTrainers = data;
+        this.checkBoxMapper.mapTrainerListToCheckboxList(temp);
+      this.allTrainers = temp;
     });
     this.locationService.getAllLocations().subscribe(data => {
       this.allLocationsCheck =
