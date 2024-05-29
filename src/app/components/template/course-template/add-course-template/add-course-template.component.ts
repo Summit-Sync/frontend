@@ -22,7 +22,7 @@ import { CoursetemplateService } from '../../../../services/coursetemplate/cours
   standalone: true,
   imports: [CommonModule, MultiSelectDropdownComponent, FormsModule],
   templateUrl: './add-course-template.component.html',
-  styleUrl: './add-course-template.component.css',
+  styleUrl: './add-course-template.component.scss',
 })
 export class AddCourseTemplateComponent {
   //Selected template
@@ -37,7 +37,7 @@ export class AddCourseTemplateComponent {
   locationList: CheckboxList[] = [];
   qualificationList: CheckboxList[] = [];
 
-  templateId:number;
+  templateId: number;
 
   defaultPriceListLength = 3;
 
@@ -60,7 +60,8 @@ export class AddCourseTemplateComponent {
     locationService
       .getAllLocations()
       .subscribe(
-        (data) => (this.locationList = this.mapLocationDTOListToCheckboxList(data))
+        (data) =>
+          (this.locationList = this.mapLocationDTOListToCheckboxList(data))
       );
     qualificationService
       .getAllQualifications()
@@ -77,14 +78,14 @@ export class AddCourseTemplateComponent {
     this.templateId = this.data.templateId;
     let priceList: PostCategoryPriceDTO[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
-      let price:PostCategoryPriceDTO= {
+      let price: PostCategoryPriceDTO = {
         name: '',
-        price: 0
-      }
+        price: 0,
+      };
       priceList.push(price);
     }
     if (this.isEdit) {
-      console.log(this.selectedCourseTemplate)
+      console.log(this.selectedCourseTemplate);
       this.courseTemplate = {
         acronym: this.selectedCourseTemplate.acronym,
         title: this.selectedCourseTemplate.title,
@@ -96,14 +97,14 @@ export class AddCourseTemplateComponent {
         location: this.selectedCourseTemplate.location.locationId,
         meetingPoint: this.selectedCourseTemplate.meetingPoint,
         numberTrainers: this.selectedCourseTemplate.numberTrainers,
-        price:this.selectedCourseTemplate.price,
-        requiredQualifications: this.selectedCourseTemplate.requiredQualifications.map(q=>q.id)
-      }
+        price: this.selectedCourseTemplate.price,
+        requiredQualifications:
+          this.selectedCourseTemplate.requiredQualifications.map((q) => q.id),
+      };
       console.log(this.courseTemplate);
       this.addSelectedLocationDTO();
       this.addSelectedQualification();
       console.log(this.requiredQualifications);
-
     } else {
       this.courseTemplate = this.data.template;
     }
@@ -120,22 +121,26 @@ export class AddCourseTemplateComponent {
     this.courseTemplate.location = location;
     console.log(this.courseTemplate);
     if (this.postCourseTemplateValidator.validate(this.courseTemplate)) {
-      if(this.isEdit){
-        this.courseTemplateService.putCourseTemplate(this.courseTemplate,this.templateId).subscribe({
-          next: (response) => console.log('Template has been created'),
-          error: (error) => {
-            console.error('Template could not be created');
-            this.dialogRef.close();
-          },
-        })
-      }else{
-        this.courseTemplateService.postCourseTemplate(this.courseTemplate).subscribe({
-          next: (response) => console.log('Template has been created'),
-          error: (error) => {
-            console.error('Template could not be created');
-            this.dialogRef.close();
-          },
-        })
+      if (this.isEdit) {
+        this.courseTemplateService
+          .putCourseTemplate(this.courseTemplate, this.templateId)
+          .subscribe({
+            next: (response) => console.log('Template has been created'),
+            error: (error) => {
+              console.error('Template could not be created');
+              this.dialogRef.close();
+            },
+          });
+      } else {
+        this.courseTemplateService
+          .postCourseTemplate(this.courseTemplate)
+          .subscribe({
+            next: (response) => console.log('Template has been created'),
+            error: (error) => {
+              console.error('Template could not be created');
+              this.dialogRef.close();
+            },
+          });
       }
     } else {
       console.log('The given template is not valid');
@@ -159,10 +164,10 @@ export class AddCourseTemplateComponent {
   }
 
   addPrice() {
-    let price:PostCategoryPriceDTO= {
+    let price: PostCategoryPriceDTO = {
       name: '',
-      price: 0
-    }
+      price: 0,
+    };
     this.courseTemplate.price.push(price);
   }
   removePrice() {
@@ -182,7 +187,7 @@ export class AddCourseTemplateComponent {
   addSelectedQualification() {
     this.courseLocation.push({
       id: this.selectedCourseTemplate.location.locationId,
-      displayFullName: this.selectedCourseTemplate.location.street  ,
+      displayFullName: this.selectedCourseTemplate.location.street,
     });
   }
 }

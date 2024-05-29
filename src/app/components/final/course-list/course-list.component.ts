@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
-import { Observable, of } from 'rxjs';
 import { CourseDTO } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
 import { CourseComponent } from '../course/course.component';
