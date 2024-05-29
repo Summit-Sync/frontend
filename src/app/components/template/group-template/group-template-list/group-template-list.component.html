@@ -1,7 +1,4 @@
-<div>
-  <button (click)="addGroupTemplate()">Vorlage hinzufügen</button>
-</div>
-<div>
+<div class="tableWrapper">
   <table>
     <thead>
       <tr>
@@ -18,17 +15,19 @@
     </thead>
     <tbody>
       <tr *ngFor="let template of groupTemplateList">
-        <td>{{template.acronym}}</td>
-        <td>{{template.numberOfDates}}</td>
-        <td>{{template.duration}}</td>
-        <td>{{template.pricePerParticipant}}</td>
-        <td>{{template.trainerPricePerHour}}</td>
-        <td>{{template.location.title}}</td>
+        <td>{{ template.acronym }}</td>
+        <td>{{ template.numberOfDates }}</td>
+        <td>{{ template.duration }}</td>
+        <td>{{ template.pricePerParticipant }}</td>
+        <td>{{ template.trainerPricePerHour }}</td>
+        <td>{{ template.location.title }}</td>
         <td><button (click)="editTemplate(template)">Bearbeiten</button></td>
-        <td><button (click)="deleteTemplate(template.id)">Löschen</button></td>
+        <td>
+          <button (click)="deleteTemplate(template.id)">Löschen</button>
+        </td>
         <td><button (click)="viewDetails(template)">Details</button></td>
       </tr>
     </tbody>
   </table>
 </div>
-  
+<button (click)="addGroupTemplate()">Vorlage hinzufügen</button>
