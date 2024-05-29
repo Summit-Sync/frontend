@@ -39,7 +39,9 @@ export class CourseViewComponent {
   }
 
   cancel(): void {
-    this.participantListService.deleteEmptyParticipants(this.viewData.participants);
+    this.participantListService.deleteEmptyParticipants(
+      this.viewData.participants
+    );
     this.participantListService.deleteEmptyParticipants(this.viewData.waitList);
     console.log('cancel: ', this.viewData);
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
