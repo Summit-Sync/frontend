@@ -453,6 +453,7 @@ export class CourseComponent implements OnInit {
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
+          this.toast.showSuccessToast("Kurs wurde erstellt");
         },
         error: (error) => {
           console.error('Course could not be created');
