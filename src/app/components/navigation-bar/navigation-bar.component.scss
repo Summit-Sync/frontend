@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  .nav-wrapper {
+    margin: 0 auto;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 219px;
+      padding: 15px 15px 15px 0;
+      cursor: pointer;
+    }
+    li {
+      padding: 0;
+      display: inline-block;
+      position: relative;
+      background-color: inherit;
+      text-align: left;
+      a {
+        padding: 10px;
+        transition: color 250ms;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        font-style: normal;
+        text-transform: uppercase;
+        font-family: "Roboto",sans-serif,"google";
+        &.highlight {
+          color: var(--hover-color);
+        }
+      }
+      a:hover {
+        color: var(--hover-color);
+      }
+    }
+  }
+}

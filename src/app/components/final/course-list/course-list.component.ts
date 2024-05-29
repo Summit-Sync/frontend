@@ -95,7 +95,8 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'confirm') {
+      if (obj.method == 'created') {
+        this.updateList();
         console.log('Dialog output:', obj.data);
         // Validate Input
         //
@@ -105,6 +106,7 @@ export class CourseListComponent implements OnInit {
 
   showEditCourse(course: CourseDTO) {
     //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
+    console.log('showEdit', course);
     this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseComponent, {
       disableClose: false,
@@ -115,8 +117,9 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'accept') {
+      if (obj.method == 'updated') {
         console.log('Dialog output:', obj.data);
+        this.updateList();
         //TODO: Muss in das next() event des Update calls
         this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
         // Validate Input
@@ -140,7 +143,7 @@ export class CourseListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
       this.updateList();
-      if (obj.method == 'accept') {
+      if (obj.method == 'delete') {
         console.log('Dialog output:', obj.data);
         // Validate Input
         //
@@ -162,7 +165,7 @@ export class CourseListComponent implements OnInit {
         course.dates = course.dates.map((dateStr) => new Date(dateStr));
       });
 
-      console.log(this.courses); // Log updated courses with Date objects
+      console.log('updateList: ', this.courses); // Log updated courses with Date objects
     });
   }
 
