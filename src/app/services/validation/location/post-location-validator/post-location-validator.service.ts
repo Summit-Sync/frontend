@@ -49,7 +49,7 @@ export class PostLocationValidatorService {
     if (data.phone&&!regex.test(data.phone)) {
       result = false;
       console.error('Telefonnummer darf nicht leer sein');
-      validationObject.phoneError='Telefonnummer darf nur aus Zeichen bestehen';
+      validationObject.phoneError='Telefonnummer darf nur aus Ziffern bestehen';
     }
     if (!data.country) {
       result = false;
