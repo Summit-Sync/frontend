@@ -11,18 +11,21 @@
             placeholder="Vorname"
             [(ngModel)]="createTrainerData.firstName"
           />
+          <p *ngIf="validationObject.firstNameError">{{validationObject.firstNameError}}</p>
           <input
             matInput
             placeholder="Nachname"
             [(ngModel)]="createTrainerData.lastName"
           />
         </div>
+        <p *ngIf="validationObject.lastNameError">{{validationObject.lastNameError}}</p>
         <div>
           <input
             matInput
             placeholder="Nutzername"
             [(ngModel)]="createTrainerData.username"
           />
+          <p *ngIf="validationObject.usernameError">{{validationObject.usernameError}}</p>
           <input
             matInput
             type="password"
@@ -30,18 +33,21 @@
             [(ngModel)]="createTrainerData.password"
           />
         </div>
+        <p *ngIf="validationObject.passwordError">{{validationObject.passwordError}}</p>
         <div>
           <input
             matInput
             placeholder="Email"
             [(ngModel)]="createTrainerData.email"
           />
+          <p *ngIf="validationObject.emailError">{{validationObject.emailError}}</p>
           <input
             matInput
             placeholder="Telefonnummer"
             [(ngModel)]="createTrainerData.phone"
           />
         </div>
+        <p *ngIf="validationObject.phoneError">{{validationObject.phoneError}}</p>
       </mat-dialog-content>
     </div>
   </div>

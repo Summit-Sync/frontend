@@ -14,6 +14,7 @@ import { PostTrainerDTO } from '../../../models/trainer/PostTrainer';
 import { TrainerDTO } from '../../../models/trainer/Trainer';
 import { PostTrainerValidatorService } from '../../../services/validation/trainer/post-trainer/post-trainer-validator.service';
 import { TrainerValidatorService } from '../../../services/validation/trainer/trainer/trainer-validator.service';
+import { TrainerValidation } from '../../../models/validation/trainervalidation';
 
 @Component({
   selector: 'app-add-trainer',
@@ -41,6 +42,17 @@ export class AddTrainerComponent implements OnInit {
   @Input() trainerData: TrainerDTO;
   allQualification: CheckboxList[];
   selectedQualification: CheckboxList[] = [];
+  validationObject:TrainerValidation = {
+    valid:true,
+    subjectIdError:'',
+    firstNameError:'',
+    lastNameError:'',
+    emailError:'',
+    phoneError:'',
+    qualificationsError:'',
+    usernameError:'',
+    passwordError:''
+  }
   createTrainerData: PostTrainerDTO = {
     username: '',
     firstName: '',
@@ -74,7 +86,8 @@ export class AddTrainerComponent implements OnInit {
 
   saveCreate(): void {
     console.log("Created: ", this.createTrainerData);
-    if (this.postTrainerValidator.validate(this.createTrainerData)) {
+    this.validationObject=this.postTrainerValidator.validate(this.createTrainerData);
+    if (this.validationObject.valid) {
       this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.createTrainerData}));
     }
   }
@@ -84,13 +97,13 @@ export class AddTrainerComponent implements OnInit {
     console.log(this.trainerData.qualifications);
     console.log('updated: ', this.trainerData);
     this.trainerData.qualifications = this.checkBoxMapper.mapCheckboxListToQualificationList(this.selectedQualification);
-    // this.trainerData = new Trainer(this.trainerData.id, this.trainerData.subjectId, this.trainerData.firstName, this.trainerData.lastName, this.trainerData.email, this.trainerData.phone, this.trainerData.qualifications)
-    if (this.trainerValidator.validate(this.trainerData)) {
+    this.validationObject=this.postTrainerValidator.validate(this.createTrainerData);
+    if (this.validationObject.valid) {
       this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.trainerData}));
     }
   }
 
   cancel(): void {
-    this.dialogRef.close({method: 'cancel'})
+    this.dialogRef.close(JSON.stringify({method: 'cancel'}))
   }
 }

@@ -1,0 +1,18 @@
+export interface GroupValidation{
+    valid: boolean,
+    titleError: string,
+    acronymError: string,
+    descriptionError: string,
+    numberOfDatesError: string,
+    durationError: string,
+    contactError: string,
+    datesError: string,
+    numberOfParticipantsError: string,
+    locationError: string,
+    meetingPointError: string,
+    trainerPricePerHours: string,
+    pricePerParticipant: string,
+    requiredQualificationError: string,
+    participantsPerTrainerError: string,
+    trainerError: string,
+}

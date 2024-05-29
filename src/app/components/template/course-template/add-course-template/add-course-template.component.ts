@@ -16,6 +16,7 @@ import { LocationDTO } from '../../../../models/location/LocationDTO';
 import { PostCourseTemplateValidatorService } from '../../../../services/validation/course-template/post-course-template/post-course-template-validator.service';
 import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 import { CoursetemplateService } from '../../../../services/coursetemplate/coursetemplate.service';
+import { CourseTemplateValidation } from '../../../../models/validation/coursetemplatevalidation';
 
 @Component({
   selector: 'app-add-course-template',
@@ -40,6 +41,22 @@ export class AddCourseTemplateComponent {
   templateId: number;
 
   defaultPriceListLength = 3;
+
+  validationObject: CourseTemplateValidation={
+    valid:true,
+    titleError:'',
+    acronymError:'',
+    descriptionError:'',
+    numberOfDatesError:'',
+    durationError:'',
+    numberOfParticipantsError:'',
+    numberWaitlistError:'',
+    priceError:'',
+    meetingPointError:'',
+    requiredQualificationError:'',
+    numberTrainersError:'',
+    locationError:''
+  }
 
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
@@ -120,27 +137,27 @@ export class AddCourseTemplateComponent {
     this.courseTemplate.requiredQualifications = qualificationIds;
     this.courseTemplate.location = location;
     console.log(this.courseTemplate);
-    if (this.postCourseTemplateValidator.validate(this.courseTemplate)) {
-      if (this.isEdit) {
-        this.courseTemplateService
-          .putCourseTemplate(this.courseTemplate, this.templateId)
-          .subscribe({
-            next: (response) => console.log('Template has been created'),
-            error: (error) => {
-              console.error('Template could not be created');
-              this.dialogRef.close();
-            },
-          });
-      } else {
-        this.courseTemplateService
-          .postCourseTemplate(this.courseTemplate)
-          .subscribe({
-            next: (response) => console.log('Template has been created'),
-            error: (error) => {
-              console.error('Template could not be created');
-              this.dialogRef.close();
-            },
-          });
+    this.validationObject=this.postCourseTemplateValidator.validate(this.courseTemplate);
+    if (this.validationObject.valid) {
+      if(this.isEdit){
+        this.courseTemplateService.putCourseTemplate(this.courseTemplate,this.templateId).subscribe({
+          next: (response) => console.log('Template has been created'),
+          error: (error) => {
+            console.error('Template could not be created');
+            this.dialogRef.close();
+          },
+        })
+      }else{
+        this.courseTemplateService.postCourseTemplate(this.courseTemplate).subscribe({
+          next: (response) =>{
+            console.log('Template has been created');
+            this.dialogRef.close();
+          },
+          error: (error) => {
+            console.error('Template could not be created');
+            this.dialogRef.close();
+          },
+        })
       }
     } else {
       console.log('The given template is not valid');

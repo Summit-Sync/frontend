@@ -18,6 +18,7 @@ import { LocationDTO } from '../../../../models/location/LocationDTO';
 import { PostGroupTemplateValidatorService } from '../../../../services/validation/group-template/post-group-template/post-group-template-validator.service';
 import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 import { GrouptemplateService } from '../../../../services/grouptemplate/grouptemplate.service';
+import { GroupTemplateValidation } from '../../../../models/validation/grouptemplatevalidation';
 
  @Component({
     selector: 'app-add-group-template',
@@ -41,6 +42,21 @@ import { GrouptemplateService } from '../../../../services/grouptemplate/groupte
   templateId: number;
 
   defaultPriceListLength = 3;
+
+  validationObject:GroupTemplateValidation={
+    valid:true,
+    acronymError:'',
+    titleError:'',
+    descriptionError:'',
+    numberOfDatesError:'',
+    durationError:'',
+    locationError:'',
+    meetingPointError:'',
+    trainerPricePerHourError:'',
+    pricePerParticipantError:'',
+    requiredQualificationsError:'',
+    participantsPerTrainerError:''
+  }
 
   constructor(
     private dialogRef: MatDialogRef<AddGroupTemplateComponent>,
@@ -121,7 +137,8 @@ import { GrouptemplateService } from '../../../../services/grouptemplate/groupte
     this.groupTemplate.requiredQualificationList = qualificationIds;
     this.groupTemplate.location = location;
     console.log(this.groupTemplate);
-    if (this.postGroupTemplateValidator.validate(this.groupTemplate)) {
+    this.validationObject=this.postGroupTemplateValidator.validate(this.groupTemplate)
+    if (this.validationObject.valid) {
       if(this.isEdit){
         this.groupTemplateService.putGroupTemplateDTO(this.templateId, this.groupTemplate).subscribe({
           next: (response) => {

@@ -3,17 +3,30 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PostLocationDTO } from '../../../../models/location/PostLocationDTO';
 import { FormsModule } from '@angular/forms';
 import { PostLocationValidatorService } from '../../../../services/validation/location/post-location-validator/post-location-validator.service';
+import { CommonModule } from '@angular/common';
+import { LocationValidation } from '../../../../models/validation/locationvalidation';
 
 @Component({
   selector: 'app-add-location-modal',
   standalone: true,
-  imports: [ FormsModule ],
+  imports: [ FormsModule, CommonModule ],
   templateUrl: './add-location-modal.component.html',
   styleUrl: './add-location-modal.component.css'
 })
 export class AddLocationModalComponent {
   
   editableLocation: PostLocationDTO;
+  validationObject:LocationValidation={
+    valid:true,
+    titleError:'',
+    streetError:'',
+    cityError:'',
+    countryError:'',
+    postCodeError:'',
+    emailError:'',
+    phoneError:'',
+    mapsUrlError:''
+  }
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,8 +46,8 @@ export class AddLocationModalComponent {
 
   save(){
     console.log(this.editableLocation);
-    
-    if(this.postLocationValidator.validate(this.editableLocation)){
+    this.validationObject=this.postLocationValidator.validate(this.editableLocation)
+    if(this.validationObject.valid){
       console.log(this.editableLocation)
       this.dialogRef.close(JSON.stringify({
         data: this.editableLocation,
