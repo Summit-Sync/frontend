@@ -35,11 +35,13 @@ export class CourseViewComponent {
     this.participantListService.fillParticipantsList(
       this.viewData.waitList,
       this.viewData.numberWaitlist
-    );
+    )
   }
 
   cancel(): void {
-    this.participantListService.deleteEmptyParticipants(this.viewData.participants);
+    this.participantListService.deleteEmptyParticipants(
+      this.viewData.participants
+    );
     this.participantListService.deleteEmptyParticipants(this.viewData.waitList);
     console.log('cancel: ', this.viewData);
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
@@ -48,5 +50,6 @@ export class CourseViewComponent {
 
   deleteCourse(): void {
     this.courseService.deleteCourse(this.viewData.id);
+    this.dialogRef.close(JSON.stringify({ method: 'delete' }));
   }
 }

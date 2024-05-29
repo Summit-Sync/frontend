@@ -37,10 +37,12 @@
 .searchBarWrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
   gap: 10px;
+  justify-content: start;
+  max-width: 500px;
+  margin: 0 auto;
+  input {
+    max-width: 200px;
+  }
 }
 
-svg {
-  border: solid black 1px;
-}

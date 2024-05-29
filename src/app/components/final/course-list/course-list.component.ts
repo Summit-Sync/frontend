@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { CourseViewComponent } from '../course-view/course-view.component';
 import { ToastService } from '../../../services/toast/toast.service';
 import {error} from "@angular/compiler-cli/src/transformers/util";
-import {GroupValidatorService} from "../../../services/validation/group/group/group-validator.service";
 
 @Component({
   selector: 'app-course-list',
@@ -97,7 +96,8 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'confirm') {
+      if (obj.method == 'created') {
+        this.updateList();
         console.log('Dialog output:', obj.data);
         // Validate Input
         //
@@ -107,6 +107,7 @@ export class CourseListComponent implements OnInit {
 
   showEditCourse(course: CourseDTO) {
     //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
+    console.log('showEdit', course);
     this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseComponent, {
       disableClose: false,
@@ -117,8 +118,9 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'accept') {
+      if (obj.method == 'updated') {
         console.log('Dialog output:', obj.data);
+        this.updateList();
 
         // Validate Input
         //
@@ -141,7 +143,7 @@ export class CourseListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
       this.updateList();
-      if (obj.method == 'accept') {
+      if (obj.method == 'delete') {
         console.log('Dialog output:', obj.data);
       }
     });
@@ -161,7 +163,7 @@ export class CourseListComponent implements OnInit {
         course.dates = course.dates.map((dateStr) => new Date(dateStr));
       });
 
-      console.log(this.courses); // Log updated courses with Date objects
+      console.log('updateList: ', this.courses); // Log updated courses with Date objects
     });
   }
 

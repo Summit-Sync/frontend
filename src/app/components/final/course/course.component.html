@@ -98,8 +98,8 @@
               <td>
                 <input
                   type="text"
-                  [(ngModel)]="p.lastName"
-                  [placeholder]="p.lastName ? p.lastName : 'leer'"
+                  [(ngModel)]="p.name"
+                  [placeholder]="p.name ? p.name : 'leer'"
                 />
               </td>
               <td>
@@ -167,8 +167,8 @@
               <td>
                 <input
                   type="text"
-                  [(ngModel)]="wp.lastName"
-                  [placeholder]="wp.lastName ? wp.lastName : 'leer'"
+                  [(ngModel)]="wp.name"
+                  [placeholder]="wp.name ? wp.name : 'leer'"
                 />
               </td>
               <td>
@@ -236,7 +236,8 @@
       >
       </app-multi-select-dropdown>
     </div>
-    <div *ngIf="!isCreate">
+    <!-- <div *ngIf="!isCreate"> -->
+    <div>
       <p>Trainer:</p>
 
       <app-multi-select-dropdown

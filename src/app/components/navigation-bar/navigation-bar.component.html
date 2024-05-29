@@ -1,24 +1,17 @@
-<div>
-    <div>
-        <button (click)="navigateToPath('/kursvorlage')">Kursvorlage</button>
-    </div>
-    <div>
-        <button (click)="navigateToPath('/kurs')">Kurs</button>
-    </div>
-    <div>
-        <button (click)="navigateToPath('/gruppenvorlage')">Gruppenvorlage</button>
-    </div>
-    <div>
-        <button (click)="navigateToPath('/gruppe')">Gruppe</button>
-    </div>
-    <div>
-        <button (click)="navigateToPath('/standort')">Standort</button>
-    </div>
-    <div>
-        <button (click)="navigateToPath('/trainer')">Trainer</button>
-    </div>
-    <div>
-        <button (click)="navigateToPath('/qualifikation')">Qualifikation</button>
-    </div>
+<div class="navbar">
+  <div class="nav-wrapper">
+    <img
+      src="../../../assets/images/klz.png"
+      (click)="navigateToPath('', -1)"
+    />
+    <ng-container *ngFor="let link of links; let i = index">
+      <li>
+        <a
+          (click)="navigateToPath(link.route, i)"
+          [class.highlight]="link.route == currentRoute"
+          >{{ link.title }}</a
+        >
+      </li>
+    </ng-container>
+  </div>
 </div>
-

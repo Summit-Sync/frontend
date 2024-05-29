@@ -26,7 +26,6 @@ import { PostCourseValidatorService } from '../../../services/validation/course/
 import { CheckboxListMapperService } from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 import { ParticipantListServiceService } from '../../../services/participant-list-service/participant-list-service.service';
 import {ToastService} from "../../../services/toast/toast.service";
-import {GroupValidatorService} from "../../../services/validation/group/group/group-validator.service";
 import {CourseValidatorService} from "../../../services/validation/course/course/course-validator.service";
 
 @Component({
@@ -81,16 +80,16 @@ export class CourseComponent implements OnInit {
       country: '',
       email: '',
       phone: '',
-      mapsUrl: ''
+      mapsUrl: '',
     },
     meetingPoint: '',
-    notes:'',
+    notes: '',
     requiredQualifications: [],
     canceled: false,
     finished: false,
     visible: false,
-    trainers: []
-  }
+    trainers: [],
+  };
   mappedDateTime: string[][] = [];
 
   constructor(
@@ -141,16 +140,16 @@ export class CourseComponent implements OnInit {
             country: this.courseTemplate.location.country,
             email: this.courseTemplate.location.email,
             phone: this.courseTemplate.location.phone,
-            mapsUrl: this.courseTemplate.location.mapsUrl
+            mapsUrl: this.courseTemplate.location.mapsUrl,
           },
           meetingPoint: this.courseTemplate.meetingPoint,
-          notes:'',
+          notes: '',
           requiredQualifications: this.courseTemplate.requiredQualifications,
           canceled: false,
           finished: false,
           visible: false,
-          trainers: []
-        }
+          trainers: [],
+        };
       } else {
         console.error('Template missing!');
       }
@@ -273,8 +272,8 @@ export class CourseComponent implements OnInit {
     let p: CategoryPriceDTO = {
       id: 0,
       name: '',
-      price: 0
-    }
+      price: 0,
+    };
     this.courseData.prices.push(p);
   }
 
@@ -337,26 +336,28 @@ export class CourseComponent implements OnInit {
 
   saveUpdate(): void {
     let updateCourse: UpdateCourseDTO = {
-      visible:this.courseData.visible,
-      canceled:this.courseData.canceled,
-      finished:this.courseData.finished,
-      acronym:this.courseData.acronym,
-      title:this.courseData.title,
-      description:this.courseData.description,
-      dates:this.courseData.dates,
-      duration:this.courseData.duration,
-      numberParticipants:this.courseData.numberParticipants,
-      numberWaitlist:this.courseData.numberWaitlist,
-      prices:this.courseData.prices,
-      location:this.courseData.location.locationId,
+      visible: this.courseData.visible,
+      canceled: this.courseData.canceled,
+      finished: this.courseData.finished,
+      acronym: this.courseData.acronym,
+      title: this.courseData.title,
+      description: this.courseData.description,
+      dates: this.courseData.dates,
+      duration: this.courseData.duration,
+      numberParticipants: this.courseData.numberParticipants,
+      numberWaitlist: this.courseData.numberWaitlist,
+      prices: this.courseData.prices,
+      location: this.courseData.location.locationId,
       meetingPoint: this.courseData.meetingPoint,
-      requiredQualifications: this.courseData.requiredQualifications.map(q => q.id),
+      requiredQualifications: this.courseData.requiredQualifications.map(
+        (q) => q.id
+      ),
       numberTrainers: this.courseData.numberTrainers,
-      notes:this.courseData.notes,
-      trainers: this.courseData.trainers,
+      notes: this.courseData.notes,
+      trainers: this.courseData.trainers.map((t) => t.id),
       waitList: this.courseData.waitList,
-      participants: this.courseData.participants
-    }
+      participants: this.courseData.participants,
+    };
     if (this.updateCourseValidator.validate(updateCourse)) {
       this.courseService
         .putCourseDetail(this.courseData.id, updateCourse)
@@ -366,11 +367,13 @@ export class CourseComponent implements OnInit {
             this.participantListService.deleteEmptyParticipants(
               this.courseData.participants
             );
-            this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
+            this.participantListService.deleteEmptyParticipants(
+              this.courseData.waitList
+            );
           },
           error: (error) => console.error('Course could not be updated'),
           complete: () =>
-            this.dialogRef.close(JSON.stringify({ method: 'save' })),
+            this.dialogRef.close(JSON.stringify({ method: 'updated' })),
         });
     }
   }
@@ -388,34 +391,44 @@ export class CourseComponent implements OnInit {
       prices: this.courseData.prices,
       location: this.courseData.location.locationId,
       meetingPoint: this.courseData.meetingPoint,
-      requiredQualifications: this.courseData.requiredQualifications.map(q=>q.id),
+      requiredQualifications: this.courseData.requiredQualifications.map(
+        (q) => q.id
+      ),
       numberTrainers: this.courseData.numberTrainers,
       notes: this.courseData.notes,
-      trainers: this.courseData.trainers,
+      trainers: this.courseData.trainers.map((t) => t.id),
       participants: this.courseData.participants,
-      waitList: this.courseData.waitList
-    }
+      waitList: this.courseData.waitList,
+    };
     if (this.postCourseValidator.validate(postCourse)) {
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
+          this.participantListService.deleteEmptyParticipants(
+            this.courseData.participants
+          );
+          this.participantListService.deleteEmptyParticipants(
+            this.courseData.waitList
+          );
           this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
-          this.participantListService.deleteEmptyParticipants(this.courseData.participants);
-          this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
         },
         error: (error) => {
           console.error('Course could not be created');
           this.toast.showErrorToast("Kurs konnte nicht erstellt werden");
         },
         complete: () =>
-          this.dialogRef.close(JSON.stringify({ method: 'save' })),
+          this.dialogRef.close(JSON.stringify({ method: 'created' })),
       });
     }
   }
 
   cancel(): void {
-    this.participantListService.deleteEmptyParticipants(this.courseData.participants);
-    this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
+    this.participantListService.deleteEmptyParticipants(
+      this.courseData.participants
+    );
+    this.participantListService.deleteEmptyParticipants(
+      this.courseData.waitList
+    );
     this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
 
@@ -440,15 +453,15 @@ export class CourseComponent implements OnInit {
     }
     let p: ParticipantDTO = {
       id: 0,
-      lastName: '',
+      name: '',
       firstName: '',
       status: {
-        statusId:0,
-        text:''
+        statusId: 0,
+        text: '',
       },
-      email:'',
-      phone:''
-    }
+      email: '',
+      phone: '',
+    };
     participants.push(p);
   }
 
