@@ -6,22 +6,27 @@
         <div class="title">
             <label for="title">Titel</label>
             <input id="title" type="text" [(ngModel)]="groupTemplate.title">
+            <p *ngIf="validationObject.titleError">{{validationObject.titleError}}</p>
         </div>
         <div class="acronym">
             <label for="acronym">Kürzel</label>
             <input id="acronym" type="text" [(ngModel)]="groupTemplate.acronym">
+            <p *ngIf="validationObject.acronymError">{{validationObject.acronymError}}</p>
         </div>
         <div class="description">
             <label for="description">Beschreibung</label>
             <input id="description" type="text" [(ngModel)]="groupTemplate.description">
+            <p *ngIf="validationObject.descriptionError">{{validationObject.descriptionError}}</p>
         </div>
         <div class="number-of-dates">
             <label for="number-of-dates">Anzahl Termine</label>
             <input id="number-of-dates" type="text" [(ngModel)]="groupTemplate.numberOfDates">
+            <p *ngIf="validationObject.numberOfDatesError">{{validationObject.numberOfDatesError}}</p>
         </div>
         <div class="duration">
             <label for="duration">Dauer pro Termin (Minuten)</label>
             <input id="duration" type="text" [(ngModel)]="groupTemplate.duration">
+            <p *ngIf="validationObject.durationError">{{validationObject.durationError}}</p>
         </div>
         <div class="location">
             <label for="location">Ort</label>
@@ -30,18 +35,22 @@
             [allOptions]="locationList"
             [selectedOptions]="courseLocation"
             [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
+            <p *ngIf="validationObject.locationError">{{validationObject.locationError}}</p>
         </div>
         <div class="meeting-point">
             <label for="meeting-point">Treffpunkt</label>
             <input id="meeting-point" type="text" [(ngModel)]="groupTemplate.meetingPoint">
+            <p *ngIf="validationObject.meetingPointError">{{validationObject.meetingPointError}}</p>
         </div>
         <div>
             <label for="trainer-price-per-hour">Trainerpreis (Stunde)</label>
             <input id="trainer-price-per-hour" type="text" [(ngModel)]="groupTemplate.trainerPricePerHour">
+            <p *ngIf="validationObject.trainerPricePerHourError">{{validationObject.trainerPricePerHourError}}</p>
         </div>
         <div>
             <label for="price-per-participant">Teilnehmerpreis</label>
             <input id="price-per-participant" type="text" [(ngModel)]="groupTemplate.pricePerParticipant">
+            <p *ngIf="validationObject.pricePerParticipantError">{{validationObject.pricePerParticipantError}}</p>
         </div>
         <div class="required-qualifications">
             <label for="required-qualifications">Qualifikationen</label>
@@ -50,10 +59,12 @@
             [selectedOptions]="requiredQualifications"
             [dropdownHeadline]="'Qualifikationen'"
             [allowMultiple]="true"></app-multi-select-dropdown>
+            <p *ngIf="validationObject.requiredQualificationsError">{{validationObject.requiredQualificationsError}}</p>
         </div>
         <div class="participantsPerTrainer">
             <label for="participantsPerTrainer">Trainerschlüssel</label>
             <input id="participantsPerTrainer" type="text" [(ngModel)]="groupTemplate.participantsPerTrainer">
+            <p *ngIf="validationObject.participantsPerTrainerError">{{validationObject.participantsPerTrainerError}}</p>
         </div>
       </div>
     <div class="footer">

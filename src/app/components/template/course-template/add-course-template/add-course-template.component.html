@@ -6,30 +6,37 @@
         <div class="title">
             <label for="title">Titel</label>
             <input id="title" type="text" [(ngModel)]="courseTemplate.title">
+            <p *ngIf="validationObject.titleError">{{validationObject.titleError}}</p>
         </div>
         <div class="acronym">
             <label for="acronym">Kürzel</label>
             <input id="acronym" type="text" [(ngModel)]="courseTemplate.acronym">
+            <p *ngIf="validationObject.acronymError">{{validationObject.acronymError}}</p>
         </div>
         <div class="description">
             <label for="description">Beschreibung</label>
             <input id="description" type="text" [(ngModel)]="courseTemplate.description">
+            <p *ngIf="validationObject.descriptionError">{{validationObject.descriptionError}}</p>
         </div>
         <div class="number-of-dates">
             <label for="number-of-dates">Anzahl Termine</label>
             <input id="number-of-dates" type="text" [(ngModel)]="courseTemplate.numberOfDates">
+            <p *ngIf="validationObject.numberOfDatesError">{{validationObject.numberOfDatesError}}</p>
         </div>
         <div class="duration">
             <label for="duration">Dauer pro Termin (Minuten)</label>
             <input id="duration" type="text" [(ngModel)]="courseTemplate.duration">
+            <p *ngIf="validationObject.durationError">{{validationObject.durationError}}</p>
         </div>
         <div class="number-of-participants">
             <label for="number-of-participants">Max. Teilnehmeranzahl</label>
             <input id="number-of-participants" type="text" [(ngModel)]="courseTemplate.numberParticipants">
+            <p *ngIf="validationObject.numberOfParticipantsError">{{validationObject.numberOfParticipantsError}}</p>
         </div>
         <div class="number-waitlist">
             <label for="number-waitlist">Max. Wartelistenlänge</label>
             <input id="number-waitlist" type="text" [(ngModel)]="courseTemplate.numberWaitlist">
+            <p *ngIf="validationObject.numberWaitlistError">{{validationObject.numberWaitlistError}}</p>
         </div>
         <div class="price">
             <div>
@@ -45,6 +52,7 @@
                 <input [(ngModel)]="price.name">
                 <input [(ngModel)]="price.price">
             </div>
+            <p *ngIf="validationObject.priceError">{{validationObject.priceError}}</p>
         </div>
         <div class="location">
             <label for="location">Ort</label>
@@ -53,10 +61,12 @@
             [allOptions]="locationList"
             [selectedOptions]="courseLocation"
             [dropdownHeadline]="'Ort'"></app-multi-select-dropdown>
+            <p *ngIf="validationObject.locationError">{{validationObject.locationError}}</p>
         </div>
         <div class="meeting-point">
             <label for="meeting-point">Treffpunkt</label>
             <input id="meeting-point" type="text" [(ngModel)]="courseTemplate.meetingPoint">
+            <p *ngIf="validationObject.meetingPointError">{{validationObject.meetingPointError}}</p>
         </div>
         <div class="required-qualifications">
             <label for="required-qualifications">Qualifikationen</label>
@@ -65,10 +75,12 @@
             [selectedOptions]="requiredQualifications"
             [dropdownHeadline]="'Qualifikationen'"
             [allowMultiple]="true"></app-multi-select-dropdown>
+            <p *ngIf="validationObject.requiredQualificationError">{{validationObject.requiredQualificationError}}</p>
         </div>
         <div class="number-trainers">
             <label for="number-trainers">Benötigte Trainer</label>
             <input id="number-trainers" type="text" [(ngModel)]="courseTemplate.numberTrainers">
+            <p *ngIf="validationObject.numberTrainersError">{{validationObject.numberTrainersError}}</p>
         </div>
 
     </div>

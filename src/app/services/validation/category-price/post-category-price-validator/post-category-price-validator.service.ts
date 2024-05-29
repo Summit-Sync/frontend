@@ -16,18 +16,15 @@ export class PostCategoryPriceValidatorService {
     if(!data){
       result = false;
       console.error('Preis darf nicht leer sein');
-      this.toast.showErrorToast('Preis darf nicht leer sein');
     }
     if(data.price <= 0){
         result = false;
         console.error("Preis darf nicht leer sein");
-        this.toast.showErrorToast("Preis darf nicht leer sein");
 
     }
     if(!data.name){
         result = false;
         console.error("Kategorie darf nicht leer sein");
-        this.toast.showErrorToast("Kategorie darf nicht leer sein");
 
     }
     return result;

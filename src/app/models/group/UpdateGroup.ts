@@ -4,6 +4,7 @@ export interface UpdateGroupDTO{
   canceled: boolean,
   groupNumber: string,
   finished: boolean,
+  acronym: string,
   title: string,
   acronym: string,
   description: string,
