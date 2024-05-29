@@ -56,6 +56,8 @@ export class TrainerListComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      
       const obj = JSON.parse(result);
       if (obj.method == 'confirm') {
         this.trainerService.deleteTrainerById(trainer.id).subscribe({

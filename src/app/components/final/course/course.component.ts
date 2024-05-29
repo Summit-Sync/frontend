@@ -33,6 +33,7 @@ import {
 } from '../../../services/participant-list-service/participant-list-service.service';
 import {ToastService} from "../../../services/toast/toast.service";
 import {CourseValidatorService} from "../../../services/validation/course/course/course-validator.service";
+import { CourseValidation } from '../../../models/validation/coursevalidation';
 
 @Component({
   selector: 'app-course',
@@ -61,6 +62,26 @@ export class CourseComponent implements OnInit {
   allLocations: LocationDTO[];
   allQualifications: QualificationDTO[];
   allTrainers: TrainerDTO[];
+
+  validationObject:CourseValidation={
+    valid:true,
+    acronymError:'',
+    titleError:'',
+    descriptionError:'',
+    datesError:'',
+    durationError:'',
+    numberOfParticipantsError:'',
+    numberWaitlistError:'',
+    pricesError:'',
+    locationError:'',
+    meetingPointError:'',
+    requiredQualificationsError:'',
+    numberTrainersError:'',
+    notesError:'',
+    trainerError:'',
+    participantsError:'',
+    waitlistError:''
+  }
 
   courseTemplate: CourseTemplateDTO | undefined;
   courseData: CourseDTO = {
@@ -375,9 +396,10 @@ export class CourseComponent implements OnInit {
       notes: this.courseData.notes,
       trainers: this.courseData.trainers.map((t) => t.id),
       waitList: this.courseData.waitList,
-      participants: this.courseData.participants,
-    };
-    if (this.updateCourseValidator.validate(updateCourse)) {
+      participants: this.courseData.participants
+    }
+    this.validationObject=this.updateCourseValidator.validate(updateCourse);
+    if (this.validationObject.valid) {
       this.courseService
         .putCourseDetail(this.courseData.id, updateCourse)
         .subscribe({
@@ -417,9 +439,10 @@ export class CourseComponent implements OnInit {
       notes: this.courseData.notes,
       trainers: this.courseData.trainers.map((t) => t.id),
       participants: this.courseData.participants,
-      waitList: this.courseData.waitList,
-    };
-    if (this.postCourseValidator.validate(postCourse)) {
+      waitList: this.courseData.waitList
+    }
+    this.validationObject=this.postCourseValidator.validate(postCourse);
+    if (this.validationObject.valid) {
       this.participantListService.deleteEmptyParticipants(
         this.courseData.participants
       );
@@ -429,7 +452,7 @@ export class CourseComponent implements OnInit {
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
-          this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
+          this.toast.showSuccessToast("Kurs wurde erstellt");
         },
         error: (error) => {
           console.error('Course could not be created');

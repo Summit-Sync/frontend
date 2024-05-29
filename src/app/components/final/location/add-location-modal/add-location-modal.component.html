@@ -6,34 +6,42 @@
         <div>
             <label>Titel:</label>
             <input type="text" [(ngModel)]="editableLocation.title">
+            <p *ngIf="validationObject.titleError">{{validationObject.titleError}}</p>
         </div>
         <div>
             <label>Straße:</label>
             <input type="text" [(ngModel)]="editableLocation.street">
+            <p *ngIf="validationObject.streetError">{{validationObject.streetError}}</p>
         </div>
         <div>
             <label>Postleitzahl:</label>
             <input type="text" [(ngModel)]="editableLocation.postCode">
+            <p *ngIf="validationObject.postCodeError">{{validationObject.postCodeError}}</p>
         </div>
         <div>
             <label>Stadt:</label>
             <input type="text" [(ngModel)]="editableLocation.city">
+            <p *ngIf="validationObject.cityError">{{validationObject.cityError}}</p>
         </div>
         <div>
             <label>Land:</label>
             <input type="text" [(ngModel)]="editableLocation.country">
+            <p *ngIf="validationObject.countryError">{{validationObject.countryError}}</p>
         </div>
         <div>
             <label>E-Mail:</label>
             <input type="text" [(ngModel)]="editableLocation.email">
+            <p *ngIf="validationObject.emailError">{{validationObject.emailError}}</p>
         </div>
         <div>
             <label>Telefonnummer:</label>
             <input type="text" [(ngModel)]="editableLocation.phone">
+            <p *ngIf="validationObject.phoneError">{{validationObject.phoneError}}</p>
         </div>
         <div>
             <label>Google Maps URL:</label>
             <input type="text" [(ngModel)]="editableLocation.mapsUrl">
+            <p *ngIf="validationObject.mapsUrlError">{{validationObject.mapsUrlError}}</p>
         </div>
     </div>
     <div class="footer">

@@ -3,6 +3,7 @@
     <div>
       <p>Kurstitel:</p>
       <input type="text" [(ngModel)]="courseData.title" />
+      <p *ngIf="validationObject.titleError">{{validationObject.titleError}}</p>
     </div>
     <div>
       <p>Kursnummer:</p>
@@ -14,6 +15,7 @@
       <p>Beschreibung:</p>
 
       <input type="text" [(ngModel)]="courseData.description" />
+      <p *ngIf="validationObject.descriptionError">{{validationObject.descriptionError}}</p>
     </div>
     <div class="listWrapper">
       <table>
@@ -56,6 +58,7 @@
           </ng-container>
         </tbody>
       </table>
+      <p *ngIf="validationObject.datesError">{{validationObject.datesError}}</p>
       <button (click)="addDate()">Termin hinzufügen</button>
     </div>
 
@@ -71,6 +74,7 @@
           )
         "
       />
+      <p *ngIf="validationObject.numberOfParticipantsError">{{validationObject.numberOfParticipantsError}}</p>
     </div>
     <div class="listWrapper">
       <table>
@@ -129,6 +133,7 @@
           </ng-container>
         </tbody>
       </table>
+      <p *ngIf="validationObject.participantsError">{{validationObject.participantsError}}</p>
     </div>
     <div>
       <p>Maximale Wartelistenlänge:</p>
@@ -142,6 +147,7 @@
           )
         "
       />
+      <p *ngIf="validationObject.waitlistError">{{validationObject.numberWaitlistError}}</p>
     </div>
     <div class="listWrapper">
       <table>
@@ -198,6 +204,7 @@
           </ng-container>
         </tbody>
       </table>
+      <p *ngIf="validationObject.waitlistError">{{validationObject.waitlistError}}</p>
     </div>
     <div>
       <div>
@@ -211,6 +218,7 @@
         </ng-container>
         <button (click)="addPrice()">Preis hinzufügen</button>
       </div>
+      <p *ngIf="validationObject.pricesError">{{validationObject.pricesError}}</p>
     </div>
     <div>
       <p>Ort:</p>
@@ -221,10 +229,12 @@
         [allowMultiple]="false"
       >
       </app-multi-select-dropdown>
+      <p *ngIf="validationObject.locationError">{{validationObject.locationError}}</p>
     </div>
     <div>
       <p>Treffpunkt:</p>
       <input type="text" [(ngModel)]="courseData.meetingPoint" />
+      <p *ngIf="validationObject.meetingPointError">{{validationObject.meetingPointError}}</p>
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
@@ -235,8 +245,8 @@
         [allowMultiple]="true"
       >
       </app-multi-select-dropdown>
+      <p *ngIf="validationObject.requiredQualificationsError">{{validationObject.requiredQualificationsError}}</p>
     </div>
-    <!-- <div *ngIf="!isCreate"> -->
     <div>
       <p>Trainer:</p>
 
@@ -248,11 +258,12 @@
         [allowedEntries]="this.courseData.numberTrainers"
       >
       </app-multi-select-dropdown>
+      <p *ngIf="validationObject.trainerError">{{validationObject.trainerError}}</p>
     </div>
     <div>
       <p>Notizen:</p>
-
       <input type="text" [(ngModel)]="courseData.notes" />
+      <p *ngIf="validationObject.notesError">{{validationObject.notesError}}</p>
     </div>
   </div>
   <div class="button-div">
