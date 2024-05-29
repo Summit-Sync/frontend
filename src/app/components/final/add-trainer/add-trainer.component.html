@@ -13,7 +13,6 @@
         <p *ngIf="validationObject.firstNameError" class="errorMessage">
           {{ validationObject.firstNameError }}
         </p>
-
         <input
           matInput
           placeholder="Nachname"
@@ -51,7 +50,6 @@
         <p *ngIf="validationObject.emailError" class="errorMessage">
           {{ validationObject.emailError }}
         </p>
-
         <input
           matInput
           placeholder="Telefonnummer"
@@ -64,6 +62,7 @@
     </div>
   </div>
   <div>
+
     <button (click)="saveCreate()">Trainer anlegen</button>
     <button (click)="cancel()">Abbrechen</button>
   </div>
@@ -104,7 +103,6 @@
           [allowMultiple]="true"
         >
         </app-multi-select-dropdown>
-
       </div>
     </div>
     <div>

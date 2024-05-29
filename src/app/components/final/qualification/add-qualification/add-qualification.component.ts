@@ -6,6 +6,7 @@ import { QualificationValidation } from '../../../../models/validation/qualifica
 import { PostQualificationValidatorService } from '../../../../services/validation/qualification/post-qualification-validator/post-qualification-validator.service';
 import { PostQualificationDTO } from '../../../../models/qualification/PostQualificationDTO';
 import { CommonModule } from '@angular/common';
+
 import { ToastService } from '../../../../services/toast/toast.service';
 
 @Component({
