@@ -112,12 +112,12 @@ export class PostGroupValidatorService {
       validationObject.pricePerParticipantError="Preis pro Teilnehmer darf nicht 0 sein";
 
     }
-    if (data.trainers.length === 0) {
-      result = false;
-      console.error("Trainerliste darf nicht leer sein");
-      validationObject.trainerError="Trainerliste darf nicht leer sein";
+    // if (data.trainers.length === 0) {
+    //   result = false;
+    //   console.error("Trainerliste darf nicht leer sein");
+    //   validationObject.trainerError="Trainerliste darf nicht leer sein";
 
-    }
+    // }
     if(data.requiredQualifications.length === 0){
       result = false;
       console.error("Einer Gruppe müssen Qualifikationen zugeordnet werden");
