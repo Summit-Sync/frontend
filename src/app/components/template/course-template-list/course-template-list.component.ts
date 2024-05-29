@@ -10,30 +10,29 @@ import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
 import { tick } from '@angular/core/testing';
 import { PostCategoryPriceDTO } from '../../../models/price/PostCategoryPriceDTO';
 import { AddCourseTemplateComponent } from '../course-template/add-course-template/add-course-template.component';
-import {ToastService} from "../../../services/toast/toast.service";
+import {ToastService} from "@/app/services/toast/toast.service";
 
 @Component({
   selector: 'app-course-template-list',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [CommonModule],
   templateUrl: './course-template-list.component.html',
-  styleUrl: './course-template-list.component.css'
+  styleUrl: './course-template-list.component.css',
 })
 export class CourseTemplateListComponent {
-
   courseTemplateList: CourseTemplateDTO[] = [];
 
   constructor(
     private courseTemplateService: CoursetemplateService,
     private dialog: MatDialog,
     private toast: ToastService
-  ){}
+  ) {}
 
-  ngOnInit(){
-    this.updateList()
+  ngOnInit() {
+    this.updateList();
   }
 
-  deleteTemplate(id:number){
+  deleteTemplate(id: number) {
     this.courseTemplateService.deleteCourseTemplate(id).subscribe({
       next:()=>{
         this.updateList();
@@ -46,50 +45,48 @@ export class CourseTemplateListComponent {
     });
   }
 
-  editTemplate(template: CourseTemplateDTO){
-
-    const dialogRef = this.dialog.open(AddCourseTemplateComponent,{
+  editTemplate(template: CourseTemplateDTO) {
+    const dialogRef = this.dialog.open(AddCourseTemplateComponent, {
       disableClose: true,
       width: '40dvw',
       height: '80dvh',
       data: {
         selectedTemplate: template,
         isEdit: true,
-        templateId: template.id
-      }
+        templateId: template.id,
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
         this.updateList();
-    })
+    });
   }
 
-  updateList(){
-    this.courseTemplateService.getAllCourseTemplates().subscribe(data=>{
-      this.courseTemplateList=data;
-    }
-    )
+  updateList() {
+    this.courseTemplateService.getAllCourseTemplates().subscribe((data) => {
+      this.courseTemplateList = data;
+    });
   }
 
-  openDetails(template:CourseTemplateDTO){
-    const dialogRef= this.dialog.open(CourseTemplateDetailViewComponent, {
+  openDetails(template: CourseTemplateDTO) {
+    const dialogRef = this.dialog.open(CourseTemplateDetailViewComponent, {
       disableClose: true,
       width: '40dvw',
       height: '80dvh',
       data: {
-        template: template
-      }
-    })
+        template: template,
+      },
+    });
   }
 
-  openCreateDialog(){
+  openCreateDialog() {
     let priceList: PostCategoryPriceDTO[] = [];
-    for(let x=0; x<3;x++){
-      let p:PostCategoryPriceDTO = {
+    for (let x = 0; x < 3; x++) {
+      let p: PostCategoryPriceDTO = {
         name: '',
-        price: 0
-      }
-      priceList.push(p)
+        price: 0,
+      };
+      priceList.push(p);
     }
     let template: PostCourseTemplateDTO = {
       acronym: '',
@@ -103,22 +100,20 @@ export class CourseTemplateListComponent {
       location: 0,
       meetingPoint: '',
       price: priceList,
-      requiredQualifications: []
-    }
-    const dialogref = this.dialog.open(AddCourseTemplateComponent,{
+      requiredQualifications: [],
+    };
+    const dialogref = this.dialog.open(AddCourseTemplateComponent, {
       disableClose: true,
-      width: '40dvw',
-      height: '80dvh',
+      height: '90dvh',
+      width: '70dvw',
       data: {
         template: template,
-        isEdit: false
-      }
+        isEdit: false,
+      },
     });
 
-    dialogref.afterClosed().subscribe(result => {
-
-        this.updateList();
-    })
+    dialogref.afterClosed().subscribe((result) => {
+      this.updateList();
+    });
   }
-
 }
