@@ -203,14 +203,14 @@ export class CourseComponent implements OnInit {
       t.forEach(tr => {
         let hasQuali = true;
         this.courseData.requiredQualifications.forEach(q => {
-          if (!tr.qualifications.includes(q)) {
+          if (!tr.qualifications.some(test => test.name === q.name)) {
             hasQuali = false;
           }
         });
         if (hasQuali) {
           temp.push(tr);
         }
-      })
+      });
       this.allCheckboxListTrainers =
         this.checkBoxListMapper.mapTrainerListToCheckboxList(temp);
       this.allTrainers = temp;
@@ -421,15 +421,15 @@ export class CourseComponent implements OnInit {
       waitList: this.courseData.waitList,
     };
     if (this.postCourseValidator.validate(postCourse)) {
+      this.participantListService.deleteEmptyParticipants(
+        this.courseData.participants
+      );
+      this.participantListService.deleteEmptyParticipants(
+        this.courseData.waitList
+      );
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
-          this.participantListService.deleteEmptyParticipants(
-            this.courseData.participants
-          );
-          this.participantListService.deleteEmptyParticipants(
-            this.courseData.waitList
-          );
           this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
         },
         error: (error) => {
