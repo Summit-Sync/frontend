@@ -25,6 +25,9 @@ import { UpdateCourseValidatorService } from '../../../services/validation/cours
 import { PostCourseValidatorService } from '../../../services/validation/course/post-course/post-course-validator.service';
 import { CheckboxListMapperService } from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 import { ParticipantListServiceService } from '../../../services/participant-list-service/participant-list-service.service';
+import {ToastService} from "../../../services/toast/toast.service";
+import {GroupValidatorService} from "../../../services/validation/group/group/group-validator.service";
+import {CourseValidatorService} from "../../../services/validation/course/course/course-validator.service";
 
 @Component({
   selector: 'app-course',
@@ -100,7 +103,9 @@ export class CourseComponent implements OnInit {
     private dialogRef: MatDialogRef<CourseComponent>,
     private updateCourseValidator: UpdateCourseValidatorService,
     private postCourseValidator: PostCourseValidatorService,
-    private participantListService: ParticipantListServiceService
+    private participantListService: ParticipantListServiceService,
+    private toast: ToastService,
+    private courseValidator: CourseValidatorService,
   ) {}
 
   ngOnInit(): void {
@@ -394,10 +399,14 @@ export class CourseComponent implements OnInit {
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
+          this.toast.showSuccessToast('Kurs wurde erfolgreich aktualisiert');
           this.participantListService.deleteEmptyParticipants(this.courseData.participants);
           this.participantListService.deleteEmptyParticipants(this.courseData.waitList);
         },
-        error: (error) => console.error('Course could not be created'),
+        error: (error) => {
+          console.error('Course could not be created');
+          this.toast.showErrorToast("Kurs konnte nicht erstellt werden");
+        },
         complete: () =>
           this.dialogRef.close(JSON.stringify({ method: 'save' })),
       });

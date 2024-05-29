@@ -150,5 +150,15 @@ export class GroupListComponent {
     });
   }
 
-  delete(group: GroupDTO) {}
+  delete(group: GroupDTO) {
+    this.groupService.deleteGroup(group.id).subscribe({
+      next:() =>{
+        this.group$ = this.groupService.getAllGroups();
+        this.toast.showSuccessToast("Löschen der Gruppe erfolgreich");
+    },
+      error: (err) =>{
+        this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen");
+      }
+    });
+  }
 }

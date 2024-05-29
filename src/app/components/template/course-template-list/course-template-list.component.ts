@@ -10,6 +10,7 @@ import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
 import { tick } from '@angular/core/testing';
 import { PostCategoryPriceDTO } from '../../../models/price/PostCategoryPriceDTO';
 import { AddCourseTemplateComponent } from '../course-template/add-course-template/add-course-template.component';
+import {ToastService} from "../../../services/toast/toast.service";
 
 @Component({
   selector: 'app-course-template-list',
@@ -24,7 +25,8 @@ export class CourseTemplateListComponent {
 
   constructor(
     private courseTemplateService: CoursetemplateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toast: ToastService
   ){}
 
   ngOnInit(){
@@ -32,8 +34,15 @@ export class CourseTemplateListComponent {
   }
 
   deleteTemplate(id:number){
-    this.courseTemplateService.deleteCourseTemplate(id).subscribe(()=>{
-      this.updateList();
+    this.courseTemplateService.deleteCourseTemplate(id).subscribe({
+      next:()=>{
+        this.updateList();
+        this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
+      },
+      error:(err) =>{
+        this.toast.showErrorToast("Vorlage löschen fehlgeschlagen");
+      }
+
     });
   }
 
@@ -49,7 +58,7 @@ export class CourseTemplateListComponent {
         templateId: template.id
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
         this.updateList();
     })
