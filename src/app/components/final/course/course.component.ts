@@ -444,15 +444,15 @@ export class CourseComponent implements OnInit {
     }
     this.validationObject=this.postCourseValidator.validate(postCourse);
     if (this.validationObject.valid) {
+      this.participantListService.deleteEmptyParticipants(
+        this.courseData.participants
+      );
+      this.participantListService.deleteEmptyParticipants(
+        this.courseData.waitList
+      );
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
-          this.participantListService.deleteEmptyParticipants(
-            this.courseData.participants
-          );
-          this.participantListService.deleteEmptyParticipants(
-            this.courseData.waitList
-          );
         },
         error: (error) => {
           console.error('Course could not be created');
