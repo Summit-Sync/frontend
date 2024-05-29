@@ -117,7 +117,7 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'updated' || obj.method == 'created') {
+      if (obj.method == 'updated') {
         console.log('Dialog output:', obj.data);
         this.updateList();
         //TODO: Muss in das next() event des Update calls
