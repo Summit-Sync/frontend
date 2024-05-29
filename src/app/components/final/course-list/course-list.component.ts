@@ -10,7 +10,6 @@ import { SearchPipe } from '../../../pipes/search/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CourseViewComponent } from '../course-view/course-view.component';
 import { ToastService } from '../../../services/toast/toast.service';
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-course-list',
