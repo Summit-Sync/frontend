@@ -1,43 +1,40 @@
-<div>
-    <div class="header">
-
+<div class="outer">
+  <div class="courseBody">
+    <div>
+      <p>Titel:</p>
+      <input type="text" [(ngModel)]="editableLocation.title" />
     </div>
-    <div class="body">
-        <div>
-            <label>Titel:</label>
-            <input type="text" [(ngModel)]="editableLocation.title">
-        </div>
-        <div>
-            <label>Straße:</label>
-            <input type="text" [(ngModel)]="editableLocation.street">
-        </div>
-        <div>
-            <label>Postleitzahl:</label>
-            <input type="text" [(ngModel)]="editableLocation.postCode">
-        </div>
-        <div>
-            <label>Stadt:</label>
-            <input type="text" [(ngModel)]="editableLocation.city">
-        </div>
-        <div>
-            <label>Land:</label>
-            <input type="text" [(ngModel)]="editableLocation.country">
-        </div>
-        <div>
-            <label>E-Mail:</label>
-            <input type="text" [(ngModel)]="editableLocation.email">
-        </div>
-        <div>
-            <label>Telefonnummer:</label>
-            <input type="text" [(ngModel)]="editableLocation.phone">
-        </div>
-        <div>
-            <label>Google Maps URL:</label>
-            <input type="text" [(ngModel)]="editableLocation.mapsUrl">
-        </div>
+    <div>
+      <p>Straße:</p>
+      <input type="text" [(ngModel)]="editableLocation.street" />
     </div>
-    <div class="footer">
-        <button (click)="save()">Speichern</button>
-        <button (click)="cancel()">Abbrechen</button>
+    <div>
+      <p>Postleitzahl:</p>
+      <input type="text" [(ngModel)]="editableLocation.postCode" />
     </div>
+    <div>
+      <p>Stadt:</p>
+      <input type="text" [(ngModel)]="editableLocation.city" />
+    </div>
+    <div>
+      <p>Land:</p>
+      <input type="text" [(ngModel)]="editableLocation.country" />
+    </div>
+    <div>
+      <p>E-Mail:</p>
+      <input type="text" [(ngModel)]="editableLocation.email" />
+    </div>
+    <div>
+      <p>Telefonnummer:</p>
+      <input type="text" [(ngModel)]="editableLocation.phone" />
+    </div>
+    <div>
+      <p>Google Maps URL:</p>
+      <input type="text" [(ngModel)]="editableLocation.mapsUrl" />
+    </div>
+  </div>
+  <div class="button-div">
+    <button (click)="save()">Speichern</button>
+    <button (click)="cancel()">Abbrechen</button>
+  </div>
 </div>

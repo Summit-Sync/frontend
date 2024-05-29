@@ -1,13 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from "rxjs";
-import {TrainerService} from "../../../services/trainer/trainer.service";
-import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
-import {QualificationsService} from "../../../services/qualifications/qualifications.service";
-import {QualificationDTO} from "../../../models/qualification/QualificationDTO";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatButton} from "@angular/material/button";
-import {MatInput} from "@angular/material/input";
-import {NgForOf} from "@angular/common";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TrainerService } from '../../../services/trainer/trainer.service';
+import {
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { QualificationsService } from '../../../services/qualifications/qualifications.service';
+import { QualificationDTO } from '../../../models/qualification/QualificationDTO';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { CommonModule, NgForOf } from '@angular/common';
 import { TrainerDTO } from '../../../models/trainer/Trainer';
 
 @Component({
@@ -21,55 +26,56 @@ import { TrainerDTO } from '../../../models/trainer/Trainer';
     MatDialogTitle,
     MatInput,
     ReactiveFormsModule,
-    NgForOf
+    NgForOf,
+    CommonModule,
   ],
   templateUrl: './trainer.component.html',
-  styleUrl: './trainer.component.css'
+  styleUrl: './trainer.component.css',
 })
-export class TrainerComponent implements OnInit{
+export class TrainerComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
   @Input() isDelete: boolean = false;
   allQualifications: QualificationDTO[];
-  trainerData: TrainerDTO ={
-    id:0,
-    subjectId:'',
-    firstName:'',
-    lastName:'',
+  trainerData: TrainerDTO = {
+    id: 0,
+    subjectId: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    qualifications: []
-  }
+    qualifications: [],
+  };
 
   constructor(
     public trainerService: TrainerService,
     public qualificationService: QualificationsService,
     private dialogRef: MatDialogRef<TrainerComponent>
-  ) {
-  }
-
+  ) {}
 
   ngOnInit(): void {
-    this.trainerService.currentTrainer.subscribe(t => {
-      if (!t){
-        console.error("No trainer to show");
-      }else{
-        this.trainerData = t
+    this.trainerService.currentTrainer.subscribe((t) => {
+      if (!t) {
+        console.error('No trainer to show');
+      } else {
+        this.trainerData = t;
         console.log('onInit', this.trainerData);
       }
     });
 
-    this.qualificationService.getAllQualifications().subscribe(q => {
+    this.qualificationService.getAllQualifications().subscribe((q) => {
       this.allQualifications = q;
     });
   }
 
-
-
-  cancel(): void{
-    console.log("cancel: ", this.trainerData);
-    this.dialogRef.close(JSON.stringify({method: 'cancel'}));
+  cancel(): void {
+    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
+
+  deleteTrainer(): void {
+    this.dialogRef.close(JSON.stringify({ method: 'delete' }));
+  }
+
   /*
   saveUpdate(): void{
     console.log("Updated: ", this.trainerData);
@@ -84,7 +90,4 @@ export class TrainerComponent implements OnInit{
   }
 
    */
-
-
-
 }
