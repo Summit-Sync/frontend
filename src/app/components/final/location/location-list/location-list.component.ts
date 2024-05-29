@@ -6,6 +6,8 @@ import { finalize } from 'rxjs';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { LocationDetailViewComponent } from '../location-detail-view/location-detail-view.component';
 import { LocationDTO } from '../../../../models/location/LocationDTO';
+import { ConfirmationDialogComponent } from '../../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { ToastService } from '../../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-location-list',
@@ -21,6 +23,7 @@ export class LocationListComponent {
   constructor(
     private locationService: LocationService,
     private dialog: MatDialog,
+    private toast: ToastService
   ){}
 
   ngOnInit(){
@@ -64,14 +67,32 @@ export class LocationListComponent {
     })
   }
 
-  deleteLocation(locationId: number){
-    this.locationService.deleteLocationById(locationId).pipe(
-      finalize(() => this.updateList())
-    ).subscribe({
-      next: (response) => console.log('Locations was deleted'),
-      error: (err) => console.error('Location could not be deleted', err),
-      complete: () => this.updateList()
-    })
+  deleteLocation(location: LocationDTO){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '40dvh',
+      width: '30dvw',
+      data: {
+        name: location.title
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const obj=JSON.parse(result);
+      if(obj.method === 'confirm'){
+        this.locationService.deleteLocationById(location.locationId).pipe(
+          finalize(()=> this.updateList())
+        )
+        .subscribe({
+          next: (response) => {
+            this.toast.showSuccessToast("Qualifikation erfolgreich gelöscht");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen der Qualifikation fehlgeschlagen \n" + err);
+          }
+        });
+      }
+    });
   }
 
   openCreateDialog(){

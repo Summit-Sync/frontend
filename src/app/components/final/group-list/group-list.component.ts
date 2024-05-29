@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GroupDTO } from '../../../models/group/Group';
-import { Observable, of } from 'rxjs';
+import { Observable, finalize, of } from 'rxjs';
 import { GroupService } from '../../../services/group/group.service';
 import { CommonModule } from '@angular/common';
 import {MatDialog} from "@angular/material/dialog";
@@ -10,6 +10,7 @@ import {ShortGroupListComponent} from "../../template/short-group-list/short-gro
 import {GroupTemplateDTO} from "../../../models/groupTemplate/GroupTemplate";
 import {UpdateGroupDTO} from "../../../models/group/UpdateGroup";
 import {PostGroupDTO} from "../../../models/group/PostGroup";
+import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -20,7 +21,6 @@ import {PostGroupDTO} from "../../../models/group/PostGroup";
   styleUrl: './group-list.component.css',
 })
 export class GroupListComponent {
-  //groups: Observable<Group[]> = of([]);
   group$: Observable<GroupDTO[]>;
 
   constructor(
@@ -31,6 +31,10 @@ export class GroupListComponent {
   }
 
   ngOnInit(): void {
+    this.updateList();
+  }
+
+  updateList(){
     this.group$ = this.groupService.getAllGroups();
   }
 
@@ -150,14 +154,30 @@ export class GroupListComponent {
     });
   }
 
-  delete(group: GroupDTO) {
-    this.groupService.deleteGroup(group.id).subscribe({
-      next:() =>{
-        this.group$ = this.groupService.getAllGroups();
-        this.toast.showSuccessToast("Löschen der Gruppe erfolgreich");
-    },
-      error: (err) =>{
-        this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen");
+  delete(template: GroupDTO) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '40dvh',
+      width: '30dvw',
+      data: {
+        name: template.title
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const obj=JSON.parse(result);
+      if(obj.method === 'confirm'){
+        this.groupService.deleteGroup(template.id).pipe(
+          finalize(()=>this.updateList())
+        )
+        .subscribe({
+          next: (response) => {
+            this.toast.showSuccessToast("Gruppe erfolgreich gelöscht");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen \n");
+          }
+        });
       }
     });
   }

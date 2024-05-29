@@ -10,6 +10,8 @@ import { SearchPipe } from '../../../pipes/search/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CourseViewComponent } from '../course-view/course-view.component';
 import { ToastService } from '../../../services/toast/toast.service';
+import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-course-list',
@@ -80,8 +82,31 @@ export class CourseListComponent implements OnInit {
   }
 
   delete(course: CourseDTO) {
-    this.showingDelete = true;
-    this.showCourseView(course);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '40dvh',
+      width: '30dvw',
+      data: {
+        name: course.title
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const obj=JSON.parse(result);
+      if(obj.method === 'confirm'){
+        this.courseService.deleteCourse(course.id).pipe(
+          finalize(()=>this.updateList())
+        )
+        .subscribe({
+          next: (response) => {
+            this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen \n");
+          }
+        });
+      }
+    });
   }
 
   showTemplateList() {

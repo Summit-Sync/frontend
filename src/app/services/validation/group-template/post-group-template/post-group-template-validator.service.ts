@@ -63,7 +63,7 @@ export class PostGroupTemplateValidatorService {
       validationObject.durationError="Dauer darf nicht leer sein";
 
     }
-    if(data.location||data.location<1){
+    if(!data.location||data.location<1){
       result=false;
       console.error("Location darf nicht leer sein");
       validationObject.locationError="Es muss ein Standort ausgewählt werden"
