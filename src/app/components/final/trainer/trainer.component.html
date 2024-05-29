@@ -1,36 +1,39 @@
-<div class="outer">
-  <div class="header">
-    <h1 mat-dialog-title>Trainer Details</h1>
+<div class="pop-up">
+  <div>
+    <h1>Trainer Details</h1>
   </div>
-  <div class="body">
-    <div class="id">
-      <p>Id: {{trainerData.id}}</p>
-    </div>
-    <div class="subjectId">
-      <p>SubjectId: {{trainerData.subjectId}}</p>
+  <div>
+    <div>
+      <p>Id: {{ trainerData.id }}</p>
       <!--      <p></p>-->
     </div>
-    <div class="firstName">
-      <p>Vorname: {{trainerData.firstName}}</p>
+    <div>
+      <p>SubjectId: {{ trainerData.subjectId }}</p>
+      <!--      <p></p>-->
+    </div>
+    <div>
+      <p>Vorname: {{ trainerData.firstName }}</p>
       <!--      <p>{{trainerData.firstName}}</p>-->
     </div>
-    <div class="lastName">
-      <p>Nachname: {{trainerData.lastName}}</p>
+    <div>
+      <p>Nachname: {{ trainerData.lastName }}</p>
       <!--      <p>{{trainerData.lastName}}</p>-->
     </div>
-    <div class="email">
-      <p>Email: {{trainerData.email}}</p>
+    <div>
+      <p>Email: {{ trainerData.email }}</p>
       <!--      <p>{{trainerData.email}}</p>-->
     </div>
-    <div class="phone">
-      <p>Telefonnummer: {{trainerData.phone}}</p>
+    <div>
+      <p>Telefonnummer: {{ trainerData.phone }}</p>
       <!--      <p>{{trainerData.phone}}</p>-->
     </div>
-    <div class="qualificationList">
-      <p>Qualifikationen: </p>
+    <div>
+      <p>Qualifikationen:</p>
       <div>
-        <p *ngFor="let t of trainerData.qualifications">{{t.name}}</p>
+        <p *ngFor="let t of trainerData.qualifications">{{ t.name }}</p>
       </div>
     </div>
   </div>
+  <button *ngIf="isDelete" (click)="deleteTrainer()">Löschen</button>
+  <button (click)="cancel()">schließen</button>
 </div>
