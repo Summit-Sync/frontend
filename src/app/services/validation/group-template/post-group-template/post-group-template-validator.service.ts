@@ -9,7 +9,7 @@ import { GroupTemplateValidation } from '../../../../models/validation/grouptemp
 export class PostGroupTemplateValidatorService {
 
   constructor(
-    private toast: ToastService
+    private toast: ToastService,
   ) { }
 
   validate(data: PostGroupTemplateDTO): GroupTemplateValidation {
@@ -63,6 +63,11 @@ export class PostGroupTemplateValidatorService {
       validationObject.durationError="Dauer darf nicht leer sein";
 
     }
+    if(data.location||data.location<1){
+      result=false;
+      console.error("Location darf nicht leer sein");
+      validationObject.locationError="Es muss ein Standort ausgewählt werden"
+    }
     if(!data.meetingPoint){
       result = false;
       console.error("Es muss einen Treffpunkt geben");
@@ -94,6 +99,8 @@ export class PostGroupTemplateValidatorService {
 
     }
     validationObject.valid=result
+    console.log(validationObject);
+    
     return validationObject;
   }
 }

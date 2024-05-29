@@ -9,6 +9,7 @@ import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
 import { TrainerDTO } from '../../../models/trainer/Trainer';
+import { TrainerValidation } from '../../../models/validation/trainervalidation';
 
 @Component({
   selector: 'app-trainer',

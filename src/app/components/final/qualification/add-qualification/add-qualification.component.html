@@ -6,6 +6,7 @@
     <mat-dialog-content [formGroup]="addQualificationForm">
       <div>
         <input matInput placeholder="Name der Qualifikation" formControlName="name">
+        <p *ngIf="validationObject.nameError">{{validationObject.nameError}}</p>
       </div>
     </mat-dialog-content>
   </div>

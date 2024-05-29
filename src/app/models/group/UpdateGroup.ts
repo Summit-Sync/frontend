@@ -6,7 +6,6 @@ export interface UpdateGroupDTO{
   finished: boolean,
   acronym: string,
   title: string,
-  acronym: string,
   description: string,
   numberOfDates: number,
   duration: number,
