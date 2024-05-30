@@ -49,7 +49,7 @@ export class AddTrainerComponent implements OnInit {
   selectedQualification: CheckboxList[] = [];
   validationObject: TrainerValidation = {
     valid: true,
-    isError: '',
+    idError: '',
     subjectIdError: '',
     firstNameError: '',
     lastNameError: '',

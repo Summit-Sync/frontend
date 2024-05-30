@@ -205,7 +205,8 @@ export class GroupComponent implements OnInit {
     this.selectedLocationsCheck.forEach(l => {
       this.groupDataUpdate.location = l.id;
     });
-    if (this.updateGroupValidator.validate(this.groupDataUpdate)){
+    this.validationObject = this.updateGroupValidator.validate(this.groupDataUpdate);
+    if (this.validationObject.valid){
       this.dialogRef.close(JSON.stringify({method: 'confirm-update', data: this.groupDataUpdate}));
       console.log("Dialog inhalt: " + this.groupDataUpdate);
     }
