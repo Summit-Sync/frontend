@@ -11,6 +11,9 @@
         <th>Kontaktperson</th>
         <th>Trainer</th>
         <th>Teilnehmer</th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -22,7 +25,7 @@
         <td>{{ g.dates[2] || "-" }}</td>
         <td>{{ g.dates.length }}</td>
         -->
-          <td>{{ g.contact.firstName + ' ' + g.contact.lastName }}</td>
+          <td>{{ g.contact.firstName + " " + g.contact.lastName }}</td>
           <td>
             <span *ngFor="let trainer of g.trainers">
               {{ trainer.firstName }}

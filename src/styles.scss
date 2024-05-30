@@ -38,6 +38,9 @@ table {
 
   td {
     text-align: center;
+    p {
+      margin: 8px 0;
+      }
   }
   thead {
     background-color: #f2f2f2;
@@ -141,4 +144,8 @@ button {
     margin-right: 10px;
     font-size: 17px;
   }
+}
+
+.errorMessage {
+  color: rgb(260,0,20);
 }
