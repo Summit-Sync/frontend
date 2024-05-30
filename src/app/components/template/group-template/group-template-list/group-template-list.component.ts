@@ -6,6 +6,9 @@ import { GrouptemplateService } from '../../../../services/grouptemplate/groupte
 import { GroupTemplateDetailViewComponent } from '../group-template-detail-view/group-template-detail-view.component';
 import { GroupTemplateDTO } from '../../../../models/groupTemplate/GroupTemplate';
 import { PostGroupTemplateDTO } from '../../../../models/groupTemplate/PostGroupTemplate';
+import { ConfirmationDialogComponent } from '../../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { finalize } from 'rxjs';
+import { ToastService } from '../../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-group-template-list',
@@ -20,7 +23,8 @@ export class GroupTemplateListComponent {
   showAddModal:boolean=false
 
   constructor(private dialog:MatDialog,
-    private groupTemplateService: GrouptemplateService
+    private groupTemplateService: GrouptemplateService,
+    private toast:ToastService
   ){}
 
   ngOnInit(){
@@ -68,11 +72,32 @@ export class GroupTemplateListComponent {
     })
   }
 
-  deleteTemplate(id: number){
-    this.groupTemplateService.deleteGroupTemplateDTO(id).subscribe({
-      next: (response) => console.log('Template was deleted'),
-      error: (error) => console.error('Template could not be deleted.' +error),
-    }).add(()=> this.updateList())
+  deleteTemplate(template: GroupTemplateDTO){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: true,
+      autoFocus: true,
+      height: '40dvh',
+      width: '30dvw',
+      data: {
+        name: template.title
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const obj=JSON.parse(result);
+      if(obj.method === 'confirm'){
+        this.groupTemplateService.deleteGroupTemplateDTO(template.id).pipe(
+          finalize(()=>this.updateList())
+        )
+        .subscribe({
+          next: (response) => {
+            this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen \n");
+          }
+        });
+      }
+    });
   }
 
   viewDetails(template: GroupTemplateDTO){

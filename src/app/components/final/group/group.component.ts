@@ -21,7 +21,9 @@ import {PostGroupDTO} from "../../../models/group/PostGroup";
 import {CheckboxListMapperService} from "../../../services/check-box-list-mapper/checkbox-list-mapper.service";
 import {TrainerApplicationDTO} from "../../../models/trainer/TrainerApplication";
 import {PostGroupValidatorService} from "../../../services/validation/group/post-group/post-group-validator.service";
+import { GroupValidation } from '../../../models/validation/groupvalidation';
 import {UpdateGroupValidatorService} from "@/app/services/validation/group/update-group/update-group-validator.service";
+
 
 @Component({
   selector: 'app-group',
@@ -100,6 +102,24 @@ export class GroupComponent implements OnInit {
     participantsPerTrainer: 0,
     trainers: []
   }
+  validationObject:GroupValidation={
+    valid:true,
+    titleError:'',
+    acronymError:'',
+    descriptionError:'',
+    numberOfDatesError:'',
+    durationError:'',
+    contactError:'',
+    datesError:'',
+    numberOfParticipantsError:'',
+    locationError:'',
+    meetingPointError:'',
+    trainerPricePerHoursError:'',
+    pricePerParticipantError:'',
+    participantsPerTrainerError:'',
+    requiredQualificationError:'',
+    trainerError:''
+  }
 
   constructor(
     private groupService: GroupService,
@@ -166,7 +186,8 @@ export class GroupComponent implements OnInit {
     this.selectedLocationsCheck.forEach(l => {
       this.groupDataCreate.location = l.id;
     });
-    if (this.postGroupValidator.validate(this.groupDataCreate)) {
+    this.validationObject=this.postGroupValidator.validate(this.groupDataCreate);
+    if (this.validationObject.valid) {
       this.dialogRef.close(JSON.stringify({method: 'confirm-create', data: this.groupDataCreate}));
       console.log("Dialog inhalt: " + this.groupDataCreate);
     }

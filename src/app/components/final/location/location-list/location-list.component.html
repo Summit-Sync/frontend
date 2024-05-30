@@ -16,13 +16,13 @@
           }}
         </td>
         <td>
-          <button (click)="openEditDialog(location)">Bearbeiten</button>
-        </td>
-        <td>
           <button (click)="openDetailDialog(location)">Details</button>
         </td>
         <td>
-          <button (click)="deleteLocation(location.locationId)">Löschen</button>
+          <button (click)="openEditDialog(location)">Bearbeiten</button>
+        </td>
+        <td>
+          <button (click)="deleteLocation(location)">Löschen</button>
         </td>
       </tr>
     </tbody>
