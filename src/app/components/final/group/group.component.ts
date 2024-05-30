@@ -245,7 +245,7 @@ export class GroupComponent implements OnInit {
       data.forEach(tr => {
         let hasQuali: boolean = true;
           reqQuali.forEach(q =>{
-            if (!tr.qualifications.some(test => test.name === q.name)) {
+            if (!tr.qualifications.some(trainer => trainer.name === q.name)) {
               hasQuali = false;
             }
         });
