@@ -8,7 +8,9 @@
         placeholder="Name der Qualifikation"
         [(ngModel)]="addQualificationForm.name"
       />
-      <p *ngIf="validationObject.nameError">{{ validationObject.nameError }}</p>
+      <p *ngIf="validationObject.nameError" class="errorMessage">
+        {{ validationObject.nameError }}
+      </p>
     </div>
   </div>
   <div class="buttonDiv">

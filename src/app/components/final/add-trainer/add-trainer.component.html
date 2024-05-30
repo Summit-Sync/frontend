@@ -10,16 +10,15 @@
           placeholder="Vorname"
           [(ngModel)]="createTrainerData.firstName"
         />
-        <p *ngIf="validationObject.firstNameError">
+        <p *ngIf="validationObject.firstNameError" class="errorMessage">
           {{ validationObject.firstNameError }}
         </p>
-
         <input
           matInput
           placeholder="Nachname"
           [(ngModel)]="createTrainerData.lastName"
         />
-        <p *ngIf="validationObject.lastNameError">
+        <p *ngIf="validationObject.lastNameError" class="errorMessage">
           {{ validationObject.lastNameError }}
         </p>
       </div>
@@ -29,7 +28,7 @@
           placeholder="Nutzername"
           [(ngModel)]="createTrainerData.username"
         />
-        <p *ngIf="validationObject.usernameError">
+        <p *ngIf="validationObject.usernameError" class="errorMessage">
           {{ validationObject.usernameError }}
         </p>
         <input
@@ -38,7 +37,7 @@
           placeholder="Passwort"
           [(ngModel)]="createTrainerData.password"
         />
-        <p *ngIf="validationObject.passwordError">
+        <p *ngIf="validationObject.passwordError" class="errorMessage">
           {{ validationObject.passwordError }}
         </p>
       </div>
@@ -48,22 +47,22 @@
           placeholder="Email"
           [(ngModel)]="createTrainerData.email"
         />
-        <p *ngIf="validationObject.emailError">
+        <p *ngIf="validationObject.emailError" class="errorMessage">
           {{ validationObject.emailError }}
         </p>
-
         <input
           matInput
           placeholder="Telefonnummer"
           [(ngModel)]="createTrainerData.phone"
         />
-        <p *ngIf="validationObject.phoneError">
+        <p *ngIf="validationObject.phoneError" class="errorMessage">
           {{ validationObject.phoneError }}
         </p>
       </div>
     </div>
   </div>
   <div>
+
     <button (click)="saveCreate()">Trainer anlegen</button>
     <button (click)="cancel()">Abbrechen</button>
   </div>
@@ -76,38 +75,34 @@
     </div>
     <div>
       <div>
-          <div>
-            <input
-              matInput
-              placeholder="Vorname"
-              [(ngModel)]="trainerData.firstName"
-            />
-            <input
-              matInput
-              placeholder="Nachname"
-              [(ngModel)]="trainerData.lastName"
-            />
-          </div>
-          <div>
-            <input
-              matInput
-              placeholder="Email"
-              [(ngModel)]="trainerData.email"
-            />
-            <input
-              matInput
-              placeholder="Telefonnummer"
-              [(ngModel)]="trainerData.phone"
-            />
-          </div>
-          <app-multi-select-dropdown
-            id="multiSelect"
-            [allOptions]="allQualification"
-            [selectedOptions]="selectedQualification"
-            [dropdownHeadline]="'Qualifikationen'"
-            [allowMultiple]="true"
-          >
-          </app-multi-select-dropdown>
+        <div>
+          <input
+            matInput
+            placeholder="Vorname"
+            [(ngModel)]="trainerData.firstName"
+          />
+          <input
+            matInput
+            placeholder="Nachname"
+            [(ngModel)]="trainerData.lastName"
+          />
+        </div>
+        <div>
+          <input matInput placeholder="Email" [(ngModel)]="trainerData.email" />
+          <input
+            matInput
+            placeholder="Telefonnummer"
+            [(ngModel)]="trainerData.phone"
+          />
+        </div>
+        <app-multi-select-dropdown
+          id="multiSelect"
+          [allOptions]="allQualification"
+          [selectedOptions]="selectedQualification"
+          [dropdownHeadline]="'Qualifikationen'"
+          [allowMultiple]="true"
+        >
+        </app-multi-select-dropdown>
       </div>
     </div>
     <div>

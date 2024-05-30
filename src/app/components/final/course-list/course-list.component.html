@@ -59,10 +59,10 @@
           <!-- <tr> -->
           <td>{{ c.courseNumber }}</td>
           <td>
-            {{ c.dates[0] | date : "EEEE, d MMMM yyyy HH:mm" : "de" }}
+            {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
           </td>
           <td>
-            {{ c.dates[1] | date : "EEEE, d MMMM yyyy HH:mm" : "de" }}
+            {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
           </td>
           <td>{{ c.dates.length }}</td>
           <td>

@@ -3,54 +3,56 @@
     <div>
       <p>Titel:</p>
       <input type="text" [(ngModel)]="editableLocation.title" />
-      <p *ngIf="validationObject.titleError">
+      <p *ngIf="validationObject.titleError" class="errorMessage">
         {{ validationObject.titleError }}
       </p>
     </div>
     <div>
       <p>Straße:</p>
       <input type="text" [(ngModel)]="editableLocation.street" />
-      <p *ngIf="validationObject.streetError">
+      <p *ngIf="validationObject.streetError" class="errorMessage">
         {{ validationObject.streetError }}
       </p>
     </div>
     <div>
       <p>Postleitzahl:</p>
       <input type="text" [(ngModel)]="editableLocation.postCode" />
-      <p *ngIf="validationObject.postCodeError">
+      <p *ngIf="validationObject.postCodeError" class="errorMessage">
         {{ validationObject.postCodeError }}
       </p>
     </div>
     <div>
       <p>Stadt:</p>
       <input type="text" [(ngModel)]="editableLocation.city" />
-      <p *ngIf="validationObject.cityError">{{ validationObject.cityError }}</p>
+      <p *ngIf="validationObject.cityError" class="errorMessage">
+        {{ validationObject.cityError }}
+      </p>
     </div>
     <div>
       <p>Land:</p>
       <input type="text" [(ngModel)]="editableLocation.country" />
-      <p *ngIf="validationObject.countryError">
+      <p *ngIf="validationObject.countryError" class="errorMessage">
         {{ validationObject.countryError }}
       </p>
     </div>
     <div>
       <p>E-Mail:</p>
       <input type="text" [(ngModel)]="editableLocation.email" />
-      <p *ngIf="validationObject.emailError">
+      <p *ngIf="validationObject.emailError" class="errorMessage">
         {{ validationObject.emailError }}
       </p>
     </div>
     <div>
       <p>Telefonnummer:</p>
       <input type="text" [(ngModel)]="editableLocation.phone" />
-      <p *ngIf="validationObject.phoneError">
+      <p *ngIf="validationObject.phoneError" class="errorMessage">
         {{ validationObject.phoneError }}
       </p>
     </div>
     <div>
       <p>Google Maps URL:</p>
       <input type="text" [(ngModel)]="editableLocation.mapsUrl" />
-      <p *ngIf="validationObject.mapsUrlError">
+      <p *ngIf="validationObject.mapsUrlError" class="errorMessage">
         {{ validationObject.mapsUrlError }}
       </p>
     </div>
