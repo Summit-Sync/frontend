@@ -142,6 +142,7 @@ export class CourseComponent implements OnInit {
           console.error('no course to show');
           return;
         }
+        this.courseData = c;
       });
     } else {
       if (this.courseTemplate) {
@@ -219,7 +220,6 @@ export class CourseComponent implements OnInit {
       this.allQualifications = q;
     });
     this.trainerService.getAllTrainers().subscribe((t) => {
-      //TODO: Experimentell, da noch keine Daten aus Backend kommen :/
       let temp: TrainerDTO[] = [];
       t.forEach(tr => {
         let hasQuali = true;
@@ -351,6 +351,7 @@ export class CourseComponent implements OnInit {
       return location.locationId == this.selectedLocations[0].id;
     })!;
     this.courseData.requiredQualifications = [];
+
     this.selectedQualifications.forEach((sQual) => {
       this.courseData.requiredQualifications.push(
         this.allQualifications.find((qual) => {
@@ -358,6 +359,7 @@ export class CourseComponent implements OnInit {
         })!
       );
     })!;
+    this.courseData.trainers = [];
     this.selectedTrainers.forEach((sTrain) => {
       this.courseData.trainers.push(
         this.allTrainers.find((train) => {
@@ -401,19 +403,23 @@ export class CourseComponent implements OnInit {
     }
     this.validationObject=this.updateCourseValidator.validate(updateCourse);
     if (this.validationObject.valid) {
+      this.participantListService.deleteEmptyParticipants(
+        this.courseData.participants
+      );
+      this.participantListService.deleteEmptyParticipants(
+        this.courseData.waitList
+      );
       this.courseService
         .putCourseDetail(this.courseData.id, updateCourse)
         .subscribe({
           next: (response) => {
             console.log('Course has been updated', this.courseData);
-            this.participantListService.deleteEmptyParticipants(
-              this.courseData.participants
-            );
-            this.participantListService.deleteEmptyParticipants(
-              this.courseData.waitList
-            );
+            this.toast.showSuccessToast("Kurs erfolgreich aktualisiert");
           },
-          error: (error) => console.error('Course could not be updated'),
+          error: (error) => {
+            console.error('Course could not be updated')
+            this.toast.showErrorToast("Kurs aktualisierung fehlgeschlagen");
+          },
           complete: () =>
             this.dialogRef.close(JSON.stringify({method: 'updated'})),
         });

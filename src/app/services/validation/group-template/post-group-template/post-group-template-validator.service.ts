@@ -100,7 +100,7 @@ export class PostGroupTemplateValidatorService {
     }
     validationObject.valid=result
     console.log(validationObject);
-    
+
     return validationObject;
   }
 }

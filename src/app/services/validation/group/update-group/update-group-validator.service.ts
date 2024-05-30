@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UpdateGroupDTO } from '../../../../models/group/UpdateGroup';
 import { ToastService } from '../../../toast/toast.service';
+import { PostContactValidatorService } from "@/app/services/validation/contact/post-contact/post-contact-validator.service";
+import {TrainerValidatorService} from "@/app/services/validation/trainer/trainer/trainer-validator.service";
 import { GroupValidation } from '../../../../models/validation/groupvalidation';
-import { PostContactValidatorService } from '../../contact/post-contact/post-contact-validator.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UpdateGroupValidatorService {
 
   constructor(
     private toast: ToastService,
-    private contactValidator: PostContactValidatorService
+    private contactValidator: PostContactValidatorService,
   ) { }
 
   validate(data: UpdateGroupDTO): GroupValidation {
@@ -43,7 +44,7 @@ export class UpdateGroupValidatorService {
       result = false;
       console.error("Titel darf nicht leer sein");
       validationObject.titleError="Titel darf nicht leer sein";
-      
+
     }
     if(!data.description){
       result = false;
@@ -122,7 +123,7 @@ export class UpdateGroupValidatorService {
       console.error("Einer Gruppe müssen Qualifikationen zugeordnet werden");
       validationObject.requiredQualificationError="Einer Gruppe müssen Qualifikationen zugeordnet werden";
 
-    }  
+    }
     validationObject.valid=result;
     return validationObject;
   }
