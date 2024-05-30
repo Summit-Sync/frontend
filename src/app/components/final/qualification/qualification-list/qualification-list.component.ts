@@ -140,6 +140,7 @@ export class QualificationListComponent implements OnInit {
           },
           error: (err) => {
             this.toast.showErrorToast('Aktualisierung fehlgeschlagen');
+            this.updateList();
           },
         });
       this.editableQualification = null;
