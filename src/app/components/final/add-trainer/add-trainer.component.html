@@ -1,74 +1,81 @@
-<div class="outer" *ngIf="!isEdit; else editTemplate">
-  <div class="header">
-    <h1 mat-dialog-title>Trainer erstellen</h1>
+<div class="pop-up" *ngIf="!isEdit; else editTemplate">
+  <div>
+    <h1>Trainer erstellen</h1>
   </div>
-  <div class="body">
+  <div>
     <div>
-      <mat-dialog-content>
-        <div>
-          <input
-            matInput
-            placeholder="Vorname"
-            [(ngModel)]="createTrainerData.firstName"
-          />
-          <p *ngIf="validationObject.firstNameError">{{validationObject.firstNameError}}</p>
-          <input
-            matInput
-            placeholder="Nachname"
-            [(ngModel)]="createTrainerData.lastName"
-          />
-        </div>
-        <p *ngIf="validationObject.lastNameError">{{validationObject.lastNameError}}</p>
-        <div>
-          <input
-            matInput
-            placeholder="Nutzername"
-            [(ngModel)]="createTrainerData.username"
-          />
-          <p *ngIf="validationObject.usernameError">{{validationObject.usernameError}}</p>
-          <input
-            matInput
-            type="password"
-            placeholder="Passwort"
-            [(ngModel)]="createTrainerData.password"
-          />
-        </div>
-        <p *ngIf="validationObject.passwordError">{{validationObject.passwordError}}</p>
-        <div>
-          <input
-            matInput
-            placeholder="Email"
-            [(ngModel)]="createTrainerData.email"
-          />
-          <p *ngIf="validationObject.emailError">{{validationObject.emailError}}</p>
-          <input
-            matInput
-            placeholder="Telefonnummer"
-            [(ngModel)]="createTrainerData.phone"
-          />
-        </div>
-        <p *ngIf="validationObject.phoneError">{{validationObject.phoneError}}</p>
-      </mat-dialog-content>
+      <div>
+        <input
+          matInput
+          placeholder="Vorname"
+          [(ngModel)]="createTrainerData.firstName"
+        />
+        <p *ngIf="validationObject.firstNameError">
+          {{ validationObject.firstNameError }}
+        </p>
+
+        <input
+          matInput
+          placeholder="Nachname"
+          [(ngModel)]="createTrainerData.lastName"
+        />
+        <p *ngIf="validationObject.lastNameError">
+          {{ validationObject.lastNameError }}
+        </p>
+      </div>
+      <div>
+        <input
+          matInput
+          placeholder="Nutzername"
+          [(ngModel)]="createTrainerData.username"
+        />
+        <p *ngIf="validationObject.usernameError">
+          {{ validationObject.usernameError }}
+        </p>
+        <input
+          matInput
+          type="password"
+          placeholder="Passwort"
+          [(ngModel)]="createTrainerData.password"
+        />
+        <p *ngIf="validationObject.passwordError">
+          {{ validationObject.passwordError }}
+        </p>
+      </div>
+      <div>
+        <input
+          matInput
+          placeholder="Email"
+          [(ngModel)]="createTrainerData.email"
+        />
+        <p *ngIf="validationObject.emailError">
+          {{ validationObject.emailError }}
+        </p>
+
+        <input
+          matInput
+          placeholder="Telefonnummer"
+          [(ngModel)]="createTrainerData.phone"
+        />
+        <p *ngIf="validationObject.phoneError">
+          {{ validationObject.phoneError }}
+        </p>
+      </div>
     </div>
   </div>
-  <div class="buttonDiv">
-    <mat-dialog-actions>
-      <button mat-raised-button color="primary" (click)="saveCreate()">
-        Trainer anlegen
-      </button>
-      <button mat-raised-button (click)="cancel()">Abbrechen</button>
-    </mat-dialog-actions>
+  <div>
+    <button (click)="saveCreate()">Trainer anlegen</button>
+    <button (click)="cancel()">Abbrechen</button>
   </div>
 </div>
 
 <ng-template #editTemplate>
-  <div class="outer">
-    <div class="header">
-      <h1 mat-dialog-title>Trainer bearbeiten</h1>
+  <div class="pop-up">
+    <div>
+      <h1>Trainer bearbeiten</h1>
     </div>
-    <div class="body">
+    <div>
       <div>
-        <mat-dialog-content>
           <div>
             <input
               matInput
@@ -93,22 +100,19 @@
               [(ngModel)]="trainerData.phone"
             />
           </div>
-          <app-multi-select-dropdown id="multiSelect"
-                                               [allOptions]="allQualification"
-                                               [selectedOptions]="selectedQualification"
-                                               [dropdownHeadline]="'Qualifikationen'"
-                                               [allowMultiple]="true">
+          <app-multi-select-dropdown
+            id="multiSelect"
+            [allOptions]="allQualification"
+            [selectedOptions]="selectedQualification"
+            [dropdownHeadline]="'Qualifikationen'"
+            [allowMultiple]="true"
+          >
           </app-multi-select-dropdown>
-        </mat-dialog-content>
       </div>
     </div>
-    <div class="buttonDiv">
-      <mat-dialog-actions>
-        <button mat-raised-button color="primary" (click)="saveUpdate()">
-          Trainer updaten
-        </button>
-        <button mat-raised-button (click)="cancel()">Abbrechen</button>
-      </mat-dialog-actions>
+    <div>
+      <button (click)="saveUpdate()">Trainer updaten</button>
+      <button (click)="cancel()">Abbrechen</button>
     </div>
   </div>
 </ng-template>

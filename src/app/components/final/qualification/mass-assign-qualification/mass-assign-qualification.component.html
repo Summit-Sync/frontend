@@ -1,23 +1,20 @@
-<div>
-   <div class="header">
-        <p mat-dialog-title >Massenzuweisung von Qualifikation '{{this.qualification.name}}' </p>
-   </div>
-    <div class="body">
-        <div>
-            <mat-dialog-content>
-                    <app-multi-select-dropdown [allOptions]="allTrainers"
-                                               [selectedOptions]="selectedTrainerList"
-                                               [dropdownHeadline]="'Trainer'"
-                                               [allowMultiple]="true"
-                                               >
-                    </app-multi-select-dropdown>
-            </mat-dialog-content>
-        </div>
+<div class="pop-up">
+  <div>
+    <p>Massenzuweisung von Qualifikation '{{ this.qualification.name }}'</p>
+  </div>
+  <div class="body">
+    <div>
+      <app-multi-select-dropdown
+        [allOptions]="allTrainers"
+        [selectedOptions]="selectedTrainerList"
+        [dropdownHeadline]="'Trainer'"
+        [allowMultiple]="true"
+      >
+      </app-multi-select-dropdown>
     </div>
-    <div class="buttonDiv">
-        <mat-dialog-actions>
-            <button mat-raised-button color="primary" (click)="save()">Trainer zuweisen</button>
-            <button mat-raised-button (click)="cancel()">Abbrechen</button>
-        </mat-dialog-actions>
-    </div>
+  </div>
+  <div>
+    <button (click)="save()">Trainer zuweisen</button>
+    <button (click)="cancel()">Abbrechen</button>
+  </div>
 </div>

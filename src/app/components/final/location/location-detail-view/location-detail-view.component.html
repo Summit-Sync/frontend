@@ -1,41 +1,39 @@
-<div>
-    <div class="header">
-
+<div class="outer">
+  <div class="courseBody">
+    <div>
+      <p>Titel:</p>
+      <p>{{ selectedLocation.title }}</p>
     </div>
-    <div class="body">
-        <div>
-            <label>Titel:</label>
-            <p>{{selectedLocation.title}}</p>
-        </div>
-        <div>
-            <label>Straße:</label>
-            <p>{{selectedLocation.street}}</p>
-        </div>
-        <div>
-            <label>Postleitzahl:</label>
-            <p>{{selectedLocation.postCode}}</p>
-        </div>
-        <div>
-            <label>Stadt:</label>
-            <p>{{selectedLocation.city}}</p>
-        </div>
-        <div>
-            <label>Land:</label>
-            <p>{{selectedLocation.country}}</p>
-        </div>
-        <div>
-            <label>E-Mail:</label>
-            <p>{{selectedLocation.email}}</p>
-        <div>
-            <label>Telefonnummer:</label>
-            <p>{{selectedLocation.phone}}</p>
-        </div>
-        <div>
-            <label>Google Maps URL:</label>
-           <p>{{selectedLocation.mapsUrl}}</p>
-        </div>
+    <div>
+      <p>Straße:</p>
+      <p>{{ selectedLocation.street }}</p>
     </div>
+    <div>
+      <p>Postleitzahl:</p>
+      <p>{{ selectedLocation.postCode }}</p>
+    </div>
+    <div>
+      <p>Stadt:</p>
+      <p>{{ selectedLocation.city }}</p>
+    </div>
+    <div>
+      <p>Land:</p>
+      <p>{{ selectedLocation.country }}</p>
+    </div>
+    <div>
+      <p>E-Mail:</p>
+      <p>{{ selectedLocation.email }}</p>
+    </div>
+    <div>
+      <p>Telefonnummer:</p>
+      <p>{{ selectedLocation.phone }}</p>
+    </div>
+    <div>
+      <p>Google Maps URL:</p>
+      <p>{{ selectedLocation.mapsUrl }}</p>
+    </div>  
     <div class="footer">
-        <button (click)="close()">Schließen</button>
+      <button (click)="close()">Schließen</button>
     </div>
+  </div>
 </div>
