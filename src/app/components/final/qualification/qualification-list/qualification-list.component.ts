@@ -51,31 +51,35 @@ export class QualificationListComponent implements OnInit {
     });
   }
 
-  deleteQualification(qualification:QualificationDTO) {
+  deleteQualification(qualification: QualificationDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       disableClose: true,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
       data: {
-        name: qualification.name
+        name: qualification.name,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method === 'confirm') {
+        this.qualificationService
+          .deleteQualification(qualification.id)
+          .subscribe({
+            next: (response) => {
+              this.toast.showSuccessToast('Standort erfolgreich gelöscht');
+              this.updateList();
+            },
+            error: (err) => {
+              this.toast.showErrorToast(
+                'Löschen des Standorts fehlgeschlagen \n'
+              );
+              this.updateList();
+            },
+          });
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      const obj=JSON.parse(result);
-      if(obj.method === 'confirm'){
-        this.qualificationService.deleteQualification(qualification.id).subscribe({
-          next: (response) => {
-            this.toast.showSuccessToast("Standort erfolgreich gelöscht");
-            this.updateList();
-          },
-          error: (err) => {
-            this.toast.showErrorToast("Löschen des Standorts fehlgeschlagen \n");
-            this.updateList()
-          }
-        });
-      }
-    });    
   }
 
   massAllocationOfQualification(quali: QualificationDTO) {
@@ -136,6 +140,7 @@ export class QualificationListComponent implements OnInit {
           },
           error: (err) => {
             this.toast.showErrorToast('Aktualisierung fehlgeschlagen');
+            this.updateList();
           },
         });
       this.editableQualification = null;
