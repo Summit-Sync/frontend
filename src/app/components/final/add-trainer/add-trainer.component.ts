@@ -44,6 +44,7 @@ export class AddTrainerComponent implements OnInit {
   selectedQualification: CheckboxList[] = [];
   validationObject:TrainerValidation = {
     valid:true,
+    idError: '',
     subjectIdError:'',
     firstNameError:'',
     lastNameError:'',
@@ -97,7 +98,7 @@ export class AddTrainerComponent implements OnInit {
     console.log(this.trainerData.qualifications);
     console.log('updated: ', this.trainerData);
     this.trainerData.qualifications = this.checkBoxMapper.mapCheckboxListToQualificationList(this.selectedQualification);
-    this.validationObject=this.postTrainerValidator.validate(this.createTrainerData);
+    this.validationObject=this.trainerValidator.validate(this.trainerData);
     if (this.validationObject.valid) {
       this.dialogRef.close(JSON.stringify({method: 'confirm', data: this.trainerData}));
     }

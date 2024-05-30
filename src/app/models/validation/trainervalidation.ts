@@ -1,5 +1,6 @@
 export interface TrainerValidation{
     valid:boolean,
+    idError: string,
     subjectIdError: string,
     firstNameError:string,
     lastNameError: string,

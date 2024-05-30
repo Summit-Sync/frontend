@@ -15,6 +15,7 @@ export class PostTrainerValidatorService {
   validate(data: PostTrainerDTO): TrainerValidation{
     let validationObject: TrainerValidation = {
       valid:true,
+      idError: '',
       subjectIdError:'',
       firstNameError:'',
       lastNameError:'',
@@ -23,7 +24,7 @@ export class PostTrainerValidatorService {
       qualificationsError:'',
       passwordError:'',
       usernameError:''
-    } 
+    }
     if(!data){
       console.error("Trainer can't be empty");
       validationObject.valid=false;
@@ -48,7 +49,7 @@ export class PostTrainerValidatorService {
       validationObject.lastNameError="Nachname darf nicht leer sein";
 
     }
-    let regex=new RegExp(/^\d+$/)    
+    let regex=new RegExp(/^\d+$/)
     if(data.phone&&!regex.test(data.phone)){
       result=false;
       console.error("Phonenumber can only contain numbers");
