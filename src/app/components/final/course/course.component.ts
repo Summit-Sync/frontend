@@ -1,38 +1,32 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseService} from '../../../services/course/course.service';
-import {CourseDTO} from '../../../models/course/Course';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {ParticipantDTO} from '../../../models/participant/ParticipantDTO';
-import {EndTimePipe} from '../../../pipes/endTime/end-time.pipe';
-import {DateTimeMapperService} from '../../../services/dateTimeMapper/date-time-mapper.service';
-import {QualificationDTO} from '../../../models/qualification/QualificationDTO';
-import {QualificationsService} from '../../../services/qualifications/qualifications.service';
-import {TrainerService} from '../../../services/trainer/trainer.service';
-import {CheckItemInListPipe} from '../../../pipes/checkbox/check-item-in-list.pipe';
-import {MultiSelectDropdownComponent} from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
-import {StatusDTO} from '../../../models/status/Status';
-import {MatDialogRef} from '@angular/material/dialog';
-import {CourseTemplateDTO} from '../../../models/courseTemplate/CourseTemplate';
-import {CategoryPriceDTO} from '../../../models/price/CategoryPriceDTO';
-import {LocationService} from '../../../services/location/location.service';
-import {CheckboxList} from '../../../models/interfaces/CheckBoxList';
-import {PostCourseDTO} from '../../../models/course/PostCourse';
-import {UpdateCourseDTO} from '../../../models/course/UpdateCourse';
-import {LocationDTO} from '../../../models/location/LocationDTO';
-import {TrainerDTO} from '../../../models/trainer/Trainer';
-import {
-  UpdateCourseValidatorService
-} from '../../../services/validation/course/update-course/update-course-validator.service';
-import {
-  PostCourseValidatorService
-} from '../../../services/validation/course/post-course/post-course-validator.service';
-import {CheckboxListMapperService} from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
-import {
-  ParticipantListServiceService
-} from '../../../services/participant-list-service/participant-list-service.service';
-import {ToastService} from "../../../services/toast/toast.service";
-import {CourseValidatorService} from "../../../services/validation/course/course/course-validator.service";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CourseService } from '../../../services/course/course.service';
+import { CourseDTO } from '../../../models/course/Course';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ParticipantDTO } from '../../../models/participant/ParticipantDTO';
+import { EndTimePipe } from '../../../pipes/endTime/end-time.pipe';
+import { DateTimeMapperService } from '../../../services/dateTimeMapper/date-time-mapper.service';
+import { QualificationDTO } from '../../../models/qualification/QualificationDTO';
+import { QualificationsService } from '../../../services/qualifications/qualifications.service';
+import { TrainerService } from '../../../services/trainer/trainer.service';
+import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
+import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
+import { StatusDTO } from '../../../models/status/Status';
+import { MatDialogRef } from '@angular/material/dialog';
+import { CourseTemplateDTO } from '../../../models/courseTemplate/CourseTemplate';
+import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
+import { LocationService } from '../../../services/location/location.service';
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
+import { PostCourseDTO } from '../../../models/course/PostCourse';
+import { UpdateCourseDTO } from '../../../models/course/UpdateCourse';
+import { LocationDTO } from '../../../models/location/LocationDTO';
+import { TrainerDTO } from '../../../models/trainer/Trainer';
+import { UpdateCourseValidatorService } from '../../../services/validation/course/update-course/update-course-validator.service';
+import { PostCourseValidatorService } from '../../../services/validation/course/post-course/post-course-validator.service';
+import { CheckboxListMapperService } from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
+import { ParticipantListServiceService } from '../../../services/participant-list-service/participant-list-service.service';
+import { ToastService } from '../../../services/toast/toast.service';
+import { CourseValidatorService } from '../../../services/validation/course/course/course-validator.service';
 import { CourseValidation } from '../../../models/validation/coursevalidation';
 
 @Component({
@@ -63,25 +57,25 @@ export class CourseComponent implements OnInit {
   allQualifications: QualificationDTO[];
   allTrainers: TrainerDTO[];
 
-  validationObject:CourseValidation={
-    valid:true,
-    acronymError:'',
-    titleError:'',
-    descriptionError:'',
-    datesError:'',
-    durationError:'',
-    numberOfParticipantsError:'',
-    numberWaitlistError:'',
-    pricesError:'',
-    locationError:'',
-    meetingPointError:'',
-    requiredQualificationsError:'',
-    numberTrainersError:'',
-    notesError:'',
-    trainerError:'',
-    participantsError:'',
-    waitlistError:''
-  }
+  validationObject: CourseValidation = {
+    valid: true,
+    acronymError: '',
+    titleError: '',
+    descriptionError: '',
+    datesError: '',
+    durationError: '',
+    numberOfParticipantsError: '',
+    numberWaitlistError: '',
+    pricesError: '',
+    locationError: '',
+    meetingPointError: '',
+    requiredQualificationsError: '',
+    numberTrainersError: '',
+    notesError: '',
+    trainerError: '',
+    participantsError: '',
+    waitlistError: '',
+  };
 
   courseTemplate: CourseTemplateDTO | undefined;
   courseData: CourseDTO = {
@@ -131,9 +125,8 @@ export class CourseComponent implements OnInit {
     private postCourseValidator: PostCourseValidatorService,
     private participantListService: ParticipantListServiceService,
     private toast: ToastService,
-    private courseValidator: CourseValidatorService,
-  ) {
-  }
+    private courseValidator: CourseValidatorService
+  ) {}
 
   ngOnInit(): void {
     if (!this.isCreate) {
@@ -221,10 +214,10 @@ export class CourseComponent implements OnInit {
     });
     this.trainerService.getAllTrainers().subscribe((t) => {
       let temp: TrainerDTO[] = [];
-      t.forEach(tr => {
+      t.forEach((tr) => {
         let hasQuali = true;
-        this.courseData.requiredQualifications.forEach(q => {
-          if (!tr.qualifications.some(test => test.name === q.name)) {
+        this.courseData.requiredQualifications.forEach((q) => {
+          if (!tr.qualifications.some((trainer) => trainer.name === q.name)) {
             hasQuali = false;
           }
         });
@@ -399,9 +392,9 @@ export class CourseComponent implements OnInit {
       notes: this.courseData.notes,
       trainers: this.courseData.trainers.map((t) => t.id),
       waitList: this.courseData.waitList,
-      participants: this.courseData.participants
-    }
-    this.validationObject=this.updateCourseValidator.validate(updateCourse);
+      participants: this.courseData.participants,
+    };
+    this.validationObject = this.updateCourseValidator.validate(updateCourse);
     if (this.validationObject.valid) {
       this.participantListService.deleteEmptyParticipants(
         this.courseData.participants
@@ -414,14 +407,14 @@ export class CourseComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('Course has been updated', this.courseData);
-            this.toast.showSuccessToast("Kurs erfolgreich aktualisiert");
+            this.toast.showSuccessToast('Kurs erfolgreich aktualisiert');
           },
           error: (error) => {
-            console.error('Course could not be updated')
-            this.toast.showErrorToast("Kurs aktualisierung fehlgeschlagen");
+            console.error('Course could not be updated');
+            this.toast.showErrorToast('Kurs aktualisierung fehlgeschlagen');
           },
           complete: () =>
-            this.dialogRef.close(JSON.stringify({method: 'updated'})),
+            this.dialogRef.close(JSON.stringify({ method: 'updated' })),
         });
     }
   }
@@ -446,9 +439,9 @@ export class CourseComponent implements OnInit {
       notes: this.courseData.notes,
       trainers: this.courseData.trainers.map((t) => t.id),
       participants: this.courseData.participants,
-      waitList: this.courseData.waitList
-    }
-    this.validationObject=this.postCourseValidator.validate(postCourse);
+      waitList: this.courseData.waitList,
+    };
+    this.validationObject = this.postCourseValidator.validate(postCourse);
     if (this.validationObject.valid) {
       this.participantListService.deleteEmptyParticipants(
         this.courseData.participants
@@ -459,14 +452,14 @@ export class CourseComponent implements OnInit {
       this.courseService.postCourse(postCourse).subscribe({
         next: (response) => {
           console.log('Course has been created');
-          this.toast.showSuccessToast("Kurs wurde erstellt");
+          this.toast.showSuccessToast('Kurs wurde erstellt');
         },
         error: (error) => {
           console.error('Course could not be created');
-          this.toast.showErrorToast("Kurs konnte nicht erstellt werden");
+          this.toast.showErrorToast('Kurs konnte nicht erstellt werden');
         },
         complete: () =>
-          this.dialogRef.close(JSON.stringify({method: 'created'})),
+          this.dialogRef.close(JSON.stringify({ method: 'created' })),
       });
     }
   }
@@ -478,7 +471,7 @@ export class CourseComponent implements OnInit {
     this.participantListService.deleteEmptyParticipants(
       this.courseData.waitList
     );
-    this.dialogRef.close(JSON.stringify({method: 'cancel'}));
+    this.dialogRef.close(JSON.stringify({ method: 'cancel' }));
   }
 
   onMaxParticipantsChange(
