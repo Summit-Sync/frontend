@@ -531,11 +531,7 @@ export class CourseComponent implements OnInit {
         if (hasQuali) {
           temp.push(tr);
         }
-      })
-      //-- Notlösung da beim Bearbeiten der Kurse der Multiselect nicht gefunden wird
-      this.selectedTrainers = [];
-      this.courseData.trainers = [];
-      //--
+      });
       this.allCheckboxListTrainers =
         this.checkBoxListMapper.mapTrainerListToCheckboxList(temp);
       this.allTrainers = temp;
