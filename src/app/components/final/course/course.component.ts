@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { CourseDTO } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
@@ -45,6 +45,7 @@ import { CourseValidation } from '../../../models/validation/coursevalidation';
 export class CourseComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isCreate: boolean = false;
+  @ViewChild('trainer') multiDropDown: MultiSelectDropdownComponent;
 
   allCheckboxListQualifications: CheckboxList[] = [];
   allCheckboxListTrainers: CheckboxList[] = [];
@@ -212,23 +213,14 @@ export class CourseComponent implements OnInit {
         this.checkBoxListMapper.mapQualificationListToCheckboxList(q);
       this.allQualifications = q;
     });
-    this.trainerService.getAllTrainers().subscribe((t) => {
-      let temp: TrainerDTO[] = [];
-      t.forEach((tr) => {
-        let hasQuali = true;
-        this.courseData.requiredQualifications.forEach((q) => {
-          if (!tr.qualifications.some((trainer) => trainer.name === q.name)) {
-            hasQuali = false;
-          }
-        });
-        if (hasQuali) {
-          temp.push(tr);
-        }
+    // Get Required Qualification
+    let reqQuali: QualificationDTO[] = [];
+    if (this.isCreate) {
+      this.courseData.requiredQualifications.forEach(q => {
+        reqQuali.push(q);
       });
-      this.allCheckboxListTrainers =
-        this.checkBoxListMapper.mapTrainerListToCheckboxList(temp);
-      this.allTrainers = temp;
-    });
+    }
+    this.setAllowedTrainersByRequiredQualification(reqQuali);
     this.locationService.getAllLocations().subscribe((l) => {
       this.allCheckboxListLocations =
         this.checkBoxListMapper.mapLocationListToCheckboxList(l);
@@ -284,7 +276,7 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  onStartTimeChange(event: Event, index: number) {
+    onStartTimeChange(event: Event, index: number) {
     const inputElement = event.target as HTMLInputElement;
     const duration = this.courseData.duration;
     const timeMS = inputElement.valueAsNumber;
@@ -362,7 +354,8 @@ export class CourseComponent implements OnInit {
     })!;
 
     console.log(this.courseData.requiredQualifications);
-
+    // Hier werden UTCHours auf die eingegebene Zeit gesetzt, um das 2h unterschiedsproblem zu lösen
+    this.courseData.dates = this.dateTimeMapper.mapGMTToUTCTime(this.courseData.dates);
     if (this.isCreate) {
       this.saveCreated();
     } else {
@@ -515,5 +508,53 @@ export class CourseComponent implements OnInit {
     this.courseService
       .putCourseCancel(this.courseData.id, !this.courseData.canceled)
       .subscribe();
+  }
+
+  onQualificationSelectionChange(qualificationList: CheckboxList[]) {
+    this.selectedQualifications = qualificationList;
+    const qualifications: QualificationDTO[] =
+      this.checkBoxListMapper.mapCheckboxListToQualificationList(this.selectedQualifications);
+    this.selectedTrainers = [];
+    this.setAllowedTrainersByRequiredQualification(qualifications);
+  }
+
+  setAllowedTrainersByRequiredQualification(qualifications: QualificationDTO[]) {
+    this.trainerService.getAllTrainers().subscribe(data => {
+      let temp: TrainerDTO[] = [];
+      data.forEach(tr => {
+        let hasQuali: boolean = true;
+        qualifications.forEach(q => {
+          if (!tr.qualifications.some(quali => quali.name === q.name)) {
+            hasQuali = false;
+          }
+        });
+        if (hasQuali) {
+          temp.push(tr);
+        }
+      })
+      //-- Notlösung da beim Bearbeiten der Kurse der Multiselect nicht gefunden wird
+      this.selectedTrainers = [];
+      this.courseData.trainers = [];
+      //--
+      this.allCheckboxListTrainers =
+        this.checkBoxListMapper.mapTrainerListToCheckboxList(temp);
+      this.allTrainers = temp;
+    });
+    if (this.multiDropDown) {
+      this.multiDropdownRefresh();
+    }
+  }
+
+  multiDropdownRefresh() {
+    this.courseData.trainers = [];
+    this.multiDropDown.allOptions = this.allCheckboxListTrainers;
+    // this.multiDropDown.selectedOptions.forEach(trainee => {
+    //   this.multiDropDown.deleteObject(trainee);
+    // });
+    this.selectedTrainers.forEach(trainer => {
+      this.multiDropDown.deleteObject(trainer);
+    });
+    this.multiDropDown.checkedBoxes = [];
+    this.toast.showInfoToast("Trainer auswahl zurückgesetzt!");
   }
 }

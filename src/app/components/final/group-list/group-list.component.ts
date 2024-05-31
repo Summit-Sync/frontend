@@ -110,6 +110,7 @@ export class GroupListComponent {
     });
     let temp: UpdateGroupDTO = {
       canceled: group.canceled,
+      id: group.id,
       groupNumber: group.groupNumber,
       finished: group.finished,
       title: group.title,
@@ -128,6 +129,7 @@ export class GroupListComponent {
       participantsPerTrainer: group.participantsPerTrainer,
       trainers: trainers
     }
+    console.log("Pre Dialog: " + temp.dates);
     const dialogRef = this.dialog.open(GroupComponent, {
       disableClose: true,
       autoFocus: true,
@@ -150,6 +152,17 @@ export class GroupListComponent {
             this.toast.showErrorToast("Aktualisierung der Gruppe fehlgeschlagen \n" + err);
           }
         });
+      } else if (obj.method == 'delete'){
+        console.log("Gruppe Löschen");
+        this.groupService.deleteGroup(obj.data.id).subscribe({
+          next:() => {
+            this.toast.showSuccessToast("Gruppe erfolgreich gelöscht");
+          },
+          error: (err) => {
+            this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen");
+            console.error("Gruppe löschen" + err);
+          }
+        })
       }
     });
   }

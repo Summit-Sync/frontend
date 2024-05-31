@@ -1,6 +1,7 @@
 import {PostContactDTO} from "../contact/PostContact";
 
 export interface UpdateGroupDTO{
+  id: number,
   canceled: boolean,
   groupNumber: string,
   finished: boolean,

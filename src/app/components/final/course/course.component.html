@@ -267,6 +267,7 @@
         [selectedOptions]="selectedQualifications"
         [dropdownHeadline]="'Qualifikationen'"
         [allowMultiple]="true"
+        (changeEvent)="onQualificationSelectionChange($event)"
       >
       </app-multi-select-dropdown>
       <p
@@ -280,6 +281,7 @@
       <p>Trainer:</p>
 
       <app-multi-select-dropdown
+        id="trainer"
         [allOptions]="allCheckboxListTrainers"
         [selectedOptions]="selectedTrainers"
         [dropdownHeadline]="'Trainer'"
