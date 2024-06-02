@@ -70,7 +70,7 @@ export class PostGroupValidatorService {
       validationObject.contactError="Einer Gruppe muss ein Kontakt zugeordnet werden";
 
     }
-    if(data.events.length === 0){
+    if(data.dates.length === 0){
       result = false;
       console.error("Gruppen müssen Daten zugeordnet werden");
       validationObject.datesError="Gruppen müssen Daten zugeordnet werden";

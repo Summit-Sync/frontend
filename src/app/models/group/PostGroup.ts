@@ -6,7 +6,7 @@ export interface PostGroupDTO {
     acronym: string,
     description: string,
     numberOfDates: number,
-    events: Date[],
+    dates: Date[],
     duration: number,
     numberParticipants: number,
     contact: PostContactDTO,
