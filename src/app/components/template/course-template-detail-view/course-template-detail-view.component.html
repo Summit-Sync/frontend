@@ -1,63 +1,63 @@
 <div class="outer">
-    <div class="header">
+  <div class="body">
+    <div class="title">
+      <p>Titel:</p>
+      <p>{{ courseTemplate.title }}</p>
     </div>
-    <div class="body">
-            <div class="title">
-                <span>Titel: </span>
-                <span>{{courseTemplate.title}}</span>
-            </div>
-            <div class="acronym">
-                <span>Kürzel: </span>
-                <span>{{courseTemplate.acronym}}</span>
-            </div>
-            <div class="description">
-                <span>Beschreibung: </span>
-                <span>{{courseTemplate.description}}</span>
-            </div>
-            <div class="number-of-dates">
-                <span>Anzahl Terminen: </span>
-                <span>{{courseTemplate.numberOfDates}}</span>
-            </div>
-            <div class="duration">
-                <span>Dauer in Minuten: </span>
-                <span>{{courseTemplate.duration}}</span>
-            </div>
-            <div class="number-of-participants">
-                <span>Maximale Teilnehmeranzahl: </span>
-                <span>{{courseTemplate.numberParticipants}}</span>
-            </div>
-            <div class="number-of-waitlist">
-                <span>Wartelistenlänge: </span>
-                <span>{{courseTemplate.numberWaitlist}}</span>
-            </div>
-            <div class="location">
-                <span>Ort: </span>
-                <span>{{courseTemplate.location.title}}</span>
-            </div>
-            <div class="meeting-point">
-                <span>Treffpunkt: </span>
-                <span>{{courseTemplate.meetingPoint}}</span>
-            </div>
-            <div class="price">
-                <span>Preisliste: </span>
-                <div>
-                    <span *ngFor="let price of courseTemplate.price">{{price.name}}:{{price.price}}</span>
-                </div>
-            </div>
-            <div class="required-qualifications">
-                <span>Benötigte Qualifikationen: </span>
-                <div>
-                    <span *ngFor="let qualification of courseTemplate.requiredQualifications">
-                        {{qualification.name}}
-                    </span>
-                </div>
-            </div>
-            <div class="number-of-trainers">
-                <span>Anzahl Trainer: </span>
-                <span>{{courseTemplate.numberTrainers}}</span>
-            </div>
+    <div class="acronym">
+      <p>Kürzel:</p>
+      <p>{{ courseTemplate.acronym }}</p>
     </div>
-    <div class="footer">
-        <button (click)="closeDialog()">Schließen</button>
+    <div class="description">
+      <p>Beschreibung:</p>
+      <p>{{ courseTemplate.description }}</p>
     </div>
+    <div class="number-of-dates">
+      <p>Anzahl Terminen:</p>
+      <p>{{ courseTemplate.numberOfDates }}</p>
+    </div>
+    <div class="duration">
+      <p>Dauer in Minuten:</p>
+      <p>{{ courseTemplate.duration }}</p>
+    </div>
+    <div class="number-of-participants">
+      <p>Maximale Teilnehmeranzahl:</p>
+      <p>{{ courseTemplate.numberParticipants }}</p>
+    </div>
+    <div class="number-of-waitlist">
+      <p>Wartelistenlänge:</p>
+      <p>{{ courseTemplate.numberWaitlist }}</p>
+    </div>
+    <div class="location">
+      <p>Ort:</p>
+      <p>{{ courseTemplate.location.title }}</p>
+    </div>
+    <div class="meeting-point">
+      <p>Treffpunkt:</p>
+      <p>{{ courseTemplate.meetingPoint }}</p>
+    </div>
+    <div class="price">
+      <p>Preisliste:</p>
+      <div>
+        <p *ngFor="let price of courseTemplate.price">
+          {{ price.name }}:{{ price.price }}
+        </p>
+      </div>
+    </div>
+    <div class="required-qualifications">
+      <p>Benötigte Qualifikationen:</p>
+      <div>
+        <p *ngFor="let qualification of courseTemplate.requiredQualifications">
+          {{ qualification.name }}
+        </p>
+      </div>
+    </div>
+    <div class="number-of-trainers">
+      <p>Anzahl Trainer:</p>
+      <p>{{ courseTemplate.numberTrainers }}</p>
+    </div>
+  </div>
+  <div class="footer">
+    <button (click)="closeDialog()">Schließen</button>
+  </div>
 </div>

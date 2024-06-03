@@ -1,21 +1,21 @@
 <div class="outer">
-  <div *ngIf="this.isCreate; else editMode">
+  <div class="body" *ngIf="this.isCreate; else editMode">
     <div>
-      <label>Titel</label>
+      <p>Titel</p>
       <input id="title" type="text" [(ngModel)]="groupDataCreate.title" />
       <p *ngIf="validationObject.titleError" class="errorMessage">
         {{ validationObject.titleError }}
       </p>
     </div>
     <div class="acronym">
-      <label>Kürzel</label>
+      <p>Kürzel</p>
       <input id="acronym" type="text" [(ngModel)]="groupDataCreate.acronym" />
       <p *ngIf="validationObject.acronymError" class="errorMessage">
         {{ validationObject.acronymError }}
       </p>
     </div>
     <div class="description">
-      <label>Beschreibung</label>
+      <p>Beschreibung</p>
       <input
         id="description"
         type="text"
@@ -26,7 +26,7 @@
       </p>
     </div>
     <div class="number-of-dates">
-      <label>Anzahl Termine</label>
+      <p>Anzahl Termine</p>
       <input
         id="number-of-dates"
         type="text"
@@ -36,40 +36,48 @@
         {{ validationObject.numberOfDatesError }}
       </p>
     </div>
-    <div class="contact">
-      <label for="contact">Contact</label>
+    <div class="contactWrapper">
+      <p for="contact">Kontakt</p>
       <div id="contact">
-        <label for="contact-firstName">Vorname</label>
-        <input
-          id="contact-firstName"
-          type="text"
-          [(ngModel)]="groupDataCreate.contact.firstName"
-        />
-        <label for="contact-lastName">Nachname</label>
-        <input
-          id="contact-lastName"
-          type="text"
-          [(ngModel)]="groupDataCreate.contact.lastName"
-        />
-        <label for="contact-email">E-Mail</label>
-        <input
-          id="contact-email"
-          type="email"
-          [(ngModel)]="groupDataCreate.contact.email"
-        />
-        <label for="contact-phone">Telefon Nummer</label>
-        <input
-          id="contact-phone"
-          type="tel"
-          [(ngModel)]="groupDataCreate.contact.phone"
-        />
+        <div>
+          <p for="contact-firstName">Vorname</p>
+          <input
+            id="contact-firstName"
+            type="text"
+            [(ngModel)]="groupDataCreate.contact.firstName"
+          />
+        </div>
+        <div>
+          <p for="contact-lastName">Nachname</p>
+          <input
+            id="contact-lastName"
+            type="text"
+            [(ngModel)]="groupDataCreate.contact.lastName"
+          />
+        </div>
+        <div>
+          <p for="contact-email">E-Mail</p>
+          <input
+            id="contact-email"
+            type="email"
+            [(ngModel)]="groupDataCreate.contact.email"
+          />
+        </div>
+        <div>
+          <p for="contact-phone">Telefon Nummer</p>
+          <input
+            id="contact-phone"
+            type="tel"
+            [(ngModel)]="groupDataCreate.contact.phone"
+          />
+        </div>
       </div>
       <p *ngIf="validationObject.contactError" class="errorMessage">
         {{ validationObject.contactError }}
       </p>
     </div>
     <div class="duration">
-      <label for="duration">Dauer pro Termin (Minuten)</label>
+      <p for="duration">Dauer pro Termin (Minuten)</p>
       <input id="duration" type="text" [(ngModel)]="groupDataCreate.duration" />
       <p *ngIf="validationObject.durationError" class="errorMessage">
         {{ validationObject.durationError }}
@@ -125,7 +133,7 @@
       </p>
     </div>
     <div class="number-participants">
-      <label for="number-participants">Anzahl Teilnehmer</label>
+      <p for="number-participants">Anzahl Teilnehmer</p>
       <input
         id="number-participants"
         type="number"
@@ -139,7 +147,7 @@
       </p>
     </div>
     <div class="location">
-      <label for="location">Ort</label>
+      <p for="location">Ort</p>
       <app-multi-select-dropdown
         id="location"
         [allowMultiple]="false"
@@ -152,7 +160,7 @@
       </p>
     </div>
     <div class="meeting-point">
-      <label for="meeting-point">Treffpunkt</label>
+      <p for="meeting-point">Treffpunkt</p>
       <input
         id="meeting-point"
         type="text"
@@ -163,7 +171,7 @@
       </p>
     </div>
     <div>
-      <label for="trainer-price-per-hour">Trainerpreis (Stunde)</label>
+      <p for="trainer-price-per-hour">Trainerpreis (Stunde)</p>
       <input
         id="trainer-price-per-hour"
         type="text"
@@ -177,7 +185,7 @@
       </p>
     </div>
     <div>
-      <label for="price-per-participant">Teilnehmerpreis</label>
+      <p for="price-per-participant">Teilnehmerpreis</p>
       <input
         id="price-per-participant"
         type="text"
@@ -188,7 +196,7 @@
       </p>
     </div>
     <div class="required-qualifications">
-      <label for="required-qualifications">Qualifikationen</label>
+      <p for="required-qualifications">Qualifikationen</p>
       <app-multi-select-dropdown
         id="required-qualifications"
         [allOptions]="allQualificationsCheck"
@@ -205,7 +213,7 @@
       </p>
     </div>
     <div class="participantsPerTrainer">
-      <label for="participantsPerTrainer">Trainerschlüssel</label>
+      <p for="participantsPerTrainer">Trainerschlüssel</p>
       <input
         id="participantsPerTrainer"
         type="text"
@@ -219,7 +227,7 @@
       </p>
     </div>
     <div class="trainers">
-      <label for="trainer">Trainer</label>
+      <p for="trainer">Trainer</p>
       <app-multi-select-dropdown
         id="trainer"
         #trainer
@@ -238,15 +246,21 @@
     </div>
     <!--
     <div class="total-price">
-      <label for="total-price">Gesamt Preis</label>
+      <p for="total-price">Gesamt Preis</p>
       <input id="total-price" type="number" [(ngModel)]="groupDataCreate.">
     </div>
     -->
   </div>
   <div class="footer">
-    <button class="save-button dialog-button" (click)="save()">Speichern</button>
+    <button class="save-button dialog-button" (click)="save()">
+      Speichern
+    </button>
     <button class="dialog button" (click)="cancel()">Abbrechen</button>
-    <button class="delete-button dialog-button" *ngIf="!this.isCreate" (click)="delete()">Löschen</button>
+    <button
+      class="delete-button dialog-button"
+      *ngIf="!this.isCreate"
+      (click)="delete()"
+    ></button>
     <button *ngIf="!this.isCreate" (click)="cancelGroup()">Gruppe absagen</button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
@@ -256,14 +270,14 @@
 
 <ng-template #editMode>
   <div class="title">
-    <label for="title-edit">Titel</label>
+    <p for="title-edit">Titel</p>
     <input id="title-edit" type="text" [(ngModel)]="groupDataUpdate.title" />
     <p *ngIf="validationObject.titleError" class="errorMessage">
       {{ validationObject.titleError }}
     </p>
   </div>
   <div class="acronym">
-    <label for="acronym-edit">Kürzel</label>
+    <p for="acronym-edit">Kürzel</p>
     <input
       id="acronym-edit"
       type="text"
@@ -274,7 +288,7 @@
     </p>
   </div>
   <div class="description">
-    <label for="description-edit">Beschreibung</label>
+    <p for="description-edit">Beschreibung</p>
     <input
       id="description-edit"
       type="text"
@@ -285,7 +299,7 @@
     </p>
   </div>
   <div class="number-of-dates">
-    <label for="number-of-dates-edit">Anzahl Termine</label>
+    <p for="number-of-dates-edit">Anzahl Termine</p>
     <input
       id="number-of-dates-edit"
       type="text"
@@ -296,27 +310,27 @@
     </p>
   </div>
   <div class="contact">
-    <label for="contact-edit">Contact</label>
+    <p for="contact-edit">Contact</p>
     <div id="contact-edit">
-      <label for="contact-firstName-edit">Vorname</label>
+      <p for="contact-firstName-edit">Vorname</p>
       <input
         id="contact-firstName-edit"
         type="text"
         [(ngModel)]="groupDataUpdate.contact.firstName"
       />
-      <label for="contact-lastName-edit">Nachname</label>
+      <p for="contact-lastName-edit">Nachname</p>
       <input
         id="contact-lastName-edit"
         type="text"
         [(ngModel)]="groupDataUpdate.contact.lastName"
       />
-      <label for="contact-email-edit">E-Mail</label>
+      <p for="contact-email-edit">E-Mail</p>
       <input
         id="contact-email-edit"
         type="email"
         [(ngModel)]="groupDataUpdate.contact.email"
       />
-      <label for="contact-phone-edit">Telefon Nummer</label>
+      <p for="contact-phone-edit">Telefon Nummer</p>
       <input
         id="contact-phone-edit"
         type="tel"
@@ -328,7 +342,7 @@
     </p>
   </div>
   <div class="duration" *ngIf="this.login.getAccessToken?.role === 'admin'">
-    <label for="duration-edit">Dauer pro Termin (Minuten)</label>
+    <p for="duration-edit">Dauer pro Termin (Minuten)</p>
     <input
       id="duration-edit"
       type="text"
@@ -382,7 +396,7 @@
     </p>
   </div>
   <div class="number-participants">
-    <label for="number-participants-edit">Anzahl Teilnehmer</label>
+    <p for="number-participants-edit">Anzahl Teilnehmer</p>
     <input
       id="number-participants-edit"
       type="number"
@@ -393,7 +407,7 @@
     </p>
   </div>
   <div class="location">
-    <label for="location-edit">Ort</label>
+    <p for="location-edit">Ort</p>
     <app-multi-select-dropdown
       id="location-edit"
       [allowMultiple]="false"
@@ -406,7 +420,7 @@
     </p>
   </div>
   <div class="meeting-point">
-    <label for="meeting-point-edit">Treffpunkt</label>
+    <p for="meeting-point-edit">Treffpunkt</p>
     <input
       id="meeting-point-edit"
       type="text"
@@ -417,7 +431,7 @@
     </p>
   </div>
   <div *ngIf="this.login.getAccessToken?.role === 'admin'">
-    <label for="trainer-price-per-hour-edit">Trainerpreis (Stunde)</label>
+    <p for="trainer-price-per-hour-edit">Trainerpreis (Stunde)</p>
     <input
       id="trainer-price-per-hour-edit"
       type="text"
@@ -428,7 +442,7 @@
     </p>
   </div>
   <div>
-    <label for="price-per-participant-edit">Teilnehmerpreis</label>
+    <p for="price-per-participant-edit">Teilnehmerpreis</p>
     <input
       id="price-per-participant-edit"
       type="text"
@@ -442,7 +456,7 @@
     class="required-qualifications"
     *ngIf="this.login.getAccessToken?.role === 'admin'"
   >
-    <label for="required-qualifications-edit">Qualifikationen</label>
+    <p for="required-qualifications-edit">Qualifikationen</p>
     <app-multi-select-dropdown
       id="required-qualifications-edit"
       [allOptions]="allQualificationsCheck"
@@ -459,7 +473,7 @@
     class="participantsPerTrainer"
     *ngIf="this.login.getAccessToken?.role === 'admin'"
   >
-    <label for="participantsPerTrainer-edit">Trainerschlüssel</label>
+    <p for="participantsPerTrainer-edit">Trainerschlüssel</p>
     <input
       id="participantsPerTrainer-edit"
       type="text"
@@ -473,7 +487,7 @@
     </p>
   </div>
   <div class="trainers">
-    <label for="trainer-edit">Trainer</label>
+    <p for="trainer-edit">Trainer</p>
     <app-multi-select-dropdown
       id="trainer-edit"
       #trainer

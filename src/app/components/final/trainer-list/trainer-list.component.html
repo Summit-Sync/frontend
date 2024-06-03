@@ -1,43 +1,48 @@
-<div class="tableWrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>Email</th>
-        <th>Telefonnummer</th>
-        <th>Qualifikationen</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let t of trainer$ | async">
+<div class="listWrapper">
+  <div class="tableWrapper">
+    <table>
+      <thead>
         <tr>
-          <td>{{ t.id }}</td>
-          <td>{{ t.firstName }}</td>
-          <td>{{ t.lastName }}</td>
-          <td>{{ t.email }}</td>
-          <td>{{ t.phone }}</td>
-          <td>
-            <span *ngFor="let q of t.qualifications">
-              {{ q.name }}
-            </span>
-          </td>
-          <td>
-            <button (click)="showDetails(t)">Bewerben</button>
-          </td>
-          <td>
-            <button (click)="showEdit(t)">Bearbeiten</button>
-          </td>
-          <td>
-            <button (click)="delete(t)">Löschen</button>
-          </td>
+          <th>Id</th>
+          <th>Vorname</th>
+          <th>Nachname</th>
+          <th>Email</th>
+          <th>Telefonnummer</th>
+          <th>Qualifikationen</th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
-      </ng-container>
-    </tbody>
-  </table>
-  <button (click)="createTrainer()">Neuen Trainer anlegen</button>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let t of trainer$ | async">
+          <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.firstName }}</td>
+            <td>{{ t.lastName }}</td>
+            <td>{{ t.email }}</td>
+            <td>{{ t.phone }}</td>
+            <td>
+              <span *ngFor="let q of t.qualifications">
+                {{ q.name }}
+              </span>
+            </td>
+            <td>
+              <button (click)="showDetails(t)">Bewerben</button>
+            </td>
+            <td>
+              <button (click)="showEdit(t)">Bearbeiten</button>
+            </td>
+            <td>
+              <button (click)="delete(t)">Löschen</button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="createButton" (click)="createTrainer()">
+    Neuen Trainer anlegen
+  </button>
 </div>

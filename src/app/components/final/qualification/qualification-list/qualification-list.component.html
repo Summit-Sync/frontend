@@ -1,60 +1,66 @@
-<div class="tableWrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let q of qualification$ | async">
+<div class="listWrapper">
+  <div class="tableWrapper">
+    <table>
+      <thead>
         <tr>
-          <td>{{ q.id }}</td>
-          <td>
-            <p *ngIf="!isEditableQualification(q.id)">{{ q.name }}</p>
-            <input
-              *ngIf="isEditableQualification(q.id)"
-              [(ngModel)]="editableQualification!.name"
-            />
-          </td>
-          <td>
-            <button
-              *ngIf="!isEditableQualification(q.id)"
-              (click)="editQualification(q)"
-            >
-              Bearbeiten
-            </button>
-            <button
-              *ngIf="isEditableQualification(q.id)"
-              (click)="saveQualification()"
-            >
-              Speichern
-            </button>
-          </td>
-          <td>
-            <button
-              *ngIf="!isEditableQualification(q.id)"
-              (click)="deleteQualification(q)"
-            >
-              Löschen
-            </button>
-            <button
-              *ngIf="isEditableQualification(q.id)"
-              (click)="cancelEditing()"
-            >
-              Abbrechen
-            </button>
-          </td>
-          <td>
-            <button (click)="massAllocationOfQualification(q)">Zuweisen</button>
-          </td>
+          <th>Id</th>
+          <th>Name</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th></th>
         </tr>
-      </ng-container>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let q of qualification$ | async">
+          <tr>
+            <td>{{ q.id }}</td>
+            <td>
+              <p *ngIf="!isEditableQualification(q.id)">{{ q.name }}</p>
+              <input
+                *ngIf="isEditableQualification(q.id)"
+                [(ngModel)]="editableQualification!.name"
+              />
+            </td>
+            <td>
+              <button
+                *ngIf="!isEditableQualification(q.id)"
+                (click)="editQualification(q)"
+              >
+                Bearbeiten
+              </button>
+              <button
+                *ngIf="isEditableQualification(q.id)"
+                (click)="saveQualification()"
+              >
+                Speichern
+              </button>
+            </td>
+            <td>
+              <button
+                *ngIf="!isEditableQualification(q.id)"
+                (click)="deleteQualification(q)"
+              >
+                Löschen
+              </button>
+              <button
+                *ngIf="isEditableQualification(q.id)"
+                (click)="cancelEditing()"
+              >
+                Abbrechen
+              </button>
+            </td>
+            <td>
+              <button (click)="massAllocationOfQualification(q)">
+                Zuweisen
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
 
-<button (click)="createNewQualification()">Neue Qualifikation erstellen</button>
+  <button class="createButton" (click)="createNewQualification()">
+    Neue Qualifikation erstellen
+  </button>
+</div>

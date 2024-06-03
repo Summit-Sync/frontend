@@ -1,5 +1,5 @@
-<div class="tableWrapper">
-  <div>
+<div class="listWrapper">
+  <div class="tableWrapper">
   <div class="dropdown">
     <button class="dropbtn" (click)="displayDropdown = !displayDropdown">
       {{ displayOption }}
@@ -32,7 +32,6 @@
     Bis:
     <input type="date" [(ngModel)]="searchEndDate" />
   </div>
-</div>
   <table>
     <thead>
       <tr>
@@ -60,29 +59,32 @@
         <td>{{ g.dates[2] || "-" }}</td>
         <td>{{ g.dates.length }}</td>
         -->
-          <td>{{ g.contact.firstName + " " + g.contact.lastName }}</td>
-          <td>
-            <span *ngFor="let trainer of g.trainers">
-              \{{ trainer.firstName }}
-              {{ trainer.lastName }}/
-            </span>
-          </td>
-          <td>{{ g.numberParticipants }}</td>
-          <td>
-            <button (click)="showDetails(g)">Bewerben</button>
-          </td>
-          <td>
-            <button (click)="showEdit(g)">Bearbeiten</button>
-          </td>
-          <td>
-            <button (click)="delete(g)">Löschen</button>
-          </td>
+            <td>{{ g.contact.firstName + " " + g.contact.lastName }}</td>
+            <td>
+              <span *ngFor="let trainer of g.trainers">
+                {{ trainer.firstName }}
+                {{ trainer.lastName }}
+              </span>
+            </td>
+            <td>{{ g.numberParticipants }}</td>
+            <td>
+              <button (click)="showDetails(g)">Bewerben</button>
+            </td>
+            <td>
+              <button (click)="showEdit(g)">Bearbeiten</button>
+            </td>
+            <td>
+              <button (click)="delete(g)">Löschen</button>
+            </td>
           <td>
             <button (click)="cancelGroup(g)">Gruppe absagen</button>
           </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <button class="createButton" (click)="createNewGroupFromTemplate()">
+    Neue Gruppe erstellen
+  </button>
 </div>
-<button (click)="createNewGroupFromTemplate()">Neue Gruppe erstellen</button>

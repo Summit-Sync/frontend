@@ -33,62 +33,69 @@
   </div>
 </div>
 
-<div class="tableWrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>Nr</th>
-        <th>Termin 1.</th>
-        <th>Termin 2.</th>
-        <th>Termine insgesamt</th>
-        <th>Trainer</th>
-        <th>Belegte Plätze</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let c of courses">
-        <tr
-          *ngIf="
-            c | search : displayOption : searchText : searchDate : searchEndDate
-          "
-        >
-          <!-- <tr> -->
-          <td>{{ c.courseNumber }}</td>
-          <td>
-            {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
-          </td>
-          <td>
-            {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
-          </td>
-          <td>{{ c.dates.length }}</td>
-          <td>
-            <span *ngFor="let trainer of c.trainers">
-              {{ trainer.firstName }}
-              {{ trainer.lastName }}
-            </span>
-          </td>
-          <td>{{ c.participants.length + "/" + c.numberParticipants }}</td>
-          <td>
-            <button (click)="showDetails(c)">Bewerben</button>
-          </td>
-          <td>
-            <button (click)="showEdit(c)">Bearbeiten</button>
-          </td>
-          <td>
-            <button (click)="delete(c)">Löschen</button>
-          </td>
-          <td>
-            <button (click)="cancelCourse(c)">Kurs absagen</button>
-          </td>
+<div class="listWrapper">
+  <div class="tableWrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Nr</th>
+          <th>Termin 1.</th>
+          <th>Termin 2.</th>
+          <th>Termine insgesamt</th>
+          <th>Trainer</th>
+          <th>Belegte Plätze</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
-      </ng-container>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let c of courses">
+          <tr
+            *ngIf="
+              c
+                | search
+                  : displayOption
+                  : searchText
+                  : searchDate
+                  : searchEndDate
+            "
+          >
+            <!-- <tr> -->
+            <td>{{ c.courseNumber }}</td>
+            <td>
+              {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
+            </td>
+            <td>
+              {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
+            </td>
+            <td>{{ c.dates.length }}</td>
+            <td>
+              <span *ngFor="let trainer of c.trainers">
+                {{ trainer.firstName }}
+                {{ trainer.lastName }}
+              </span>
+            </td>
+            <td>{{ c.participants.length + "/" + c.numberParticipants }}</td>
+            <td>
+              <button (click)="showDetails(c)">Bewerben</button>
+            </td>
+            <td>
+              <button (click)="showEdit(c)">Bearbeiten</button>
+            </td>
+            <td>
+              <button (click)="delete(c)">Löschen</button>
+            </td>
+            <td>
+              <button (click)="cancelCourse(c)">Kurs absagen</button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <button class="createButton" (click)="showTemplateList()">
+    Kurs anhand einer Vorlage erstellen
+  </button>
 </div>
-<button (click)="showTemplateList()">
-  Kurs anhand einer Vorlage erstellen
-</button>
