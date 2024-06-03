@@ -1,54 +1,52 @@
 <div class="outer">
-    <div class="header">
-
+  <div class="body">
+    <div class="title">
+      <p>Titel:</p>
+      <p>{{ selectedTemplate.title }}</p>
     </div>
-    <div class="body">
-        <div class="title">
-            <p>Titel: </p>
-            <p>{{selectedTemplate.title}}</p>
-        </div>
-        <div class="acronym">
-            <p>Kürzel: </p>
-            <p>{{selectedTemplate.acronym}}</p>
-        </div>
-        <div class="description">
-            <p>Beschreibung: </p>
-            <p>{{selectedTemplate.description}}</p>
-        </div>
-        <div class="dates">
-            <p>Anzahl an Terminen: </p>
-            <p>{{selectedTemplate.numberOfDates}}</p>
-        </div>
-        <div class="duration">
-            <p>Dauer: </p>
-            <p>{{selectedTemplate.duration}}</p>
-        </div>
-        <div class="prices">
-            <p>Preise: </p>
-            <p>Trainerpreis pro Stunde: </p>
-            <p>{{selectedTemplate.trainerPricePerHour}}</p>
-            <p>Preis pro Teilnehmer: </p>
-            <p>{{selectedTemplate.pricePerParticipant}}</p>
-        </div>
-        <div class="location">
-            <p>Ort: </p>
-            <p>{{selectedTemplate.location.title}}</p>
-        </div>
-        <div class="meetingpoint">
-            <p>Treffpunkt: </p>
-            <p>{{selectedTemplate.meetingPoint}}</p>
-        </div>
-        <div class="trainerkey">
-            <p>Trainerschlüssel: </p>
-            <p>{{selectedTemplate.participantsPerTrainer}}</p>
-        </div>
-        <div class="required-qualification">
-            <p>Qualifikationen: </p>
-            <p *ngFor="let q of selectedTemplate.requiredQualificationList">{{q.name}}</p>
-        </div>
+    <div class="acronym">
+      <p>Kürzel:</p>
+      <p>{{ selectedTemplate.acronym }}</p>
     </div>
-    <div class="footer">
-        <button (click)="close()">Schließen</button>
+    <div class="description">
+      <p>Beschreibung:</p>
+      <p>{{ selectedTemplate.description }}</p>
     </div>
-
+    <div class="dates">
+      <p>Anzahl an Terminen:</p>
+      <p>{{ selectedTemplate.numberOfDates }}</p>
+    </div>
+    <div class="duration">
+      <p>Dauer:</p>
+      <p>{{ selectedTemplate.duration }}</p>
+    </div>
+    <div class="priceWrapper">
+      <p>Preise:</p>
+      <p>Trainerpreis pro Stunde:</p>
+      <p>{{ selectedTemplate.trainerPricePerHour }}</p>
+      <p>Preis pro Teilnehmer:</p>
+      <p>{{ selectedTemplate.pricePerParticipant }}</p>
+    </div>
+    <div class="location">
+      <p>Ort:</p>
+      <p>{{ selectedTemplate.location.title }}</p>
+    </div>
+    <div class="meetingpoint">
+      <p>Treffpunkt:</p>
+      <p>{{ selectedTemplate.meetingPoint }}</p>
+    </div>
+    <div class="trainerkey">
+      <p>Trainerschlüssel:</p>
+      <p>{{ selectedTemplate.participantsPerTrainer }}</p>
+    </div>
+    <div class="required-qualification">
+      <p>Qualifikationen:</p>
+      <p *ngFor="let q of selectedTemplate.requiredQualificationList">
+        {{ q.name }}
+      </p>
+    </div>
+  </div>
+  <div class="footer">
+    <button (click)="close()">Schließen</button>
+  </div>
 </div>
