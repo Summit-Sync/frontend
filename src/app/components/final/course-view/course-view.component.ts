@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { CourseDTO } from '../../../models/course/Course';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { ParticipantListServiceService } from '../../../services/participant-lis
   templateUrl: './course-view.component.html',
   styleUrl: './course-view.component.scss',
 })
-export class CourseViewComponent {
+export class CourseViewComponent implements OnInit{
   @Input() isDelete: boolean = false;
   viewData: CourseDTO;
 
