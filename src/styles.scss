@@ -24,8 +24,7 @@ body {
   width: fit-content;
   position: relative;
   .createButton {
-    position: absolute;
-    bottom: 0;
+    margin-top: 16px;
   }
 }
 
@@ -41,6 +40,10 @@ body {
     margin: 0 auto;
     border: none;
   }
+}
+
+.componentListWrapper {
+  flex-direction: column;
 }
 
 table {
@@ -123,7 +126,6 @@ button {
     }
   }
   .priceWrapper {
-    display: flex;
     flex-direction: column;
     .price {
       p {
