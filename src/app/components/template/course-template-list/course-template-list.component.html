@@ -1,35 +1,39 @@
-<div class="tableWrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>Kurskürzel</th>
-        <th>Anzahl Termine</th>
-        <th>Teilnehmeranzahl</th>
-        <th>Wartelistenlänge</th>
-        <th>Trainer</th>
-        <th>Ort</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let template of courseTemplateList">
-        <td>{{ template.acronym }}</td>
-        <td>{{ template.numberOfDates }}</td>
-        <td>{{ template.numberParticipants }}</td>
-        <td>{{ template.numberWaitlist }}</td>
-        <td>{{ template.numberTrainers }}</td>
-        <td>{{ template.meetingPoint }}</td>
-        <td><button (click)="openDetails(template)">Details</button></td>
-        <td>
-          <button (click)="deleteTemplate(template)">Löschen</button>
-        </td>
-        <td>
-          <button (click)="editTemplate(template)">Bearbeiten</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="listWrapper">
+  <div class="tableWrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Kurskürzel</th>
+          <th>Anzahl Termine</th>
+          <th>Teilnehmeranzahl</th>
+          <th>Wartelistenlänge</th>
+          <th>Trainer</th>
+          <th>Ort</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let template of courseTemplateList">
+          <td>{{ template.acronym }}</td>
+          <td>{{ template.numberOfDates }}</td>
+          <td>{{ template.numberParticipants }}</td>
+          <td>{{ template.numberWaitlist }}</td>
+          <td>{{ template.numberTrainers }}</td>
+          <td>{{ template.meetingPoint }}</td>
+          <td><button (click)="openDetails(template)">Details</button></td>
+          <td>
+            <button (click)="deleteTemplate(template)">Löschen</button>
+          </td>
+          <td>
+            <button (click)="editTemplate(template)">Bearbeiten</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="createButton" (click)="openCreateDialog()">
+    Vorlage erstellen
+  </button>
 </div>
-<button (click)="openCreateDialog()" >Vorlage erstellen</button>
