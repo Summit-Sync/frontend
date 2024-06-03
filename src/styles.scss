@@ -18,6 +18,17 @@ body {
   --klz-bg-color: #ffc932;
 }
 
+.listWrapper {
+  margin: 0 auto;
+  height: 350px;
+  width: fit-content;
+  position: relative;
+  .createButton {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
 .tableWrapper {
   max-height: 300px;
   width: fit-content;
@@ -28,6 +39,7 @@ body {
   border-radius: 5px;
   table { 
     margin: 0 auto;
+    border: none;
   }
 }
 
@@ -35,6 +47,7 @@ table {
   border-spacing: 0;
   border-radius: 5px;
   min-width: 580px;
+  border: var(--klz-bg-color) solid 2px;
   th, td {
     padding: 0 2px;
     // border: var(--klz-bg-color) solid 2px;
@@ -159,6 +172,11 @@ button {
       div {
         flex-direction: row;
       }
+    }
+  }
+  .button-wrapper {
+    button {
+      margin-right: 10px;
     }
   }
 }
