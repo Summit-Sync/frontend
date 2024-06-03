@@ -1,8 +1,7 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { CourseDTO } from '../../models/course/Course';
-import { GroupDTO } from '../../models/group/Group';
-import { FilterOption } from '../../models/enums/search';
-import { cond } from 'lodash';
+import {Pipe, PipeTransform} from '@angular/core';
+import {CourseDTO} from '../../models/course/Course';
+import {GroupDTO} from '../../models/group/Group';
+import {FilterOption} from '../../models/enums/search';
 
 @Pipe({
   name: 'search',
@@ -31,8 +30,14 @@ export class SearchPipe implements PipeTransform {
         return true;
       case FilterOption.CourseAcronym:
         return (list as CourseDTO).acronym.toLowerCase().includes(condition);
+      case FilterOption.GroupAcronym:
+        return (list as GroupDTO).acronym.toLowerCase().includes(condition);
       case FilterOption.FreeTrainerSpots:
-        return list.trainers.length < (list as CourseDTO).numberTrainers;
+        if ("courseNumber" in list) {
+          return list.trainers.length < (list as CourseDTO).numberTrainers;
+        } else {
+          return list.trainers.length < (list as GroupDTO).numberParticipants / (list as GroupDTO).participantsPerTrainer;
+        }
       case FilterOption.FreeParticipantSpots:
         return (list as CourseDTO).participants.length < list.numberParticipants;
       case FilterOption.NoParticipants:

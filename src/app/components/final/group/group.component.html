@@ -246,7 +246,8 @@
   <div class="footer">
     <button class="save-button dialog-button" (click)="save()">Speichern</button>
     <button class="dialog button" (click)="cancel()">Abbrechen</button>
-    <button class="delete-button dialog-button" *ngIf="!this.isCreate" (click)="delete()"></button>
+    <button class="delete-button dialog-button" *ngIf="!this.isCreate" (click)="delete()">Löschen</button>
+    <button *ngIf="!this.isCreate" (click)="cancelGroup()">Gruppe absagen</button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
     -->

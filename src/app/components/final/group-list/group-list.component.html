@@ -1,4 +1,38 @@
 <div class="tableWrapper">
+  <div>
+  <div class="dropdown">
+    <button class="dropbtn" (click)="displayDropdown = !displayDropdown">
+      {{ displayOption }}
+    </button>
+    <div
+      class="dropdown-content"
+      [ngClass]="{ 'show-dropdown-content': displayDropdown }"
+    >
+      <button
+        *ngFor="let filterOption of filterOptions"
+        (click)="optionClicked(filterOption)"
+      >
+        {{ filterOption }}
+      </button>
+    </div>
+  </div>
+  <input
+    type="text"
+    *ngIf="
+      displayOption == FilterOption.TrainerFullName ||
+      displayOption == FilterOption.GroupAcronym
+    "
+    [(ngModel)]="searchText"
+  />
+  <div *ngIf="displayOption == FilterOption.StartDate">
+    Von:
+    <input type="date" [(ngModel)]="searchDate" />
+  </div>
+  <div *ngIf="displayOption == FilterOption.StartDate">
+    Bis:
+    <input type="date" [(ngModel)]="searchEndDate" />
+  </div>
+</div>
   <table>
     <thead>
       <tr>
@@ -14,12 +48,13 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngFor="let g of group$ | async">
-        <tr>
-          <td>{{ g.title }}</td>
+        <tr *ngIf="g | search: displayOption : searchText : searchDate : searchEndDate">
+          <td>{{ g.acronym }}</td>
           <!--
         <td>{{ g.dates[1] || "-" }}</td>
         <td>{{ g.dates[2] || "-" }}</td>
@@ -28,8 +63,8 @@
           <td>{{ g.contact.firstName + " " + g.contact.lastName }}</td>
           <td>
             <span *ngFor="let trainer of g.trainers">
-              {{ trainer.firstName }}
-              {{ trainer.lastName }}
+              \{{ trainer.firstName }}
+              {{ trainer.lastName }}/
             </span>
           </td>
           <td>{{ g.numberParticipants }}</td>
@@ -41,6 +76,9 @@
           </td>
           <td>
             <button (click)="delete(g)">Löschen</button>
+          </td>
+          <td>
+            <button (click)="cancelGroup(g)">Gruppe absagen</button>
           </td>
         </tr>
       </ng-container>

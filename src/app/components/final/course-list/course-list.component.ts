@@ -102,7 +102,7 @@ export class CourseListComponent implements OnInit {
             this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
           },
           error: (err) => {
-            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen \n");
+            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen");
           }
         });
       }
