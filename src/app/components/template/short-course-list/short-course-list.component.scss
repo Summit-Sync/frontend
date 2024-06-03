@@ -3,9 +3,6 @@ table {
   // max-height: 200px;
 }
 
-.shortListContent {
-  &:hover{
-
-    background-color: #d3d3d3;
-  }
+.shortListContent:hover{
+  background-color: #d3d3d3;
 }
