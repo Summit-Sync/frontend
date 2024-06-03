@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { GroupDTO } from '../../../models/group/Group';
 import { Observable, finalize, of } from 'rxjs';
 import { GroupService } from '../../../services/group/group.service';
@@ -9,16 +9,36 @@ import { GroupComponent } from '../group/group.component';
 import { ShortGroupListComponent } from '../../template/short-group-list/short-group-list.component';
 import { UpdateGroupDTO } from '../../../models/group/UpdateGroup';
 import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SearchPipe} from "@/app/pipes/search/search.pipe";
+import { FilterOption } from '../../../models/enums/search';
+
 
 @Component({
   selector: 'app-group-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SearchPipe],
   templateUrl: './group-list.component.html',
-  styleUrl: './group-list.component.css',
+  styleUrl: './group-list.component.scss',
 })
-export class GroupListComponent {
+export class GroupListComponent implements OnInit{
   group$: Observable<GroupDTO[]>;
+
+  //Für Searchpipe
+  displayDropdown: boolean = false;
+  dropdownContent: any;
+  searchText: string = '';
+  searchDate?: Date;
+  searchEndDate?: Date;
+  displayOption: FilterOption = FilterOption.None;
+  filterOptions: FilterOption[] = [
+    FilterOption.None,
+    FilterOption.GroupAcronym,
+    FilterOption.FreeTrainerSpots,
+    FilterOption.StartDate,
+    FilterOption.TrainerFullName,
+  ];
+  FilterOption = FilterOption;
 
   constructor(
     public groupService: GroupService,
@@ -28,6 +48,20 @@ export class GroupListComponent {
 
   ngOnInit(): void {
     this.updateList();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    this.dropdownContent = document.querySelectorAll('.dropdown-content');
+    const btn = document.querySelectorAll('.dropbtn');
+    const clickedInside = event.composedPath().includes(this.dropdownContent);
+    if (!clickedInside && !btn && this.displayDropdown) {
+      this.displayDropdown = false;
+    }
+  }
+
+  optionClicked(filterOption: FilterOption) {
+    this.displayOption = filterOption;
   }
 
   updateList() {
@@ -98,22 +132,23 @@ export class GroupListComponent {
             this.toast.showSuccessToast('Gruppe erfolgreich aktualisiert');
           },
           error: (err) => {
-            this.toast.showErrorToast(
-              'Aktualisierung der Gruppe fehlgeschlagen \n' + err
-            );
+            this.toast.showErrorToast('Aktualisierung der Gruppe fehlgeschlagen \n' + err);
           },
         });
       } else if (obj.method == 'delete') {
         console.log('Gruppe Löschen');
         this.groupService.deleteGroup(obj.data.id).subscribe({
-          next: () => {
-            this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
+          next:() => {
+            this.group$ = this.groupService.getAllGroups();
+            this.toast.showSuccessToast("Gruppe erfolgreich gelöscht");
           },
           error: (err) => {
             this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
             console.error('Gruppe löschen' + err);
           },
         });
+      } else if (obj.method == 'cancel-group'){
+        this.cancelGroup(obj.data);
       }
     });
   }
@@ -136,12 +171,24 @@ export class GroupListComponent {
           .pipe(finalize(() => this.updateList()))
           .subscribe({
             next: (response) => {
+              this.group$ = this.groupService.getAllGroups();
               this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
             },
             error: (err) => {
               this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n');
             },
           });
+      }
+    });
+  }
+  cancelGroup(group: GroupDTO) {
+    this.groupService.putGroupCanceled(group.id, !group.canceled).subscribe({
+      next:() =>{
+        this.group$ = this.groupService.getAllGroups();
+        this.toast.showSuccessToast("Gruppe erfolgreich abgesagt");
+    },
+      error:() =>{
+        this.toast.showErrorToast("Gruppe absagen fehlgeschlagen");
       }
     });
   }

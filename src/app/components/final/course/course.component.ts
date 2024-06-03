@@ -507,7 +507,14 @@ export class CourseComponent implements OnInit {
   cancelCourse() {
     this.courseService
       .putCourseCancel(this.courseData.id, !this.courseData.canceled)
-      .subscribe();
+      .subscribe({
+        next:() =>{
+          this.toast.showSuccessToast("Kurs erfolgreich abgesagt");
+        },
+        error:() =>{
+          this.toast.showErrorToast("Kurs absagen fehlgeschlagen");
+        }
+      });
   }
 
   onQualificationSelectionChange(qualificationList: CheckboxList[]) {
@@ -551,6 +558,6 @@ export class CourseComponent implements OnInit {
       this.multiDropDown.deleteObject(trainer);
     });
     this.multiDropDown.checkedBoxes = [];
-    this.toast.showInfoToast("Trainer auswahl zurückgesetzt!");
+    this.toast.showInfoToast("Trainerauswahl zurückgesetzt!");
   }
 }

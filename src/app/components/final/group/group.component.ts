@@ -480,4 +480,18 @@ export class GroupComponent implements OnInit {
     };
     return temp;
   }
+
+  cancelGroup() {
+    this.dialogRef.close(JSON.stringify({method: 'cancel-group', data: this.groupDataUpdate}));
+    console.log("Group canceled");
+
+    // this.groupService.putGroupCanceled(this.groupDataUpdate.id, !this.groupDataUpdate.canceled).subscribe({
+    //   next:() =>{
+    //     this.toast.showSuccessToast("Gruppe erfolgreich abgesagt");
+    //   },
+    //   error:() =>{
+    //     this.toast.showErrorToast("Gruppe absagen fehlgeschlagen");
+    //   }
+    // })
+  }
 }

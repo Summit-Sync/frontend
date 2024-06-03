@@ -261,6 +261,7 @@
       *ngIf="!this.isCreate"
       (click)="delete()"
     ></button>
+    <button *ngIf="!this.isCreate" (click)="cancelGroup()">Gruppe absagen</button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
     -->
