@@ -106,8 +106,11 @@ export class AddTrainerComponent implements OnInit {
     console.log(this.allQualification);
     console.log(this.trainerData.qualifications);
     console.log('updated: ', this.trainerData);
-    this.trainerData.qualifications = this.checkBoxMapper.mapCheckboxListToQualificationList(this.selectedQualification);
-    this.validationObject=this.trainerValidator.validate(this.trainerData);
+    this.trainerData.qualifications =
+      this.checkBoxMapper.mapCheckboxListToQualificationList(
+        this.selectedQualification
+      );
+    this.validationObject = this.trainerValidator.validate(this.trainerData);
     if (this.validationObject.valid) {
       this.dialogRef.close(
         JSON.stringify({ method: 'confirm', data: this.trainerData })

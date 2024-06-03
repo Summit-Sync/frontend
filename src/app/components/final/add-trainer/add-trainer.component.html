@@ -6,7 +6,6 @@
     <div>
       <div>
         <input
-          matInput
           placeholder="Vorname"
           [(ngModel)]="createTrainerData.firstName"
         />
@@ -14,7 +13,6 @@
           {{ validationObject.firstNameError }}
         </p>
         <input
-          matInput
           placeholder="Nachname"
           [(ngModel)]="createTrainerData.lastName"
         />
@@ -24,7 +22,6 @@
       </div>
       <div>
         <input
-          matInput
           placeholder="Nutzername"
           [(ngModel)]="createTrainerData.username"
         />
@@ -32,7 +29,6 @@
           {{ validationObject.usernameError }}
         </p>
         <input
-          matInput
           type="password"
           placeholder="Passwort"
           [(ngModel)]="createTrainerData.password"
@@ -42,16 +38,11 @@
         </p>
       </div>
       <div>
-        <input
-          matInput
-          placeholder="Email"
-          [(ngModel)]="createTrainerData.email"
-        />
+        <input placeholder="Email" [(ngModel)]="createTrainerData.email" />
         <p *ngIf="validationObject.emailError" class="errorMessage">
           {{ validationObject.emailError }}
         </p>
         <input
-          matInput
           placeholder="Telefonnummer"
           [(ngModel)]="createTrainerData.phone"
         />
@@ -62,7 +53,6 @@
     </div>
   </div>
   <div>
-
     <button (click)="saveCreate()">Trainer anlegen</button>
     <button (click)="cancel()">Abbrechen</button>
   </div>
@@ -76,24 +66,12 @@
     <div>
       <div>
         <div>
-          <input
-            matInput
-            placeholder="Vorname"
-            [(ngModel)]="trainerData.firstName"
-          />
-          <input
-            matInput
-            placeholder="Nachname"
-            [(ngModel)]="trainerData.lastName"
-          />
+          <input placeholder="Vorname" [(ngModel)]="trainerData.firstName" />
+          <input placeholder="Nachname" [(ngModel)]="trainerData.lastName" />
         </div>
         <div>
-          <input matInput placeholder="Email" [(ngModel)]="trainerData.email" />
-          <input
-            matInput
-            placeholder="Telefonnummer"
-            [(ngModel)]="trainerData.phone"
-          />
+          <input placeholder="Email" [(ngModel)]="trainerData.email" />
+          <input placeholder="Telefonnummer" [(ngModel)]="trainerData.phone" />
         </div>
         <app-multi-select-dropdown
           id="multiSelect"
