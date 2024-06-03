@@ -1,31 +1,35 @@
-<div class="tableWrapper">
-  <table>
-    <thead>
-      <th>Titel</th>
-      <th>Adresse</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let location of locationList">
-        <td>{{ location.title }}</td>
-        <td>
-          {{ location.street }},&nbsp;{{ location.postCode }}&nbsp;{{
-            location.title
-          }}
-        </td>
-        <td>
-          <button (click)="openDetailDialog(location)">Details</button>
-        </td>
-        <td>
-          <button (click)="openEditDialog(location)">Bearbeiten</button>
-        </td>
-        <td>
-          <button (click)="deleteLocation(location)">Löschen</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="listWrapper">
+  <div class="tableWrapper">
+    <table>
+      <thead>
+        <th>Titel</th>
+        <th>Adresse</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let location of locationList">
+          <td>{{ location.title }}</td>
+          <td>
+            {{ location.street }},&nbsp;{{ location.postCode }}&nbsp;{{
+              location.title
+            }}
+          </td>
+          <td>
+            <button (click)="openDetailDialog(location)">Details</button>
+          </td>
+          <td>
+            <button (click)="openEditDialog(location)">Bearbeiten</button>
+          </td>
+          <td>
+            <button (click)="deleteLocation(location)">Löschen</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="createButton" (click)="openCreateDialog()">
+    Standort erstellen
+  </button>
 </div>
-<button (click)="openCreateDialog()">Standort erstellen</button>

@@ -3,15 +3,12 @@ import { GroupDTO } from '../../../models/group/Group';
 import { Observable, finalize, of } from 'rxjs';
 import { GroupService } from '../../../services/group/group.service';
 import { CommonModule } from '@angular/common';
-import {MatDialog} from "@angular/material/dialog";
-import {ToastService} from "../../../services/toast/toast.service";
-import {GroupComponent} from "../group/group.component";
-import {ShortGroupListComponent} from "../../template/short-group-list/short-group-list.component";
-import {GroupTemplateDTO} from "../../../models/groupTemplate/GroupTemplate";
-import {UpdateGroupDTO} from "../../../models/group/UpdateGroup";
-import {PostGroupDTO} from "../../../models/group/PostGroup";
+import { MatDialog } from '@angular/material/dialog';
+import { ToastService } from '../../../services/toast/toast.service';
+import { GroupComponent } from '../group/group.component';
+import { ShortGroupListComponent } from '../../template/short-group-list/short-group-list.component';
+import { UpdateGroupDTO } from '../../../models/group/UpdateGroup';
 import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-
 
 @Component({
   selector: 'app-group-list',
@@ -27,14 +24,13 @@ export class GroupListComponent {
     public groupService: GroupService,
     private dialog: MatDialog,
     private toast: ToastService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.updateList();
   }
 
-  updateList(){
+  updateList() {
     this.group$ = this.groupService.getAllGroups();
   }
 
@@ -45,67 +41,20 @@ export class GroupListComponent {
       height: '80dvh',
       width: '40dvw',
     });
-    templateDialogRef.afterClosed().subscribe(((result) => {
-      const obj = JSON.parse(result);
-      if (obj.method == 'confirm') {
-        console.log('Template select Dialog output: ' + obj.data);
-        let data = obj.data;
-        let template: GroupTemplateDTO = {
-          id: data.id,
-          acronym: data.acronym,
-          title: data.title,
-          description: data.description,
-          numberOfDates: data.numberOfDates,
-          duration: data.duration,
-          location: data.location,
-          meetingPoint: data.meetingPoint,
-          trainerPricePerHour: data.trainerPricePerHour,
-          pricePerParticipant: data.pricePerParticipant,
-          requiredQualificationList: data.requiredQualificationList,
-          participantsPerTrainer: data.participantsPerTrainer
-        }
-        this.openCreateDialog(template)
-      }
-    }));
-  }
-
-  openCreateDialog(template: GroupTemplateDTO) {
-    const dialogRef = this.dialog.open(GroupComponent, {
-      disableClose: true,
-      autoFocus: true,
-      height: '80dvh',
-      width: '50dvw',
-    });
-    let instance = dialogRef.componentInstance;
-    instance.template = template;
-    instance.isCreate = true;
-    dialogRef.afterClosed().subscribe((result) => {
-      const obj = JSON.parse(result);
-      if (obj.method == 'confirm-create') {
-        console.log("Dialog output: ", obj.data);
-        this.groupService.postGroup(obj.data).subscribe({
-          next: () => {
-            this.group$ = this.groupService.getAllGroups();
-            this.toast.showSuccessToast("Gruppe erfolgreich erstellt");
-          },
-          error: (err) => {
-            this.toast.showErrorToast("Erstellung der Gruppe fehlgeschlagen \n" + err);
-          }
-        });
-      }
+    templateDialogRef.afterClosed().subscribe((result) => {
+      this.group$ = this.groupService.getAllGroups();
     });
   }
 
-  showDetails(group: GroupDTO) {
-  }
+  showDetails(group: GroupDTO) {}
 
   showEdit(group: GroupDTO) {
     let reqQuali: number[] = [];
     let trainers: number[] = [];
-    group.requiredQualifications.forEach(q => {
+    group.requiredQualifications.forEach((q) => {
       reqQuali.push(q.id);
     });
-    group.trainers.forEach(t => {
+    group.trainers.forEach((t) => {
       trainers.push(t.id);
     });
     let temp: UpdateGroupDTO = {
@@ -127,9 +76,9 @@ export class GroupListComponent {
       pricePerParticipant: group.pricePerParticipant,
       requiredQualifications: reqQuali,
       participantsPerTrainer: group.participantsPerTrainer,
-      trainers: trainers
-    }
-    console.log("Pre Dialog: " + temp.dates);
+      trainers: trainers,
+    };
+    console.log('Pre Dialog: ' + temp.dates);
     const dialogRef = this.dialog.open(GroupComponent, {
       disableClose: true,
       autoFocus: true,
@@ -142,27 +91,29 @@ export class GroupListComponent {
     dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
       if (obj.method == 'confirm-update') {
-        console.log("Dialog output: ", obj.data);
+        console.log('Dialog output: ', obj.data);
         this.groupService.putGroup(obj.data.id, obj.data).subscribe({
           next: () => {
             this.group$ = this.groupService.getAllGroups();
-            this.toast.showSuccessToast("Gruppe erfolgreich aktualisiert");
+            this.toast.showSuccessToast('Gruppe erfolgreich aktualisiert');
           },
           error: (err) => {
-            this.toast.showErrorToast("Aktualisierung der Gruppe fehlgeschlagen \n" + err);
-          }
+            this.toast.showErrorToast(
+              'Aktualisierung der Gruppe fehlgeschlagen \n' + err
+            );
+          },
         });
-      } else if (obj.method == 'delete'){
-        console.log("Gruppe Löschen");
+      } else if (obj.method == 'delete') {
+        console.log('Gruppe Löschen');
         this.groupService.deleteGroup(obj.data.id).subscribe({
-          next:() => {
-            this.toast.showSuccessToast("Gruppe erfolgreich gelöscht");
+          next: () => {
+            this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
           },
           error: (err) => {
-            this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen");
-            console.error("Gruppe löschen" + err);
-          }
-        })
+            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
+            console.error('Gruppe löschen' + err);
+          },
+        });
       }
     });
   }
@@ -174,23 +125,23 @@ export class GroupListComponent {
       height: '40dvh',
       width: '30dvw',
       data: {
-        name: template.title
-      }
+        name: template.title,
+      },
     });
-    dialogRef.afterClosed().subscribe(result => {
-      const obj=JSON.parse(result);
-      if(obj.method === 'confirm'){
-        this.groupService.deleteGroup(template.id).pipe(
-          finalize(()=>this.updateList())
-        )
-        .subscribe({
-          next: (response) => {
-            this.toast.showSuccessToast("Gruppe erfolgreich gelöscht");
-          },
-          error: (err) => {
-            this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen \n");
-          }
-        });
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method === 'confirm') {
+        this.groupService
+          .deleteGroup(template.id)
+          .pipe(finalize(() => this.updateList()))
+          .subscribe({
+            next: (response) => {
+              this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
+            },
+            error: (err) => {
+              this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n');
+            },
+          });
       }
     });
   }

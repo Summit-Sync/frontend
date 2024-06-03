@@ -1,5 +1,5 @@
 <div class="outer">
-  <div class="courseBody">
+  <div class="body">
     <div>
       <p>Titel:</p>
       <input type="text" [(ngModel)]="editableLocation.title" />
@@ -56,9 +56,9 @@
         {{ validationObject.mapsUrlError }}
       </p>
     </div>
-  </div>
-  <div class="button-div">
-    <button (click)="save()">Speichern</button>
-    <button (click)="cancel()">Abbrechen</button>
+    <div class="button-wrapper">
+      <button (click)="save()">Speichern</button>
+      <button (click)="cancel()">Abbrechen</button>
+    </div>
   </div>
 </div>
