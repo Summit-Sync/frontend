@@ -114,4 +114,13 @@ export class DateTimeMapperService {
     );
     return dates;
   }
+
+  mapGMTToUTCTime(dates: Date[]){
+    let newDates: Date[] = [];
+    dates.forEach(date => {
+      date.setUTCHours(date.getHours());
+      newDates.push(date);
+    });
+    return newDates;
+  }
 }

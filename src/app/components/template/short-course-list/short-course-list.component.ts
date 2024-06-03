@@ -28,7 +28,7 @@ export class ShortCourseListComponent implements OnInit {
 
   openCourseCreator(courseTemplate: CourseTemplateDTO) {
     let courseDialogRef = this.dialog.open(CourseComponent, {
-      disableClose: false,
+      disableClose: true,
       autoFocus: true,
       height: '80dvh',
       width: '60dvw',

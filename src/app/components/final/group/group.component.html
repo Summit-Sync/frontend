@@ -88,7 +88,7 @@
           </thead>
           <tbody>
             <ng-container
-              *ngFor="let currentDate of groupDataCreate.events; let i = index"
+              *ngFor="let currentDate of groupDataCreate.dates; let i = index"
             >
               <tr>
                 <td>
@@ -195,6 +195,7 @@
         [selectedOptions]="selectedQualificationsCheck"
         [dropdownHeadline]="'Qualifikationen'"
         [allowMultiple]="true"
+        (changeEvent)="onQualificationSelectionChange($event)"
       ></app-multi-select-dropdown>
       <p
         *ngIf="validationObject.requiredQualificationError"
@@ -221,6 +222,7 @@
       <label for="trainer">Trainer</label>
       <app-multi-select-dropdown
         id="trainer"
+        #trainer
         [allOptions]="allTrainersCheck"
         [selectedOptions]="selectedTrainersCheck"
         [dropdownHeadline]="'Trainer'"
@@ -242,10 +244,9 @@
     -->
   </div>
   <div class="footer">
-    <button class="save-button dialog-button" (click)="save()">
-      Speichern
-    </button>
+    <button class="save-button dialog-button" (click)="save()">Speichern</button>
     <button class="dialog button" (click)="cancel()">Abbrechen</button>
+    <button class="delete-button dialog-button" *ngIf="!this.isCreate" (click)="delete()"></button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
     -->
@@ -444,9 +445,10 @@
     <app-multi-select-dropdown
       id="required-qualifications-edit"
       [allOptions]="allQualificationsCheck"
-      [selectedOptions]="selectedLocationsCheck"
+      [selectedOptions]="selectedQualificationsCheck"
       [dropdownHeadline]="'Qualifikationen'"
       [allowMultiple]="true"
+      (changeEvent)="onQualificationSelectionChange($event)"
     ></app-multi-select-dropdown>
     <p *ngIf="validationObject.requiredQualificationError" class="errorMessage">
       {{ validationObject.requiredQualificationError }}
@@ -473,6 +475,7 @@
     <label for="trainer-edit">Trainer</label>
     <app-multi-select-dropdown
       id="trainer-edit"
+      #trainer
       [allOptions]="allTrainersCheck"
       [selectedOptions]="selectedTrainersCheck"
       [dropdownHeadline]="'Trainer'"

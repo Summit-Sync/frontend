@@ -27,11 +27,13 @@ export class MultiSelectDropdownComponent implements OnInit, OnChanges {
     @Input() dropdownHeadline: string;
     @Input() allowMultiple: boolean;
     @Input() allowedEntries: number = 999999999999999;
+    @Output() changeEvent: EventEmitter<CheckboxList[]> = new EventEmitter<CheckboxList[]>;
     checkedBoxes: boolean[] = [];
     showList: boolean = false;
 
     ngOnChanges(changes: SimpleChanges): void {
-        // console.log(this.allOptions);
+
+      // console.log(this.allOptions);
         this.allOptions.forEach((aOption) =>
             this.checkedBoxes.push(
                 this.selectedOptions.some((sOption) => {
@@ -74,6 +76,7 @@ export class MultiSelectDropdownComponent implements OnInit, OnChanges {
             this.checkedBoxes.fill(false, 0, this.allOptions.length);
             this.checkedBoxes[index] = true;
         }
+      this.changeEvent.emit(this.selectedOptions);
     }
 
     deleteObject(clickedObject: CheckboxList) {

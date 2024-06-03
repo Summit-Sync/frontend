@@ -106,6 +106,7 @@ export class AddTrainerComponent implements OnInit {
     console.log(this.allQualification);
     console.log(this.trainerData.qualifications);
     console.log('updated: ', this.trainerData);
+    this.trainerData.qualifications = [];
     this.trainerData.qualifications =
       this.checkBoxMapper.mapCheckboxListToQualificationList(
         this.selectedQualification
