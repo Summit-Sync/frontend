@@ -1,0 +1,126 @@
+<div class="outer">
+  <div class="body">
+    <div>
+      <p>Gruppentitel:</p>
+      <p>
+        {{ viewData.title }}
+      </p>
+    </div>
+    <div>
+      <p>Gruppennummer:</p>
+      <p>
+        {{ viewData.groupNumber }}
+      </p>
+    </div>
+    <div>
+      <p>Beschreibung:</p>
+      <p>
+        {{ viewData.description }}
+      </p>
+    </div>
+    <div class="listWrapper">
+      <table>
+        <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Start Zeit</th>
+          <th>End Zeit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container
+          *ngFor="let currentDate of viewData.dates; let i = index"
+        >
+          <tr>
+            <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
+            <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
+            <td>
+              {{ currentDate | endTime : viewData.duration }}
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <p>Maximale Teilnehmeranzahl:</p>
+      <p>
+        {{ viewData.numberParticipants }}
+      </p>
+    </div>
+    <div>
+      <p>Teilnehmer per Trainer:</p>
+      <p>
+        {{ viewData.participantsPerTrainer }}
+      </p>
+    </div>
+    <div>
+      <div>
+        <p>Preis pro Teilnehmer:</p>
+        <p>
+          {{viewData.pricePerParticipant}}
+        </p>
+      </div>
+    </div>
+    <div>
+      <p>Ort:</p>
+      <div class="locationWrapper">
+        <p>
+          {{ viewData.location.title }}
+        </p>
+        <p>
+          {{ viewData.location.street }}
+        </p>
+        <p>
+          {{ viewData.location.postCode + " " + viewData.location.city }}
+        </p>
+        <p>
+          {{ viewData.location.country }}
+        </p>
+
+        <div>
+          <p>Telefonnummer:</p>
+          <p>
+            {{ viewData.location.phone }}
+          </p>
+        </div>
+        <div>
+          <p>Email:</p>
+          <p>
+            {{ viewData.location.email }}
+          </p>
+        </div>
+        <div *ngIf="viewData.location.mapsUrl">
+          <p>Google Maps Link:</p>
+          <a>
+            {{ viewData.location.mapsUrl }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p>Treffpunkt:</p>
+      <p>
+        {{ viewData.meetingPoint }}
+      </p>
+    </div>
+    <div>
+      <p>Trainer Qualifikation:</p>
+      <ng-container *ngFor="let q of viewData.requiredQualifications">
+        <li>{{ q.name }}</li>
+      </ng-container>
+    </div>
+    <div>
+      <p>Trainer:</p>
+      <ng-container *ngFor="let t of viewData.trainers">
+        <li>{{ t.firstName + " " + t.lastName }}</li>
+      </ng-container>
+    </div>
+  </div>
+  <div class="button-div">
+    <button (click)="cancel()">Ansicht schließen</button>
+    <button (click)="deleteGroup()">Löschen</button>
+    <button (click)="cancelGroup()">Gruppe absagen</button>
+  </div>
+</div>

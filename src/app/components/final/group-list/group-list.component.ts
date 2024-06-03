@@ -12,6 +12,7 @@ import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SearchPipe} from "@/app/pipes/search/search.pipe";
 import { FilterOption } from '../../../models/enums/search';
+import {GroupViewComponent} from "@/app/components/final/group-view/group-view.component";
 
 
 @Component({
@@ -80,7 +81,43 @@ export class GroupListComponent implements OnInit{
     });
   }
 
-  showDetails(group: GroupDTO) {}
+  showDetails(group: GroupDTO) {
+    const dialogRef = this.dialog.open(GroupViewComponent, {
+      disableClose: false,
+      autoFocus: true,
+      height: '90dvh',
+      width: '70dvw',
+    });
+    let instance = dialogRef.componentInstance;
+    instance.viewData = group;
+
+    dialogRef.afterClosed().subscribe((result) =>{
+      const obj = JSON.parse(result);
+      if (obj.method == 'cancel'){
+
+      } else if (obj.method == 'delete'){
+        this.groupService.deleteGroup(obj.data.id).subscribe({
+          next:() =>{
+            this.toast.showSuccessToast("Gruppe löschen erfolgreich");
+            this.group$ = this.groupService.getAllGroups();
+          },
+          error:() => {
+            this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen");
+          }
+        });
+      } else if (obj.method == 'cancel-group'){
+        this.groupService.putGroupCanceled(obj.data.id, !obj.data.canceled).subscribe({
+          next:() =>{
+            this.toast.showSuccessToast("Gruppe erfolgreich abgesagt");
+            this.group$ = this.groupService.getAllGroups();
+          },
+          error:() =>{
+            this.toast.showErrorToast("Gruppe absagen fehlgeschlagen");
+          }
+        });
+      }
+    });
+  }
 
   showEdit(group: GroupDTO) {
     let reqQuali: number[] = [];
