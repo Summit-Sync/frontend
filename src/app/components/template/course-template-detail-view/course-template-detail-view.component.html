@@ -51,8 +51,17 @@
     </div>
     <div class="required-qualifications">
       <p>Benötigte Qualifikationen:</p>
-      <p *ngFor="let qualification of courseTemplate.requiredQualifications">
-        {{ qualification.name }}
+      <p
+        *ngFor="
+          let qualification of courseTemplate.requiredQualifications;
+          let i = index
+        "
+      >
+        {{
+          qualification.name +
+            (i + 1 != courseTemplate.requiredQualifications.length ? ", " : " ")
+        }}
+        &nbsp;
       </p>
     </div>
     <div class="number-of-trainers">
