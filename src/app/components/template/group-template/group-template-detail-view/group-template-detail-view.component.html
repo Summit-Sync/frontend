@@ -20,12 +20,15 @@
       <p>Dauer:</p>
       <p>{{ selectedTemplate.duration }}</p>
     </div>
-    <div class="priceWrapper">
-      <p>Preise:</p>
-      <p>Trainerpreis pro Stunde:</p>
-      <p>{{ selectedTemplate.trainerPricePerHour }}</p>
-      <p>Preis pro Teilnehmer:</p>
-      <p>{{ selectedTemplate.pricePerParticipant }}</p>
+    <div class="componentListWrapper" style="align-items: baseline">
+      <div>
+        <p>Trainerpreis pro Stunde:</p>
+        <p>{{ selectedTemplate.trainerPricePerHour }}</p>
+      </div>
+      <div>
+        <p>Preis pro Teilnehmer:</p>
+        <p>{{ selectedTemplate.pricePerParticipant }}</p>
+      </div>
     </div>
     <div class="location">
       <p>Ort:</p>

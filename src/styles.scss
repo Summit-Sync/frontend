@@ -44,6 +44,9 @@ body {
 
 .componentListWrapper {
   flex-direction: column;
+  button {
+    margin-top: 10px;
+  }
 }
 
 table {
@@ -52,7 +55,7 @@ table {
   min-width: 580px;
   border: var(--klz-bg-color) solid 2px;
   th, td {
-    padding: 0 2px;
+    padding: 1px 6px;
     // border: var(--klz-bg-color) solid 2px;
     margin: 0;
   }
@@ -127,6 +130,7 @@ button {
   }
   .priceWrapper {
     flex-direction: column;
+    padding: 15px;
     .price {
       p {
         margin: 0;
@@ -137,10 +141,17 @@ button {
         margin-right: 10px;
       }
     }
+    .addPriceBtn {
+      margin-top: 10px;
+    }
+    .deletePriceBtn {
+      margin-left: 5px;
+    }
   }
   .locationWrapper {
     flex-direction: column;
     border: solid  1px black;
+    padding: 15px;
     p:first-child { 
       font-weight: 400;
       margin-right: 0;
@@ -176,10 +187,12 @@ button {
       }
     }
   }
-  .button-wrapper {
-    button {
-      margin-right: 10px;
-    }
+}
+
+.footer {
+  margin: 12px;
+  button {
+    margin-right: 10px;
   }
 }
 

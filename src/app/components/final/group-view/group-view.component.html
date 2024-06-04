@@ -21,24 +21,24 @@
     <div class="listWrapper">
       <table>
         <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Start Zeit</th>
-          <th>End Zeit</th>
-        </tr>
+          <tr>
+            <th>Datum</th>
+            <th>Start Zeit</th>
+            <th>End Zeit</th>
+          </tr>
         </thead>
         <tbody>
-        <ng-container
-          *ngFor="let currentDate of viewData.dates; let i = index"
-        >
-          <tr>
-            <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
-            <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
-            <td>
-              {{ currentDate | endTime : viewData.duration }}
-            </td>
-          </tr>
-        </ng-container>
+          <ng-container
+            *ngFor="let currentDate of viewData.dates; let i = index"
+          >
+            <tr>
+              <td>{{ currentDate | date : "dd/MM/yyyy" : "de" }}</td>
+              <td>{{ currentDate | date : "HH:mm" : "de" }}</td>
+              <td>
+                {{ currentDate | endTime : viewData.duration }}
+              </td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>
@@ -59,7 +59,7 @@
       <div>
         <p>Preis pro Teilnehmer:</p>
         <p>
-          {{viewData.pricePerParticipant}}
+          {{ viewData.pricePerParticipant }}
         </p>
       </div>
     </div>
@@ -118,7 +118,7 @@
       </ng-container>
     </div>
   </div>
-  <div class="button-div">
+  <div class="footer">
     <button (click)="cancel()">Ansicht schließen</button>
     <button (click)="deleteGroup()">Löschen</button>
     <button (click)="cancelGroup()">Gruppe absagen</button>

@@ -1,5 +1,5 @@
 <div class="outer">
-  <div class="body" *ngIf="this.isCreate; else editMode">
+  <div class="body">
     <div>
       <p>Titel</p>
       <input id="title" type="text" [(ngModel)]="groupDataCreate.title" />
@@ -256,12 +256,9 @@
       Speichern
     </button>
     <button class="dialog button" (click)="cancel()">Abbrechen</button>
-    <button
-      class="delete-button dialog-button"
-      *ngIf="!this.isCreate"
-      (click)="delete()"
-    ></button>
-    <button *ngIf="!this.isCreate" (click)="cancelGroup()">Gruppe absagen</button>
+    <button *ngIf="!this.isCreate" (click)="cancelGroup()">
+      Gruppe absagen
+    </button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
     -->
@@ -269,239 +266,250 @@
 </div>
 
 <ng-template #editMode>
-  <div class="title">
-    <p for="title-edit">Titel</p>
-    <input id="title-edit" type="text" [(ngModel)]="groupDataUpdate.title" />
-    <p *ngIf="validationObject.titleError" class="errorMessage">
-      {{ validationObject.titleError }}
-    </p>
-  </div>
-  <div class="acronym">
-    <p for="acronym-edit">Kürzel</p>
-    <input
-      id="acronym-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.acronym"
-    />
-    <p *ngIf="validationObject.acronymError" class="errorMessage">
-      {{ validationObject.acronymError }}
-    </p>
-  </div>
-  <div class="description">
-    <p for="description-edit">Beschreibung</p>
-    <input
-      id="description-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.description"
-    />
-    <p *ngIf="validationObject.descriptionError" class="errorMessage">
-      {{ validationObject.descriptionError }}
-    </p>
-  </div>
-  <div class="number-of-dates">
-    <p for="number-of-dates-edit">Anzahl Termine</p>
-    <input
-      id="number-of-dates-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.numberOfDates"
-    />
-    <p *ngIf="validationObject.numberOfDatesError" class="errorMessage">
-      {{ validationObject.numberOfDatesError }}
-    </p>
-  </div>
-  <div class="contact">
-    <p for="contact-edit">Contact</p>
-    <div id="contact-edit">
-      <p for="contact-firstName-edit">Vorname</p>
-      <input
-        id="contact-firstName-edit"
-        type="text"
-        [(ngModel)]="groupDataUpdate.contact.firstName"
-      />
-      <p for="contact-lastName-edit">Nachname</p>
-      <input
-        id="contact-lastName-edit"
-        type="text"
-        [(ngModel)]="groupDataUpdate.contact.lastName"
-      />
-      <p for="contact-email-edit">E-Mail</p>
-      <input
-        id="contact-email-edit"
-        type="email"
-        [(ngModel)]="groupDataUpdate.contact.email"
-      />
-      <p for="contact-phone-edit">Telefon Nummer</p>
-      <input
-        id="contact-phone-edit"
-        type="tel"
-        [(ngModel)]="groupDataUpdate.contact.phone"
-      />
+  <div class="body">
+    <div class="title">
+      <p for="title-edit">Titel</p>
+      <input id="title-edit" type="text" [(ngModel)]="groupDataUpdate.title" />
+      <p *ngIf="validationObject.titleError" class="errorMessage">
+        {{ validationObject.titleError }}
+      </p>
     </div>
-    <p *ngIf="validationObject.contactError" class="errorMessage">
-      {{ validationObject.contactError }}
-    </p>
-  </div>
-  <div class="duration" *ngIf="this.login.getAccessToken?.role === 'admin'">
-    <p for="duration-edit">Dauer pro Termin (Minuten)</p>
-    <input
-      id="duration-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.duration"
-    />
-    <p *ngIf="validationObject.durationError" class="errorMessage">
-      {{ validationObject.durationError }}
-    </p>
-  </div>
-  <div class="dates">
-    <div class="componentListWrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Datum</th>
-            <th>Start Zeit</th>
-            <th>End Zeit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container
-            *ngFor="let currentDate of groupDataUpdate.dates; let i = index"
-          >
+    <div class="acronym">
+      <p for="acronym-edit">Kürzel</p>
+      <input
+        id="acronym-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.acronym"
+      />
+      <p *ngIf="validationObject.acronymError" class="errorMessage">
+        {{ validationObject.acronymError }}
+      </p>
+    </div>
+    <div class="description">
+      <p for="description-edit">Beschreibung</p>
+      <input
+        id="description-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.description"
+      />
+      <p *ngIf="validationObject.descriptionError" class="errorMessage">
+        {{ validationObject.descriptionError }}
+      </p>
+    </div>
+    <div class="number-of-dates">
+      <p for="number-of-dates-edit">Anzahl Termine</p>
+      <input
+        id="number-of-dates-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.numberOfDates"
+      />
+      <p *ngIf="validationObject.numberOfDatesError" class="errorMessage">
+        {{ validationObject.numberOfDatesError }}
+      </p>
+    </div>
+    <div class="contact">
+      <p for="contact-edit">Contact</p>
+      <div id="contact-edit">
+        <p for="contact-firstName-edit">Vorname</p>
+        <input
+          id="contact-firstName-edit"
+          type="text"
+          [(ngModel)]="groupDataUpdate.contact.firstName"
+        />
+        <p for="contact-lastName-edit">Nachname</p>
+        <input
+          id="contact-lastName-edit"
+          type="text"
+          [(ngModel)]="groupDataUpdate.contact.lastName"
+        />
+        <p for="contact-email-edit">E-Mail</p>
+        <input
+          id="contact-email-edit"
+          type="email"
+          [(ngModel)]="groupDataUpdate.contact.email"
+        />
+        <p for="contact-phone-edit">Telefon Nummer</p>
+        <input
+          id="contact-phone-edit"
+          type="tel"
+          [(ngModel)]="groupDataUpdate.contact.phone"
+        />
+      </div>
+      <p *ngIf="validationObject.contactError" class="errorMessage">
+        {{ validationObject.contactError }}
+      </p>
+    </div>
+    <div class="duration" *ngIf="this.login.getAccessToken?.role === 'admin'">
+      <p for="duration-edit">Dauer pro Termin (Minuten)</p>
+      <input
+        id="duration-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.duration"
+      />
+      <p *ngIf="validationObject.durationError" class="errorMessage">
+        {{ validationObject.durationError }}
+      </p>
+    </div>
+    <div class="dates">
+      <div class="componentListWrapper">
+        <table>
+          <thead>
             <tr>
-              <td>
-                <input
-                  type="date"
-                  [ngModel]="currentDate | date : 'yyyy-MM-dd'"
-                  (input)="onDateChange($event, i)"
-                />
-              </td>
-              <td>
-                <input
-                  type="time"
-                  [ngModel]="mappedDateTime[i][0]"
-                  (input)="onStartTimeChange($event, i)"
-                />
-              </td>
-              <td>
-                {{ mappedDateTime[i][1] }}
-              </td>
-              <button (click)="deleteDate(i)">-</button>
+              <th>Datum</th>
+              <th>Start Zeit</th>
+              <th>End Zeit</th>
             </tr>
-          </ng-container>
-        </tbody>
-      </table>
-      <button (click)="addDate()">Termin hinzufügen</button>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let currentDate of groupDataUpdate.dates; let i = index"
+            >
+              <tr>
+                <td>
+                  <input
+                    type="date"
+                    [ngModel]="currentDate | date : 'yyyy-MM-dd'"
+                    (input)="onDateChange($event, i)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="time"
+                    [ngModel]="mappedDateTime[i][0]"
+                    (input)="onStartTimeChange($event, i)"
+                  />
+                </td>
+                <td>
+                  {{ mappedDateTime[i][1] }}
+                </td>
+                <button (click)="deleteDate(i)">-</button>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <button (click)="addDate()">Termin hinzufügen</button>
+      </div>
+      <p *ngIf="validationObject.datesError" class="errorMessage">
+        {{ validationObject.datesError }}
+      </p>
     </div>
-    <p *ngIf="validationObject.datesError" class="errorMessage">
-      {{ validationObject.datesError }}
-    </p>
-  </div>
-  <div class="number-participants">
-    <p for="number-participants-edit">Anzahl Teilnehmer</p>
-    <input
-      id="number-participants-edit"
-      type="number"
-      [(ngModel)]="groupDataUpdate.numberParticipants"
-    />
-    <p *ngIf="validationObject.numberOfParticipantsError" class="errorMessage">
-      {{ validationObject.numberOfParticipantsError }}
-    </p>
-  </div>
-  <div class="location">
-    <p for="location-edit">Ort</p>
-    <app-multi-select-dropdown
-      id="location-edit"
-      [allowMultiple]="false"
-      [allOptions]="allLocationsCheck"
-      [selectedOptions]="selectedLocationsCheck"
-      [dropdownHeadline]="'Ort'"
-    ></app-multi-select-dropdown>
-    <p *ngIf="validationObject.locationError" class="errorMessage">
-      {{ validationObject.locationError }}
-    </p>
-  </div>
-  <div class="meeting-point">
-    <p for="meeting-point-edit">Treffpunkt</p>
-    <input
-      id="meeting-point-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.meetingPoint"
-    />
-    <p *ngIf="validationObject.meetingPointError" class="errorMessage">
-      {{ validationObject.meetingPointError }}
-    </p>
-  </div>
-  <div *ngIf="this.login.getAccessToken?.role === 'admin'">
-    <p for="trainer-price-per-hour-edit">Trainerpreis (Stunde)</p>
-    <input
-      id="trainer-price-per-hour-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.trainerPricePerHour"
-    />
-    <p *ngIf="validationObject.trainerPricePerHoursError" class="errorMessage">
-      {{ validationObject.trainerPricePerHoursError }}
-    </p>
-  </div>
-  <div>
-    <p for="price-per-participant-edit">Teilnehmerpreis</p>
-    <input
-      id="price-per-participant-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.pricePerParticipant"
-    />
-    <p *ngIf="validationObject.pricePerParticipantError" class="errorMessage">
-      {{ validationObject.pricePerParticipantError }}
-    </p>
-  </div>
-  <div
-    class="required-qualifications"
-    *ngIf="this.login.getAccessToken?.role === 'admin'"
-  >
-    <p for="required-qualifications-edit">Qualifikationen</p>
-    <app-multi-select-dropdown
-      id="required-qualifications-edit"
-      [allOptions]="allQualificationsCheck"
-      [selectedOptions]="selectedQualificationsCheck"
-      [dropdownHeadline]="'Qualifikationen'"
-      [allowMultiple]="true"
-      (changeEvent)="onQualificationSelectionChange($event)"
-    ></app-multi-select-dropdown>
-    <p *ngIf="validationObject.requiredQualificationError" class="errorMessage">
-      {{ validationObject.requiredQualificationError }}
-    </p>
-  </div>
-  <div
-    class="participantsPerTrainer"
-    *ngIf="this.login.getAccessToken?.role === 'admin'"
-  >
-    <p for="participantsPerTrainer-edit">Trainerschlüssel</p>
-    <input
-      id="participantsPerTrainer-edit"
-      type="text"
-      [(ngModel)]="groupDataUpdate.participantsPerTrainer"
-    />
-    <p
-      *ngIf="validationObject.participantsPerTrainerError"
-      class="errorMessage"
+    <div class="number-participants">
+      <p for="number-participants-edit">Anzahl Teilnehmer</p>
+      <input
+        id="number-participants-edit"
+        type="number"
+        [(ngModel)]="groupDataUpdate.numberParticipants"
+      />
+      <p
+        *ngIf="validationObject.numberOfParticipantsError"
+        class="errorMessage"
+      >
+        {{ validationObject.numberOfParticipantsError }}
+      </p>
+    </div>
+    <div class="location">
+      <p for="location-edit">Ort</p>
+      <app-multi-select-dropdown
+        id="location-edit"
+        [allowMultiple]="false"
+        [allOptions]="allLocationsCheck"
+        [selectedOptions]="selectedLocationsCheck"
+        [dropdownHeadline]="'Ort'"
+      ></app-multi-select-dropdown>
+      <p *ngIf="validationObject.locationError" class="errorMessage">
+        {{ validationObject.locationError }}
+      </p>
+    </div>
+    <div class="meeting-point">
+      <p for="meeting-point-edit">Treffpunkt</p>
+      <input
+        id="meeting-point-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.meetingPoint"
+      />
+      <p *ngIf="validationObject.meetingPointError" class="errorMessage">
+        {{ validationObject.meetingPointError }}
+      </p>
+    </div>
+    <div *ngIf="this.login.getAccessToken?.role === 'admin'">
+      <p for="trainer-price-per-hour-edit">Trainerpreis (Stunde)</p>
+      <input
+        id="trainer-price-per-hour-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.trainerPricePerHour"
+      />
+      <p
+        *ngIf="validationObject.trainerPricePerHoursError"
+        class="errorMessage"
+      >
+        {{ validationObject.trainerPricePerHoursError }}
+      </p>
+    </div>
+    <div>
+      <p for="price-per-participant-edit">Teilnehmerpreis</p>
+      <input
+        id="price-per-participant-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.pricePerParticipant"
+      />
+      <p *ngIf="validationObject.pricePerParticipantError" class="errorMessage">
+        {{ validationObject.pricePerParticipantError }}
+      </p>
+    </div>
+    <div
+      class="required-qualifications"
+      *ngIf="this.login.getAccessToken?.role === 'admin'"
     >
-      {{ validationObject.participantsPerTrainerError }}
-    </p>
-  </div>
-  <div class="trainers">
-    <p for="trainer-edit">Trainer</p>
-    <app-multi-select-dropdown
-      id="trainer-edit"
-      #trainer
-      [allOptions]="allTrainersCheck"
-      [selectedOptions]="selectedTrainersCheck"
-      [dropdownHeadline]="'Trainer'"
-      [allowMultiple]="true"
-      [allowedEntries]="
-        this.groupDataUpdate.numberParticipants /
-        this.groupDataUpdate.participantsPerTrainer
-      "
-    ></app-multi-select-dropdown>
-    <p *ngIf="validationObject.trainerError" class="errorMessage">
-      {{ validationObject.trainerError }}
-    </p>
+      <p for="required-qualifications-edit">Qualifikationen</p>
+      <app-multi-select-dropdown
+        id="required-qualifications-edit"
+        [allOptions]="allQualificationsCheck"
+        [selectedOptions]="selectedQualificationsCheck"
+        [dropdownHeadline]="'Qualifikationen'"
+        [allowMultiple]="true"
+        (changeEvent)="onQualificationSelectionChange($event)"
+      ></app-multi-select-dropdown>
+      <p
+        *ngIf="validationObject.requiredQualificationError"
+        class="errorMessage"
+      >
+        {{ validationObject.requiredQualificationError }}
+      </p>
+    </div>
+    <div
+      class="participantsPerTrainer"
+      *ngIf="this.login.getAccessToken?.role === 'admin'"
+    >
+      <p for="participantsPerTrainer-edit">Trainerschlüssel</p>
+      <input
+        id="participantsPerTrainer-edit"
+        type="text"
+        [(ngModel)]="groupDataUpdate.participantsPerTrainer"
+      />
+      <p
+        *ngIf="validationObject.participantsPerTrainerError"
+        class="errorMessage"
+      >
+        {{ validationObject.participantsPerTrainerError }}
+      </p>
+    </div>
+    <div class="trainers">
+      <p for="trainer-edit">Trainer</p>
+      <app-multi-select-dropdown
+        id="trainer-edit"
+        #trainer
+        [allOptions]="allTrainersCheck"
+        [selectedOptions]="selectedTrainersCheck"
+        [dropdownHeadline]="'Trainer'"
+        [allowMultiple]="true"
+        [allowedEntries]="
+          this.groupDataUpdate.numberParticipants /
+          this.groupDataUpdate.participantsPerTrainer
+        "
+      ></app-multi-select-dropdown>
+      <p *ngIf="validationObject.trainerError" class="errorMessage">
+        {{ validationObject.trainerError }}
+      </p>
+    </div>
   </div>
 </ng-template>

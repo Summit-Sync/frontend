@@ -36,21 +36,24 @@
       <p>Treffpunkt:</p>
       <p>{{ courseTemplate.meetingPoint }}</p>
     </div>
-    <div class="price">
-      <p>Preisliste:</p>
+    <div>
       <div>
-        <p *ngFor="let price of courseTemplate.price">
-          {{ price.name }}:{{ price.price }}
-        </p>
+        <p>Preise:</p>
+      </div>
+      <div class="priceWrapper">
+        <ng-container *ngFor="let price of courseTemplate.price; let i = index">
+          <div class="price">
+            <p>{{ price.name }}:</p>
+            <p>{{ price.price }}</p>
+          </div>
+        </ng-container>
       </div>
     </div>
     <div class="required-qualifications">
       <p>Benötigte Qualifikationen:</p>
-      <div>
-        <p *ngFor="let qualification of courseTemplate.requiredQualifications">
-          {{ qualification.name }}
-        </p>
-      </div>
+      <p *ngFor="let qualification of courseTemplate.requiredQualifications">
+        {{ qualification.name }}
+      </p>
     </div>
     <div class="number-of-trainers">
       <p>Anzahl Trainer:</p>

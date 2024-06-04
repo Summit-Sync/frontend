@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { GroupDTO } from '../../../models/group/Group';
 import { Observable, finalize, of } from 'rxjs';
 import { GroupService } from '../../../services/group/group.service';
@@ -9,11 +9,10 @@ import { GroupComponent } from '../group/group.component';
 import { ShortGroupListComponent } from '../../template/short-group-list/short-group-list.component';
 import { UpdateGroupDTO } from '../../../models/group/UpdateGroup';
 import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SearchPipe} from "@/app/pipes/search/search.pipe";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterOption } from '../../../models/enums/search';
-import {GroupViewComponent} from "@/app/components/final/group-view/group-view.component";
-
+import { SearchPipe } from '../../../pipes/search/search.pipe';
+import { GroupViewComponent } from '../group-view/group-view.component';
 
 @Component({
   selector: 'app-group-list',
@@ -22,7 +21,7 @@ import {GroupViewComponent} from "@/app/components/final/group-view/group-view.c
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.scss',
 })
-export class GroupListComponent implements OnInit{
+export class GroupListComponent implements OnInit {
   group$: Observable<GroupDTO[]>;
 
   //Für Searchpipe
@@ -91,30 +90,31 @@ export class GroupListComponent implements OnInit{
     let instance = dialogRef.componentInstance;
     instance.viewData = group;
 
-    dialogRef.afterClosed().subscribe((result) =>{
+    dialogRef.afterClosed().subscribe((result) => {
       const obj = JSON.parse(result);
-      if (obj.method == 'cancel'){
-
-      } else if (obj.method == 'delete'){
+      if (obj.method == 'cancel') {
+      } else if (obj.method == 'delete') {
         this.groupService.deleteGroup(obj.data.id).subscribe({
-          next:() =>{
-            this.toast.showSuccessToast("Gruppe löschen erfolgreich");
+          next: () => {
+            this.toast.showSuccessToast('Gruppe löschen erfolgreich');
             this.group$ = this.groupService.getAllGroups();
           },
-          error:() => {
-            this.toast.showErrorToast("Löschen der Gruppe fehlgeschlagen");
-          }
-        });
-      } else if (obj.method == 'cancel-group'){
-        this.groupService.putGroupCanceled(obj.data.id, !obj.data.canceled).subscribe({
-          next:() =>{
-            this.toast.showSuccessToast("Gruppe erfolgreich abgesagt");
-            this.group$ = this.groupService.getAllGroups();
+          error: () => {
+            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
           },
-          error:() =>{
-            this.toast.showErrorToast("Gruppe absagen fehlgeschlagen");
-          }
         });
+      } else if (obj.method == 'cancel-group') {
+        this.groupService
+          .putGroupCanceled(obj.data.id, !obj.data.canceled)
+          .subscribe({
+            next: () => {
+              this.toast.showSuccessToast('Gruppe erfolgreich abgesagt');
+              this.group$ = this.groupService.getAllGroups();
+            },
+            error: () => {
+              this.toast.showErrorToast('Gruppe absagen fehlgeschlagen');
+            },
+          });
       }
     });
   }
@@ -169,22 +169,24 @@ export class GroupListComponent implements OnInit{
             this.toast.showSuccessToast('Gruppe erfolgreich aktualisiert');
           },
           error: (err) => {
-            this.toast.showErrorToast('Aktualisierung der Gruppe fehlgeschlagen \n' + err);
+            this.toast.showErrorToast(
+              'Aktualisierung der Gruppe fehlgeschlagen \n' + err
+            );
           },
         });
       } else if (obj.method == 'delete') {
         console.log('Gruppe Löschen');
         this.groupService.deleteGroup(obj.data.id).subscribe({
-          next:() => {
+          next: () => {
             this.group$ = this.groupService.getAllGroups();
-            this.toast.showSuccessToast("Gruppe erfolgreich gelöscht");
+            this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
           },
           error: (err) => {
             this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
             console.error('Gruppe löschen' + err);
           },
         });
-      } else if (obj.method == 'cancel-group'){
+      } else if (obj.method == 'cancel-group') {
         this.cancelGroup(obj.data);
       }
     });
@@ -220,13 +222,13 @@ export class GroupListComponent implements OnInit{
   }
   cancelGroup(group: GroupDTO) {
     this.groupService.putGroupCanceled(group.id, !group.canceled).subscribe({
-      next:() =>{
+      next: () => {
         this.group$ = this.groupService.getAllGroups();
-        this.toast.showSuccessToast("Gruppe erfolgreich abgesagt");
-    },
-      error:() =>{
-        this.toast.showErrorToast("Gruppe absagen fehlgeschlagen");
-      }
+        this.toast.showSuccessToast('Gruppe erfolgreich abgesagt');
+      },
+      error: () => {
+        this.toast.showErrorToast('Gruppe absagen fehlgeschlagen');
+      },
     });
   }
 }
