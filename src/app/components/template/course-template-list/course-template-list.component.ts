@@ -9,7 +9,7 @@ import { PostCourseTemplateDTO } from '../../../models/courseTemplate/PostCourse
 import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
 import { tick } from '@angular/core/testing';
 import { PostCategoryPriceDTO } from '../../../models/price/PostCategoryPriceDTO';
-import { AddCourseTemplateComponent } from '../course-template/add-course-template/add-course-template.component';
+import { AddCourseTemplateComponent } from '../add-course-template/add-course-template.component';
 import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { ToastService } from '../../../services/toast/toast.service';
 import { finalize } from 'rxjs';
@@ -41,25 +41,27 @@ export class CourseTemplateListComponent {
       height: '40dvh',
       width: '30dvw',
       data: {
-        name: template.title
+        name: template.title,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method === 'confirm') {
+        this.courseTemplateService
+          .deleteCourseTemplate(template.id)
+          .pipe(finalize(() => this.updateList()))
+          .subscribe({
+            next: (response) => {
+              this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
+            },
+            error: (err) => {
+              this.toast.showErrorToast(
+                'Löschen der Vorlage fehlgeschlagen \n'
+              );
+            },
+          });
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      const obj=JSON.parse(result);
-      if(obj.method === 'confirm'){
-        this.courseTemplateService.deleteCourseTemplate(template.id).pipe(
-          finalize(()=>this.updateList())
-        )
-        .subscribe({
-          next: (response) => {
-            this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
-          },
-          error: (err) => {
-            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen \n");
-          }
-        });
-      }
-    }); 
   }
 
   editTemplate(template: CourseTemplateDTO) {
@@ -74,8 +76,8 @@ export class CourseTemplateListComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-        this.updateList();
+    dialogRef.afterClosed().subscribe((result) => {
+      this.updateList();
     });
   }
 

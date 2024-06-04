@@ -73,9 +73,11 @@
         <div *ngFor="let price of courseTemplate.price">
           <input type="text" [(ngModel)]="price.name" />
           <input type="number" [(ngModel)]="price.price" />
-          <button (click)="removePrice()">-</button>
+          <button class="deletePriceBtn" (click)="removePrice()">-</button>
         </div>
-        <button (click)="addPrice()">Preis hinzufügen</button>
+        <button class="addPriceBtn" (click)="addPrice()">
+          Preis hinzufügen
+        </button>
       </div>
       <p *ngIf="validationObject.priceError">
         {{ validationObject.priceError }}
@@ -130,7 +132,7 @@
       </p>
     </div>
   </div>
-  <div>
+  <div class="footer">
     <button class="save-button dialog-button" (click)="save()">
       Speichern
     </button>

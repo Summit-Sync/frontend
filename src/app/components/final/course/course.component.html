@@ -21,7 +21,7 @@
         {{ validationObject.descriptionError }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -88,7 +88,7 @@
         {{ validationObject.numberOfParticipantsError }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -165,7 +165,7 @@
         {{ validationObject.numberWaitlistError }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -229,12 +229,14 @@
         <p>Preise:</p>
       </div>
       <div class="priceWrapper">
-        <ng-container *ngFor="let price of courseData.prices; let i = index">
+        <div *ngFor="let price of courseData.prices; let i = index">
           <input type="text" [(ngModel)]="price.name" />
           <input type="number" [(ngModel)]="price.price" />
-          <button (click)="deletePrice(i)">-</button>
-        </ng-container>
-        <button (click)="addPrice()">Preis hinzufügen</button>
+          <button class="deletePriceBtn" (click)="deletePrice(i)">-</button>
+        </div>
+        <button class="addPriceBtn" (click)="addPrice()">
+          Preis hinzufügen
+        </button>
       </div>
       <p *ngIf="validationObject.pricesError" class="errorMessage">
         {{ validationObject.pricesError }}
@@ -302,7 +304,7 @@
       </p>
     </div>
   </div>
-  <div class="button-div">
+  <div class="footer">
     <button (click)="save()">Speichern</button>
     <button (click)="cancel()">Abbrechen</button>
     <button *ngIf="!isCreate" (click)="cancelCourse()">Kurs absagen</button>

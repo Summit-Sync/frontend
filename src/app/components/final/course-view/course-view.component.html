@@ -18,7 +18,7 @@
         {{ viewData.description }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -49,7 +49,7 @@
         {{ viewData.numberParticipants }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -89,7 +89,7 @@
         {{ viewData.numberWaitlist }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -199,7 +199,7 @@
       </p>
     </div>
   </div>
-  <div class="button-div">
+  <div class="footer">
     <button (click)="cancel()">schließen</button>
     <button (click)="deleteCourse()" *ngIf="isDelete">Löschen</button>
   </div>

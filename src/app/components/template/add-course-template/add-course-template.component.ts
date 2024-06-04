@@ -1,22 +1,22 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PostCourseTemplateDTO } from '../../../../models/courseTemplate/PostCourseTemplate';
-import { CheckboxList } from '../../../../models/interfaces/CheckBoxList';
-import { CategoryPriceDTO } from '../../../../models/price/CategoryPriceDTO';
-import { QualificationDTO } from '../../../../models/qualification/QualificationDTO';
-import { LocationService } from '../../../../services/location/location.service';
-import { CategoryPriceService } from '../../../../services/price/price.service';
-import { QualificationsService } from '../../../../services/qualifications/qualifications.service';
+import { PostCourseTemplateDTO } from '../../../models/courseTemplate/PostCourseTemplate';
+import { CheckboxList } from '../../../models/interfaces/CheckBoxList';
+import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
+import { QualificationDTO } from '../../../models/qualification/QualificationDTO';
+import { LocationService } from '../../../services/location/location.service';
+import { CategoryPriceService } from '../../../services/price/price.service';
+import { QualificationsService } from '../../../services/qualifications/qualifications.service';
 import { CommonModule } from '@angular/common';
-import { MultiSelectDropdownComponent } from '../../../utilities/multi-select-dropdown/multi-select-dropdown.component';
+import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
 import { FormsModule } from '@angular/forms';
-import { CourseTemplateDTO } from '../../../../models/courseTemplate/CourseTemplate';
-import { PostCategoryPriceDTO } from '../../../../models/price/PostCategoryPriceDTO';
-import { LocationDTO } from '../../../../models/location/LocationDTO';
-import { PostCourseTemplateValidatorService } from '../../../../services/validation/course-template/post-course-template/post-course-template-validator.service';
-import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
-import { CoursetemplateService } from '../../../../services/coursetemplate/coursetemplate.service';
-import { CourseTemplateValidation } from '../../../../models/validation/coursetemplatevalidation';
+import { CourseTemplateDTO } from '../../../models/courseTemplate/CourseTemplate';
+import { PostCategoryPriceDTO } from '../../../models/price/PostCategoryPriceDTO';
+import { LocationDTO } from '../../../models/location/LocationDTO';
+import { PostCourseTemplateValidatorService } from '../../../services/validation/course-template/post-course-template/post-course-template-validator.service';
+import { CheckboxListMapperService } from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
+import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
+import { CourseTemplateValidation } from '../../../models/validation/coursetemplatevalidation';
 
 @Component({
   selector: 'app-add-course-template',
@@ -42,21 +42,21 @@ export class AddCourseTemplateComponent {
 
   defaultPriceListLength = 3;
 
-  validationObject: CourseTemplateValidation={
-    valid:true,
-    titleError:'',
-    acronymError:'',
-    descriptionError:'',
-    numberOfDatesError:'',
-    durationError:'',
-    numberOfParticipantsError:'',
-    numberWaitlistError:'',
-    priceError:'',
-    meetingPointError:'',
-    requiredQualificationError:'',
-    numberTrainersError:'',
-    locationError:''
-  }
+  validationObject: CourseTemplateValidation = {
+    valid: true,
+    titleError: '',
+    acronymError: '',
+    descriptionError: '',
+    numberOfDatesError: '',
+    durationError: '',
+    numberOfParticipantsError: '',
+    numberWaitlistError: '',
+    priceError: '',
+    meetingPointError: '',
+    requiredQualificationError: '',
+    numberTrainersError: '',
+    locationError: '',
+  };
 
   constructor(
     private dialogRef: MatDialogRef<AddCourseTemplateComponent>,
@@ -137,27 +137,33 @@ export class AddCourseTemplateComponent {
     this.courseTemplate.requiredQualifications = qualificationIds;
     this.courseTemplate.location = location;
     console.log(this.courseTemplate);
-    this.validationObject=this.postCourseTemplateValidator.validate(this.courseTemplate);
+    this.validationObject = this.postCourseTemplateValidator.validate(
+      this.courseTemplate
+    );
     if (this.validationObject.valid) {
-      if(this.isEdit){
-        this.courseTemplateService.putCourseTemplate(this.courseTemplate,this.templateId).subscribe({
-          next: (response) => console.log('Template has been created'),
-          error: (error) => {
-            console.error('Template could not be created');
-            this.dialogRef.close();
-          },
-        })
-      }else{
-        this.courseTemplateService.postCourseTemplate(this.courseTemplate).subscribe({
-          next: (response) =>{
-            console.log('Template has been created');
-            this.dialogRef.close();
-          },
-          error: (error) => {
-            console.error('Template could not be created');
-            this.dialogRef.close();
-          },
-        })
+      if (this.isEdit) {
+        this.courseTemplateService
+          .putCourseTemplate(this.courseTemplate, this.templateId)
+          .subscribe({
+            next: (response) => console.log('Template has been created'),
+            error: (error) => {
+              console.error('Template could not be created');
+              this.dialogRef.close();
+            },
+          });
+      } else {
+        this.courseTemplateService
+          .postCourseTemplate(this.courseTemplate)
+          .subscribe({
+            next: (response) => {
+              console.log('Template has been created');
+              this.dialogRef.close();
+            },
+            error: (error) => {
+              console.error('Template could not be created');
+              this.dialogRef.close();
+            },
+          });
       }
     } else {
       console.log('The given template is not valid');
