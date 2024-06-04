@@ -29,7 +29,7 @@
       <p>Anzahl Termine</p>
       <input
         id="number-of-dates"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataCreate.numberOfDates"
       />
       <p *ngIf="validationObject.numberOfDatesError" class="errorMessage">
@@ -78,7 +78,11 @@
     </div>
     <div class="duration">
       <p for="duration">Dauer pro Termin (Minuten)</p>
-      <input id="duration" type="text" [(ngModel)]="groupDataCreate.duration" />
+      <input
+        id="duration"
+        type="number"
+        [(ngModel)]="groupDataCreate.duration"
+      />
       <p *ngIf="validationObject.durationError" class="errorMessage">
         {{ validationObject.durationError }}
       </p>
@@ -174,7 +178,7 @@
       <p for="trainer-price-per-hour">Trainerpreis (Stunde)</p>
       <input
         id="trainer-price-per-hour"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataCreate.trainerPricePerHour"
       />
       <p
@@ -300,7 +304,7 @@
       <p for="number-of-dates-edit">Anzahl Termine</p>
       <input
         id="number-of-dates-edit"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataUpdate.numberOfDates"
       />
       <p *ngIf="validationObject.numberOfDatesError" class="errorMessage">
@@ -343,7 +347,7 @@
       <p for="duration-edit">Dauer pro Termin (Minuten)</p>
       <input
         id="duration-edit"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataUpdate.duration"
       />
       <p *ngIf="validationObject.durationError" class="errorMessage">

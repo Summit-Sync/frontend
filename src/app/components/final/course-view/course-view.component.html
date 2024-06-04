@@ -182,15 +182,26 @@
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
-      <ng-container *ngFor="let q of viewData.requiredQualifications">
-        <li>{{ q.name }}</li>
-      </ng-container>
+
+      <p *ngFor="let q of viewData.requiredQualifications; let i = index">
+        {{
+          q.name +
+            (i + 1 != viewData.requiredQualifications.length ? ", " : " ")
+        }}
+        &nbsp;
+      </p>
     </div>
     <div>
       <p>Trainer:</p>
-      <ng-container *ngFor="let t of viewData.trainers">
-        <li>{{ t.firstName + " " + t.lastName }}</li>
-      </ng-container>
+      <p *ngFor="let t of viewData.trainers; let i = index">
+        {{
+          t.firstName +
+            " " +
+            t.lastName +
+            (i + 1 != viewData.requiredQualifications.length ? ", " : " ")
+        }}
+        &nbsp;
+      </p>
     </div>
     <div>
       <p>Notizen:</p>

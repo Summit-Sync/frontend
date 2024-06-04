@@ -88,23 +88,23 @@ export class CourseListComponent implements OnInit {
       height: '40dvh',
       width: '30dvw',
       data: {
-        name: course.title
-      }
+        name: course.title,
+      },
     });
-    dialogRef.afterClosed().subscribe(result => {
-      const obj=JSON.parse(result);
-      if(obj.method === 'confirm'){
-        this.courseService.deleteCourse(course.id).pipe(
-          finalize(()=>this.updateList())
-        )
-        .subscribe({
-          next: (response) => {
-            this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
-          },
-          error: (err) => {
-            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen");
-          }
-        });
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method === 'confirm') {
+        this.courseService
+          .deleteCourse(course.id)
+          .pipe(finalize(() => this.updateList()))
+          .subscribe({
+            next: (response) => {
+              this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
+            },
+            error: (err) => {
+              this.toast.showErrorToast('Löschen der Vorlage fehlgeschlagen');
+            },
+          });
       }
     });
   }
@@ -136,7 +136,7 @@ export class CourseListComponent implements OnInit {
       disableClose: false,
       autoFocus: true,
       height: '90dvh',
-      width: '70dvw',
+      width: '1075px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -192,13 +192,12 @@ export class CourseListComponent implements OnInit {
 
   cancelCourse(course: CourseDTO) {
     this.courseService.putCourseCancel(course.id, !course.canceled).subscribe({
-      next:()=>{
-        this.toast.showSuccessToast("Kurs erfolgreich abgesagt");
+      next: () => {
+        this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
       },
-      error:()=>{
-        this.toast.showErrorToast("Kurs absagen fehlgeschlagen");
-      }
+      error: () => {
+        this.toast.showErrorToast('Kurs absagen fehlgeschlagen');
+      },
     });
-
   }
 }

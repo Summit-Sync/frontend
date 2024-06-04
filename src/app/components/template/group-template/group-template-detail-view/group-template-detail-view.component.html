@@ -44,8 +44,19 @@
     </div>
     <div class="required-qualification">
       <p>Qualifikationen:</p>
-      <p *ngFor="let q of selectedTemplate.requiredQualificationList">
-        {{ q.name }}
+      <p
+        *ngFor="
+          let q of selectedTemplate.requiredQualificationList;
+          let i = index
+        "
+      >
+        {{
+          q.name +
+            (i + 1 != selectedTemplate.requiredQualificationList.length
+              ? ", "
+              : " ")
+        }}
+        &nbsp;
       </p>
     </div>
   </div>

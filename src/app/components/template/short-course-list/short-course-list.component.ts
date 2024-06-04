@@ -30,8 +30,8 @@ export class ShortCourseListComponent implements OnInit {
     let courseDialogRef = this.dialog.open(CourseComponent, {
       disableClose: true,
       autoFocus: true,
-      height: '80dvh',
-      width: '60dvw',
+      height: '90dvh',
+      width: '70dvw',
     });
 
     console.log('open');
@@ -39,9 +39,11 @@ export class ShortCourseListComponent implements OnInit {
     let instance = courseDialogRef.componentInstance;
     instance.isCreate = true;
     instance.courseTemplate = courseTemplate;
-    courseDialogRef.afterClosed().subscribe(() => this.selfDialogRef.close(
-      JSON.stringify({ method: 'created' })
-    ));
+    courseDialogRef
+      .afterClosed()
+      .subscribe(() =>
+        this.selfDialogRef.close(JSON.stringify({ method: 'created' }))
+      );
   }
 
   //         qualificationService.getAllQualifications().subscribe(data=>this.qualificationList=data);

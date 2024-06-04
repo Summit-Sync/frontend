@@ -29,7 +29,7 @@
       <p>Anzahl Termine:</p>
       <input
         id="number-of-dates"
-        type="text"
+        type="number"
         [(ngModel)]="courseTemplate.numberOfDates"
       />
       <p *ngIf="validationObject.numberOfDatesError">
@@ -38,7 +38,11 @@
     </div>
     <div class="duration">
       <p>Dauer pro Termin (Minuten):</p>
-      <input id="duration" type="text" [(ngModel)]="courseTemplate.duration" />
+      <input
+        id="duration"
+        type="number"
+        [(ngModel)]="courseTemplate.duration"
+      />
       <p *ngIf="validationObject.durationError">
         {{ validationObject.durationError }}
       </p>
@@ -47,7 +51,7 @@
       <p>Max. Teilnehmeranzahl:</p>
       <input
         id="number-of-participants"
-        type="text"
+        type="number"
         [(ngModel)]="courseTemplate.numberParticipants"
       />
       <p *ngIf="validationObject.numberOfParticipantsError">
@@ -58,7 +62,7 @@
       <p>Max. Wartelistenlänge:</p>
       <input
         id="number-waitlist"
-        type="text"
+        type="number"
         [(ngModel)]="courseTemplate.numberWaitlist"
       />
       <p *ngIf="validationObject.numberWaitlistError">
@@ -124,7 +128,7 @@
       <p>Benötigte Trainer:</p>
       <input
         id="number-trainers"
-        type="text"
+        type="number"
         [(ngModel)]="courseTemplate.numberTrainers"
       />
       <p *ngIf="validationObject.numberTrainersError">
