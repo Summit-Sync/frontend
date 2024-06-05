@@ -35,7 +35,7 @@
     <table>
       <thead>
       <tr>
-        <th>Gruppenkürzel</th>
+        <th>Gruppen Nr.</th>
         <!--
         <th>Termin 1.</th>
         <th>Termin 2.</th>
@@ -53,7 +53,7 @@
       <tbody>
       <ng-container *ngFor="let g of group$ | async">
         <tr *ngIf="g | search: displayOption : searchText : searchDate : searchEndDate">
-          <td>{{ g.acronym }}</td>
+          <td>{{ g.acronym + g.groupNumber }}</td>
           <!--
         <td>{{ g.dates[1] || "-" }}</td>
         <td>{{ g.dates[2] || "-" }}</td>

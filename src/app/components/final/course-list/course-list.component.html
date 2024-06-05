@@ -38,7 +38,7 @@
     <table>
       <thead>
         <tr>
-          <th>Nr</th>
+          <th>Kurs Nr.</th>
           <th>Termin 1.</th>
           <th>Termin 2.</th>
           <th>Termine insgesamt</th>
@@ -63,7 +63,7 @@
             "
           >
             <!-- <tr> -->
-            <td>{{ c.courseNumber }}</td>
+            <td>{{ c.acronym + c.courseNumber }}</td>
             <td>
               {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
             </td>
@@ -77,7 +77,7 @@
                 {{ trainer.lastName }}
               </span>
             </td>
-            <td>{{ c.participants.length + "/" + c.numberParticipants }}</td>
+            <td>{{ c.participants.length + "/" + c.numberParticipants + " + (" + c.waitList.length + "/" + c.numberWaitlist + ")" }}</td>
             <td>
               <button (click)="showDetails(c)">Bewerben</button>
             </td>

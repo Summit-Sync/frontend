@@ -380,18 +380,21 @@ export class GroupComponent implements OnInit {
   }
 
   addDate() {
-    if (this.isCreate) {
+    if (this.isCreate && this.groupDataCreate.dates.length < this.groupDataCreate.numberOfDates) {
       this.dateTimeMapper.addDate(
         this.groupDataCreate.duration,
         this.groupDataCreate.dates,
         this.mappedDateTime
       );
-    } else {
+    } else if (!this.isCreate){
       this.dateTimeMapper.addDate(
         this.groupDataUpdate.duration,
         this.groupDataUpdate.dates,
         this.mappedDateTime
       );
+    } else {
+      this.toast.showInfoToast("Maximale Terminanzahl erreicht.");
+      return;
     }
   }
 

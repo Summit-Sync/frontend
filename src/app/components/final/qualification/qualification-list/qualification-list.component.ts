@@ -95,9 +95,9 @@ export class QualificationListComponent implements OnInit {
       const obj = JSON.parse(result);
       if (obj.method == 'confirm') {
         console.log('Dialog output: ', obj.data);
-        for (let id of obj.data) {
+        for (let trainer of obj.data) {
           this.trainerService
-            .postQualificationOfTrainerById(id, quali.id)
+            .postQualificationOfTrainerById(trainer.id, quali.id)
             .subscribe({
               next: () => {
                 this.toast.showSuccessToast('Massenpflege erfolgreich');
