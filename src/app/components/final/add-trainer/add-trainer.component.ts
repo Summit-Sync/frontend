@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {
   MatDialogActions,
   MatDialogContent,
@@ -42,6 +42,7 @@ import { TrainerValidation } from '../../../models/validation/trainervalidation'
   styleUrl: './add-trainer.component.css',
 })
 export class AddTrainerComponent implements OnInit {
+  @ViewChild('qualification') multiDropDown: MultiSelectDropdownComponent;
   @Output() close = new EventEmitter();
   @Input() isEdit: boolean = false;
   @Input() trainerData: TrainerDTO;
@@ -103,19 +104,17 @@ export class AddTrainerComponent implements OnInit {
   }
 
   saveUpdate(): void {
-    console.log(this.allQualification);
-    console.log(this.trainerData.qualifications);
-    console.log('updated: ', this.trainerData);
     this.trainerData.qualifications = [];
     this.trainerData.qualifications =
       this.checkBoxMapper.mapCheckboxListToQualificationList(
-        this.selectedQualification
+        this.multiDropDown.selectedOptions
       );
     this.validationObject = this.trainerValidator.validate(this.trainerData);
     if (this.validationObject.valid) {
       this.dialogRef.close(
         JSON.stringify({ method: 'confirm', data: this.trainerData })
       );
+      console.log('updated: ', this.trainerData);
     }
   }
 
