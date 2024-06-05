@@ -40,7 +40,7 @@ export class ShortGroupListComponent implements OnInit {
       disableClose: true,
       autoFocus: true,
       height: '80dvh',
-      width: '65dvw',
+      width: '40dvw',
     });
     let instance = dialogRef.componentInstance;
     instance.template = template;

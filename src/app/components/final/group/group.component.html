@@ -1,5 +1,5 @@
 <div class="outer">
-  <div class="body" *ngIf="this.isCreate else editMode">
+  <div class="body" *ngIf="this.isCreate; else editMode">
     <div>
       <p>Titel</p>
       <input id="title" type="text" [(ngModel)]="groupDataCreate.title" />
@@ -272,7 +272,6 @@
 <ng-template #editMode>
   <div class="body">
     <div class="title">
-
       <input id="title-edit" type="text" [(ngModel)]="groupDataUpdate.title" />
       <p *ngIf="validationObject.titleError" class="errorMessage">
         {{ validationObject.titleError }}
@@ -311,33 +310,41 @@
         {{ validationObject.numberOfDatesError }}
       </p>
     </div>
-    <div class="contact">
-      <p>Contact</p>
-      <div id="contact-edit">
-        <p>Vorname</p>
-        <input
-          id="contact-firstName-edit"
-          type="text"
-          [(ngModel)]="groupDataUpdate.contact.firstName"
-        />
-        <p>Nachname</p>
-        <input
-          id="contact-lastName-edit"
-          type="text"
-          [(ngModel)]="groupDataUpdate.contact.lastName"
-        />
-        <p>E-Mail</p>
-        <input
-          id="contact-email-edit"
-          type="email"
-          [(ngModel)]="groupDataUpdate.contact.email"
-        />
-        <p>Telefon Nummer</p>
-        <input
-          id="contact-phone-edit"
-          type="tel"
-          [(ngModel)]="groupDataUpdate.contact.phone"
-        />
+    <div class="contactWrapper">
+      <h1>Kontakt</h1>
+      <div id="contact">
+        <div>
+          <p>Vorname</p>
+          <input
+            id="contact-firstName"
+            type="text"
+            [(ngModel)]="groupDataCreate.contact.firstName"
+          />
+        </div>
+        <div>
+          <p>Nachname</p>
+          <input
+            id="contact-lastName"
+            type="text"
+            [(ngModel)]="groupDataCreate.contact.lastName"
+          />
+        </div>
+        <div>
+          <p>E-Mail</p>
+          <input
+            id="contact-email"
+            type="email"
+            [(ngModel)]="groupDataCreate.contact.email"
+          />
+        </div>
+        <div>
+          <p>Telefon Nummer</p>
+          <input
+            id="contact-phone"
+            type="tel"
+            [(ngModel)]="groupDataCreate.contact.phone"
+          />
+        </div>
       </div>
       <p *ngIf="validationObject.contactError" class="errorMessage">
         {{ validationObject.contactError }}
@@ -362,6 +369,7 @@
               <th>Datum</th>
               <th>Start Zeit</th>
               <th>End Zeit</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

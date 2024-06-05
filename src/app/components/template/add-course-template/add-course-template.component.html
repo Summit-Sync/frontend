@@ -3,14 +3,14 @@
     <div>
       <p>Titel:</p>
       <input type="text" [(ngModel)]="courseTemplate.title" />
-      <p *ngIf="validationObject.titleError">
+      <p *ngIf="validationObject.titleError" class="errorMessage">
         {{ validationObject.titleError }}
       </p>
     </div>
     <div>
       <p>Kürzel:</p>
       <input type="text" [(ngModel)]="courseTemplate.acronym" />
-      <p *ngIf="validationObject.acronymError">
+      <p *ngIf="validationObject.acronymError" class="errorMessage">
         {{ validationObject.acronymError }}
       </p>
     </div>
@@ -21,7 +21,7 @@
         type="text"
         [(ngModel)]="courseTemplate.description"
       />
-      <p *ngIf="validationObject.descriptionError">
+      <p *ngIf="validationObject.descriptionError" class="errorMessage">
         {{ validationObject.descriptionError }}
       </p>
     </div>
@@ -32,7 +32,7 @@
         type="number"
         [(ngModel)]="courseTemplate.numberOfDates"
       />
-      <p *ngIf="validationObject.numberOfDatesError">
+      <p *ngIf="validationObject.numberOfDatesError" class="errorMessage">
         {{ validationObject.numberOfDatesError }}
       </p>
     </div>
@@ -43,7 +43,7 @@
         type="number"
         [(ngModel)]="courseTemplate.duration"
       />
-      <p *ngIf="validationObject.durationError">
+      <p *ngIf="validationObject.durationError" class="errorMessage">
         {{ validationObject.durationError }}
       </p>
     </div>
@@ -54,7 +54,10 @@
         type="number"
         [(ngModel)]="courseTemplate.numberParticipants"
       />
-      <p *ngIf="validationObject.numberOfParticipantsError">
+      <p
+        *ngIf="validationObject.numberOfParticipantsError"
+        class="errorMessage"
+      >
         {{ validationObject.numberOfParticipantsError }}
       </p>
     </div>
@@ -65,7 +68,7 @@
         type="number"
         [(ngModel)]="courseTemplate.numberWaitlist"
       />
-      <p *ngIf="validationObject.numberWaitlistError">
+      <p *ngIf="validationObject.numberWaitlistError" class="errorMessage">
         {{ validationObject.numberWaitlistError }}
       </p>
     </div>
@@ -74,16 +77,16 @@
         <p>Preise:</p>
       </div>
       <div class="priceWrapper">
-        <div *ngFor="let price of courseTemplate.price">
+        <div *ngFor="let price of courseTemplate.price; let i = index">
           <input type="text" [(ngModel)]="price.name" />
           <input type="number" [(ngModel)]="price.price" />
-          <button class="deletePriceBtn" (click)="removePrice()">-</button>
+          <button class="deletePriceBtn" (click)="deletePrice(i)">-</button>
         </div>
         <button class="addPriceBtn" (click)="addPrice()">
           Preis hinzufügen
         </button>
       </div>
-      <p *ngIf="validationObject.priceError">
+      <p *ngIf="validationObject.priceError" class="errorMessage">
         {{ validationObject.priceError }}
       </p>
     </div>
@@ -96,7 +99,7 @@
         [selectedOptions]="courseLocation"
         [dropdownHeadline]="'Ort'"
       ></app-multi-select-dropdown>
-      <p *ngIf="validationObject.locationError">
+      <p *ngIf="validationObject.locationError" class="errorMessage">
         {{ validationObject.locationError }}
       </p>
     </div>
@@ -107,7 +110,7 @@
         type="text"
         [(ngModel)]="courseTemplate.meetingPoint"
       />
-      <p *ngIf="validationObject.meetingPointError">
+      <p *ngIf="validationObject.meetingPointError" class="errorMessage">
         {{ validationObject.meetingPointError }}
       </p>
     </div>
@@ -120,7 +123,10 @@
         [dropdownHeadline]="'Qualifikationen'"
         [allowMultiple]="true"
       ></app-multi-select-dropdown>
-      <p *ngIf="validationObject.requiredQualificationError">
+      <p
+        *ngIf="validationObject.requiredQualificationError"
+        class="errorMessage"
+      >
         {{ validationObject.requiredQualificationError }}
       </p>
     </div>
@@ -131,7 +137,7 @@
         type="number"
         [(ngModel)]="courseTemplate.numberTrainers"
       />
-      <p *ngIf="validationObject.numberTrainersError">
+      <p *ngIf="validationObject.numberTrainersError" class="errorMessage">
         {{ validationObject.numberTrainersError }}
       </p>
     </div>
