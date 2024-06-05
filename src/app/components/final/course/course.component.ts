@@ -248,19 +248,24 @@ export class CourseComponent implements OnInit {
 
   addDate() {
     const datesLength = this.courseData.dates.length;
-    this.mappedDateTime[datesLength] = [];
-    this.mappedDateTime[datesLength].push(
-      '12:00',
-      this.dateTimeMapper.mapDateToEndTimeString(
-        12,
-        0,
-        this.courseData.duration
-      )
-    );
-    const addedDate = new Date();
-    addedDate.setHours(12);
-    addedDate.setMinutes(0);
-    this.courseData.dates.push(addedDate);
+    if (this.isCreate && datesLength >= this.courseTemplate!.numberOfDates){
+      this.toast.showInfoToast("Maximale Terminanzahl erreicht.");
+      return;
+    } else {
+      this.mappedDateTime[datesLength] = [];
+      this.mappedDateTime[datesLength].push(
+        '12:00',
+        this.dateTimeMapper.mapDateToEndTimeString(
+          12,
+          0,
+          this.courseData.duration
+        )
+      );
+      const addedDate = new Date();
+      addedDate.setHours(12);
+      addedDate.setMinutes(0);
+      this.courseData.dates.push(addedDate);
+    }
   }
 
   deleteDate(index: number): void {
