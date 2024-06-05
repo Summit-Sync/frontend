@@ -255,6 +255,7 @@
     </div>
     -->
   </div>
+
   <div class="footer">
     <button class="save-button dialog-button" (click)="save()">
       Speichern
@@ -268,7 +269,6 @@
     -->
   </div>
 </div>
-
 <ng-template #editMode>
   <div class="body">
     <div class="title">
@@ -515,5 +515,17 @@
         {{ validationObject.trainerError }}
       </p>
     </div>
+  </div>
+  <div class="footer">
+    <button class="save-button dialog-button" (click)="save()">
+      Speichern
+    </button>
+    <button class="dialog button" (click)="cancel()">Abbrechen</button>
+    <button *ngIf="!this.isCreate" (click)="cancelGroup()">
+      Gruppe absagen
+    </button>
+    <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
+    <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
+    -->
   </div>
 </ng-template>

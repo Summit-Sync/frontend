@@ -1,18 +1,18 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { GroupDTO } from '../../../models/group/Group';
-import { Observable, finalize, of } from 'rxjs';
-import { GroupService } from '../../../services/group/group.service';
-import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { ToastService } from '../../../services/toast/toast.service';
-import { GroupComponent } from '../group/group.component';
-import { ShortGroupListComponent } from '../../template/short-group-list/short-group-list.component';
-import { UpdateGroupDTO } from '../../../models/group/UpdateGroup';
-import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FilterOption } from '../../../models/enums/search';
-import { SearchPipe } from '../../../pipes/search/search.pipe';
-import { GroupViewComponent } from '../group-view/group-view.component';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {GroupDTO} from '../../../models/group/Group';
+import {finalize, Observable} from 'rxjs';
+import {GroupService} from '../../../services/group/group.service';
+import {CommonModule} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import {ToastService} from '../../../services/toast/toast.service';
+import {GroupComponent} from '../group/group.component';
+import {ShortGroupListComponent} from '../../template/short-group-list/short-group-list.component';
+import {UpdateGroupDTO} from '../../../models/group/UpdateGroup';
+import {ConfirmationDialogComponent} from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FilterOption} from '../../../models/enums/search';
+import {SearchPipe} from '../../../pipes/search/search.pipe';
+import {GroupViewComponent} from '../group-view/group-view.component';
 
 @Component({
   selector: 'app-group-list',
@@ -33,6 +33,7 @@ export class GroupListComponent implements OnInit {
   displayOption: FilterOption = FilterOption.None;
   filterOptions: FilterOption[] = [
     FilterOption.None,
+    FilterOption.GroupCanceled,
     FilterOption.GroupAcronym,
     FilterOption.FreeTrainerSpots,
     FilterOption.StartDate,
@@ -70,13 +71,16 @@ export class GroupListComponent implements OnInit {
 
   createNewGroupFromTemplate(): void {
     const templateDialogRef = this.dialog.open(ShortGroupListComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '80dvh',
       width: '40dvw',
     });
     templateDialogRef.afterClosed().subscribe((result) => {
-      this.group$ = this.groupService.getAllGroups();
+      const obj = JSON.parse(result);
+      if (obj.method == 'created') {
+        this.group$ = this.groupService.getAllGroups();
+      }
     });
   }
 

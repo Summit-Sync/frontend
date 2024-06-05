@@ -1,17 +1,17 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { CourseService } from '../../../services/course/course.service';
-import { CourseDTO } from '../../../models/course/Course';
-import { CommonModule } from '@angular/common';
-import { CourseComponent } from '../course/course.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ShortCourseListComponent } from '../../template/short-course-list/short-course-list.component';
-import { FilterOption } from '../../../models/enums/search';
-import { SearchPipe } from '../../../pipes/search/search.pipe';
-import { FormsModule } from '@angular/forms';
-import { CourseViewComponent } from '../course-view/course-view.component';
-import { ToastService } from '../../../services/toast/toast.service';
-import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-import { finalize } from 'rxjs';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {CourseService} from '../../../services/course/course.service';
+import {CourseDTO} from '../../../models/course/Course';
+import {CommonModule} from '@angular/common';
+import {CourseComponent} from '../course/course.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ShortCourseListComponent} from '../../template/short-course-list/short-course-list.component';
+import {FilterOption} from '../../../models/enums/search';
+import {SearchPipe} from '../../../pipes/search/search.pipe';
+import {FormsModule} from '@angular/forms';
+import {CourseViewComponent} from '../course-view/course-view.component';
+import {ToastService} from '../../../services/toast/toast.service';
+import {ConfirmationDialogComponent} from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-course-list',
@@ -32,6 +32,9 @@ export class CourseListComponent implements OnInit {
   displayOption: FilterOption = FilterOption.None;
   filterOptions: FilterOption[] = [
     FilterOption.None,
+    FilterOption.CourseCanceled,
+    FilterOption.CourseFinished,
+    FilterOption.CourseVisible,
     FilterOption.CourseAcronym,
     FilterOption.FreeTrainerSpots,
     FilterOption.FreeParticipantSpots,
@@ -184,6 +187,7 @@ export class CourseListComponent implements OnInit {
     this.courseService.putCourseCancel(course.id, !course.canceled).subscribe({
       next: () => {
         this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
+        this.updateList();
       },
       error: () => {
         this.toast.showErrorToast('Kurs absagen fehlgeschlagen');
