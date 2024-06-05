@@ -126,8 +126,7 @@ export class CourseListComponent implements OnInit {
 
   showEditCourse(course: CourseDTO) {
     console.log('showEdit', course);
-    //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
-    //this.courseService.updateCourseDetails(course);
+    this.courseService.updateCurrentCourse(course);
     const dialogRef = this.dialog.open(CourseComponent, {
       disableClose: true,
       autoFocus: true,
@@ -148,7 +147,7 @@ export class CourseListComponent implements OnInit {
   }
 
   showCourseView(course: CourseDTO) {
-    this.courseService.updateCourseDetails(course);
+    this.courseService.updateCurrentCourse(course);
     const dialogRef = this.dialog.open(CourseViewComponent, {
       disableClose: false,
       autoFocus: true,

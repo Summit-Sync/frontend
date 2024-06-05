@@ -83,7 +83,7 @@ export class CourseService {
     return this.http.delete<CourseDTO>(apiUrl);
   }
 
-  updateCourseDetails(course: CourseDTO) {
+  updateCurrentCourse(course: CourseDTO) {
     this.currentCourse.next(course);
   }
 }
