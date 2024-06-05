@@ -1,24 +1,28 @@
-<table>
-  <thead>
-  <tr>
-    <th>Gruppenkürzel</th>
-    <th>Anzahl Termine</th>
-    <th>Trainer Qualifikationen</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let template of groupTemplate$ | async">
-    <tr class="shortListContent" (dblclick)="save(template)">
-      <td>{{ template.acronym }}</td>
-      <td>{{ template.numberOfDates }}</td>
-      <td>
-        <p *ngFor="let qualification of template.requiredQualificationList">
-          {{ qualification.name }}
-        </p>
-      </td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
+<div class="shortListWrapper">
+  <h1>Kursvorlagen Liste</h1>
 
-<button (click)="close()">Abbrechen</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Gruppenkürzel</th>
+        <th>Anzahl Termine</th>
+        <th>Trainer Qualifikationen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let template of groupTemplate$ | async">
+        <tr class="shortListContent" (dblclick)="save(template)">
+          <td>{{ template.acronym }}</td>
+          <td>{{ template.numberOfDates }}</td>
+          <td>
+            <p *ngFor="let qualification of template.requiredQualificationList">
+              {{ qualification.name }}
+            </p>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <button (click)="close()">Abbrechen</button>
+</div>
