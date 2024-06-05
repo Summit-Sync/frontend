@@ -5,7 +5,11 @@
       (click)="dropDownClick()"
       tabindex="0"
       (keydown.space)="dropDownClick()"
-      >{{ dropdownHeadline }}</span
+      >{{
+        !allowMultiple && selectedOptions.length
+          ? selectedOptions[0].displayFullName
+          : dropdownHeadline
+      }}</span
     >
     <ul class="items" [ngClass]="{ showTrainerList: showList }">
       <li
