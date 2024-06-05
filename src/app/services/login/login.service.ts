@@ -2,11 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 
-interface AccessTokenResponse {
+export interface AccessTokenResponse {
   accessToken: string,
-  expiresIn: number,
+  expiresAt: Date,
   role: string
-  refreshTokenExpiresIn: string
+  refreshTokenExpiresAt: Date
 }
 
 @Injectable({
@@ -18,7 +18,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { };
 
   public getOrRefreshAccessToken(): Observable<AccessTokenResponse> {
-    if (!this.accessToken || this.accessToken.expiresIn <= 10) {
+    if (!this.accessToken || this.accessToken.expiresAt.getTime() + 10 <= Date.now()) {
       console.log("no access token, or expired, refreshing...")
       return this.doLogin()
     }
@@ -31,7 +31,7 @@ export class LoginService {
       return null;
     }
 
-    if (this.accessToken.expiresIn <= 10) {
+    if (this.accessToken.expiresAt.getTime() + 10 <= Date.now()) {
       this.accessToken = null;
       this.loggedIn = false;
       return null;
@@ -55,6 +55,8 @@ export class LoginService {
         map(res => {
           console.log('successful response from the bff access token endpoint')
           this.accessToken = res;
+          this.accessToken.expiresAt = new Date(this.accessToken.expiresAt);
+          this.accessToken.refreshTokenExpiresAt = new Date(this.accessToken.refreshTokenExpiresAt);
           this.loggedIn = true;
 
           return res;

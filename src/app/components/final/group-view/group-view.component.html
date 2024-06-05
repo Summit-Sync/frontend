@@ -18,7 +18,28 @@
         {{ viewData.description }}
       </p>
     </div>
-    <div class="listWrapper">
+    <div>
+      <p>Anzahl Termine:</p>
+      <p>{{ viewData.numberOfDates }}</p>
+    </div>
+    <div>
+      <p>Ort:</p>
+      <div class="boxWrapper">
+        <p>
+          {{ viewData.contact.firstName }}
+        </p>
+        <p>
+          {{ viewData.contact.lastName }}
+        </p>
+        <p>
+          {{ viewData.contact.email }}
+        </p>
+        <p>
+          {{ viewData.contact.phone }}
+        </p>
+      </div>
+    </div>
+    <div class="componentListWrapper">
       <table>
         <thead>
           <tr>
@@ -65,7 +86,7 @@
     </div>
     <div>
       <p>Ort:</p>
-      <div class="locationWrapper">
+      <div class="boxWrapper">
         <p>
           {{ viewData.location.title }}
         </p>
@@ -120,7 +141,6 @@
   </div>
   <div class="footer">
     <button (click)="cancel()">Ansicht schließen</button>
-    <button (click)="deleteGroup()">Löschen</button>
     <button (click)="cancelGroup()">Gruppe absagen</button>
   </div>
 </div>
