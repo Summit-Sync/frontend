@@ -34,6 +34,7 @@ export class GroupListComponent implements OnInit {
   filterOptions: FilterOption[] = [
     FilterOption.None,
     FilterOption.GroupCanceled,
+    FilterOption.GroupFinished,
     FilterOption.GroupAcronym,
     FilterOption.FreeTrainerSpots,
     FilterOption.StartDate,
