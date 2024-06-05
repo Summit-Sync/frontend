@@ -58,7 +58,9 @@
                     /> -->
                 {{ mappedDateTime[i][1] }}
               </td>
-              <button (click)="deleteDate(i)">-</button>
+              <td>
+                <button (click)="deleteDate(i)">-</button>
+              </td>
             </tr>
           </ng-container>
         </tbody>
@@ -257,7 +259,8 @@
     </div>
     <div>
       <p>Treffpunkt:</p>
-      <input type="text" [(ngModel)]="courseData.meetingPoint" />
+      <textarea rows="5" cols="35" [(ngModel)]="courseData.meetingPoint">
+      </textarea>
       <p *ngIf="validationObject.meetingPointError" class="errorMessage">
         {{ validationObject.meetingPointError }}
       </p>
@@ -298,7 +301,7 @@
     </div>
     <div>
       <p>Notizen:</p>
-      <input type="text" [(ngModel)]="courseData.notes" />
+      <textarea rows="7" cols="50" [(ngModel)]="courseData.notes"> </textarea>
       <p *ngIf="validationObject.notesError" class="errorMessage">
         {{ validationObject.notesError }}
       </p>

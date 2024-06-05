@@ -51,6 +51,11 @@ input[type="number"] {
   button {
     margin-top: 10px;
   }
+  table {
+    button {
+      margin: 0;
+    }
+  }
 }
 
 table {
@@ -153,13 +158,16 @@ button {
       margin-left: 5px;
     }
   }
-  .locationWrapper {
+  .boxWrapper {
     flex-direction: column;
     border: solid  1px black;
     padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
     p:first-child { 
       font-weight: 400;
       margin-right: 0;
+      margin-top: 0;
     }
     p {
       margin: 7px 0 0 0;
@@ -191,6 +199,14 @@ button {
         flex-direction: row;
       }
     }
+    h1 {
+      font-size: 23px;
+      margin-bottom: 0;
+    }
+  }
+  .notes {
+    width: 392px;
+    height: 138px;
   }
 }
 
