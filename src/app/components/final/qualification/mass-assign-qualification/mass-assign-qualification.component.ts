@@ -53,8 +53,7 @@ export class MassAssignQualificationComponent implements OnInit {
       }
     });
     this.trainerService.getAllTrainers().subscribe(t => {
-      this.fillSelectedTrainerList(t)
-      this.allTrainers = this.checkBoxMapper.mapTrainerListToCheckboxList(t);
+      this.fillAllTrainerList(t);
     });
   }
 
@@ -73,14 +72,15 @@ export class MassAssignQualificationComponent implements OnInit {
     this.dialogRef.close(JSON.stringify({method: 'cancel'}));
   }
 
-  fillSelectedTrainerList(data: TrainerDTO[]){
+  // Alle Trainer die diese Qualifikation noch nicht haben
+  fillAllTrainerList(data: TrainerDTO[]){
     let trainersWithQualification: TrainerDTO[] = []
     for(let trainer of data){
-      if(!this.checkIfTrainerHasQualification){
+      if(!this.checkIfTrainerHasQualification(trainer)){
         trainersWithQualification.push(trainer)
       }
     }
-    this.selectedTrainerList= this.checkBoxMapper.mapTrainerListToCheckboxList(trainersWithQualification);
+    this.allTrainers= this.checkBoxMapper.mapTrainerListToCheckboxList(trainersWithQualification);
   }
 
   checkIfTrainerHasQualification(trainer: TrainerDTO):boolean{
