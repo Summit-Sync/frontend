@@ -76,7 +76,13 @@ export class AddTrainerComponent implements OnInit {
     private checkBoxMapper: CheckboxListMapperService,
     private postTrainerValidator: PostTrainerValidatorService,
     private trainerValidator: TrainerValidatorService
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      }
+    });
+  }
 
   ngOnInit(): void {
     if (this.isEdit) {

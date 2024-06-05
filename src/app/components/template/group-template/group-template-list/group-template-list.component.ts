@@ -66,7 +66,7 @@ export class GroupTemplateListComponent {
         next: (response) => {
           this.groupTemplateList=response;
           console.log(response[0]);
-          
+
         },
         error: (error) => this.groupTemplateList=[],
     })
@@ -74,7 +74,7 @@ export class GroupTemplateListComponent {
 
   deleteTemplate(template: GroupTemplateDTO){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -102,7 +102,8 @@ export class GroupTemplateListComponent {
 
   viewDetails(template: GroupTemplateDTO){
     const dialogRef = this.dialog.open(GroupTemplateDetailViewComponent,{
-      disableClose: true,
+      disableClose: false,
+      autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {
@@ -115,6 +116,7 @@ export class GroupTemplateListComponent {
   editTemplate(template: GroupTemplateDTO){
     const dialogRef = this.dialog.open(AddGroupTemplateComponent,{
       disableClose: true,
+      autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {

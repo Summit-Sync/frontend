@@ -70,7 +70,7 @@ export class GroupListComponent implements OnInit {
 
   createNewGroupFromTemplate(): void {
     const templateDialogRef = this.dialog.open(ShortGroupListComponent, {
-      disableClose: false,
+      disableClose: true,
       autoFocus: true,
       height: '80dvh',
       width: '40dvw',
@@ -194,7 +194,7 @@ export class GroupListComponent implements OnInit {
 
   delete(template: GroupDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',

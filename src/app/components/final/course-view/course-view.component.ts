@@ -22,7 +22,13 @@ export class CourseViewComponent implements OnInit{
     public courseService: CourseService,
     private dialogRef: MatDialogRef<CourseViewComponent>,
     private participantListService: ParticipantListServiceService
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.courseService.currentCourse.subscribe((currenCourse) => {

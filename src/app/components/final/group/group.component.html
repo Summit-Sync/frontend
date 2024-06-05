@@ -1,5 +1,5 @@
-<div class="outer">
-  <div class="body" *ngIf="this.isCreate else editMode">
+<div class="outer" *ngIf="this.isCreate else editMode">
+  <div class="body" >
     <div>
       <p>Titel</p>
       <input id="title" type="text" [(ngModel)]="groupDataCreate.title" />

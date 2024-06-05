@@ -42,7 +42,7 @@ export class TrainerListComponent {
 
   delete(trainer: TrainerDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -98,7 +98,7 @@ export class TrainerListComponent {
     this.trainerService.currentTrainer.next(trainer);
     if (this.showingEdit) {
       const dialogRef = this.dialog.open(AddTrainerComponent, {
-        disableClose: false,
+        disableClose: true,
         autoFocus: true,
         height: '90dvh',
         width: '40dvw',

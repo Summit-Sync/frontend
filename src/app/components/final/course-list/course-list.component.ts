@@ -67,10 +67,6 @@ export class CourseListComponent implements OnInit {
     this.displayOption = filterOption;
   }
 
-  // searchFilteredCourses() {
-  //   this.selectedOption = this.displayOption;
-  // }
-
   showDetails(course: CourseDTO) {
     this.showingEdit = false;
     this.showCourseView(course);
@@ -83,7 +79,7 @@ export class CourseListComponent implements OnInit {
 
   delete(course: CourseDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -129,11 +125,11 @@ export class CourseListComponent implements OnInit {
   }
 
   showEditCourse(course: CourseDTO) {
-    //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
     console.log('showEdit', course);
-    this.courseService.updateCourseDetails(course);
+    //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
+    //this.courseService.updateCourseDetails(course);
     const dialogRef = this.dialog.open(CourseComponent, {
-      disableClose: false,
+      disableClose: true,
       autoFocus: true,
       height: '90dvh',
       width: '1075px',
@@ -170,11 +166,6 @@ export class CourseListComponent implements OnInit {
         console.log('Dialog output:', obj.data);
       }
     });
-  }
-
-  hideCourse() {
-    this.showingEdit = false;
-    this.showingDelete = false;
   }
 
   updateList() {

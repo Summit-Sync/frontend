@@ -36,7 +36,7 @@ export class CourseTemplateListComponent {
 
   deleteTemplate(template: CourseTemplateDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -67,6 +67,7 @@ export class CourseTemplateListComponent {
   editTemplate(template: CourseTemplateDTO) {
     const dialogRef = this.dialog.open(AddCourseTemplateComponent, {
       disableClose: true,
+      autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {
@@ -89,7 +90,8 @@ export class CourseTemplateListComponent {
 
   openDetails(template: CourseTemplateDTO) {
     const dialogRef = this.dialog.open(CourseTemplateDetailViewComponent, {
-      disableClose: true,
+      disableClose: false,
+      autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {
@@ -123,6 +125,7 @@ export class CourseTemplateListComponent {
     };
     const dialogref = this.dialog.open(AddCourseTemplateComponent, {
       disableClose: true,
+      autoFocus: true,
       height: '90dvh',
       width: '70dvw',
       data: {

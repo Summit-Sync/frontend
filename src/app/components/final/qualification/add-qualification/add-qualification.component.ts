@@ -29,7 +29,15 @@ export class AddQualificationComponent {
     private qualificationService: QualificationsService,
     private qualificationValidator: PostQualificationValidatorService,
     private toast: ToastService
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      } else if (event.key === 'Enter') {
+        this.save();
+      }
+    });
+  }
 
   save() {
     let postQualification: PostQualificationDTO = {

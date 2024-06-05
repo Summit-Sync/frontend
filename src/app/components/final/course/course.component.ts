@@ -127,7 +127,15 @@ export class CourseComponent implements OnInit {
     private participantListService: ParticipantListServiceService,
     private toast: ToastService,
     private courseValidator: CourseValidatorService
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      } else if (event.key === 'Enter') {
+        this.save();
+      }
+    });
+  }
 
   ngOnInit(): void {
     if (!this.isCreate) {

@@ -45,6 +45,12 @@ export class PostGroupTemplateValidatorService {
       validationObject.acronymError="Abkürzung darf nicht leer sein";
 
     }
+    if (data.acronym.length > 2){
+      result = false;
+      console.error("Kürzel darf nicht länger als 2 Zeichen Lang sein");
+      validationObject.acronymError="Kürzel darf nicht länger als 2 Zeichen Lang sein";
+    }
+
     if(!data.description){
       result = false;
       console.error("Beschreibung darf nicht leer sein");

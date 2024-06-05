@@ -145,7 +145,10 @@ export class AddCourseTemplateComponent {
         this.courseTemplateService
           .putCourseTemplate(this.courseTemplate, this.templateId)
           .subscribe({
-            next: (response) => console.log('Template has been created'),
+            next: (response) =>{
+              console.log('Template has been created');
+              this.dialogRef.close();
+            },
             error: (error) => {
               console.error('Template could not be created');
               this.dialogRef.close();

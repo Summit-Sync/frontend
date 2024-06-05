@@ -13,7 +13,7 @@ export class PostCourseTemplateValidatorService {
     private toast: ToastService,
     private priceValidator: PostCategoryPriceValidatorService,
   ) { }
-  
+
   public validate(data: PostCourseTemplateDTO):CourseTemplateValidation{
     let result:boolean = true;
     let validationObject: CourseTemplateValidation={
@@ -48,6 +48,12 @@ export class PostCourseTemplateValidatorService {
       validationObject.acronymError="Kürzel darf nicht leer sein";
 
     }
+    if (data.acronym.length > 2){
+      result = false;
+      console.error("Kürzel darf nicht länger als 2 Zeichen Lang sein");
+      validationObject.acronymError="Kürzel darf nicht länger als 2 Zeichen Lang sein";
+    }
+
     if(!data.description){
       result = false;
       console.error("Beschreibung darf nicht leer sein");
@@ -103,7 +109,7 @@ export class PostCourseTemplateValidatorService {
 
     }
     for (const price of data.price) {
-              
+
       if (!this.priceValidator.validate(price)) {
         result = false; // PostPrice validation failed
         validationObject.priceError="Ungültige Preise"

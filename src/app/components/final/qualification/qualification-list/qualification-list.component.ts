@@ -53,7 +53,7 @@ export class QualificationListComponent implements OnInit {
 
   deleteQualification(qualification: QualificationDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
