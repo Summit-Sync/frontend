@@ -100,8 +100,8 @@ export class CourseListComponent implements OnInit {
             next: (response) => {
               this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
             },
-            error: (err) => {
-              this.toast.showErrorToast('Löschen der Vorlage fehlgeschlagen');
+            error: (error) => {
+              this.toast.showErrorToast('Löschen der Vorlage fehlgeschlagen \n' + error.error.error);
             },
           });
       }
@@ -165,7 +165,14 @@ export class CourseListComponent implements OnInit {
       const obj = JSON.parse(result);
       this.updateList();
       if (obj.method == 'delete') {
-        console.log('Dialog output:', obj.data);
+        this.courseService.deleteCourse(obj.data.id).subscribe({
+          next: () =>{
+            this.toast.showSuccessToast("Kurs erfolgreich gelöscht");
+          },
+          error: (error) =>{
+            this.toast.showErrorToast("Kurs löschen fehlgeschlagen \n" + error.error.error);
+          }
+         });
       }
     });
   }
@@ -189,8 +196,8 @@ export class CourseListComponent implements OnInit {
         this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
         this.updateList();
       },
-      error: () => {
-        this.toast.showErrorToast('Kurs absagen fehlgeschlagen');
+      error: (error) => {
+        this.toast.showErrorToast('Kurs absagen fehlgeschlagen \n' + error.error.error);
       },
     });
   }

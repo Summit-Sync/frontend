@@ -54,9 +54,9 @@ export class CourseTemplateListComponent {
             next: (response) => {
               this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
             },
-            error: (err) => {
+            error: (error) => {
               this.toast.showErrorToast(
-                'Löschen der Vorlage fehlgeschlagen \n'
+                'Löschen der Vorlage fehlgeschlagen \n' + error.error.error
               );
             },
           });
@@ -77,8 +77,13 @@ export class CourseTemplateListComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.updateList();
+    dialogRef.afterClosed().subscribe( {
+      next:() =>{
+        this.toast.showSuccessToast("Kursvorlage aktualisiert");
+      },
+      error:(error) =>{
+        this.toast.showErrorToast("Aktualiseren fehlgeschlagen \n" + error.error.error)
+      }
     });
   }
 

@@ -17,6 +17,7 @@ import { PostCourseTemplateValidatorService } from '../../../services/validation
 import { CheckboxListMapperService } from '../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 import { CoursetemplateService } from '../../../services/coursetemplate/coursetemplate.service';
 import { CourseTemplateValidation } from '../../../models/validation/coursetemplatevalidation';
+import {ToastService} from "@/app/services/toast/toast.service";
 
 @Component({
   selector: 'app-add-course-template',
@@ -65,7 +66,8 @@ export class AddCourseTemplateComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService,
     private postCourseTemplateValidator: PostCourseTemplateValidatorService,
-    private courseTemplateService: CoursetemplateService
+    private courseTemplateService: CoursetemplateService,
+    private toast: ToastService
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
@@ -147,9 +149,11 @@ export class AddCourseTemplateComponent {
           .subscribe({
             next: (response) =>{
               console.log('Template has been created');
+              this.toast.showSuccessToast("Vorlage aktualisiert");
               this.dialogRef.close();
             },
             error: (error) => {
+              this.toast.showErrorToast("Aktualisierung fehlgeschlagen \n"+ error.error.error)
               console.error('Template could not be created');
               this.dialogRef.close();
             },
@@ -160,10 +164,12 @@ export class AddCourseTemplateComponent {
           .subscribe({
             next: (response) => {
               console.log('Template has been created');
+              this.toast.showSuccessToast("Vorlage erfolgreich erstellt");
               this.dialogRef.close();
             },
             error: (error) => {
               console.error('Template could not be created');
+              this.toast.showErrorToast("Vorlage erstellen fehlgeschlagen \n"+ error.error.error)
               this.dialogRef.close();
             },
           });

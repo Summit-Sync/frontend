@@ -55,7 +55,6 @@ export class CourseViewComponent implements OnInit{
   }
 
   deleteCourse(): void {
-    this.courseService.deleteCourse(this.viewData.id);
     this.dialogRef.close(JSON.stringify({ method: 'delete' }));
   }
 }

@@ -38,6 +38,7 @@ export class AddLocationModalComponent {
         dialogRef.close('cancel');
       } else if (event.key === 'Enter') {
         this.save();
+        this.dialogRef.close();
       }
     });
   }

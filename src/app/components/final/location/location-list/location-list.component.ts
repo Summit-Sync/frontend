@@ -47,8 +47,14 @@ export class LocationListComponent {
       if(obj.method == 'accept'){
         console.log('Dialog output: ' + obj.data)
         this.locationService.putLocation(location.locationId, obj.data).subscribe({
-          next: (response) => console.log('Location has been updated'),
-          error: (error) => console.error('Location could not be updated'),
+          next: (response) => {
+            console.log('Location has been updated');
+            this.toast.showSuccessToast("Standort aktualisiert");
+          },
+          error: (error) => {
+            console.error('Location could not be updated');
+            this.toast.showErrorToast("Standort konnte nicht aktualisiert werden \n" + error.error.error)
+            },
           complete: () => this.updateList()
         })
       }else{
@@ -87,10 +93,10 @@ export class LocationListComponent {
         )
         .subscribe({
           next: (response) => {
-            this.toast.showSuccessToast("Qualifikation erfolgreich gelöscht");
+            this.toast.showSuccessToast("Standort erfolgreich gelöscht");
           },
-          error: (err) => {
-            this.toast.showErrorToast("Löschen der Qualifikation fehlgeschlagen \n" + err);
+          error: (error) => {
+            this.toast.showErrorToast("Löschen des Standortes fehlgeschlagen \n" + error.error.error);
           }
         });
       }
@@ -123,8 +129,14 @@ export class LocationListComponent {
       if(obj.method == 'accept'){
         console.log('Dialog output: ' + obj.data)
         this.locationService.postLocation(obj.data).subscribe({
-          next: (response) => console.log('Location has been created'),
-          error: (error) => console.error('Location could not be created'),
+          next: (response) => {
+            console.log('Location has been created');
+            this.toast.showSuccessToast("Standort erstellt");
+          },
+          error: (error) => {
+            console.error('Location could not be created');
+            this.toast.showErrorToast("Standort konnte nicht erstellt werden \n"+ error.error.error)
+          },
           complete: () => this.updateList()
         })
       }

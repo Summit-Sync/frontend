@@ -428,7 +428,7 @@ export class CourseComponent implements OnInit {
           },
           error: (error) => {
             console.error('Course could not be updated');
-            this.toast.showErrorToast('Kurs aktualisierung fehlgeschlagen');
+            this.toast.showErrorToast('Kurs aktualisierung fehlgeschlagen \n' + error.error.error);
           },
           complete: () =>
             this.dialogRef.close(JSON.stringify({ method: 'updated' })),
@@ -473,7 +473,7 @@ export class CourseComponent implements OnInit {
         },
         error: (error) => {
           console.error('Course could not be created');
-          this.toast.showErrorToast('Kurs konnte nicht erstellt werden');
+          this.toast.showErrorToast('Kurs konnte nicht erstellt werden \n' + error.error.error);
         },
         complete: () =>
           this.dialogRef.close(JSON.stringify({ method: 'created' })),
@@ -535,8 +535,8 @@ export class CourseComponent implements OnInit {
         next: () => {
           this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
         },
-        error: () => {
-          this.toast.showErrorToast('Kurs absagen fehlgeschlagen');
+        error: (error) => {
+          this.toast.showErrorToast('Kurs absagen fehlgeschlagen \\n' + error.error.error);
         },
       });
   }

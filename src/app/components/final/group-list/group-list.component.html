@@ -77,7 +77,7 @@
             <button (click)="delete(g)">Löschen</button>
           </td>
           <td>
-            <button (click)="cancelGroup(g)">Gruppe absagen</button>
+            <button (click)="cancelGroup(g)">{{g.canceled ? 'Veranstalten':'Absagen'}}</button>
           </td>
         </tr>
       </ng-container>

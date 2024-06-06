@@ -62,7 +62,7 @@ export class ShortGroupListComponent implements OnInit {
           },
           error: (err) => {
             this.toast.showErrorToast(
-              'Erstellung der Gruppe fehlgeschlagen \n' + err
+              'Erstellung der Gruppe fehlgeschlagen \n' + err.error.error
             );
           },
         });

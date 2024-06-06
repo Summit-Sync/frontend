@@ -104,8 +104,8 @@ export class GroupListComponent implements OnInit {
             this.toast.showSuccessToast('Gruppe löschen erfolgreich');
             this.group$ = this.groupService.getAllGroups();
           },
-          error: () => {
-            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
+          error: (error) => {
+            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n' + error.error.error);
           },
         });
       } else if (obj.method == 'cancel-group') {
@@ -116,8 +116,8 @@ export class GroupListComponent implements OnInit {
               this.toast.showSuccessToast('Gruppe erfolgreich abgesagt');
               this.group$ = this.groupService.getAllGroups();
             },
-            error: () => {
-              this.toast.showErrorToast('Gruppe absagen fehlgeschlagen');
+            error: (error) => {
+              this.toast.showErrorToast('Gruppe absagen fehlgeschlagen \n' + error.error.error);
             },
           });
       }
@@ -175,7 +175,7 @@ export class GroupListComponent implements OnInit {
           },
           error: (err) => {
             this.toast.showErrorToast(
-              'Aktualisierung der Gruppe fehlgeschlagen \n' + err
+              'Aktualisierung der Gruppe fehlgeschlagen \n' + err.error.error
             );
           },
         });
@@ -187,7 +187,7 @@ export class GroupListComponent implements OnInit {
             this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
           },
           error: (err) => {
-            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
+            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n' + err.error.error);
             console.error('Gruppe löschen' + err);
           },
         });
@@ -218,8 +218,8 @@ export class GroupListComponent implements OnInit {
               this.group$ = this.groupService.getAllGroups();
               this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
             },
-            error: (err) => {
-              this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n');
+            error: (error) => {
+              this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n' + error.error.error);
             },
           });
       }
@@ -231,8 +231,8 @@ export class GroupListComponent implements OnInit {
         this.group$ = this.groupService.getAllGroups();
         this.toast.showSuccessToast('Gruppe erfolgreich abgesagt');
       },
-      error: () => {
-        this.toast.showErrorToast('Gruppe absagen fehlgeschlagen');
+      error: (error) => {
+        this.toast.showErrorToast('Gruppe absagen fehlgeschlagen \n' + error.error.error);
       },
     });
   }
