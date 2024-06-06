@@ -15,23 +15,23 @@ import { ToastService } from '../../../../services/toast/toast.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './group-template-list.component.html',
-  styleUrl: './group-template-list.component.css'
+  styleUrl: './group-template-list.component.css',
 })
 export class GroupTemplateListComponent {
+  groupTemplateList: GroupTemplateDTO[];
+  showAddModal: boolean = false;
 
-  groupTemplateList:GroupTemplateDTO[]
-  showAddModal:boolean=false
-
-  constructor(private dialog:MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private groupTemplateService: GrouptemplateService,
-    private toast:ToastService
-  ){}
+    private toast: ToastService
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.updateList();
   }
 
-  addGroupTemplate(){
+  addGroupTemplate() {
     let data: PostGroupTemplateDTO = {
       acronym: '',
       title: '',
@@ -43,78 +43,77 @@ export class GroupTemplateListComponent {
       trainerPricePerHour: 0,
       participantsPerTrainer: 0,
       pricePerParticipant: 0,
-      requiredQualificationList: []
-    }
+      requiredQualificationList: [],
+    };
     const dialogRef = this.dialog.open(AddGroupTemplateComponent, {
-      disableClose:true,
-      autoFocus:true,
-      height:'80dvh',
-      width:'40dvw',
-      data:{
+      disableClose: true,
+      autoFocus: true,
+      height: '80dvh',
+      width: '40dvw',
+      data: {
         template: data,
         isEdit: false,
-        templateId: 0
-      }
+        templateId: 0,
+      },
     });
-    dialogRef.afterClosed().subscribe(
-      result =>  this.updateList()
-    )
+    dialogRef.afterClosed().subscribe((result) => this.updateList());
   }
 
-  updateList(){
+  updateList() {
     this.groupTemplateService.getAllGroupTemplateDTOs().subscribe({
-        next: (response) => {
-          this.groupTemplateList=response;
-          console.log(response[0]);
-
-        },
-        error: (error) => this.groupTemplateList=[],
-    })
+      next: (response) => {
+        this.groupTemplateList = response;
+        console.log(response[0]);
+      },
+      error: (error) => (this.groupTemplateList = []),
+    });
   }
 
-  deleteTemplate(template: GroupTemplateDTO){
+  deleteTemplate(template: GroupTemplateDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
       data: {
-        name: template.title
-      }
+        name: template.title,
+      },
     });
-    dialogRef.afterClosed().subscribe(result => {
-      const obj=JSON.parse(result);
-      if(obj.method === 'confirm'){
-        this.groupTemplateService.deleteGroupTemplateDTO(template.id).pipe(
-          finalize(()=>this.updateList())
-        )
-        .subscribe({
-          next: (response) => {
-            this.toast.showSuccessToast("Vorlage erfolgreich gelöscht");
-          },
-          error: (err) => {
-            this.toast.showErrorToast("Löschen der Vorlage fehlgeschlagen \n");
-          }
-        });
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method === 'confirm') {
+        this.groupTemplateService
+          .deleteGroupTemplateDTO(template.id)
+          .pipe(finalize(() => this.updateList()))
+          .subscribe({
+            next: (response) => {
+              this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
+            },
+            error: (err) => {
+              this.toast.showErrorToast(
+                'Löschen der Vorlage fehlgeschlagen \n'
+              );
+            },
+          });
       }
     });
   }
 
-  viewDetails(template: GroupTemplateDTO){
-    const dialogRef = this.dialog.open(GroupTemplateDetailViewComponent,{
+  viewDetails(template: GroupTemplateDTO) {
+    const dialogRef = this.dialog.open(GroupTemplateDetailViewComponent, {
       disableClose: false,
       autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {
         selectedTemplate: template,
-        isEdit: true
-      }
-    })
+        isEdit: true,
+      },
+    });
   }
 
-  editTemplate(template: GroupTemplateDTO){
-    const dialogRef = this.dialog.open(AddGroupTemplateComponent,{
+  editTemplate(template: GroupTemplateDTO) {
+    const dialogRef = this.dialog.open(AddGroupTemplateComponent, {
       disableClose: true,
       autoFocus: true,
       width: '40dvw',
@@ -122,12 +121,11 @@ export class GroupTemplateListComponent {
       data: {
         selectedTemplate: template,
         isEdit: true,
-        templateId: template.id
-      }
-    })
-    dialogRef.afterClosed().subscribe(result => {
-      this.updateList()
-    })
+        templateId: template.id,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.updateList();
+    });
   }
-
 }
