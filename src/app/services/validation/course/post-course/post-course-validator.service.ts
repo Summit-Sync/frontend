@@ -134,9 +134,9 @@ export class PostCourseValidatorService {
       }
     }
     for (const participant of data.participants) {
-      if (!this.participantValidator.validate(participant)) {
+      if (!this.participantValidator.validateExceptAllEmpty(participant)) {
         result = false; // PostPrice validation failed
-        validationObject.participantsError = 'Ungültige Preise';
+        validationObject.participantsError = 'Ungülitge Teilnehmer';
       }
     }
     //TODO
