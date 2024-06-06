@@ -428,7 +428,9 @@ export class CourseComponent implements OnInit {
           },
           error: (error) => {
             console.error('Course could not be updated');
-            this.toast.showErrorToast('Kurs aktualisierung fehlgeschlagen \n' + error.error.error);
+            this.toast.showErrorToast(
+              'Kurs aktualisierung fehlgeschlagen \n' + error.error.error
+            );
           },
           complete: () =>
             this.dialogRef.close(JSON.stringify({ method: 'updated' })),
@@ -473,7 +475,9 @@ export class CourseComponent implements OnInit {
         },
         error: (error) => {
           console.error('Course could not be created');
-          this.toast.showErrorToast('Kurs konnte nicht erstellt werden \n' + error.error.error);
+          this.toast.showErrorToast(
+            'Kurs konnte nicht erstellt werden \n' + error.error.error
+          );
         },
         complete: () =>
           this.dialogRef.close(JSON.stringify({ method: 'created' })),
@@ -493,13 +497,21 @@ export class CourseComponent implements OnInit {
 
   onMaxParticipantsChange(
     numberParticipants: number,
-    participants: ParticipantDTO[]
+    participants: ParticipantDTO[],
+    event: Event
   ): void {
     const participantsLength = participants.length;
+    const maxParticipantChange = Math.abs(
+      numberParticipants - participantsLength
+    );
+    const inputElement = event.target as HTMLInputElement;
     if (numberParticipants < participantsLength) {
-      participants.splice(participantsLength - 1, 1);
+      console.log(numberParticipants, maxParticipantChange);
+      participants.splice(inputElement.valueAsNumber, maxParticipantChange);
     } else {
-      this.addParticipant(numberParticipants, participants);
+      for (let i = 0; i < maxParticipantChange; i++) {
+        this.addParticipant(numberParticipants, participants);
+      }
     }
   }
 
@@ -536,7 +548,9 @@ export class CourseComponent implements OnInit {
           this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
         },
         error: (error) => {
-          this.toast.showErrorToast('Kurs absagen fehlgeschlagen \\n' + error.error.error);
+          this.toast.showErrorToast(
+            'Kurs absagen fehlgeschlagen \\n' + error.error.error
+          );
         },
       });
   }
@@ -586,6 +600,5 @@ export class CourseComponent implements OnInit {
       this.multiDropDown.deleteObject(trainer);
     });
     this.multiDropDown.checkedBoxes = [];
-    this.toast.showInfoToast('Trainerauswahl zurückgesetzt!');
   }
 }

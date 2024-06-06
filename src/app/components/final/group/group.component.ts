@@ -331,7 +331,6 @@ export class GroupComponent implements OnInit {
       this.multiDropDown.deleteObject(trainer);
     });
     this.multiDropDown.checkedBoxes = [];
-    this.toast.showInfoToast('Trainer auswahl zurückgesetzt!');
   }
 
   mapAllListsToCheckBoxLists(): void {

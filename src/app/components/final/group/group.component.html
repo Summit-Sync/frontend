@@ -259,7 +259,9 @@
       Speichern
     </button>
     <button class="dialog button" (click)="cancel()">Abbrechen</button>
-    <button *ngIf="!this.isCreate" (click)="cancelGroup()">{{groupDataUpdate.canceled ? 'Veranstalten' : 'Absagen'}}</button>
+    <button *ngIf="!this.isCreate" (click)="cancelGroup()">
+      {{ groupDataUpdate.canceled ? "Veranstalten" : "Absagen" }}
+    </button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
     -->
@@ -277,7 +279,7 @@
     <div class="acronym">
       <p>Gruppennummer</p>
       <p>
-        {{ groupDataUpdate.groupNumber }}
+        {{ groupDataUpdate.acronym + groupDataUpdate.groupNumber }}
       </p>
       <p *ngIf="validationObject.acronymError" class="errorMessage">
         {{ validationObject.acronymError }}

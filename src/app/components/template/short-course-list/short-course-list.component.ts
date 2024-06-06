@@ -23,7 +23,8 @@ export class ShortCourseListComponent implements OnInit {
     selfDialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
         selfDialogRef.close('cancel');
-    }});
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -33,7 +34,7 @@ export class ShortCourseListComponent implements OnInit {
 
   openCourseCreator(courseTemplate: CourseTemplateDTO) {
     let courseDialogRef = this.dialog.open(CourseComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '90dvh',
       width: '70dvw',

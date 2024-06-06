@@ -43,7 +43,7 @@ export class ShortGroupListComponent implements OnInit {
 
   openCreateDialog(template: GroupTemplateDTO) {
     const dialogRef = this.dialog.open(GroupComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '80dvh',
       width: '50dvw',
