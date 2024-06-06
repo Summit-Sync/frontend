@@ -77,12 +77,11 @@ export class CourseTemplateListComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe( {
-      next:() =>{
-        this.toast.showSuccessToast("Kursvorlage aktualisiert");
-      },
-      error:(error) =>{
-        this.toast.showErrorToast("Aktualiseren fehlgeschlagen \n" + error.error.error)
+    dialogRef.afterClosed().subscribe((result) => {
+      const obj = JSON.parse(result);
+      if (obj.method != 'cancel') {
+        this.toast.showSuccessToast('Kursvorlage aktualisiert');
+        this.updateList();
       }
     });
   }
