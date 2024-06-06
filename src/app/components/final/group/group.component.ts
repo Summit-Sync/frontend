@@ -21,6 +21,7 @@ import { CheckboxListMapperService } from '../../../services/check-box-list-mapp
 import { GroupValidation } from '../../../models/validation/groupvalidation';
 import { PostGroupValidatorService } from '../../../services/validation/group/post-group/post-group-validator.service';
 import { UpdateGroupValidatorService } from '../../../services/validation/group/update-group/update-group-validator.service';
+import { EndTimePipe } from '../../../pipes/endTime/end-time.pipe';
 
 @Component({
   selector: 'app-group',
@@ -31,6 +32,7 @@ import { UpdateGroupValidatorService } from '../../../services/validation/group/
     FormsModule,
     NgIf,
     DatePipe,
+    EndTimePipe,
     NgForOf,
   ],
   templateUrl: './group.component.html',
@@ -380,20 +382,23 @@ export class GroupComponent implements OnInit {
   }
 
   addDate() {
-    if (this.isCreate && this.groupDataCreate.dates.length < this.groupDataCreate.numberOfDates) {
+    if (
+      this.isCreate &&
+      this.groupDataCreate.dates.length < this.groupDataCreate.numberOfDates
+    ) {
       this.dateTimeMapper.addDate(
         this.groupDataCreate.duration,
         this.groupDataCreate.dates,
         this.mappedDateTime
       );
-    } else if (!this.isCreate){
+    } else if (!this.isCreate) {
       this.dateTimeMapper.addDate(
         this.groupDataUpdate.duration,
         this.groupDataUpdate.dates,
         this.mappedDateTime
       );
     } else {
-      this.toast.showInfoToast("Maximale Terminanzahl erreicht.");
+      this.toast.showInfoToast('Maximale Terminanzahl erreicht.');
       return;
     }
   }
@@ -485,8 +490,10 @@ export class GroupComponent implements OnInit {
   }
 
   cancelGroup() {
-    this.dialogRef.close(JSON.stringify({method: 'cancel-group', data: this.groupDataUpdate}));
-    console.log("Group canceled");
+    this.dialogRef.close(
+      JSON.stringify({ method: 'cancel-group', data: this.groupDataUpdate })
+    );
+    console.log('Group canceled');
 
     // this.groupService.putGroupCanceled(this.groupDataUpdate.id, !this.groupDataUpdate.canceled).subscribe({
     //   next:() =>{

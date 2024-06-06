@@ -120,13 +120,6 @@ export class PostCourseValidatorService {
         'Mindestens ein Trainer muss einem Kurs zugeordnet werden können';
       result = false;
     }
-    if (!data.notes) {
-      console.error('Es muss eine Notiz zu einem Kurs existieren');
-      validationObject.notesError =
-        'Es muss eine Notiz zu einem Kurs existieren';
-
-      result = false;
-    }
     for (const price of data.prices) {
       if (!this.priceValidator.validate(price)) {
         result = false; // PostPrice validation failed

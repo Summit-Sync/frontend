@@ -19,8 +19,8 @@
           <td>{{ template.acronym }}</td>
           <td>{{ template.numberOfDates }}</td>
           <td>{{ template.duration }}</td>
-          <td>{{ template.pricePerParticipant }}</td>
-          <td>{{ template.trainerPricePerHour }}</td>
+          <td>{{ template.pricePerParticipant + "€" }}</td>
+          <td>{{ template.trainerPricePerHour + "€" }}</td>
           <td>{{ template.location.title }}</td>
           <td><button (click)="viewDetails(template)">Details</button></td>
           <td><button (click)="editTemplate(template)">Bearbeiten</button></td>

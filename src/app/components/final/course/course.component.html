@@ -26,8 +26,8 @@
         <thead>
           <tr>
             <th>Datum</th>
-            <th>Start Zeit</th>
-            <th>End Zeit</th>
+            <th>Startzeit</th>
+            <th>Endzeit</th>
             <th></th>
           </tr>
         </thead>
@@ -233,8 +233,8 @@
       <div class="priceWrapper">
         <div *ngFor="let price of courseData.prices; let i = index">
           <input type="text" [(ngModel)]="price.name" />
-          <input type="number" [(ngModel)]="price.price" />
-          <button class="deletePriceBtn" (click)="deletePrice(i)">-</button>
+          <input type="number" class="valueInput" [(ngModel)]="price.price" />
+          <button class="priceValueInput" (click)="deletePrice(i)">-</button>
         </div>
         <button class="addPriceBtn" (click)="addPrice()">
           Preis hinzufügen
