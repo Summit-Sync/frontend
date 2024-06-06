@@ -1,5 +1,6 @@
-app-toast{
+app-toast {
   position: absolute;
   right: 1dvw;
   top: 2dvh;
+  z-index: 9999;
 }
