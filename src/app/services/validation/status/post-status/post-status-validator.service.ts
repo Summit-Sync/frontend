@@ -21,7 +21,7 @@ export class PostStatusValidatorService {
     if (!data.text){
       result = false;
       console.error("Statustext darf nicht leer sein");
-      this.toast.showErrorToast("Statustext darf nicht leer sein");      
+      // this.toast.showErrorToast("Statustext darf nicht leer sein");      
     }
     return result;
   }
