@@ -74,9 +74,9 @@
     <div>
       <p for="trainer-price-per-hour">Trainerpreis (Stunde)</p>
       <input
-        id="trainer-price-per-hour"
         type="number"
         [(ngModel)]="groupTemplate.trainerPricePerHour"
+        class="priceValueInput"
       />
       <p *ngIf="validationObject.trainerPricePerHourError" class="errorMessage">
         {{ validationObject.trainerPricePerHourError }}
@@ -85,9 +85,9 @@
     <div>
       <p for="price-per-participant">Teilnehmerpreis</p>
       <input
-        id="price-per-participant"
         type="number"
         [(ngModel)]="groupTemplate.pricePerParticipant"
+        class="priceValueInput"
       />
       <p *ngIf="validationObject.pricePerParticipantError" class="errorMessage">
         {{ validationObject.pricePerParticipantError }}

@@ -1,5 +1,5 @@
-<div class="outer" *ngIf="this.isCreate else editMode">
-  <div class="body" >
+<div class="outer">
+  <div class="body" *ngIf="this.isCreate; else editMode">
     <div>
       <p>Titel</p>
       <input id="title" type="text" [(ngModel)]="groupDataCreate.title" />
@@ -8,10 +8,9 @@
       </p>
     </div>
     <div class="acronym">
-      <p>Kürzel</p>
-      <input id="acronym" type="text" [(ngModel)]="groupDataCreate.acronym" />
-      <p *ngIf="validationObject.acronymError" class="errorMessage">
-        {{ validationObject.acronymError }}
+      <p>Gruppennummer</p>
+      <p>
+        {{ "Wird automatisch erstellt!" }}
       </p>
     </div>
     <div class="description">
@@ -38,7 +37,7 @@
     </div>
     <div class="contactWrapper">
       <h1>Kontakt</h1>
-      <div id="contact">
+      <div class="boxWrapper">
         <div>
           <p>Vorname</p>
           <input
@@ -64,7 +63,7 @@
           />
         </div>
         <div>
-          <p>Telefon Nummer</p>
+          <p>Telefonnummer</p>
           <input
             id="contact-phone"
             type="tel"
@@ -93,8 +92,8 @@
           <thead>
             <tr>
               <th>Datum</th>
-              <th>Start Zeit</th>
-              <th>End Zeit</th>
+              <th>Startzeit</th>
+              <th>Endzeit</th>
               <th></th>
             </tr>
           </thead>
@@ -177,9 +176,9 @@
     <div>
       <p>Trainerpreis (Stunde)</p>
       <input
-        id="trainer-price-per-hour"
         type="number"
         [(ngModel)]="groupDataCreate.trainerPricePerHour"
+        class="priceValueInput"
       />
       <p
         *ngIf="validationObject.trainerPricePerHoursError"
@@ -191,9 +190,9 @@
     <div>
       <p>Teilnehmerpreis</p>
       <input
-        id="price-per-participant"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataCreate.pricePerParticipant"
+        class="priceValueInput"
       />
       <p *ngIf="validationObject.pricePerParticipantError" class="errorMessage">
         {{ validationObject.pricePerParticipantError }}
@@ -255,7 +254,6 @@
     </div>
     -->
   </div>
-
   <div class="footer">
     <button class="save-button dialog-button" (click)="save()">
       Speichern
@@ -269,22 +267,20 @@
     -->
   </div>
 </div>
+
 <ng-template #editMode>
   <div class="body">
     <div class="title">
-
       <input id="title-edit" type="text" [(ngModel)]="groupDataUpdate.title" />
       <p *ngIf="validationObject.titleError" class="errorMessage">
         {{ validationObject.titleError }}
       </p>
     </div>
     <div class="acronym">
-      <p>Kürzel</p>
-      <input
-        id="acronym-edit"
-        type="text"
-        [(ngModel)]="groupDataUpdate.acronym"
-      />
+      <p>Gruppennummer</p>
+      <p>
+        {{ groupDataUpdate.groupNumber }}
+      </p>
       <p *ngIf="validationObject.acronymError" class="errorMessage">
         {{ validationObject.acronymError }}
       </p>
@@ -311,33 +307,41 @@
         {{ validationObject.numberOfDatesError }}
       </p>
     </div>
-    <div class="contact">
-      <p>Contact</p>
-      <div id="contact-edit">
-        <p>Vorname</p>
-        <input
-          id="contact-firstName-edit"
-          type="text"
-          [(ngModel)]="groupDataUpdate.contact.firstName"
-        />
-        <p>Nachname</p>
-        <input
-          id="contact-lastName-edit"
-          type="text"
-          [(ngModel)]="groupDataUpdate.contact.lastName"
-        />
-        <p>E-Mail</p>
-        <input
-          id="contact-email-edit"
-          type="email"
-          [(ngModel)]="groupDataUpdate.contact.email"
-        />
-        <p>Telefon Nummer</p>
-        <input
-          id="contact-phone-edit"
-          type="tel"
-          [(ngModel)]="groupDataUpdate.contact.phone"
-        />
+    <div class="contactWrapper">
+      <h1>Kontakt</h1>
+      <div class="boxWrapper">
+        <div>
+          <p>Vorname</p>
+          <input
+            id="contact-firstName"
+            type="text"
+            [(ngModel)]="groupDataCreate.contact.firstName"
+          />
+        </div>
+        <div>
+          <p>Nachname</p>
+          <input
+            id="contact-lastName"
+            type="text"
+            [(ngModel)]="groupDataCreate.contact.lastName"
+          />
+        </div>
+        <div>
+          <p>E-Mail</p>
+          <input
+            id="contact-email"
+            type="email"
+            [(ngModel)]="groupDataCreate.contact.email"
+          />
+        </div>
+        <div>
+          <p>Telefonnummer</p>
+          <input
+            id="contact-phone"
+            type="tel"
+            [(ngModel)]="groupDataCreate.contact.phone"
+          />
+        </div>
       </div>
       <p *ngIf="validationObject.contactError" class="errorMessage">
         {{ validationObject.contactError }}
@@ -360,8 +364,9 @@
           <thead>
             <tr>
               <th>Datum</th>
-              <th>Start Zeit</th>
-              <th>End Zeit</th>
+              <th>Startzeit</th>
+              <th>Endzeit</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -438,9 +443,9 @@
     <div *ngIf="this.login.getAccessToken?.role === 'admin'">
       <p>Trainerpreis (Stunde)</p>
       <input
-        id="trainer-price-per-hour-edit"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataUpdate.trainerPricePerHour"
+        class="priceValueInput"
       />
       <p
         *ngIf="validationObject.trainerPricePerHoursError"
@@ -452,9 +457,9 @@
     <div>
       <p>Teilnehmerpreis</p>
       <input
-        id="price-per-participant-edit"
-        type="text"
+        type="number"
         [(ngModel)]="groupDataUpdate.pricePerParticipant"
+        class="priceValueInput"
       />
       <p *ngIf="validationObject.pricePerParticipantError" class="errorMessage">
         {{ validationObject.pricePerParticipantError }}

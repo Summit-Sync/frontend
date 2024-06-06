@@ -4,107 +4,87 @@ import { ToastService } from '../../../toast/toast.service';
 import { GroupTemplateValidation } from '../../../../models/validation/grouptemplatevalidation';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostGroupTemplateValidatorService {
-
-  constructor(
-    private toast: ToastService,
-  ) { }
+  constructor(private toast: ToastService) {}
 
   validate(data: PostGroupTemplateDTO): GroupTemplateValidation {
     let result: boolean = true;
-    let validationObject:GroupTemplateValidation={
-      valid:true,
-      acronymError:'',
-      titleError:'',
-      descriptionError:'',
-      numberOfDatesError:'',
-      durationError:'',
-      locationError:'',
-      meetingPointError:'',
-      trainerPricePerHourError:'',
-      pricePerParticipantError:'',
-      requiredQualificationsError:'',
-      participantsPerTrainerError:''
-    }
-    if(!data){
+    let validationObject: GroupTemplateValidation = {
+      valid: true,
+      acronymError: '',
+      titleError: '',
+      descriptionError: '',
+      numberOfDatesError: '',
+      durationError: '',
+      locationError: '',
+      meetingPointError: '',
+      trainerPricePerHourError: '',
+      pricePerParticipantError: '',
+      requiredQualificationsError: '',
+      participantsPerTrainerError: '',
+    };
+    if (!data) {
       console.error("GroupTemplate can't be empty");
-      validationObject.valid=false;
+      validationObject.valid = false;
       return validationObject;
     }
-    if(!data.title){
+    if (!data.title) {
       result = false;
-      console.error("Titel darf nicht leer sein");
-      validationObject.titleError="Titel darf nicht leer sein";
-
+      console.error('Titel darf nicht leer sein');
+      validationObject.titleError = 'Titel darf nicht leer sein';
     }
-    if(!data.acronym){
+    if (!data.acronym) {
       result = false;
-      console.error("Abkürzung darf nicht leer sein");
-      validationObject.acronymError="Abkürzung darf nicht leer sein";
-
+      console.error('Abkürzung darf nicht leer sein');
+      validationObject.acronymError = 'Abkürzung darf nicht leer sein';
     }
     if (data.acronym.length > 2){
       result = false;
       console.error("Kürzel darf nicht länger als 2 Zeichen Lang sein");
       validationObject.acronymError="Kürzel darf nicht länger als 2 Zeichen Lang sein";
     }
-
-    if(!data.description){
+    if (!data.description) {
       result = false;
-      console.error("Beschreibung darf nicht leer sein");
-      validationObject.descriptionError="Beschreibung darf nicht leer sein";
-
+      console.error('Beschreibung darf nicht leer sein');
+      validationObject.descriptionError = 'Beschreibung darf nicht leer sein';
     }
-    if(data.numberOfDates < 1){
+    if (data.numberOfDates < 1) {
       result = false;
-      console.error("Terminanzahl darf nicht leer sein");
-      validationObject.numberOfDatesError="Terminanzahl darf nicht leer sein";
-
+      console.error('Terminanzahl darf nicht leer sein');
+      validationObject.numberOfDatesError = 'Terminanzahl darf nicht leer sein';
     }
-    if(data.duration < 1){
+    if (data.duration < 1) {
       result = false;
-      console.error("Dauer darf nicht leer sein");
-      validationObject.durationError="Dauer darf nicht leer sein";
-
+      console.error('Dauer darf nicht leer sein');
+      validationObject.durationError = 'Dauer darf nicht leer sein';
     }
-    if(!data.location||data.location<1){
-      result=false;
-      console.error("Location darf nicht leer sein");
-      validationObject.locationError="Es muss ein Standort ausgewählt werden"
-    }
-    if(!data.meetingPoint){
+    if (data.trainerPricePerHour < 1) {
       result = false;
-      console.error("Es muss einen Treffpunkt geben");
-      validationObject.meetingPointError="Es muss einen Treffpunkt geben";
-
+      console.error('Trainerpreis darf nicht leer sein');
+      validationObject.trainerPricePerHourError =
+        'Trainerpreis darf nicht leer sein';
     }
-    if(data.trainerPricePerHour < 1){
-      result = false;
-      console.error("Trainerpreis darf nicht leer sein");
-      validationObject.trainerPricePerHourError="Trainerpreis darf nicht leer sein";
-
-    }
-    if(data.pricePerParticipant < 1){
+    if (data.pricePerParticipant < 1) {
       result = false;
       console.error('Teilnehmerpreis darf nicht leer sein');
-      validationObject.pricePerParticipantError='Teilnehmerpreis darf nicht leer sein';
-
+      validationObject.pricePerParticipantError =
+        'Teilnehmerpreis darf nicht leer sein';
     }
-    if(data.participantsPerTrainer < 1){
+    if (data.participantsPerTrainer < 1) {
       result = false;
-      console.error("Trainerschlüssel darf nicht leer sein");
-      validationObject.participantsPerTrainerError="Trainerschlüssel darf nicht leer sein";
-
+      console.error('Trainerschlüssel darf nicht leer sein');
+      validationObject.participantsPerTrainerError =
+        'Trainerschlüssel darf nicht leer sein';
     }
     if (data.requiredQualificationList.length === 0) {
       result = false;
-      console.error("Qualifikationsliste darf nicht leer sein");
-      validationObject.requiredQualificationsError="Qualifikationsliste darf nicht leer sein";
-
+      console.error('Qualifikationsliste darf nicht leer sein');
+      validationObject.requiredQualificationsError =
+        'Qualifikationsliste darf nicht leer sein';
     }
-    validationObject.valid=result
+    validationObject.valid = result;
     console.log(validationObject);
 
     return validationObject;

@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { CourseService } from '../../../services/course/course.service';
 import { CourseDTO } from '../../../models/course/Course';
 import { CommonModule } from '@angular/common';
@@ -224,7 +231,7 @@ export class CourseComponent implements OnInit {
     // Get Required Qualification
     let reqQuali: QualificationDTO[] = [];
     if (this.isCreate) {
-      this.courseData.requiredQualifications.forEach(q => {
+      this.courseData.requiredQualifications.forEach((q) => {
         reqQuali.push(q);
       });
     }
@@ -256,8 +263,8 @@ export class CourseComponent implements OnInit {
 
   addDate() {
     const datesLength = this.courseData.dates.length;
-    if (this.isCreate && datesLength >= this.courseTemplate!.numberOfDates){
-      this.toast.showInfoToast("Maximale Terminanzahl erreicht.");
+    if (this.isCreate && datesLength >= this.courseTemplate!.numberOfDates) {
+      this.toast.showInfoToast('Maximale Terminanzahl erreicht.');
       return;
     } else {
       this.mappedDateTime[datesLength] = [];
@@ -289,7 +296,7 @@ export class CourseComponent implements OnInit {
     }
   }
 
-    onStartTimeChange(event: Event, index: number) {
+  onStartTimeChange(event: Event, index: number) {
     const inputElement = event.target as HTMLInputElement;
     const duration = this.courseData.duration;
     const timeMS = inputElement.valueAsNumber;
@@ -345,9 +352,11 @@ export class CourseComponent implements OnInit {
   }
 
   save(): void {
-    this.courseData.location = this.allLocations.find((location) => {
-      return location.locationId == this.selectedLocations[0].id;
-    })!;
+    if (this.selectedLocations.length != 0) {
+      this.courseData.location = this.allLocations.find((location) => {
+        return location.locationId == this.selectedLocations[0].id;
+      })!;
+    }
     this.courseData.requiredQualifications = [];
 
     this.selectedQualifications.forEach((sQual) => {
@@ -368,7 +377,9 @@ export class CourseComponent implements OnInit {
 
     console.log(this.courseData.requiredQualifications);
     // Hier werden UTCHours auf die eingegebene Zeit gesetzt, um das 2h unterschiedsproblem zu lösen
-    this.courseData.dates = this.dateTimeMapper.mapGMTToUTCTime(this.courseData.dates);
+    this.courseData.dates = this.dateTimeMapper.mapGMTToUTCTime(
+      this.courseData.dates
+    );
     if (this.isCreate) {
       this.saveCreated();
     } else {
@@ -521,30 +532,34 @@ export class CourseComponent implements OnInit {
     this.courseService
       .putCourseCancel(this.courseData.id, !this.courseData.canceled)
       .subscribe({
-        next:() =>{
-          this.toast.showSuccessToast("Kurs erfolgreich abgesagt");
+        next: () => {
+          this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
         },
-        error:() =>{
-          this.toast.showErrorToast("Kurs absagen fehlgeschlagen");
-        }
+        error: () => {
+          this.toast.showErrorToast('Kurs absagen fehlgeschlagen');
+        },
       });
   }
 
   onQualificationSelectionChange(qualificationList: CheckboxList[]) {
     this.selectedQualifications = qualificationList;
     const qualifications: QualificationDTO[] =
-      this.checkBoxListMapper.mapCheckboxListToQualificationList(this.selectedQualifications);
+      this.checkBoxListMapper.mapCheckboxListToQualificationList(
+        this.selectedQualifications
+      );
     this.selectedTrainers = [];
     this.setAllowedTrainersByRequiredQualification(qualifications);
   }
 
-  setAllowedTrainersByRequiredQualification(qualifications: QualificationDTO[]) {
-    this.trainerService.getAllTrainers().subscribe(data => {
+  setAllowedTrainersByRequiredQualification(
+    qualifications: QualificationDTO[]
+  ) {
+    this.trainerService.getAllTrainers().subscribe((data) => {
       let temp: TrainerDTO[] = [];
-      data.forEach(tr => {
+      data.forEach((tr) => {
         let hasQuali: boolean = true;
-        qualifications.forEach(q => {
-          if (!tr.qualifications.some(quali => quali.name === q.name)) {
+        qualifications.forEach((q) => {
+          if (!tr.qualifications.some((quali) => quali.name === q.name)) {
             hasQuali = false;
           }
         });
@@ -567,10 +582,10 @@ export class CourseComponent implements OnInit {
     // this.multiDropDown.selectedOptions.forEach(trainee => {
     //   this.multiDropDown.deleteObject(trainee);
     // });
-    this.selectedTrainers.forEach(trainer => {
+    this.selectedTrainers.forEach((trainer) => {
       this.multiDropDown.deleteObject(trainer);
     });
     this.multiDropDown.checkedBoxes = [];
-    this.toast.showInfoToast("Trainerauswahl zurückgesetzt!");
+    this.toast.showInfoToast('Trainerauswahl zurückgesetzt!');
   }
 }

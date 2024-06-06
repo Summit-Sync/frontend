@@ -126,6 +126,7 @@ button {
   div {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     p:first-child {
       font-weight: 500;
       margin-right: 10px;
@@ -133,9 +134,6 @@ button {
     li {
       list-style-type: none;
       height: fit-content;
-    }
-    &.listWrapper {
-      flex-direction: column;
     }
   }
   .priceWrapper {
@@ -173,6 +171,7 @@ button {
       margin: 7px 0 0 0;
     }
     div {
+      margin: 5px 0;
       p:first-child {
         font-weight: 500;
         margin-right: 10px;
@@ -208,6 +207,9 @@ button {
     width: 392px;
     height: 138px;
   }
+  .priceValueInput {
+    width: 70px;
+    }
 }
 
 .footer {
@@ -249,4 +251,5 @@ button {
   background: #FF6347;
   border-radius: 2px;
   padding: 4px;
+  flex-basis: 100%;
 }

@@ -196,8 +196,8 @@ export class AddCourseTemplateComponent {
     };
     this.courseTemplate.price.push(price);
   }
-  removePrice() {
-    this.courseTemplate.price.length = this.courseTemplate.price.length - 1;
+  deletePrice(index: number) {
+    this.courseTemplate.price.splice(index, 1);
   }
 
   addSelectedLocationDTO() {
