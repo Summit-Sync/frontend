@@ -1,39 +1,42 @@
-<div class="pop-up">
-  <div>
-    <h1>Trainer Details</h1>
-  </div>
-  <div>
+<div class="outer">
+  <div class="body">
     <div>
-      <p>Id: {{ trainerData.id }}</p>
-      <!--      <p></p>-->
+      <h1>Trainer Details</h1>
     </div>
     <div>
-      <p>SubjectId: {{ trainerData.subjectId }}</p>
-      <!--      <p></p>-->
+      <p>Id:</p>
+      <p>{{ trainerData.id }}</p>
     </div>
     <div>
-      <p>Vorname: {{ trainerData.firstName }}</p>
-      <!--      <p>{{trainerData.firstName}}</p>-->
+      <p>SubjectId:</p>
+      <p>{{ trainerData.subjectId }}</p>
     </div>
     <div>
-      <p>Nachname: {{ trainerData.lastName }}</p>
-      <!--      <p>{{trainerData.lastName}}</p>-->
+      <p>Vorname:</p>
+      <p>{{ trainerData.firstName }}</p>
     </div>
     <div>
-      <p>Email: {{ trainerData.email }}</p>
-      <!--      <p>{{trainerData.email}}</p>-->
+      <p>Nachname:</p>
+      <p>{{ trainerData.lastName }}</p>
     </div>
     <div>
-      <p>Telefonnummer: {{ trainerData.phone }}</p>
-      <!--      <p>{{trainerData.phone}}</p>-->
+      <p>Email:</p>
+      <p>{{ trainerData.email }}</p>
+    </div>
+    <div>
+      <p>Telefonnummer:</p>
+      <p>{{ trainerData.phone }}</p>
     </div>
     <div>
       <p>Qualifikationen:</p>
-      <div>
-        <p *ngFor="let t of trainerData.qualifications">{{ t.name }}</p>
-      </div>
+
+      <p *ngFor="let t of trainerData.qualifications; let i = index">
+        {{
+          t.name + (i + 1 != trainerData.qualifications.length ? ", " : " ")
+        }}&nbsp;
+      </p>
     </div>
+    <button *ngIf="isDelete" (click)="deleteTrainer()">Löschen</button>
+    <button (click)="cancel()">schließen</button>
   </div>
-  <button *ngIf="isDelete" (click)="deleteTrainer()">Löschen</button>
-  <button (click)="cancel()">schließen</button>
 </div>
