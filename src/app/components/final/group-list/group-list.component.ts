@@ -84,8 +84,8 @@ export class GroupListComponent implements OnInit {
     const dialogRef = this.dialog.open(GroupViewComponent, {
       disableClose: false,
       autoFocus: true,
-      height: '90dvh',
-      width: '70dvw',
+      height: '80dvh',
+      width: '50dvw',
     });
     let instance = dialogRef.componentInstance;
     instance.viewData = group;
