@@ -6,7 +6,10 @@ import { LocationValidatorService } from '../../location/location-validator/loca
   providedIn: 'root',
 })
 export class GroupTemplateValidatorService {
-  constructor(private locationValidator: LocationValidatorService) {}
+
+  constructor(
+    private locationValidator: LocationValidatorService
+  ) { }
 
   validate(data: GroupTemplateDTO): boolean {
     let result: boolean = true;

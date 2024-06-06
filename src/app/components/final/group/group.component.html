@@ -259,9 +259,7 @@
       Speichern
     </button>
     <button class="dialog button" (click)="cancel()">Abbrechen</button>
-    <button *ngIf="!this.isCreate" (click)="cancelGroup()">
-      Gruppe absagen
-    </button>
+    <button *ngIf="!this.isCreate" (click)="cancelGroup()">{{groupDataUpdate.canceled ? 'Veranstalten' : 'Absagen'}}</button>
     <!-- Rollenprüfung für Funktionsabschirmung für Nutzer
     <button *ngIf="login.getAccessToken!.role !== 'admin'" (click)="temp()">TEST</button>
     -->

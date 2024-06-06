@@ -23,7 +23,13 @@ export class GroupViewComponent implements OnInit{
   constructor(
     public groupService: GroupService,
     private dialogRef: MatDialogRef<GroupViewComponent>
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      }
+    });
+  }
 
   ngOnInit(): void {
 

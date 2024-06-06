@@ -53,7 +53,7 @@ export class QualificationListComponent implements OnInit {
 
   deleteQualification(qualification: QualificationDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -71,9 +71,9 @@ export class QualificationListComponent implements OnInit {
               this.toast.showSuccessToast('Standort erfolgreich gelöscht');
               this.updateList();
             },
-            error: (err) => {
+            error: (error) => {
               this.toast.showErrorToast(
-                'Löschen des Standorts fehlgeschlagen \n'
+                'Löschen des Standorts fehlgeschlagen \n' + + error.error.error
               );
               this.updateList();
             },
@@ -102,8 +102,8 @@ export class QualificationListComponent implements OnInit {
               next: () => {
                 this.toast.showSuccessToast('Massenpflege erfolgreich');
               },
-              error: () => {
-                this.toast.showErrorToast('Massenpflege fehlgeschlagen');
+              error: (error) => {
+                this.toast.showErrorToast('Massenpflege fehlgeschlagen \n' + error.error.error);
               },
             });
         }
@@ -138,8 +138,8 @@ export class QualificationListComponent implements OnInit {
             this.toast.showSuccessToast('Qualifikation wurde aktualisiert');
             this.updateList();
           },
-          error: (err) => {
-            this.toast.showErrorToast('Aktualisierung fehlgeschlagen');
+          error: (error) => {
+            this.toast.showErrorToast('Aktualisierung fehlgeschlagen \n' + error.error.error);
             this.updateList();
           },
         });

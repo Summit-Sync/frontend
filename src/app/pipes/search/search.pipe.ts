@@ -27,11 +27,29 @@ export class SearchPipe implements PipeTransform {
 
     switch (selectedOption) {
       case FilterOption.None:
-        return true;
+        // Um standardmäßig die abgesagten Kurse und Gruppen auszublenden
+        if ("courseNumber" in list){
+          return !(list as CourseDTO).canceled;
+        } else {
+          return !(list as GroupDTO).canceled;
+        }
+      // Kurs
+      case FilterOption.CourseFinished:
+        return (list as CourseDTO).finished;
+      case FilterOption.CourseCanceled:
+        return (list as CourseDTO).canceled;
+      case FilterOption.CourseVisible:
+        return (list as CourseDTO).visible;
       case FilterOption.CourseAcronym:
         return (list as CourseDTO).acronym.toLowerCase().includes(condition);
+      // Gruppe
+      case FilterOption.GroupFinished:
+        return (list as GroupDTO).finished;
+      case FilterOption.GroupCanceled:
+        return (list as GroupDTO).canceled;
       case FilterOption.GroupAcronym:
         return (list as GroupDTO).acronym.toLowerCase().includes(condition);
+      // Allgemein
       case FilterOption.FreeTrainerSpots:
         if ("courseNumber" in list) {
           return list.trainers.length < (list as CourseDTO).numberTrainers;

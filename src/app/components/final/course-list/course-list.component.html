@@ -88,7 +88,7 @@
               <button (click)="delete(c)">Löschen</button>
             </td>
             <td>
-              <button (click)="cancelCourse(c)">Kurs absagen</button>
+              <button (click)="cancelCourse(c)">{{c.canceled ? 'Veranstalten' : 'Absagen'}}</button>
             </td>
           </tr>
         </ng-container>

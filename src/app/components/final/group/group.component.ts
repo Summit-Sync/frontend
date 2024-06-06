@@ -134,7 +134,15 @@ export class GroupComponent implements OnInit {
     public toast: ToastService,
     public postGroupValidator: PostGroupValidatorService,
     private updateGroupValidator: UpdateGroupValidatorService
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      } else if (event.key === 'Enter') {
+        this.save();
+      }
+    });
+  }
 
   ngOnInit(): void {
     if (!this.isCreate) {

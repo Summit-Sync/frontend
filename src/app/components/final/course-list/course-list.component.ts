@@ -1,17 +1,17 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { CourseService } from '../../../services/course/course.service';
-import { CourseDTO } from '../../../models/course/Course';
-import { CommonModule } from '@angular/common';
-import { CourseComponent } from '../course/course.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ShortCourseListComponent } from '../../template/short-course-list/short-course-list.component';
-import { FilterOption } from '../../../models/enums/search';
-import { SearchPipe } from '../../../pipes/search/search.pipe';
-import { FormsModule } from '@angular/forms';
-import { CourseViewComponent } from '../course-view/course-view.component';
-import { ToastService } from '../../../services/toast/toast.service';
-import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-import { finalize } from 'rxjs';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {CourseService} from '../../../services/course/course.service';
+import {CourseDTO} from '../../../models/course/Course';
+import {CommonModule} from '@angular/common';
+import {CourseComponent} from '../course/course.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ShortCourseListComponent} from '../../template/short-course-list/short-course-list.component';
+import {FilterOption} from '../../../models/enums/search';
+import {SearchPipe} from '../../../pipes/search/search.pipe';
+import {FormsModule} from '@angular/forms';
+import {CourseViewComponent} from '../course-view/course-view.component';
+import {ToastService} from '../../../services/toast/toast.service';
+import {ConfirmationDialogComponent} from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-course-list',
@@ -32,6 +32,9 @@ export class CourseListComponent implements OnInit {
   displayOption: FilterOption = FilterOption.None;
   filterOptions: FilterOption[] = [
     FilterOption.None,
+    FilterOption.CourseCanceled,
+    FilterOption.CourseFinished,
+    FilterOption.CourseVisible,
     FilterOption.CourseAcronym,
     FilterOption.FreeTrainerSpots,
     FilterOption.FreeParticipantSpots,
@@ -67,10 +70,6 @@ export class CourseListComponent implements OnInit {
     this.displayOption = filterOption;
   }
 
-  // searchFilteredCourses() {
-  //   this.selectedOption = this.displayOption;
-  // }
-
   showDetails(course: CourseDTO) {
     this.showingEdit = false;
     this.showCourseView(course);
@@ -83,7 +82,7 @@ export class CourseListComponent implements OnInit {
 
   delete(course: CourseDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -101,8 +100,8 @@ export class CourseListComponent implements OnInit {
             next: (response) => {
               this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
             },
-            error: (err) => {
-              this.toast.showErrorToast('Löschen der Vorlage fehlgeschlagen');
+            error: (error) => {
+              this.toast.showErrorToast('Löschen der Vorlage fehlgeschlagen \n' + error.error.error);
             },
           });
       }
@@ -129,11 +128,10 @@ export class CourseListComponent implements OnInit {
   }
 
   showEditCourse(course: CourseDTO) {
-    //?? TODO: Updaten bevor der Kursdialog abgeschlossen wurde?
     console.log('showEdit', course);
-    this.courseService.updateCourseDetails(course);
+    this.courseService.updateCurrentCourse(course);
     const dialogRef = this.dialog.open(CourseComponent, {
-      disableClose: false,
+      disableClose: true,
       autoFocus: true,
       height: '90dvh',
       width: '1075px',
@@ -152,7 +150,7 @@ export class CourseListComponent implements OnInit {
   }
 
   showCourseView(course: CourseDTO) {
-    this.courseService.updateCourseDetails(course);
+    this.courseService.updateCurrentCourse(course);
     const dialogRef = this.dialog.open(CourseViewComponent, {
       disableClose: false,
       autoFocus: true,
@@ -167,14 +165,16 @@ export class CourseListComponent implements OnInit {
       const obj = JSON.parse(result);
       this.updateList();
       if (obj.method == 'delete') {
-        console.log('Dialog output:', obj.data);
+        this.courseService.deleteCourse(obj.data.id).subscribe({
+          next: () =>{
+            this.toast.showSuccessToast("Kurs erfolgreich gelöscht");
+          },
+          error: (error) =>{
+            this.toast.showErrorToast("Kurs löschen fehlgeschlagen \n" + error.error.error);
+          }
+         });
       }
     });
-  }
-
-  hideCourse() {
-    this.showingEdit = false;
-    this.showingDelete = false;
   }
 
   updateList() {
@@ -194,9 +194,10 @@ export class CourseListComponent implements OnInit {
     this.courseService.putCourseCancel(course.id, !course.canceled).subscribe({
       next: () => {
         this.toast.showSuccessToast('Kurs erfolgreich abgesagt');
+        this.updateList();
       },
-      error: () => {
-        this.toast.showErrorToast('Kurs absagen fehlgeschlagen');
+      error: (error) => {
+        this.toast.showErrorToast('Kurs absagen fehlgeschlagen \n' + error.error.error);
       },
     });
   }

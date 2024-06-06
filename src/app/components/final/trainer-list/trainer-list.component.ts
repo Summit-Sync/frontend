@@ -42,7 +42,7 @@ export class TrainerListComponent {
 
   delete(trainer: TrainerDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -60,8 +60,8 @@ export class TrainerListComponent {
             this.trainer$ = this.trainerService.getAllTrainers();
             this.toast.showSuccessToast('Trainer erfolgreich gelöscht');
           },
-          error: (err) => {
-            this.toast.showErrorToast('Löschen fehlgeschlagen\n' + err);
+          error: (error) => {
+            this.toast.showErrorToast('Löschen fehlgeschlagen\n' +  error.error.error);
             // console.error("Something went wrong while deleting a Trainer");
           },
         });
@@ -85,9 +85,9 @@ export class TrainerListComponent {
             this.trainer$ = this.trainerService.getAllTrainers();
             this.toast.showSuccessToast('Trainer erfolgreich angelegt');
           },
-          error: (err) => {
+          error: (error) => {
             // console.error("Something went wrong while Posting a Trainer");
-            this.toast.showErrorToast('Trainer anlage fehlgeschlagen\n' + err);
+            this.toast.showErrorToast('Trainer anlage fehlgeschlagen\n' + error.error.error);
           },
         });
       }
@@ -98,7 +98,7 @@ export class TrainerListComponent {
     this.trainerService.currentTrainer.next(trainer);
     if (this.showingEdit) {
       const dialogRef = this.dialog.open(AddTrainerComponent, {
-        disableClose: false,
+        disableClose: true,
         autoFocus: true,
         height: '90dvh',
         width: '40dvw',
@@ -120,10 +120,10 @@ export class TrainerListComponent {
               this.trainer$ = this.trainerService.getAllTrainers();
               this.toast.showSuccessToast('Trainer erfolgreich aktualisiert');
             },
-            error: (err) => {
+            error: (error) => {
               // console.error("Something went wrong while Posting a Trainer");
               this.toast.showErrorToast(
-                'Trainer aktualisierung fehlgeschlagen \n' + err
+                'Trainer aktualisierung fehlgeschlagen \n' + error.error.error
               );
             },
           });

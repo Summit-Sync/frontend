@@ -14,7 +14,7 @@ import { LocationValidation } from '../../../../models/validation/locationvalida
   styleUrl: './add-location-modal.component.css'
 })
 export class AddLocationModalComponent {
-  
+
   editableLocation: PostLocationDTO;
   validationObject:LocationValidation={
     valid:true,
@@ -32,7 +32,16 @@ export class AddLocationModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<AddLocationModalComponent>,
     private postLocationValidator: PostLocationValidatorService
-  ){}
+  ){
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      } else if (event.key === 'Enter') {
+        this.save();
+        this.dialogRef.close();
+      }
+    });
+  }
 
   ngOnInit(){
     this.editableLocation = this.data.location;

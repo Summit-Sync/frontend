@@ -36,7 +36,7 @@ export class CourseTemplateListComponent {
 
   deleteTemplate(template: CourseTemplateDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -54,9 +54,9 @@ export class CourseTemplateListComponent {
             next: (response) => {
               this.toast.showSuccessToast('Vorlage erfolgreich gelöscht');
             },
-            error: (err) => {
+            error: (error) => {
               this.toast.showErrorToast(
-                'Löschen der Vorlage fehlgeschlagen \n'
+                'Löschen der Vorlage fehlgeschlagen \n' + error.error.error
               );
             },
           });
@@ -67,6 +67,7 @@ export class CourseTemplateListComponent {
   editTemplate(template: CourseTemplateDTO) {
     const dialogRef = this.dialog.open(AddCourseTemplateComponent, {
       disableClose: true,
+      autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {
@@ -76,8 +77,13 @@ export class CourseTemplateListComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.updateList();
+    dialogRef.afterClosed().subscribe( {
+      next:() =>{
+        this.toast.showSuccessToast("Kursvorlage aktualisiert");
+      },
+      error:(error) =>{
+        this.toast.showErrorToast("Aktualiseren fehlgeschlagen \n" + error.error.error)
+      }
     });
   }
 
@@ -89,7 +95,8 @@ export class CourseTemplateListComponent {
 
   openDetails(template: CourseTemplateDTO) {
     const dialogRef = this.dialog.open(CourseTemplateDetailViewComponent, {
-      disableClose: true,
+      disableClose: false,
+      autoFocus: true,
       width: '40dvw',
       height: '80dvh',
       data: {
@@ -123,6 +130,7 @@ export class CourseTemplateListComponent {
     };
     const dialogref = this.dialog.open(AddCourseTemplateComponent, {
       disableClose: true,
+      autoFocus: true,
       height: '90dvh',
       width: '70dvw',
       data: {

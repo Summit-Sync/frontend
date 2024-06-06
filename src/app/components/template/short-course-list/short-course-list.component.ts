@@ -19,7 +19,12 @@ export class ShortCourseListComponent implements OnInit {
     public courseTemplateService: CoursetemplateService,
     private selfDialogRef: MatDialogRef<ShortCourseListComponent>,
     private dialog: MatDialog
-  ) {}
+  ) {
+    selfDialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        selfDialogRef.close('cancel');
+    }});
+  }
 
   ngOnInit(): void {
     this.courseTemplates = this.courseTemplateService.getAllCourseTemplates();
@@ -45,35 +50,6 @@ export class ShortCourseListComponent implements OnInit {
         this.selfDialogRef.close(JSON.stringify({ method: 'created' }))
       );
   }
-
-  //         qualificationService.getAllQualifications().subscribe(data=>this.qualificationList=data);
-  //         this.priceDropwdownSetting={
-  //           singleSelection:false,
-  //           idField:'priceName',
-  //           textField:'priceValue'
-  //         }
-  //       }
-  //   //
-  //       save() {
-  //         let groupTemplate:PostGroupTemplateDto={
-  //           acronym:this.acronym.value!,
-  //           title:this.title.value!,
-  //           description:this.description.value!,
-  //           numberOfDates:this.numberOfDates.value!,
-  //           duration:this.duration.value!,
-  //           numberOfParticipant:this.numberOfParticipants.value!,
-  //           locationDTO:this.location,
-  //           meetingPoint:this.meetingPoint.value!,
-  //           priceList:this.priceList,
-  //           requiredQualificationList:this.requiredQualifications,
-  //           numberOfTrainers:this.numberOfTrainers.value!
-  //         }
-  //         console.log(groupTemplate)
-
-  //         this.dialogRef.close(JSON.stringify({
-  //           data:groupTemplate,
-  //           method: 'confirm'}));
-  //       }
 
   close() {
     this.selfDialogRef.close(JSON.stringify({ method: 'cancel' }));

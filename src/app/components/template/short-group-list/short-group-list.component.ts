@@ -25,7 +25,13 @@ export class ShortGroupListComponent implements OnInit {
     private dialogRef: MatDialogRef<ShortGroupListComponent>,
     private dialog: MatDialog,
     private toast: ToastService
-  ) {}
+  ) {
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      }
+    });
+  }
   ngOnInit(): void {
     this.groupTemplate$ = this.gTempService.getAllGroupTemplateDTOs();
     console.log('Init: Short-group-list');
@@ -56,7 +62,7 @@ export class ShortGroupListComponent implements OnInit {
           },
           error: (err) => {
             this.toast.showErrorToast(
-              'Erstellung der Gruppe fehlgeschlagen \n' + err
+              'Erstellung der Gruppe fehlgeschlagen \n' + err.error.error
             );
           },
         });

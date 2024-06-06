@@ -19,6 +19,7 @@ import { PostGroupTemplateValidatorService } from '../../../../services/validati
 import { CheckboxListMapperService } from '../../../../services/check-box-list-mapper/checkbox-list-mapper.service';
 import { GrouptemplateService } from '../../../../services/grouptemplate/grouptemplate.service';
 import { GroupTemplateValidation } from '../../../../models/validation/grouptemplatevalidation';
+import {ToastService} from "@/app/services/toast/toast.service";
 
  @Component({
     selector: 'app-add-group-template',
@@ -65,7 +66,8 @@ import { GroupTemplateValidation } from '../../../../models/validation/grouptemp
     @Inject(MAT_DIALOG_DATA) public data: any,
     private qualificationService: QualificationsService,
     private postGroupTemplateValidator: PostGroupTemplateValidatorService,
-    private groupTemplateService: GrouptemplateService
+    private groupTemplateService: GrouptemplateService,
+    private toast: ToastService
   ) {
     dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
@@ -93,7 +95,7 @@ import { GroupTemplateValidation } from '../../../../models/validation/grouptemp
     this.selectedGroupTemplate = this.data.selectedTemplate;
     this.templateId = this.data.templateId;
     console.log(this.templateId);
-    
+
     let priceList: PostCategoryPriceDTO[] = [];
     for (let i = 0; i < this.defaultPriceListLength; i++) {
       let price:PostCategoryPriceDTO= {
@@ -143,17 +145,26 @@ import { GroupTemplateValidation } from '../../../../models/validation/grouptemp
         this.groupTemplateService.putGroupTemplateDTO(this.templateId, this.groupTemplate).subscribe({
           next: (response) => {
             console.log('Template has been created');
+            this.toast.showSuccessToast("Vorlage aktualisiert");
             this.dialogRef.close();
           },
-          error: (error) => console.error('Template could not be created'),
+          error: (error) => {
+            console.error('Template could not be created');
+            this.toast.showErrorToast("Aktualisierung fehlgeschlagen \n" + error.error.error)
+          },
         });
       } else{
         this.groupTemplateService.postGroupTemplateDTO(this.groupTemplate).subscribe({
             next: (response) => {
             console.log('Template has been created');
+            this.toast.showSuccessToast("Vorlage erstellt");
             this.dialogRef.close();
+
           },
-            error: (error) => console.error('Template could not be created'),
+            error: (error) => {
+              console.error('Template could not be created');
+              this.toast.showSuccessToast("Erstellung fehlgeschlagen \n" + error.error.error)
+            },
           });
       }
     } else {

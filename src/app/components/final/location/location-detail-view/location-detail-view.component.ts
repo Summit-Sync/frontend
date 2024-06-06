@@ -16,7 +16,13 @@ export class LocationDetailViewComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<LocationDetailViewComponent>
-  ){}
+  ){
+    dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        dialogRef.close('cancel');
+      }
+    });
+  }
 
   ngOnInit(){
     this.selectedLocation = this.data.location

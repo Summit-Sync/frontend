@@ -1,18 +1,18 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { GroupDTO } from '../../../models/group/Group';
-import { Observable, finalize, of } from 'rxjs';
-import { GroupService } from '../../../services/group/group.service';
-import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { ToastService } from '../../../services/toast/toast.service';
-import { GroupComponent } from '../group/group.component';
-import { ShortGroupListComponent } from '../../template/short-group-list/short-group-list.component';
-import { UpdateGroupDTO } from '../../../models/group/UpdateGroup';
-import { ConfirmationDialogComponent } from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FilterOption } from '../../../models/enums/search';
-import { SearchPipe } from '../../../pipes/search/search.pipe';
-import { GroupViewComponent } from '../group-view/group-view.component';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {GroupDTO} from '../../../models/group/Group';
+import {finalize, Observable} from 'rxjs';
+import {GroupService} from '../../../services/group/group.service';
+import {CommonModule} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import {ToastService} from '../../../services/toast/toast.service';
+import {GroupComponent} from '../group/group.component';
+import {ShortGroupListComponent} from '../../template/short-group-list/short-group-list.component';
+import {UpdateGroupDTO} from '../../../models/group/UpdateGroup';
+import {ConfirmationDialogComponent} from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FilterOption} from '../../../models/enums/search';
+import {SearchPipe} from '../../../pipes/search/search.pipe';
+import {GroupViewComponent} from '../group-view/group-view.component';
 
 @Component({
   selector: 'app-group-list',
@@ -33,6 +33,8 @@ export class GroupListComponent implements OnInit {
   displayOption: FilterOption = FilterOption.None;
   filterOptions: FilterOption[] = [
     FilterOption.None,
+    FilterOption.GroupCanceled,
+    FilterOption.GroupFinished,
     FilterOption.GroupAcronym,
     FilterOption.FreeTrainerSpots,
     FilterOption.StartDate,
@@ -76,7 +78,10 @@ export class GroupListComponent implements OnInit {
       width: '40dvw',
     });
     templateDialogRef.afterClosed().subscribe((result) => {
-      this.group$ = this.groupService.getAllGroups();
+      const obj = JSON.parse(result);
+      if (obj.method == 'created') {
+        this.group$ = this.groupService.getAllGroups();
+      }
     });
   }
 
@@ -99,8 +104,8 @@ export class GroupListComponent implements OnInit {
             this.toast.showSuccessToast('Gruppe löschen erfolgreich');
             this.group$ = this.groupService.getAllGroups();
           },
-          error: () => {
-            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
+          error: (error) => {
+            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n' + error.error.error);
           },
         });
       } else if (obj.method == 'cancel-group') {
@@ -111,8 +116,8 @@ export class GroupListComponent implements OnInit {
               this.toast.showSuccessToast('Gruppe erfolgreich abgesagt');
               this.group$ = this.groupService.getAllGroups();
             },
-            error: () => {
-              this.toast.showErrorToast('Gruppe absagen fehlgeschlagen');
+            error: (error) => {
+              this.toast.showErrorToast('Gruppe absagen fehlgeschlagen \n' + error.error.error);
             },
           });
       }
@@ -170,7 +175,7 @@ export class GroupListComponent implements OnInit {
           },
           error: (err) => {
             this.toast.showErrorToast(
-              'Aktualisierung der Gruppe fehlgeschlagen \n' + err
+              'Aktualisierung der Gruppe fehlgeschlagen \n' + err.error.error
             );
           },
         });
@@ -182,7 +187,7 @@ export class GroupListComponent implements OnInit {
             this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
           },
           error: (err) => {
-            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen');
+            this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n' + err.error.error);
             console.error('Gruppe löschen' + err);
           },
         });
@@ -194,7 +199,7 @@ export class GroupListComponent implements OnInit {
 
   delete(template: GroupDTO) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus: true,
       height: '40dvh',
       width: '30dvw',
@@ -213,8 +218,8 @@ export class GroupListComponent implements OnInit {
               this.group$ = this.groupService.getAllGroups();
               this.toast.showSuccessToast('Gruppe erfolgreich gelöscht');
             },
-            error: (err) => {
-              this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n');
+            error: (error) => {
+              this.toast.showErrorToast('Löschen der Gruppe fehlgeschlagen \n' + error.error.error);
             },
           });
       }
@@ -226,8 +231,8 @@ export class GroupListComponent implements OnInit {
         this.group$ = this.groupService.getAllGroups();
         this.toast.showSuccessToast('Gruppe erfolgreich abgesagt');
       },
-      error: () => {
-        this.toast.showErrorToast('Gruppe absagen fehlgeschlagen');
+      error: (error) => {
+        this.toast.showErrorToast('Gruppe absagen fehlgeschlagen \n' + error.error.error);
       },
     });
   }

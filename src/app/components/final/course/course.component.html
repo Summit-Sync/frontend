@@ -310,6 +310,6 @@
   <div class="footer">
     <button (click)="save()">Speichern</button>
     <button (click)="cancel()">Abbrechen</button>
-    <button *ngIf="!isCreate" (click)="cancelCourse()">Kurs absagen</button>
+    <button *ngIf="!isCreate" (click)="cancelCourse()">{{courseData.canceled ? 'Veranstalten' : 'Absagen'}}</button>
   </div>
 </div>
