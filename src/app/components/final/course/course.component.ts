@@ -52,6 +52,7 @@ import { CourseValidation } from '../../../models/validation/coursevalidation';
 export class CourseComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() isCreate: boolean = false;
+
   @ViewChild('trainer') multiDropDown: MultiSelectDropdownComponent;
 
   allCheckboxListQualifications: CheckboxList[] = [];
@@ -212,13 +213,14 @@ export class CourseComponent implements OnInit {
       this.checkBoxListMapper.mapSingleLocationToCheckboxList(
         this.courseData.location
       );
-    this.selectedTrainers =
-      this.checkBoxListMapper.mapTrainerListToCheckboxList(
-        this.courseData.trainers
-      );
     this.selectedQualifications =
       this.checkBoxListMapper.mapQualificationListToCheckboxList(
         this.courseData.requiredQualifications
+      );
+    this.setAllowedTrainersByRequiredQualification(this.courseData.requiredQualifications);
+    this.selectedTrainers =
+      this.checkBoxListMapper.mapTrainerListToCheckboxList(
+        this.courseData.trainers
       );
   }
 
@@ -411,14 +413,14 @@ export class CourseComponent implements OnInit {
       waitList: this.courseData.waitList,
       participants: this.courseData.participants,
     };
+    this.participantListService.deleteEmptyParticipants(
+      this.courseData.participants
+    );
+    this.participantListService.deleteEmptyParticipants(
+      this.courseData.waitList
+    );
     this.validationObject = this.updateCourseValidator.validate(updateCourse);
     if (this.validationObject.valid) {
-      this.participantListService.deleteEmptyParticipants(
-        this.courseData.participants
-      );
-      this.participantListService.deleteEmptyParticipants(
-        this.courseData.waitList
-      );
       this.courseService
         .putCourseDetail(this.courseData.id, updateCourse)
         .subscribe({
@@ -579,13 +581,10 @@ export class CourseComponent implements OnInit {
   multiDropdownRefresh() {
     this.courseData.trainers = [];
     this.multiDropDown.allOptions = this.allCheckboxListTrainers;
-    // this.multiDropDown.selectedOptions.forEach(trainee => {
-    //   this.multiDropDown.deleteObject(trainee);
-    // });
+    this.multiDropDown.checkedBoxes = [];
     this.selectedTrainers.forEach((trainer) => {
       this.multiDropDown.deleteObject(trainer);
     });
-    this.multiDropDown.checkedBoxes = [];
     this.toast.showInfoToast('Trainerauswahl zurückgesetzt!');
   }
 }

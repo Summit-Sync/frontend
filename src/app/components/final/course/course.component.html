@@ -267,14 +267,15 @@
     </div>
     <div>
       <p>Trainer Qualifikation:</p>
+
       <app-multi-select-dropdown
         [allOptions]="allCheckboxListQualifications"
         [selectedOptions]="selectedQualifications"
         [dropdownHeadline]="'Qualifikationen'"
         [allowMultiple]="true"
-        (changeEvent)="onQualificationSelectionChange($event)"
-      >
+        (changeEvent)="onQualificationSelectionChange($event)">
       </app-multi-select-dropdown>
+
       <p
         *ngIf="validationObject.requiredQualificationsError"
         class="errorMessage"
@@ -285,8 +286,7 @@
     <div>
       <p>Trainer:</p>
 
-      <app-multi-select-dropdown
-        id="trainer"
+      <app-multi-select-dropdown id="trainer"
         #trainer
         [allOptions]="allCheckboxListTrainers"
         [selectedOptions]="selectedTrainers"
