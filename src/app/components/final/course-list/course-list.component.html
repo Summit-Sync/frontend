@@ -77,9 +77,20 @@
                 {{ trainer.lastName }}
               </span>
             </td>
-            <td>{{ c.participants.length + "/" + c.numberParticipants + " + (" + c.waitList.length + "/" + c.numberWaitlist + ")" }}</td>
             <td>
-              <button (click)="showDetails(c)">Bewerben</button>
+              {{
+                c.participants.length +
+                  "/" +
+                  c.numberParticipants +
+                  " + (" +
+                  c.waitList.length +
+                  "/" +
+                  c.numberWaitlist +
+                  ")"
+              }}
+            </td>
+            <td>
+              <button (click)="showDetails(c)">Details</button>
             </td>
             <td>
               <button (click)="showEdit(c)">Bearbeiten</button>
@@ -88,7 +99,9 @@
               <button (click)="delete(c)">Löschen</button>
             </td>
             <td>
-              <button (click)="cancelCourse(c)">{{c.canceled ? 'Veranstalten' : 'Absagen'}}</button>
+              <button (click)="cancelCourse(c)">
+                {{ c.canceled ? "Veranstalten" : "Absagen" }}
+              </button>
             </td>
           </tr>
         </ng-container>
