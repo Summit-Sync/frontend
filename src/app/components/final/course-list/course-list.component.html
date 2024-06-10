@@ -53,9 +53,7 @@
       <tbody>
         <ng-container *ngFor="let c of courses">
           <tr
-            *ngIf="
-              c
-                | search
+            *ngIf="c | search
                   : displayOption
                   : searchText
                   : searchDate
