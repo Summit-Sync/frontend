@@ -18,7 +18,7 @@ import { QualificationsService } from '../../../services/qualifications/qualific
 import { TrainerService } from '../../../services/trainer/trainer.service';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
-import { StatusDTO } from '../../../models/status/Status';
+import { StatusDTO } from '../../../models/status/StatusDTO';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CourseTemplateDTO } from '../../../models/courseTemplate/CourseTemplate';
 import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';

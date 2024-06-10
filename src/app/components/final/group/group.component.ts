@@ -162,8 +162,8 @@ export class GroupComponent implements OnInit {
             this.checkBoxMapper.mapLocationListToCheckboxList(temp)[0]
           );
         });
-      // Qualification Mapping
 
+      // Qualification Mapping
       this.groupDataUpdate.requiredQualifications.forEach((q) => {
         let temp: QualificationDTO[] = [];
         this.qualificationService.getQualificationById(q).subscribe((quali) => {
@@ -173,6 +173,7 @@ export class GroupComponent implements OnInit {
           );
         });
       });
+
       // Trainer Mapping
       this.groupDataUpdate.trainers.forEach((trainer) => {
         let tempTrainer: TrainerDTO[] = [];
@@ -185,31 +186,21 @@ export class GroupComponent implements OnInit {
             );
           });
       });
+      console.log(this.groupDataUpdate.contact);
     } else {
-      if (this.template) {
-        this.groupDataCreate = this.createPostGroupFromTemplate(this.template);
-        this.locationService
-          .getLocationById(this.groupDataCreate.location)
-          .subscribe((l) => {
-            let temp: LocationDTO[] = [];
-            temp.push(l);
-            this.selectedLocationsCheck.push(
-              this.checkBoxMapper.mapLocationListToCheckboxList(temp)[0]
-            );
-          });
-        let temp: QualificationDTO[] = [];
-        this.groupDataCreate.requiredQualifications.forEach((q) => {
-          this.qualificationService
-            .getQualificationById(q)
-            .subscribe((quali) => {
-              temp.push(quali);
-            });
-        });
-        this.selectedQualificationsCheck =
-          this.checkBoxMapper.mapQualificationListToCheckboxList(temp);
-      } else {
+      if (!this.template) {
         this.toast.showErrorToast('Vorlage nicht vorhanden');
         console.log('Template missing!');
+      } else {
+        // Qualification Mapping
+        this.selectedQualificationsCheck =
+            this.checkBoxMapper.mapQualificationListToCheckboxList(this.template.requiredQualificationList);
+
+        // Location Mapping
+        this.selectedLocationsCheck =
+            this.checkBoxMapper.mapSingleLocationToCheckboxList(this.template.location);
+
+        this.groupDataCreate = this.createPostGroupFromTemplate(this.template);
       }
     }
     this.mapAllListsToCheckBoxLists();
@@ -500,15 +491,5 @@ export class GroupComponent implements OnInit {
     this.dialogRef.close(
       JSON.stringify({ method: 'cancel-group', data: this.groupDataUpdate })
     );
-    console.log('Group canceled');
-
-    // this.groupService.putGroupCanceled(this.groupDataUpdate.id, !this.groupDataUpdate.canceled).subscribe({
-    //   next:() =>{
-    //     this.toast.showSuccessToast("Gruppe erfolgreich abgesagt");
-    //   },
-    //   error:() =>{
-    //     this.toast.showErrorToast("Gruppe absagen fehlgeschlagen");
-    //   }
-    // })
   }
 }

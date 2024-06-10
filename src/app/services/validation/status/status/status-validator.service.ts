@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StatusDTO } from '../../../../models/status/Status';
+import { StatusDTO } from '../../../../models/status/StatusDTO';
 import { ToastService } from '../../../toast/toast.service';
 
 @Injectable({

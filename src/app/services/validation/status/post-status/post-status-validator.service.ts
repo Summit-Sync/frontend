@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PostStatusDTO } from '../../../../models/status/PostStatus';
+import { PostStatusDTO } from '../../../../models/status/PostStatusDTO';
 import { ToastService } from '../../../toast/toast.service';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class PostStatusValidatorService {
     if (!data.text){
       result = false;
       console.error("Statustext darf nicht leer sein");
-      // this.toast.showErrorToast("Statustext darf nicht leer sein");      
+      // this.toast.showErrorToast("Statustext darf nicht leer sein");
     }
     return result;
   }

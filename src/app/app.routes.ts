@@ -9,7 +9,6 @@ import {QualificationListComponent} from "./components/final/qualification/quali
 import {TrainerListComponent} from "./components/final/trainer-list/trainer-list.component";
 import { LocationListComponent } from './components/final/location/location-list/location-list.component';
 import { GroupTemplateListComponent } from './components/template/group-template/group-template-list/group-template-list.component';
-import { HomeViewComponent } from './components/home-view/home-view.component';
 
 export const routes: Routes = [
   // Kurs Routen
@@ -18,7 +17,7 @@ export const routes: Routes = [
   // Gruppen Routen
   { path: 'gruppe', component: GroupListComponent, canActivate:[]},
   { path: 'gruppe/:id', component: GroupComponent, canActivate:[]},
-  //Gruppentemplates Routen
+  // Gruppenvorlagen Routen
   {path: 'gruppenvorlage', component:GroupTemplateListComponent, canActivate:[]},
   //Kursvorlagen
   {path:'kursvorlage', component:CourseTemplateListComponent, canActivate:[]},
@@ -29,6 +28,6 @@ export const routes: Routes = [
   // Location
   { path: 'standort', component: LocationListComponent, canActivate: []},
   // Root Routen
-  { path: '', component: HomeViewComponent, canActivate:[]}, // TODO: Wahrscheinlich die Falsche Komponente
+  { path: '', component: CourseListComponent, canActivate:[]},
   { path: '**', redirectTo:'', canActivate:[]},
 ];
