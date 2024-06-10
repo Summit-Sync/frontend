@@ -9,7 +9,7 @@ import {FilterOption} from '../../models/enums/search';
 })
 export class SearchPipe implements PipeTransform {
   transform(
-    list: CourseDTO | GroupDTO,
+    entry: CourseDTO | GroupDTO,
     selectedOption: FilterOption,
     condition: string,
     date1?: Date,
@@ -28,43 +28,43 @@ export class SearchPipe implements PipeTransform {
     switch (selectedOption) {
       case FilterOption.None:
         // Um standardmäßig die abgesagten Kurse und Gruppen auszublenden
-        if ("courseNumber" in list){
-          return !(list as CourseDTO).canceled;
+        if ("courseNumber" in entry){
+          return !(entry as CourseDTO).canceled;
         } else {
-          return !(list as GroupDTO).canceled;
+          return !(entry as GroupDTO).canceled;
         }
       // Kurs
       case FilterOption.CourseFinished:
-        return (list as CourseDTO).finished;
+        return (entry as CourseDTO).finished;
       case FilterOption.CourseCanceled:
-        return (list as CourseDTO).canceled;
+        return (entry as CourseDTO).canceled;
       case FilterOption.CourseVisible:
-        return (list as CourseDTO).visible;
+        return (entry as CourseDTO).visible;
       case FilterOption.CourseAcronym:
-        return (list as CourseDTO).acronym.toLowerCase().includes(condition);
+        return (entry as CourseDTO).acronym.toLowerCase().includes(condition);
       // Gruppe
       case FilterOption.GroupFinished:
-        return (list as GroupDTO).finished;
+        return (entry as GroupDTO).finished;
       case FilterOption.GroupCanceled:
-        return (list as GroupDTO).canceled;
+        return (entry as GroupDTO).canceled;
       case FilterOption.GroupAcronym:
-        return (list as GroupDTO).acronym.toLowerCase().includes(condition);
+        return (entry as GroupDTO).acronym.toLowerCase().includes(condition);
       // Allgemein
       case FilterOption.FreeTrainerSpots:
-        if ("courseNumber" in list) {
-          return list.trainers.length < (list as CourseDTO).numberTrainers;
+        if ("courseNumber" in entry) {
+          return entry.trainers.length < (entry as CourseDTO).numberTrainers;
         } else {
-          return list.trainers.length < (list as GroupDTO).numberParticipants / (list as GroupDTO).participantsPerTrainer;
+          return entry.trainers.length < (entry as GroupDTO).numberParticipants / (entry as GroupDTO).participantsPerTrainer;
         }
       case FilterOption.FreeParticipantSpots:
-        return (list as CourseDTO).participants.length < list.numberParticipants;
+        return (entry as CourseDTO).participants.length < entry.numberParticipants;
       case FilterOption.NoParticipants:
-        return (list as CourseDTO).participants.length === 0;
+        return (entry as CourseDTO).participants.length === 0;
       case FilterOption.StartDate:
         if (!date1 || !date2) {
           return true;
         }
-        let startDate = list.dates[0];
+        let startDate = entry.dates[0];
 
         const target = new Date(
           startDate.getFullYear(),
@@ -80,7 +80,7 @@ export class SearchPipe implements PipeTransform {
         return target >= start && target <= end;
       case FilterOption.TrainerFullName:
         return (
-          list.trainers.filter((trainer) => {
+          entry.trainers.filter((trainer) => {
             if (firstPart) {
               return (
                 (trainer.lastName.toLowerCase().includes(firstPart) &&
