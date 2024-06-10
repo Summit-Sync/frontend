@@ -1,4 +1,4 @@
-import { StatusDTO } from '../status/Status';
+import { StatusDTO } from '../status/StatusDTO';
 
 export interface ParticipantDTO {
   id: number;

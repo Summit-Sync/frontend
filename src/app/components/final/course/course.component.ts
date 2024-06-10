@@ -18,7 +18,7 @@ import { QualificationsService } from '../../../services/qualifications/qualific
 import { TrainerService } from '../../../services/trainer/trainer.service';
 import { CheckItemInListPipe } from '../../../pipes/checkbox/check-item-in-list.pipe';
 import { MultiSelectDropdownComponent } from '../../utilities/multi-select-dropdown/multi-select-dropdown.component';
-import { StatusDTO } from '../../../models/status/Status';
+import { StatusDTO } from '../../../models/status/StatusDTO';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CourseTemplateDTO } from '../../../models/courseTemplate/CourseTemplate';
 import { CategoryPriceDTO } from '../../../models/price/CategoryPriceDTO';
@@ -212,13 +212,14 @@ export class CourseComponent implements OnInit {
       this.checkBoxListMapper.mapSingleLocationToCheckboxList(
         this.courseData.location
       );
-    this.selectedTrainers =
-      this.checkBoxListMapper.mapTrainerListToCheckboxList(
-        this.courseData.trainers
-      );
     this.selectedQualifications =
       this.checkBoxListMapper.mapQualificationListToCheckboxList(
         this.courseData.requiredQualifications
+      );
+    this.setAllowedTrainersByRequiredQualification(this.courseData.requiredQualifications);
+    this.selectedTrainers =
+      this.checkBoxListMapper.mapTrainerListToCheckboxList(
+        this.courseData.trainers
       );
   }
 
@@ -411,14 +412,14 @@ export class CourseComponent implements OnInit {
       waitList: this.courseData.waitList,
       participants: this.courseData.participants,
     };
+    this.participantListService.deleteEmptyParticipants(
+      this.courseData.participants
+    );
+    this.participantListService.deleteEmptyParticipants(
+      this.courseData.waitList
+    );
     this.validationObject = this.updateCourseValidator.validate(updateCourse);
     if (this.validationObject.valid) {
-      this.participantListService.deleteEmptyParticipants(
-        this.courseData.participants
-      );
-      this.participantListService.deleteEmptyParticipants(
-        this.courseData.waitList
-      );
       this.courseService
         .putCourseDetail(this.courseData.id, updateCourse)
         .subscribe({
@@ -549,7 +550,7 @@ export class CourseComponent implements OnInit {
         },
         error: (error) => {
           this.toast.showErrorToast(
-            'Kurs absagen fehlgeschlagen \\n' + error.error.error
+            'Kurs absagen fehlgeschlagen \n' + error.error.error
           );
         },
       });
@@ -593,12 +594,9 @@ export class CourseComponent implements OnInit {
   multiDropdownRefresh() {
     this.courseData.trainers = [];
     this.multiDropDown.allOptions = this.allCheckboxListTrainers;
-    // this.multiDropDown.selectedOptions.forEach(trainee => {
-    //   this.multiDropDown.deleteObject(trainee);
-    // });
+    this.multiDropDown.checkedBoxes = [];
     this.selectedTrainers.forEach((trainer) => {
       this.multiDropDown.deleteObject(trainer);
     });
-    this.multiDropDown.checkedBoxes = [];
   }
 }

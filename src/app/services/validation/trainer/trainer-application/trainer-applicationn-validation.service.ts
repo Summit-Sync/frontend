@@ -18,6 +18,7 @@ export class TrainerApplicationnValidationService {
   validate(data: TrainerApplicationDTO): TrainerValidation{
     let validationObject: TrainerValidation = {
       valid:true,
+      idError: '',
       subjectIdError:'',
       firstNameError:'',
       lastNameError:'',
@@ -26,7 +27,7 @@ export class TrainerApplicationnValidationService {
       qualificationsError:'',
       usernameError:'',
       passwordError:''
-    } 
+    }
     if(!data){
       console.error("Trainer can't be empty");
       validationObject.valid=false;

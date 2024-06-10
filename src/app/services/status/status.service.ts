@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {StatusDTO} from "../../models/status/Status";
-import {PostStatusDTO} from "../../models/status/PostStatus";
+import {StatusDTO} from "../../models/status/StatusDTO";
+import {PostStatusDTO} from "../../models/status/PostStatusDTO";
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({

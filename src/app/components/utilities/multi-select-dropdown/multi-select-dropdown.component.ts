@@ -29,9 +29,7 @@ export class MultiSelectDropdownComponent implements OnInit, OnChanges {
   @Input() dropdownHeadline: string;
   @Input() allowMultiple: boolean;
   @Input() allowedEntries: number = 999999999999999;
-  @Output() changeEvent: EventEmitter<CheckboxList[]> = new EventEmitter<
-    CheckboxList[]
-  >();
+  @Output() changeEvent: EventEmitter<CheckboxList[]> = new EventEmitter<CheckboxList[]>();
 
   checkedBoxes: boolean[] = [];
   showList: boolean = false;

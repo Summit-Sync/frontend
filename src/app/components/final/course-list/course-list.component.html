@@ -23,6 +23,7 @@
     "
     [(ngModel)]="searchText"
   />
+
   <div *ngIf="displayOption == FilterOption.StartDate">
     Von:
     <input type="date" [(ngModel)]="searchDate" />
@@ -53,9 +54,7 @@
       <tbody>
         <ng-container *ngFor="let c of courses">
           <tr
-            *ngIf="
-              c
-                | search
+            *ngIf="c | search
                   : displayOption
                   : searchText
                   : searchDate
