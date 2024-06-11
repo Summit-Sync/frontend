@@ -12,9 +12,7 @@
         <tr *ngFor="let location of locationList">
           <td>{{ location.title }}</td>
           <td>
-            {{ location.street }},&nbsp;{{ location.postCode }}&nbsp;{{
-              location.title
-            }}
+            {{ location.street }},&nbsp;{{ location.postCode }}
           </td>
           <td>
             <button (click)="openDetailDialog(location)">Details</button>
