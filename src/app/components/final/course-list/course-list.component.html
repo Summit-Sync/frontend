@@ -49,6 +49,7 @@
           <th></th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -92,15 +93,19 @@
               <button (click)="showDetails(c)">Details</button>
             </td>
             <td>
-              <button (click)="showEdit(c)">Bearbeiten</button>
+              <button (click)="showEdit(c)" *ngIf="loginService.isAdmin()">Bearbeiten</button>
             </td>
             <td>
-              <button (click)="delete(c)">Löschen</button>
+              <button (click)="delete(c)" *ngIf="loginService.isAdmin()">Löschen</button>
             </td>
             <td>
               <button (click)="cancelCourse(c)">
                 {{ c.canceled ? "Veranstalten" : "Absagen" }}
               </button>
+            </td>
+            <td>
+              <button (click)="applyToCourse(c)" *ngIf="!hasAppliedToCourse(c); else elseBlock">Bewerben</button>
+              <ng-template #elseBlock><button>Bewerbungsstatus</button></ng-template>
             </td>
           </tr>
         </ng-container>

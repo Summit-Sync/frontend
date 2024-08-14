@@ -11,6 +11,7 @@ import { ToastService } from '../../../../services/toast/toast.service';
 import { AddQualificationComponent } from '../add-qualification/add-qualification.component';
 import { QualificationValidatorService } from '../../../../services/validation/qualification/qualification-validator/qualification-validator.service';
 import { ConfirmationDialogComponent } from '../../../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { LoginService } from '../../../../services/login/login.service';
 
 @Component({
   selector: 'app-qualification-list',
@@ -28,7 +29,8 @@ export class QualificationListComponent implements OnInit {
     private trainerService: TrainerService,
     private toast: ToastService,
     private dialog: MatDialog,
-    private qualificationValidator: QualificationValidatorService
+    private qualificationValidator: QualificationValidatorService,
+    public loginService: LoginService
   ) {}
 
   ngOnInit(): void {

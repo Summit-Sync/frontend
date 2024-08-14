@@ -11,7 +11,10 @@ import {FormsModule} from '@angular/forms';
 import {CourseViewComponent} from '../course-view/course-view.component';
 import {ToastService} from '../../../services/toast/toast.service';
 import {ConfirmationDialogComponent} from '../../../dialog/confirmation-dialog/confirmation-dialog.component';
-import {finalize} from 'rxjs';
+import {combineLatest, combineLatestWith, finalize, mergeMap} from 'rxjs';
+import { AccessTokenResponse, LoginService } from '../../../services/login/login.service';
+import { ApplicationService } from '../../../services/application/application.service';
+import { TrainerApplicationDTO } from '../../../models/trainer/TrainerApplication';
 
 @Component({
   selector: 'app-course-list',
@@ -22,6 +25,8 @@ import {finalize} from 'rxjs';
 })
 export class CourseListComponent implements OnInit {
   courses: CourseDTO[] = [];
+  applications: CourseDTO[] = [];
+  token: AccessTokenResponse;
   showingEdit: boolean = false;
   showingDelete: boolean = false;
   displayDropdown: boolean = false;
@@ -48,7 +53,9 @@ export class CourseListComponent implements OnInit {
     public courseService: CourseService,
     private dialog: MatDialog,
     private toast: ToastService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    public loginService: LoginService,
+    private applicationService: ApplicationService
   ) {}
 
   ngOnInit() {
@@ -178,8 +185,18 @@ export class CourseListComponent implements OnInit {
   }
 
   updateList() {
-    this.courseService.getAllCourses().subscribe((data) => {
+    this.loginService.getOrRefreshAccessToken().pipe(
+      mergeMap((token) => {
+        this.token = token;
+        let courses = this.courseService.getAllCourses();
+        let courseApplications = this.applicationService.getAppliedCourses(token.subjectId);
+
+        return combineLatest([courses, courseApplications])
+      })
+    ).subscribe(([data, applications]) => {
+
       this.courses = data;
+      this.applications = applications;
 
       // Iterate over courses and convert dates to Date objects
       this.courses.forEach((course) => {
@@ -187,7 +204,7 @@ export class CourseListComponent implements OnInit {
       });
 
       console.log('updateList: ', this.courses); // Log updated courses with Date objects
-    });
+      })
   }
 
   cancelCourse(course: CourseDTO) {
@@ -200,5 +217,21 @@ export class CourseListComponent implements OnInit {
         this.toast.showErrorToast('Kurs absagen fehlgeschlagen \n' + error.error.error);
       },
     });
+  }
+
+  applyToCourse(course: CourseDTO) {
+    this.applicationService.applyToCourse(this.token.subjectId, course.id).subscribe({
+      next: () => {
+        this.toast.showSuccessToast('Erfolgreich auf Kurs beworben');
+        this.updateList();
+      },
+      error: (error) => {
+        this.toast.showErrorToast('Bewerbung auf Kurs fehlgeschlagen \n' + error.error.error)
+      }
+    })
+  }
+
+  hasAppliedToCourse(course: CourseDTO) {
+    return !!this.applications.find((c) => c.id == course.id);
   }
 }

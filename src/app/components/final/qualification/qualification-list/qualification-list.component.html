@@ -58,7 +58,7 @@
     </table>
   </div>
 
-  <button class="createButton" (click)="createNewQualification()">
+  <button class="createButton" (click)="createNewQualification()" *ngIf="loginService.isAdmin()">
     Neue Qualifikation erstellen
   </button>
 </div>
