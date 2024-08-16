@@ -19,7 +19,7 @@ services:
     ports:
       - 6379:6379
   api:
-    image: ghcr.io/summit-sync/backend:dev
+    image: ghcr.io/summit-sync/backend:application-hack
     ports:
       - 8080:8080
     environment:

@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div class="listWrapper">
+<div class="listWrapper horizontal">
   <div class="tableWrapper">
     <table>
       <thead>
@@ -55,7 +55,9 @@
       <tbody>
         <ng-container *ngFor="let c of courses">
           <tr
-            *ngIf="c | search
+            *ngIf="
+              c
+                | search
                   : displayOption
                   : searchText
                   : searchDate
@@ -93,10 +95,14 @@
               <button (click)="showDetails(c)">Details</button>
             </td>
             <td>
-              <button (click)="showEdit(c)" *ngIf="loginService.isAdmin()">Bearbeiten</button>
+              <button (click)="showEdit(c)" *ngIf="loginService.isAdmin()">
+                Bearbeiten
+              </button>
             </td>
             <td>
-              <button (click)="delete(c)" *ngIf="loginService.isAdmin()">Löschen</button>
+              <button (click)="delete(c)" *ngIf="loginService.isAdmin()">
+                Löschen
+              </button>
             </td>
             <td>
               <button (click)="cancelCourse(c)">
@@ -104,11 +110,115 @@
               </button>
             </td>
             <td>
-              <button (click)="applyToCourse(c)" *ngIf="!hasAppliedToCourse(c); else elseBlock">Bewerben</button>
-              <ng-template #elseBlock><button>Bewerbungsstatus</button></ng-template>
+              <button
+                (click)="applyToCourse(c)"
+                *ngIf="!hasAppliedToCourse(c); else elseBlock"
+              >
+                Bewerben
+              </button>
+              <ng-template #elseBlock
+                ><button>Bewerbungsstatus</button></ng-template
+              >
             </td>
           </tr>
         </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <button class="createButton" (click)="showTemplateList()">
+    Kurs anhand einer Vorlage erstellen
+  </button>
+</div>
+
+<div class="listWrapper vertical">
+  <div class="tableWrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Kurs Nr.</th>
+          <th *ngFor="let c of courses">{{ c.acronym + c.courseNumber }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Termin 1.</td>
+          <td *ngFor="let c of courses">
+            {{ c.dates[0] | date : "EEE dd.MM.yy HH.mm" : "de" }}
+          </td>
+        </tr>
+        <tr>
+          <td>Termin 2.</td>
+          <td *ngFor="let c of courses">
+            {{ c.dates[1] | date : "EEE dd.MM.yy HH.mm" : "de" }}
+          </td>
+        </tr>
+        <tr>
+          <td>Termine insgesamt</td>
+          <td *ngFor="let c of courses">{{ c.dates.length }}</td>
+        </tr>
+        <tr>
+          <td>Trainer</td>
+          <td *ngFor="let c of courses">
+            <span *ngFor="let trainer of c.trainers">
+              {{ trainer.firstName }} {{ trainer.lastName }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Belegte Plätze</td>
+          <td *ngFor="let c of courses">
+            {{
+              c.participants.length +
+                "/" +
+                c.numberParticipants +
+                " + (" +
+                c.waitList.length +
+                "/" +
+                c.numberWaitlist +
+                ")"
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td *ngFor="let c of courses">
+            <button (click)="showDetails(c)">Details</button>
+          </td>
+        </tr>
+        <tr *ngIf="loginService.isAdmin()">
+          <td></td>
+          <td *ngFor="let c of courses">
+            <button (click)="showEdit(c)">Bearbeiten</button>
+          </td>
+        </tr>
+        <tr *ngIf="loginService.isAdmin()">
+          <td></td>
+          <td *ngFor="let c of courses">
+            <button (click)="delete(c)">Löschen</button>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td *ngFor="let c of courses">
+            <button (click)="cancelCourse(c)">
+              {{ c.canceled ? "Veranstalten" : "Absagen" }}
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td *ngFor="let c of courses">
+            <button
+              (click)="applyToCourse(c)"
+              *ngIf="!hasAppliedToCourse(c); else elseBlock"
+            >
+              Bewerben
+            </button>
+            <ng-template #elseBlock
+              ><button>Bewerbungsstatus</button></ng-template
+            >
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

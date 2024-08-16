@@ -2,11 +2,12 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavLink } from './types';
 import { CommonModule } from '@angular/common';
+import { MultiSelectDropdownComponent } from "../utilities/multi-select-dropdown/multi-select-dropdown.component";
 
 @Component({
   selector: 'app-navigation-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MultiSelectDropdownComponent],
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.scss',
 })

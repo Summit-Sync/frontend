@@ -4,8 +4,8 @@
       src="../../../assets/images/klz.png"
       (click)="navigateToPath('', -1)"
     />
-    <ng-container *ngFor="let link of links; let i = index">
-      <li>
+    <ng-container *ngFor="let link of links; let i = index" class="horizontal">
+      <li class="horizontal">
         <a
           (click)="navigateToPath(link.route, i)"
           [class.highlight]="link.route == currentRoute"
@@ -13,5 +13,11 @@
         >
       </li>
     </ng-container>
+
+    <div class="dropbox-wrapper">
+      <div id="list1" class="dropdown-check-list">
+        <span class="anchor" tabindex="0">Kurs</span>
+      </div>
+    </div>
   </div>
 </div>

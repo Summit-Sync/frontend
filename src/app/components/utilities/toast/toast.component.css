@@ -40,3 +40,12 @@
   color: #ffffff;
   padding: 0;
 }
+
+@media only screen and (max-width: 500px) {
+  .notification {
+    width: 150px; /* Passe die Breite an deine Anforderungen an */
+  }
+  p {
+    text-align: center;
+  }
+}
